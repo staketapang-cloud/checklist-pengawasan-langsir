@@ -20,6 +20,17 @@
       color: #222;
     }
 
+    <script>
+  if (!cekStatusLogin()) {
+    document.body.innerHTML = `
+      <div style="text-align:center; padding:50px;">
+        <h2>Akses Ditolak</h2>
+        <p>Silakan login terlebih dahulu.</p>
+      </div>
+    `;
+  }
+</script>
+    
     .container {
       max-width: 1100px;
       margin: 0 auto;
