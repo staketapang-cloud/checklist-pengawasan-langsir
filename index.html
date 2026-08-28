@@ -140,6 +140,17 @@ function handleCredentialResponse(response) {
 .then(result => {
   console.log("Hasil pengecekan USER:", result);
   console.log("Data USER:", result.data);
+
+  if (result.success && result.data) {
+    const userInfo = document.getElementById("userInfo");
+
+    userInfo.innerHTML =
+      "Login berhasil<br>" +
+      "Nama: " + result.data.NAMA + "<br>" +
+      "Role: " + result.data.ROLE;
+
+    userInfo.style.display = "block";
+  }
 })
     .catch(error => {
   console.error("Gagal menghubungi API USER:", error);
