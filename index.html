@@ -141,16 +141,23 @@ function handleCredentialResponse(response) {
   console.log("Hasil pengecekan USER:", result);
   console.log("Data USER:", result.data);
 
-  if (result.success && result.data) {
-    const userInfo = document.getElementById("userInfo");
+if (result.success && result.data) {
 
-    userInfo.innerHTML =
-      "Login berhasil<br>" +
-      "Nama: " + result.data.NAMA + "<br>" +
-      "Role: " + result.data.ROLE;
+  // Simpan status login
+  sessionStorage.setItem("isLoggedIn", "true");
+  sessionStorage.setItem("userEmail", result.data.EMAIL);
+  sessionStorage.setItem("userNama", result.data.NAMA);
+  sessionStorage.setItem("userRole", result.data.ROLE);
 
-    userInfo.style.display = "block";
-  }
+  const userInfo = document.getElementById("userInfo");
+
+  userInfo.innerHTML =
+    "Login berhasil<br>" +
+    "Nama: " + result.data.NAMA + "<br>" +
+    "Role: " + result.data.ROLE;
+
+  userInfo.style.display = "block";
+}
 })
     .catch(error => {
   console.error("Gagal menghubungi API USER:", error);
