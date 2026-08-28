@@ -136,9 +136,10 @@ function handleCredentialResponse(response) {
   // Hubungkan email dengan API USER
   fetch(API_URL + "?action=user&email=" + encodeURIComponent(email))
     .then(response => response.json())
-    .then(result => {
-      console.log("Hasil pengecekan USER:", result);
-    })
+.then(result => {
+  console.log("Hasil pengecekan USER:", result);
+  console.log("Data USER:", result.data);
+})
     .catch(error => {
       console.error("Gagal menghubungi API USER:", error);
     });
