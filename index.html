@@ -163,6 +163,15 @@ if (result.success && result.data) {
   console.error("Gagal menghubungi API USER:", error);
 });
 }
+  function cekStatusLogin() {
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+
+  if (isLoggedIn === "true") {
+    return true;
+  }
+
+  return false;
+}
 </script>
 </body>
 </html>
