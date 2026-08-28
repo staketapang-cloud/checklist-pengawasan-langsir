@@ -118,9 +118,31 @@
     );
   };
 
-  function handleCredentialResponse(response) {
-    console.log("Google Login berhasil:", response);
-  }
+function handleCredentialResponse(response) {
+  console.log("Google Login berhasil:", response);
+
+  // Decode credential Google (JWT)
+  const payload = JSON.parse(atob(response.credential.split(".")[1]));
+
+  // Ambil email user
+  const email = payload.email;
+
+  console.log("Email Google:", email);
+
+  // URL API Apps Script
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+
+  // Hubungkan email dengan API USER
+  fetch(API_URL + "?action=user&email=" + encodeURIComponent(email))
+    .then(response => response.json())
+    .then(result => {
+      console.log("Hasil pengecekan USER:", result);
+    })
+    .catch(error => {
+      console.error("Gagal menghubungi API USER:", error);
+    });
+}
 </script>
 </body>
 </html>
