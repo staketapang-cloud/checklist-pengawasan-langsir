@@ -1,30 +1,35 @@
+```html
 <!DOCTYPE html>
-
 <html lang="id">
 
 <head>
 
   <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
->
+  <title>
+    Checklist Pengawasan Kegiatan Langsir
+  </title>
 
-  <title>Checklist Pengawasan Kegiatan Langsir</title>
 
-<meta
-name="google-signin-client_id"
-content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
+  <!-- GOOGLE CLIENT ID -->
 
->
+  <meta
+    name="google-signin-client_id"
+    content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
+  >
+
 
   <style>
 
     * {
       box-sizing: border-box;
     }
+
 
     body {
       margin: 0;
@@ -33,11 +38,13 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       color: #222;
     }
 
+
     .container {
       max-width: 1100px;
       margin: 0 auto;
       padding: 20px;
     }
+
 
     /* =========================
        HEADER
@@ -48,18 +55,22 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       border-radius: 12px;
       padding: 30px 20px;
       text-align: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08);
     }
+
 
     .header h1 {
       margin: 0 0 10px;
       font-size: 28px;
     }
 
+
     .header p {
       margin: 0;
       color: #666666;
     }
+
 
     /* =========================
        CARD
@@ -70,8 +81,10 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       margin-top: 20px;
       padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08);
     }
+
 
     /* =========================
        GOOGLE LOGIN
@@ -83,6 +96,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       align-items: center;
     }
 
+
     /* =========================
        DASHBOARD
     ========================= */
@@ -91,16 +105,19 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       text-align: center;
     }
 
+
     .dashboard h1 {
       margin: 0 0 10px;
     }
+
 
     .dashboard p {
       color: #666666;
     }
 
+
     /* =========================
-       MENU UTAMA
+       MENU
     ========================= */
 
     #menuUtama {
@@ -110,6 +127,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       gap: 10px;
       margin-top: 25px;
     }
+
 
     #menuUtama button {
       padding: 10px 16px;
@@ -121,9 +139,11 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       font-size: 14px;
     }
 
+
     #menuUtama button:hover {
       background: #1565c0;
     }
+
 
     /* =========================
        FORM PEMERIKSAAN
@@ -135,10 +155,12 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       border-top: 1px solid #dddddd;
     }
 
+
     #formPemeriksaan h2 {
       margin: 0 0 10px;
       text-align: center;
     }
+
 
     #formPemeriksaan > p {
       margin-bottom: 25px;
@@ -146,24 +168,24 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       color: #666666;
     }
 
-    /* =========================
-       IDENTITAS PEMERIKSAAN
-    ========================= */
 
     #identitasPemeriksaan {
       max-width: 700px;
       margin: 0 auto;
     }
 
+
     .form-group {
       margin-bottom: 18px;
     }
+
 
     .form-group label {
       display: block;
       margin-bottom: 7px;
       font-weight: bold;
     }
+
 
     .form-group input,
     .form-group select {
@@ -175,46 +197,36 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       font-size: 14px;
     }
 
+
     .form-group input:focus,
     .form-group select:focus {
       outline: none;
       border-color: #1976d2;
     }
 
+
     /* =========================
-       TOMBOL SIMPAN
+       TOMBOL
     ========================= */
 
     .btn-simpan {
       width: 100%;
-      padding: 12px;
       margin-top: 10px;
+      padding: 12px;
       border: none;
       border-radius: 8px;
       background: #2e7d32;
-      color: #ffffff;
+      color: white;
       font-size: 15px;
       font-weight: bold;
       cursor: pointer;
     }
 
+
     .btn-simpan:hover {
       background: #1b5e20;
     }
 
-    /* =========================
-       STATUS
-    ========================= */
-
-    .status {
-      display: inline-block;
-      padding: 8px 14px;
-      border-radius: 20px;
-      background: #e8f5e9;
-      color: #2e7d32;
-      font-weight: bold;
-      margin-top: 10px;
-    }
 
     /* =========================
        RESPONSIVE
@@ -226,21 +238,26 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
         padding: 12px;
       }
 
+
       .header {
         padding: 25px 15px;
       }
+
 
       .header h1 {
         font-size: 22px;
       }
 
+
       .card {
         padding: 20px 15px;
       }
 
+
       #menuUtama {
         flex-direction: column;
       }
+
 
       #menuUtama button {
         width: 100%;
@@ -249,6 +266,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
     }
 
   </style>
+
 
   <!-- GOOGLE IDENTITY SERVICES -->
 
@@ -260,252 +278,383 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
 </head>
 
+
 <body>
+
 
   <div class="container">
 
-```
-<!-- =========================
-     HEADER
-========================= -->
-
-<div class="header">
-
-  <h1>
-    Checklist Pengawasan Kegiatan Langsir
-  </h1>
-
-  <p>
-    Sistem Informasi Pengawasan Kegiatan Langsir
-  </p>
-
-</div>
-
-
-<!-- =========================
-     CARD UTAMA
-========================= -->
-
-<div class="card">
-
-
-  <!-- GOOGLE LOGIN -->
-
-  <div id="googleLogin"></div>
-
-
-  <!-- INFORMASI USER -->
-
-  <div
-    id="userInfo"
-    style="display: none;">
-  </div>
-
-
-  <!-- =========================
-       APLIKASI
-  ========================= -->
-
-  <div
-    id="app"
-    style="display: none;">
-
 
     <!-- =========================
-         DASHBOARD
+         HEADER
     ========================= -->
 
-    <div class="dashboard">
+    <div class="header">
 
       <h1>
-        Dashboard
+        Checklist Pengawasan Kegiatan Langsir
       </h1>
 
       <p>
         Sistem Informasi Pengawasan Kegiatan Langsir
       </p>
 
-
-      <!-- MENU UTAMA -->
-
-      <div id="menuUtama">
-
-        <button
-          onclick="tampilkanDashboard()">
-          Dashboard
-        </button>
-
-        <button
-          onclick="tampilkanFormPemeriksaan()">
-          Form Pemeriksaan
-        </button>
-
-        <button
-          onclick="tampilkanRiwayatPemeriksaan()">
-          Riwayat Pemeriksaan
-        </button>
-
-        <button
-          onclick="tampilkanRekapPemeriksaan()">
-          Rekap Pemeriksaan
-        </button>
-
-        <button
-          onclick="tampilkanDataPegawai()">
-          Data Pegawai
-        </button>
-
-        <button
-          onclick="tampilkanDataStasiun()">
-          Data Stasiun
-        </button>
-
-        <button
-          onclick="tampilkanDataLokomotif()">
-          Data Lokomotif
-        </button>
-
-      </div>
-
     </div>
 
 
     <!-- =========================
-         FORM PEMERIKSAAN
+         CARD UTAMA
     ========================= -->
 
-    <div
-      id="formPemeriksaan"
-      style="display: none;">
+    <div class="card">
 
 
-      <h2>
-        Form Pemeriksaan
-      </h2>
+      <!-- GOOGLE LOGIN -->
 
-      <p>
-        Form pemeriksaan kegiatan langsir
-      </p>
+      <div id="googleLogin"></div>
 
 
-      <!-- IDENTITAS PEMERIKSAAN -->
+      <!-- USER INFO -->
 
-      <div id="identitasPemeriksaan">
-
-
-        <!-- TANGGAL -->
-
-        <div class="form-group">
-
-          <label
-            for="tanggalPemeriksaan">
-            Tanggal Pemeriksaan
-          </label>
-
-          <input
-            type="date"
-            id="tanggalPemeriksaan"
-          >
-
-        </div>
+      <div
+        id="userInfo"
+        style="display:none;">
+      </div>
 
 
-        <!-- STASIUN -->
+      <!-- =========================
+           APLIKASI
+      ========================= -->
 
-        <div class="form-group">
-
-          <label
-            for="stasiunPemeriksaan">
-            Stasiun
-          </label>
-
-          <select
-            id="stasiunPemeriksaan">
-
-            <option value="">
-              Pilih Stasiun
-            </option>
-
-          </select>
-
-        </div>
+      <div
+        id="app"
+        style="display:none;">
 
 
-        <!-- LOKOMOTIF -->
+        <!-- =========================
+             DASHBOARD
+        ========================= -->
 
-        <div class="form-group">
+        <div class="dashboard">
 
-          <label
-            for="lokomotifPemeriksaan">
-            Lokomotif
-          </label>
+          <h1>
+            Dashboard
+          </h1>
 
-          <select
-            id="lokomotifPemeriksaan">
-
-            <option value="">
-              Pilih Lokomotif
-            </option>
-
-          </select>
-
-        </div>
+          <p>
+            Sistem Informasi Pengawasan Kegiatan Langsir
+          </p>
 
 
-        <!-- MASINIS -->
+          <!-- MENU -->
 
-        <div class="form-group">
+          <div id="menuUtama">
 
-          <label
-            for="masinisPemeriksaan">
-            Masinis
-          </label>
+            <button
+              onclick="tampilkanDashboard()">
+              Dashboard
+            </button>
 
-          <select
-            id="masinisPemeriksaan">
 
-            <option value="">
-              Pilih Masinis
-            </option>
+            <button
+              onclick="tampilkanFormPemeriksaan()">
+              Form Pemeriksaan
+            </button>
 
-          </select>
+
+            <button
+              onclick="tampilkanRiwayatPemeriksaan()">
+              Riwayat Pemeriksaan
+            </button>
+
+
+            <button
+              onclick="tampilkanRekapPemeriksaan()">
+              Rekap Pemeriksaan
+            </button>
+
+
+            <button
+              onclick="tampilkanDataPegawai()">
+              Data Pegawai
+            </button>
+
+
+            <button
+              onclick="tampilkanDataStasiun()">
+              Data Stasiun
+            </button>
+
+
+            <button
+              onclick="tampilkanDataLokomotif()">
+              Data Lokomotif
+            </button>
+
+          </div>
 
         </div>
 
 
-        <!-- ASISTEN MASINIS -->
+        <!-- =========================
+             FORM PEMERIKSAAN
+        ========================= -->
 
-        <div class="form-group">
+        <div
+          id="formPemeriksaan"
+          style="display:none;">
 
-          <label
-            for="asistenMasinisPemeriksaan">
-            Asisten Masinis
-          </label>
 
-          <select
-            id="asistenMasinisPemeriksaan">
+          <h2>
+            Form Pemeriksaan
+          </h2>
 
-            <option value="">
-              Pilih Asisten Masinis
-            </option>
 
-          </select>
+          <p>
+            Form pemeriksaan kegiatan langsir
+          </p>
+
+
+          <!-- =========================
+               IDENTITAS PEMERIKSAAN
+          ========================= -->
+
+          <div id="identitasPemeriksaan">
+
+
+            <!-- TANGGAL -->
+
+            <div class="form-group">
+
+              <label
+                for="tanggalPemeriksaan">
+
+                Tanggal Pemeriksaan
+
+              </label>
+
+
+              <input
+                type="date"
+                id="tanggalPemeriksaan"
+              >
+
+            </div>
+
+
+            <!-- STASIUN -->
+
+            <div class="form-group">
+
+              <label
+                for="stasiunPemeriksaan">
+
+                Stasiun
+
+              </label>
+
+
+              <select
+                id="stasiunPemeriksaan">
+
+                <option value="">
+                  Pilih Stasiun
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- LOKOMOTIF -->
+
+            <div class="form-group">
+
+              <label
+                for="lokomotifPemeriksaan">
+
+                Lokomotif
+
+              </label>
+
+
+              <select
+                id="lokomotifPemeriksaan">
+
+                <option value="">
+                  Pilih Lokomotif
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- MASINIS -->
+
+            <div class="form-group">
+
+              <label
+                for="masinisPemeriksaan">
+
+                Masinis
+
+              </label>
+
+
+              <select
+                id="masinisPemeriksaan">
+
+                <option value="">
+                  Pilih Masinis
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- ASISTEN MASINIS -->
+
+            <div class="form-group">
+
+              <label
+                for="asistenMasinisPemeriksaan">
+
+                Asisten Masinis
+
+              </label>
+
+
+              <select
+                id="asistenMasinisPemeriksaan">
+
+                <option value="">
+                  Pilih Asisten Masinis
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- PLR 1 -->
+
+            <div class="form-group">
+
+              <label
+                for="plr1Pemeriksaan">
+
+                PLR 1
+
+              </label>
+
+
+              <select
+                id="plr1Pemeriksaan">
+
+                <option value="">
+                  Pilih PLR 1
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- PLR 2 -->
+
+            <div class="form-group">
+
+              <label
+                for="plr2Pemeriksaan">
+
+                PLR 2
+
+              </label>
+
+
+              <select
+                id="plr2Pemeriksaan">
+
+                <option value="">
+                  Pilih PLR 2
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- PLR DIPO -->
+
+            <div class="form-group">
+
+              <label
+                for="plrDipoPemeriksaan">
+
+                PLR DIPO
+
+              </label>
+
+
+              <select
+                id="plrDipoPemeriksaan">
+
+                <option value="">
+                  Pilih PLR DIPO
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- PETUGAS SCHOWING -->
+
+            <div class="form-group">
+
+              <label
+                for="petugasSchowingPemeriksaan">
+
+                Petugas Schowing
+
+              </label>
+
+
+              <select
+                id="petugasSchowingPemeriksaan">
+
+                <option value="">
+                  Pilih Petugas Schowing
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <!-- TOMBOL SIMPAN -->
+
+            <button
+              class="btn-simpan"
+              onclick="simpanPemeriksaan()">
+
+              Simpan Pemeriksaan
+
+            </button>
+
+
+          </div>
 
         </div>
-
 
       </div>
 
     </div>
 
-
   </div>
 
-
-</div>
-```
-
-  </div>
 
   <!-- =========================
        JAVASCRIPT
@@ -550,16 +699,19 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
         ),
 
         {
+
           theme: "outline",
+
           size: "large",
+
           text: "signin_with",
+
           shape: "rectangular"
+
         }
 
       );
 
-
-      /* CEK LOGIN SEBELUMNYA */
 
       if (cekStatusLogin()) {
 
@@ -588,8 +740,6 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       try {
 
 
-        /* Decode JWT Google */
-
         const payload =
           JSON.parse(
             atob(
@@ -598,8 +748,6 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
             )
           );
 
-
-        /* Email Google */
 
         const email =
           payload.email;
@@ -610,8 +758,6 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           email
         );
 
-
-        /* Cek USER */
 
         fetch(
           API_URL +
@@ -636,19 +782,11 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
             );
 
 
-            console.log(
-              "Data USER:",
-              result.data
-            );
-
-
             if (
               result.success &&
               result.data
             ) {
 
-
-              /* Simpan session */
 
               sessionStorage.setItem(
                 "isLoggedIn",
@@ -674,9 +812,8 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
               );
 
 
-              /* Tampilkan aplikasi */
-
               tampilkanAplikasi();
+
 
             }
 
@@ -690,12 +827,12 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
             }
 
           }
+
         )
 
 
         .catch(
           error => {
-
 
             console.error(
               "Gagal menghubungi API USER:",
@@ -721,7 +858,6 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           error
         );
 
-
       }
 
     }
@@ -743,23 +879,20 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
         "app"
       ).style.display = "block";
 
-
     }
 
 
     /* ==========================================
-       CEK STATUS LOGIN
+       CEK LOGIN
     ========================================== */
 
     function cekStatusLogin() {
-
 
       return (
         sessionStorage.getItem(
           "isLoggedIn"
         ) === "true"
       );
-
 
     }
 
@@ -774,7 +907,6 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       document.getElementById(
         "formPemeriksaan"
       ).style.display = "none";
-
 
     }
 
@@ -791,20 +923,17 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       ).style.display = "block";
 
 
-      /* Load data master */
-
       loadStasiun();
 
       loadLokomotif();
 
       loadPegawai();
 
-
     }
 
 
     /* ==========================================
-       LOAD MASTER STASIUN
+       LOAD STASIUN
     ========================================== */
 
     function loadStasiun() {
@@ -848,8 +977,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
           if (
             result.success &&
-            Array.isArray(result.data) &&
-            result.data.length > 0
+            Array.isArray(result.data)
           ) {
 
 
@@ -875,28 +1003,10 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
                   option
                 );
 
-
               }
             );
 
-
-            console.log(
-              "Jumlah stasiun:",
-              result.data.length
-            );
-
-
           }
-
-          else {
-
-
-            select.innerHTML =
-              '<option value="">Data stasiun belum tersedia</option>';
-
-
-          }
-
 
         }
       )
@@ -915,16 +1025,14 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           select.innerHTML =
             '<option value="">Gagal memuat stasiun</option>';
 
-
         }
       );
-
 
     }
 
 
     /* ==========================================
-       LOAD MASTER LOKOMOTIF
+       LOAD LOKOMOTIF
     ========================================== */
 
     function loadLokomotif() {
@@ -968,8 +1076,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
           if (
             result.success &&
-            Array.isArray(result.data) &&
-            result.data.length > 0
+            Array.isArray(result.data)
           ) {
 
 
@@ -995,28 +1102,10 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
                   option
                 );
 
-
               }
             );
 
-
-            console.log(
-              "Jumlah lokomotif:",
-              result.data.length
-            );
-
-
           }
-
-          else {
-
-
-            select.innerHTML =
-              '<option value="">Data lokomotif belum tersedia</option>';
-
-
-          }
-
 
         }
       )
@@ -1035,10 +1124,8 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           select.innerHTML =
             '<option value="">Gagal memuat lokomotif</option>';
 
-
         }
       );
-
 
     }
 
@@ -1050,39 +1137,73 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
     function loadPegawai() {
 
 
-      const masinisSelect =
+      const masinis =
         document.getElementById(
           "masinisPemeriksaan"
         );
 
 
-      const asistenSelect =
+      const asisten =
         document.getElementById(
           "asistenMasinisPemeriksaan"
         );
 
 
-      if (
-        !masinisSelect ||
-        !asistenSelect
-      ) {
-
-        console.error(
-          "Dropdown pegawai tidak ditemukan."
+      const plr1 =
+        document.getElementById(
+          "plr1Pemeriksaan"
         );
 
-        return;
 
-      }
-
-
-      masinisSelect.innerHTML =
-        '<option value="">Memuat data pegawai...</option>';
+      const plr2 =
+        document.getElementById(
+          "plr2Pemeriksaan"
+        );
 
 
-      asistenSelect.innerHTML =
-        '<option value="">Memuat data pegawai...</option>';
+      const plrDipo =
+        document.getElementById(
+          "plrDipoPemeriksaan"
+        );
 
+
+      const schowing =
+        document.getElementById(
+          "petugasSchowingPemeriksaan"
+        );
+
+
+      /* =========================
+         LOADING
+      ========================= */
+
+      masinis.innerHTML =
+        '<option value="">Memuat...</option>';
+
+
+      asisten.innerHTML =
+        '<option value="">Memuat...</option>';
+
+
+      plr1.innerHTML =
+        '<option value="">Memuat...</option>';
+
+
+      plr2.innerHTML =
+        '<option value="">Memuat...</option>';
+
+
+      plrDipo.innerHTML =
+        '<option value="">Memuat...</option>';
+
+
+      schowing.innerHTML =
+        '<option value="">Memuat...</option>';
+
+
+      /* =========================
+         AMBIL DATA API
+      ========================= */
 
       fetch(
         API_URL +
@@ -1106,97 +1227,218 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           );
 
 
-          masinisSelect.innerHTML =
+          /* RESET */
+
+          masinis.innerHTML =
             '<option value="">Pilih Masinis</option>';
 
 
-          asistenSelect.innerHTML =
+          asisten.innerHTML =
             '<option value="">Pilih Asisten Masinis</option>';
 
 
+          plr1.innerHTML =
+            '<option value="">Pilih PLR 1</option>';
+
+
+          plr2.innerHTML =
+            '<option value="">Pilih PLR 2</option>';
+
+
+          plrDipo.innerHTML =
+            '<option value="">Pilih PLR DIPO</option>';
+
+
+          schowing.innerHTML =
+            '<option value="">Pilih Petugas Schowing</option>';
+
+
           if (
-            result.success &&
-            Array.isArray(result.data) &&
-            result.data.length > 0
+            !result.success ||
+            !Array.isArray(result.data)
           ) {
 
 
-            result.data.forEach(
-              item => {
+            console.warn(
+              "Data MASTER_PEGAWAI tidak tersedia."
+            );
 
 
-                /* MASINIS */
+            return;
 
-                const optionMasinis =
-                  document.createElement(
-                    "option"
-                  );
+          }
 
 
-                optionMasinis.value =
-                  item.ID || "";
+          /* =========================
+             LOOP PEGAWAI
+          ========================= */
+
+          result.data.forEach(
+            item => {
 
 
-                optionMasinis.textContent =
-                  item.NAMA || "";
+              const id =
+                item.ID || "";
 
 
-                masinisSelect.appendChild(
-                  optionMasinis
-                );
+              const nama =
+                item.NAMA || "";
 
 
-                /* ASISTEN MASINIS */
-
-                const optionAsisten =
-                  document.createElement(
-                    "option"
-                  );
-
-
-                optionAsisten.value =
-                  item.ID || "";
+              const jabatan =
+                String(
+                  item.JABATAN || ""
+                )
+                .trim()
+                .toUpperCase();
 
 
-                optionAsisten.textContent =
-                  item.NAMA || "";
+              const status =
+                String(
+                  item.STATUS || ""
+                )
+                .trim()
+                .toUpperCase();
 
 
-                asistenSelect.appendChild(
-                  optionAsisten
-                );
+              /* HANYA AKTIF */
 
+              if (
+                status !== "AKTIF"
+              ) {
+
+                return;
 
               }
-            );
 
 
-            console.log(
-              "Jumlah pegawai:",
-              result.data.length
-            );
+              /* =========================
+                 BUAT OPTION
+              ========================= */
+
+              function buatOption() {
 
 
-          }
-
-          else {
-
-
-            masinisSelect.innerHTML =
-              '<option value="">Data pegawai belum tersedia</option>';
+                const option =
+                  document.createElement(
+                    "option"
+                  );
 
 
-            asistenSelect.innerHTML =
-              '<option value="">Data pegawai belum tersedia</option>';
+                option.value = id;
+
+                option.textContent = nama;
 
 
-            console.warn(
-              "MASTER_PEGAWAI belum memiliki data."
-            );
+                return option;
+
+              }
 
 
-          }
+              /* =========================
+                 MASINIS
+              ========================= */
 
+              if (
+                jabatan === "MASINIS"
+              ) {
+
+
+                masinis.appendChild(
+                  buatOption()
+                );
+
+              }
+
+
+              /* =========================
+                 ASISTEN MASINIS
+              ========================= */
+
+              if (
+                jabatan ===
+                "ASISTEN MASINIS"
+              ) {
+
+
+                asisten.appendChild(
+                  buatOption()
+                );
+
+              }
+
+
+              /* =========================
+                 PLR 1
+              ========================= */
+
+              if (
+                jabatan === "PLR 1" ||
+                jabatan === "PLR1"
+              ) {
+
+
+                plr1.appendChild(
+                  buatOption()
+                );
+
+              }
+
+
+              /* =========================
+                 PLR 2
+              ========================= */
+
+              if (
+                jabatan === "PLR 2" ||
+                jabatan === "PLR2"
+              ) {
+
+
+                plr2.appendChild(
+                  buatOption()
+                );
+
+              }
+
+
+              /* =========================
+                 PLR DIPO
+              ========================= */
+
+              if (
+                jabatan === "PLR DIPO" ||
+                jabatan === "PLR_DIPO" ||
+                jabatan === "PLRDIPO"
+              ) {
+
+
+                plrDipo.appendChild(
+                  buatOption()
+                );
+
+              }
+
+
+              /* =========================
+                 PETUGAS SCHOWING
+              ========================= */
+
+              if (
+                jabatan === "PETUGAS SCHOWING" ||
+                jabatan === "SCHOWING" ||
+                jabatan === "PETUGAS SHOWING"
+              ) {
+
+
+                schowing.appendChild(
+                  buatOption()
+                );
+
+              }
+
+            }
+          );
 
         }
       )
@@ -1212,23 +1454,51 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           );
 
 
-          masinisSelect.innerHTML =
-            '<option value="">Gagal memuat pegawai</option>';
+          masinis.innerHTML =
+            '<option value="">Gagal memuat data</option>';
 
 
-          asistenSelect.innerHTML =
-            '<option value="">Gagal memuat pegawai</option>';
+          asisten.innerHTML =
+            '<option value="">Gagal memuat data</option>';
 
+
+          plr1.innerHTML =
+            '<option value="">Gagal memuat data</option>';
+
+
+          plr2.innerHTML =
+            '<option value="">Gagal memuat data</option>';
+
+
+          plrDipo.innerHTML =
+            '<option value="">Gagal memuat data</option>';
+
+
+          schowing.innerHTML =
+            '<option value="">Gagal memuat data</option>';
 
         }
       );
-
 
     }
 
 
     /* ==========================================
-       MENU LAINNYA
+       SIMPAN PEMERIKSAAN
+    ========================================== */
+
+    function simpanPemeriksaan() {
+
+
+      alert(
+        "Tahap penyimpanan pemeriksaan akan kita buat setelah seluruh identitas pemeriksaan selesai."
+      );
+
+    }
+
+
+    /* ==========================================
+       MENU LAIN
     ========================================== */
 
     function tampilkanRiwayatPemeriksaan() {
@@ -1237,7 +1507,6 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       alert(
         "Riwayat Pemeriksaan akan dibuat pada tahap berikutnya."
       );
-
 
     }
 
@@ -1249,7 +1518,6 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
         "Rekap Pemeriksaan akan dibuat pada tahap berikutnya."
       );
 
-
     }
 
 
@@ -1257,9 +1525,8 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
 
       alert(
-        "Data Pegawai akan dibuat pada tahap berikutnya."
+        "Data Pegawai dikelola melalui MASTER_PEGAWAI."
       );
-
 
     }
 
@@ -1268,9 +1535,8 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
 
       alert(
-        "Data Stasiun akan dibuat pada tahap berikutnya."
+        "Data Stasiun dikelola melalui MASTER_STASIUN."
       );
-
 
     }
 
@@ -1279,9 +1545,8 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
 
       alert(
-        "Data Lokomotif akan dibuat pada tahap berikutnya."
+        "Data Lokomotif dikelola melalui MASTER_LOKOMOTIF."
       );
-
 
     }
 
@@ -1290,3 +1555,4 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 </body>
 
 </html>
+```
