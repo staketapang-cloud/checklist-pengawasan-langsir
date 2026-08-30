@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -6,10 +7,11 @@
 
   <title>Checklist Pengawasan Kegiatan Langsir</title>
 
-  <meta
-    name="google-signin-client_id"
-    content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
-  >
+<meta
+name="google-signin-client_id"
+content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
+
+>
 
   <style>
     * {
@@ -29,8 +31,12 @@
       padding: 20px;
     }
 
+    /* =========================
+       HEADER
+    ========================= */
+
     .header {
-      background: white;
+      background: #ffffff;
       border-radius: 12px;
       padding: 30px 20px;
       text-align: center;
@@ -44,29 +50,50 @@
 
     .header p {
       margin: 0;
-      color: #666;
+      color: #666666;
     }
 
+    /* =========================
+       CARD
+    ========================= */
+
     .card {
-      background: white;
+      background: #ffffff;
       margin-top: 20px;
       padding: 25px;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    /* =========================
+       GOOGLE LOGIN
+    ========================= */
+
+    #googleLogin {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    .dashboard {
       text-align: center;
     }
 
-    .dashboard {
-      margin-top: 10px;
-    }
-
     .dashboard h1 {
-      margin-bottom: 10px;
+      margin: 0 0 10px;
     }
 
     .dashboard p {
-      color: #666;
+      color: #666666;
     }
+
+    /* =========================
+       MENU UTAMA
+    ========================= */
 
     #menuUtama {
       display: flex;
@@ -82,49 +109,73 @@
       border-radius: 8px;
       cursor: pointer;
       background: #1976d2;
-      color: white;
+      color: #ffffff;
       font-size: 14px;
     }
 
     #menuUtama button:hover {
-      opacity: 0.9;
+      background: #1565c0;
     }
 
+    /* =========================
+       FORM PEMERIKSAAN
+    ========================= */
+
     #formPemeriksaan {
-      margin-top: 25px;
-      text-align: left;
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px solid #dddddd;
     }
 
     #formPemeriksaan h2 {
+      margin: 0 0 10px;
       text-align: center;
-      margin-bottom: 10px;
     }
 
     #formPemeriksaan > p {
-      text-align: center;
-      color: #666;
       margin-bottom: 25px;
+      text-align: center;
+      color: #666666;
     }
+
+    /* =========================
+       IDENTITAS PEMERIKSAAN
+    ========================= */
 
     #identitasPemeriksaan {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      max-width: 700px;
+      margin: 0 auto;
     }
 
-    #identitasPemeriksaan label {
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 7px;
       font-weight: bold;
-      margin-top: 8px;
     }
 
-    #identitasPemeriksaan input,
-    #identitasPemeriksaan select {
+    .form-group input,
+    .form-group select {
       width: 100%;
-      padding: 11px;
-      border: 1px solid #ccc;
+      padding: 11px 12px;
+      border: 1px solid #cccccc;
       border-radius: 8px;
+      background: #ffffff;
       font-size: 14px;
     }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #1976d2;
+    }
+
+    /* =========================
+       STATUS
+    ========================= */
 
     .status {
       display: inline-block;
@@ -136,9 +187,18 @@
       margin-top: 10px;
     }
 
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
     @media (max-width: 600px) {
+
       .container {
         padding: 12px;
+      }
+
+      .header {
+        padding: 25px 15px;
       }
 
       .header h1 {
@@ -156,120 +216,205 @@
       #menuUtama button {
         width: 100%;
       }
+
     }
   </style>
 
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- GOOGLE IDENTITY SERVICES -->
+
+  <script
+    src="https://accounts.google.com/gsi/client"
+    async
+    defer>
+  </script>
+
 </head>
 
 <body>
 
   <div class="container">
 
-    <div class="header">
-      <h1>Checklist Pengawasan Kegiatan Langsir</h1>
-      <p>Sistem Informasi Pengawasan Kegiatan Langsir</p>
+```
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+  <h1>
+    Checklist Pengawasan Kegiatan Langsir
+  </h1>
+
+  <p>
+    Sistem Informasi Pengawasan Kegiatan Langsir
+  </p>
+
+</div>
+
+
+<!-- =========================
+     CARD UTAMA
+========================= -->
+
+<div class="card">
+
+  <!-- GOOGLE LOGIN -->
+
+  <div id="googleLogin"></div>
+
+
+  <!-- INFORMASI USER -->
+
+  <div
+    id="userInfo"
+    style="display: none;">
+  </div>
+
+
+  <!-- =========================
+       APLIKASI
+  ========================= -->
+
+  <div
+    id="app"
+    style="display: none;">
+
+    <!-- =========================
+         DASHBOARD
+    ========================= -->
+
+    <div class="dashboard">
+
+      <h1>
+        Dashboard
+      </h1>
+
+      <p>
+        Sistem Informasi Pengawasan Kegiatan Langsir
+      </p>
+
+
+      <!-- =========================
+           MENU UTAMA
+      ========================= -->
+
+      <div id="menuUtama">
+
+        <button
+          onclick="tampilkanDashboard()">
+          Dashboard
+        </button>
+
+        <button
+          onclick="tampilkanFormPemeriksaan()">
+          Form Pemeriksaan
+        </button>
+
+        <button
+          onclick="tampilkanRiwayatPemeriksaan()">
+          Riwayat Pemeriksaan
+        </button>
+
+        <button
+          onclick="tampilkanRekapPemeriksaan()">
+          Rekap Pemeriksaan
+        </button>
+
+        <button
+          onclick="tampilkanDataPegawai()">
+          Data Pegawai
+        </button>
+
+        <button
+          onclick="tampilkanDataStasiun()">
+          Data Stasiun
+        </button>
+
+        <button
+          onclick="tampilkanDataLokomotif()">
+          Data Lokomotif
+        </button>
+
+      </div>
+
     </div>
 
-    <div class="card">
 
-      <div id="googleLogin"></div>
+    <!-- =========================
+         FORM PEMERIKSAAN
+    ========================= -->
 
-      <div id="userInfo" style="display:none;"></div>
+    <div
+      id="formPemeriksaan"
+      style="display: none;">
 
-      <div id="app" style="display:none;">
+      <h2>
+        Form Pemeriksaan
+      </h2>
 
-        <div class="dashboard">
+      <p>
+        Form pemeriksaan kegiatan langsir
+      </p>
 
-          <h1>Dashboard</h1>
 
-          <p>
-            Sistem Informasi Pengawasan Kegiatan Langsir
-          </p>
+      <!-- IDENTITAS PEMERIKSAAN -->
 
-          <div id="menuUtama">
+      <div id="identitasPemeriksaan">
 
-            <button onclick="tampilkanDashboard()">
-              Dashboard
-            </button>
+        <!-- TANGGAL -->
 
-            <button onclick="tampilkanFormPemeriksaan()">
-              Form Pemeriksaan
-            </button>
+        <div class="form-group">
 
-            <button onclick="tampilkanRiwayatPemeriksaan()">
-              Riwayat Pemeriksaan
-            </button>
+          <label
+            for="tanggalPemeriksaan">
+            Tanggal Pemeriksaan
+          </label>
 
-            <button onclick="tampilkanRekapPemeriksaan()">
-              Rekap Pemeriksaan
-            </button>
-
-            <button onclick="tampilkanDataPegawai()">
-              Data Pegawai
-            </button>
-
-            <button onclick="tampilkanDataStasiun()">
-              Data Stasiun
-            </button>
-
-            <button onclick="tampilkanDataLokomotif()">
-              Data Lokomotif
-            </button>
-
-          </div>
+          <input
+            type="date"
+            id="tanggalPemeriksaan">
 
         </div>
 
 
-        <!-- FORM PEMERIKSAAN -->
+        <!-- STASIUN -->
 
-        <div id="formPemeriksaan" style="display:none;">
+        <div class="form-group">
 
-          <h2>Form Pemeriksaan</h2>
+          <label
+            for="stasiunPemeriksaan">
+            Stasiun
+          </label>
 
-          <p>
-            Form pemeriksaan kegiatan langsir
-          </p>
+          <select
+            id="stasiunPemeriksaan">
 
-          <div id="identitasPemeriksaan">
+            <option value="">
+              Pilih Stasiun
+            </option>
 
-            <label for="tanggalPemeriksaan">
-              Tanggal Pemeriksaan
-            </label>
+          </select>
 
-            <input
-              type="date"
-              id="tanggalPemeriksaan"
-            >
-
-
-            <label for="stasiunPemeriksaan">
-              Stasiun
-            </label>
-
-            <select id="stasiunPemeriksaan">
-
-              <option value="">
-                Pilih Stasiun
-              </option>
-
-            </select>
+        </div>
 
 
-            <label for="lokomotifPemeriksaan">
-              Lokomotif
-            </label>
+        <!-- LOKOMOTIF -->
 
-            <select id="lokomotifPemeriksaan">
+        <div class="form-group">
 
-              <option value="">
-                Pilih Lokomotif
-              </option>
+          <label
+            for="lokomotifPemeriksaan">
+            Lokomotif
+          </label>
 
-            </select>
+          <select
+            id="lokomotifPemeriksaan">
 
-          </div>
+            <option value="">
+              Pilih Lokomotif
+            </option>
+
+          </select>
 
         </div>
 
@@ -279,33 +424,78 @@
 
   </div>
 
+</div>
+```
+
+  </div>
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
 
   <script>
+
+    /* ==========================================
+       KONFIGURASI
+    ========================================== */
+
+    const CLIENT_ID =
+      "566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com";
+
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+
+
+    /* ==========================================
+       GOOGLE LOGIN
+    ========================================== */
 
     window.onload = function () {
 
       google.accounts.id.initialize({
-        client_id:
-          "566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com",
 
-        callback: handleCredentialResponse
+        client_id: CLIENT_ID,
+
+        callback:
+          handleCredentialResponse
+
       });
 
 
       google.accounts.id.renderButton(
-        document.getElementById("googleLogin"),
+
+        document.getElementById(
+          "googleLogin"
+        ),
+
         {
           theme: "outline",
           size: "large",
           text: "signin_with",
           shape: "rectangular"
         }
+
       );
+
+
+      /* CEK LOGIN SEBELUMNYA */
+
+      if (cekStatusLogin()) {
+
+        tampilkanAplikasi();
+
+      }
 
     };
 
 
-    function handleCredentialResponse(response) {
+    /* ==========================================
+       HANDLE GOOGLE LOGIN
+    ========================================== */
+
+    function handleCredentialResponse(
+      response
+    ) {
 
       console.log(
         "Google Login berhasil:",
@@ -313,127 +503,168 @@
       );
 
 
-      const payload =
-        JSON.parse(
-          atob(
-            response.credential.split(".")[1]
-          )
-        );
+      try {
+
+        /* Decode JWT Google */
+
+        const payload =
+          JSON.parse(
+            atob(
+              response.credential
+                .split(".")[1]
+            )
+          );
 
 
-      const email = payload.email;
+        /* Ambil email */
 
+        const email =
+          payload.email;
 
-      console.log(
-        "Email Google:",
-        email
-      );
-
-
-      const API_URL =
-        "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
-
-
-      fetch(
-        API_URL +
-        "?action=user&email=" +
-        encodeURIComponent(email)
-      )
-
-      .then(response => response.json())
-
-      .then(result => {
 
         console.log(
-          "Hasil pengecekan USER:",
-          result
-        );
-
-        console.log(
-          "Data USER:",
-          result.data
+          "Email Google:",
+          email
         );
 
 
-        if (result.success && result.data) {
+        /* Cek USER melalui Apps Script */
 
-          sessionStorage.setItem(
-            "isLoggedIn",
-            "true"
-          );
+        fetch(
+          API_URL +
+          "?action=user&email=" +
+          encodeURIComponent(email)
+        )
 
-          sessionStorage.setItem(
-            "userEmail",
-            result.data.EMAIL
-          );
+        .then(
+          response =>
+            response.json()
+        )
 
-          sessionStorage.setItem(
-            "userNama",
-            result.data.NAMA
-          );
+        .then(
+          result => {
 
-          sessionStorage.setItem(
-            "userRole",
-            result.data.ROLE
-          );
+            console.log(
+              "Hasil pengecekan USER:",
+              result
+            );
 
-
-          document.getElementById(
-            "googleLogin"
-          ).style.display = "none";
+            console.log(
+              "Data USER:",
+              result.data
+            );
 
 
-          document.getElementById(
-            "app"
-          ).style.display = "block";
+            if (
+              result.success &&
+              result.data
+            ) {
 
-        }
+              /* Simpan session */
 
-      })
+              sessionStorage.setItem(
+                "isLoggedIn",
+                "true"
+              );
 
-      .catch(error => {
+              sessionStorage.setItem(
+                "userEmail",
+                result.data.EMAIL
+              );
+
+              sessionStorage.setItem(
+                "userNama",
+                result.data.NAMA
+              );
+
+              sessionStorage.setItem(
+                "userRole",
+                result.data.ROLE
+              );
+
+
+              /* Tampilkan aplikasi */
+
+              tampilkanAplikasi();
+
+            }
+
+            else {
+
+              alert(
+                "Email Google belum terdaftar pada USER."
+              );
+
+            }
+
+          }
+        )
+
+        .catch(
+          error => {
+
+            console.error(
+              "Gagal menghubungi API USER:",
+              error
+            );
+
+            alert(
+              "Gagal menghubungi server."
+            );
+
+          }
+        );
+
+      }
+
+      catch (error) {
 
         console.error(
-          "Gagal menghubungi API USER:",
+          "Gagal membaca credential Google:",
           error
         );
 
-      });
-
-    }
-
-
-    function cekStatusLogin() {
-
-      const isLoggedIn =
-        sessionStorage.getItem(
-          "isLoggedIn"
-        );
-
-
-      if (isLoggedIn === "true") {
-        return true;
       }
 
-
-      return false;
-
     }
 
 
-    if (cekStatusLogin()) {
+    /* ==========================================
+       TAMPILKAN APLIKASI
+    ========================================== */
 
-      document.getElementById(
-        "app"
-      ).style.display = "block";
-
+    function tampilkanAplikasi() {
 
       document.getElementById(
         "googleLogin"
       ).style.display = "none";
 
+
+      document.getElementById(
+        "app"
+      ).style.display = "block";
+
     }
 
+
+    /* ==========================================
+       CEK STATUS LOGIN
+    ========================================== */
+
+    function cekStatusLogin() {
+
+      return (
+        sessionStorage.getItem(
+          "isLoggedIn"
+        ) === "true"
+      );
+
+    }
+
+
+    /* ==========================================
+       DASHBOARD
+    ========================================== */
 
     function tampilkanDashboard() {
 
@@ -444,17 +675,340 @@
     }
 
 
-function tampilkanFormPemeriksaan() {
+    /* ==========================================
+       FORM PEMERIKSAAN
+    ========================================== */
 
-  document.getElementById(
-    "formPemeriksaan"
-  ).style.display = "block";
+    function tampilkanFormPemeriksaan() {
 
-  loadStasiun();
-  loadLokomotif();
+      document.getElementById(
+        "formPemeriksaan"
+      ).style.display = "block";
 
-}
 
+      /* Load data master */
+
+      loadStasiun();
+
+      loadLokomotif();
+
+    }
+
+
+    /* ==========================================
+       LOAD MASTER STASIUN
+    ========================================== */
+
+    function loadStasiun() {
+
+      const select =
+        document.getElementById(
+          "stasiunPemeriksaan"
+        );
+
+
+      /* Tampilkan status loading */
+
+      select.innerHTML = "";
+
+      const loadingOption =
+        document.createElement(
+          "option"
+        );
+
+      loadingOption.value = "";
+
+      loadingOption.textContent =
+        "Memuat data stasiun...";
+
+      select.appendChild(
+        loadingOption
+      );
+
+
+      fetch(
+        API_URL +
+        "?action=master_stasiun"
+      )
+
+      .then(
+        response =>
+          response.json()
+      )
+
+      .then(
+        result => {
+
+          console.log(
+            "Data MASTER_STASIUN:",
+            result
+          );
+
+
+          /* Reset dropdown */
+
+          select.innerHTML = "";
+
+
+          /* Option awal */
+
+          const defaultOption =
+            document.createElement(
+              "option"
+            );
+
+          defaultOption.value = "";
+
+          defaultOption.textContent =
+            "Pilih Stasiun";
+
+          select.appendChild(
+            defaultOption
+          );
+
+
+          /* Periksa data */
+
+          if (
+            result.success &&
+            Array.isArray(result.data) &&
+            result.data.length > 0
+          ) {
+
+            result.data.forEach(
+              item => {
+
+                const option =
+                  document.createElement(
+                    "option"
+                  );
+
+
+                option.value =
+                  item.ID || "";
+
+
+                option.textContent =
+                  item.STASIUN || "";
+
+
+                select.appendChild(
+                  option
+                );
+
+              }
+            );
+
+
+            console.log(
+              "Jumlah stasiun:",
+              result.data.length
+            );
+
+          }
+
+          else {
+
+            console.warn(
+              "MASTER_STASIUN tidak memiliki data."
+            );
+
+          }
+
+        }
+      )
+
+      .catch(
+        error => {
+
+          console.error(
+            "Gagal mengambil data stasiun:",
+            error
+          );
+
+
+          select.innerHTML = "";
+
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value = "";
+
+          option.textContent =
+            "Gagal memuat stasiun";
+
+          select.appendChild(
+            option
+          );
+
+        }
+      );
+
+    }
+
+
+    /* ==========================================
+       LOAD MASTER LOKOMOTIF
+    ========================================== */
+
+    function loadLokomotif() {
+
+      const select =
+        document.getElementById(
+          "lokomotifPemeriksaan"
+        );
+
+
+      /* Tampilkan status loading */
+
+      select.innerHTML = "";
+
+
+      const loadingOption =
+        document.createElement(
+          "option"
+        );
+
+      loadingOption.value = "";
+
+      loadingOption.textContent =
+        "Memuat data lokomotif...";
+
+      select.appendChild(
+        loadingOption
+      );
+
+
+      fetch(
+        API_URL +
+        "?action=master_lokomotif"
+      )
+
+      .then(
+        response =>
+          response.json()
+      )
+
+      .then(
+        result => {
+
+          console.log(
+            "Data MASTER_LOKOMOTIF:",
+            result
+          );
+
+
+          /* Reset dropdown */
+
+          select.innerHTML = "";
+
+
+          /* Option awal */
+
+          const defaultOption =
+            document.createElement(
+              "option"
+            );
+
+          defaultOption.value = "";
+
+          defaultOption.textContent =
+            "Pilih Lokomotif";
+
+          select.appendChild(
+            defaultOption
+          );
+
+
+          /* Periksa data */
+
+          if (
+            result.success &&
+            Array.isArray(result.data) &&
+            result.data.length > 0
+          ) {
+
+            result.data.forEach(
+              item => {
+
+                const option =
+                  document.createElement(
+                    "option"
+                  );
+
+
+                option.value =
+                  item.ID || "";
+
+
+                option.textContent =
+                  item.NOMOR_LOK || "";
+
+
+                select.appendChild(
+                  option
+                );
+
+              }
+            );
+
+
+            console.log(
+              "Jumlah lokomotif:",
+              result.data.length
+            );
+
+          }
+
+          else {
+
+            console.warn(
+              "MASTER_LOKOMOTIF tidak memiliki data."
+            );
+
+          }
+
+        }
+      )
+
+      .catch(
+        error => {
+
+          console.error(
+            "Gagal mengambil data lokomotif:",
+            error
+          );
+
+
+          select.innerHTML = "";
+
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value = "";
+
+          option.textContent =
+            "Gagal memuat lokomotif";
+
+          select.appendChild(
+            option
+          );
+
+        }
+      );
+
+    }
+
+
+    /* ==========================================
+       MENU LAINNYA
+    ========================================== */
 
     function tampilkanRiwayatPemeriksaan() {
 
@@ -477,7 +1031,7 @@ function tampilkanFormPemeriksaan() {
     function tampilkanDataPegawai() {
 
       alert(
-        "Rekap Pegawai akan dibuat pada tahap berikutnya."
+        "Data Pegawai akan dibuat pada tahap berikutnya."
       );
 
     }
@@ -486,7 +1040,7 @@ function tampilkanFormPemeriksaan() {
     function tampilkanDataStasiun() {
 
       alert(
-        "Rekap Stasiun akan dibuat pada tahap berikutnya."
+        "Data Stasiun akan dibuat pada tahap berikutnya."
       );
 
     }
@@ -495,67 +1049,11 @@ function tampilkanFormPemeriksaan() {
     function tampilkanDataLokomotif() {
 
       alert(
-        "Rekap Lokomotif akan dibuat pada tahap berikutnya."
+        "Data Lokomotif akan dibuat pada tahap berikutnya."
       );
 
     }
-function loadStasiun() {
-  const API_URL =
-    "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
 
-  fetch(API_URL + "?action=master_stasiun")
-    .then(response => response.json())
-    .then(result => {
-      console.log("Data MASTER_STASIUN:", result);
-
-      if (result.success && result.data) {
-        const select = document.getElementById("stasiunPemeriksaan");
-
-        result.data.forEach(item => {
-          const option = document.createElement("option");
-
-          option.value = item.ID;
-          option.textContent = item.STASIUN;
-
-          select.appendChild(option);
-        });
-      }
-    })
-    .catch(error => {
-      console.error("Gagal mengambil data stasiun:", error);
-    });
-}
-function loadLokomotif() {
-  const API_URL =
-    "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
-
-  fetch(API_URL + "?action=master_lokomotif")
-    .then(response => response.json())
-    .then(result => {
-      console.log("Data MASTER_LOKOMOTIF:", result);
-
-      if (result.success && result.data) {
-        const select =
-          document.getElementById("lokomotifPemeriksaan");
-
-        result.data.forEach(item => {
-          const option = document.createElement("option");
-
-          option.value = item.ID;
-          option.textContent = item.NOMOR_LOK;
-
-          select.appendChild(option);
-        });
-      }
-    })
-    .catch(error => {
-      console.error(
-        "Gagal mengambil data lokomotif:",
-        error
-      );
-    });
-}
-    
   </script>
 
 </body>
