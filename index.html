@@ -103,7 +103,10 @@
     <div class="card">
       <div id="googleLogin"></div>
       <div id="userInfo" style="display:none;"></div>
-      <div id="app" style="display:none;">
+<div id="app" style="display:none;">
+  <hr>
+  <h2>Dashboard</h2>
+  <p>Selamat datang di Sistem Informasi Pengawasan Kegiatan Langsir</p>
 </div>
       <h2>Frontend Berhasil Dibuat</h2>
       <p>Halaman GitHub Pages siap dikembangkan.</p>
@@ -170,6 +173,7 @@ if (result.success && result.data) {
     "Role: " + result.data.ROLE;
 
   userInfo.style.display = "block";
+  document.getElementById("app").style.display = "block";
 }
 })
     .catch(error => {
