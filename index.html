@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 
 <html lang="id">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
 
   <title>Checklist Pengawasan Kegiatan Langsir</title>
 
@@ -14,6 +21,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 >
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -174,6 +182,27 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
     }
 
     /* =========================
+       TOMBOL SIMPAN
+    ========================= */
+
+    .btn-simpan {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #2e7d32;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-simpan:hover {
+      background: #1b5e20;
+    }
+
+    /* =========================
        STATUS
     ========================= */
 
@@ -218,6 +247,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       }
 
     }
+
   </style>
 
   <!-- GOOGLE IDENTITY SERVICES -->
@@ -258,6 +288,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
 <div class="card">
 
+
   <!-- GOOGLE LOGIN -->
 
   <div id="googleLogin"></div>
@@ -279,6 +310,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
     id="app"
     style="display: none;">
 
+
     <!-- =========================
          DASHBOARD
     ========================= -->
@@ -294,9 +326,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       </p>
 
 
-      <!-- =========================
-           MENU UTAMA
-      ========================= -->
+      <!-- MENU UTAMA -->
 
       <div id="menuUtama">
 
@@ -348,6 +378,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       id="formPemeriksaan"
       style="display: none;">
 
+
       <h2>
         Form Pemeriksaan
       </h2>
@@ -361,6 +392,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
       <div id="identitasPemeriksaan">
 
+
         <!-- TANGGAL -->
 
         <div class="form-group">
@@ -372,7 +404,8 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
           <input
             type="date"
-            id="tanggalPemeriksaan">
+            id="tanggalPemeriksaan"
+          >
 
         </div>
 
@@ -417,43 +450,57 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           </select>
 
         </div>
-<div class="form-group">
-
-  <label for="masinisPemeriksaan">
-    Masinis
-  </label>
-
-  <select id="masinisPemeriksaan">
-
-    <option value="">
-      Pilih Masinis
-    </option>
-
-  </select>
-
-</div>
 
 
-<div class="form-group">
+        <!-- MASINIS -->
 
-  <label for="asistenMasinisPemeriksaan">
-    Asisten Masinis
-  </label>
+        <div class="form-group">
 
-  <select id="asistenMasinisPemeriksaan">
+          <label
+            for="masinisPemeriksaan">
+            Masinis
+          </label>
 
-    <option value="">
-      Pilih Asisten Masinis
-    </option>
+          <select
+            id="masinisPemeriksaan">
 
-  </select>
+            <option value="">
+              Pilih Masinis
+            </option>
 
-</div>
+          </select>
+
+        </div>
+
+
+        <!-- ASISTEN MASINIS -->
+
+        <div class="form-group">
+
+          <label
+            for="asistenMasinisPemeriksaan">
+            Asisten Masinis
+          </label>
+
+          <select
+            id="asistenMasinisPemeriksaan">
+
+            <option value="">
+              Pilih Asisten Masinis
+            </option>
+
+          </select>
+
+        </div>
+
+
       </div>
 
     </div>
 
+
   </div>
+
 
 </div>
 ```
@@ -466,12 +513,14 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
   <script>
 
+
     /* ==========================================
        KONFIGURASI
     ========================================== */
 
     const CLIENT_ID =
       "566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com";
+
 
     const API_URL =
       "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
@@ -482,6 +531,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
     ========================================== */
 
     window.onload = function () {
+
 
       google.accounts.id.initialize({
 
@@ -528,6 +578,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       response
     ) {
 
+
       console.log(
         "Google Login berhasil:",
         response
@@ -535,6 +586,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
 
       try {
+
 
         /* Decode JWT Google */
 
@@ -547,7 +599,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           );
 
 
-        /* Ambil email */
+        /* Email Google */
 
         const email =
           payload.email;
@@ -559,7 +611,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
         );
 
 
-        /* Cek USER melalui Apps Script */
+        /* Cek USER */
 
         fetch(
           API_URL +
@@ -567,18 +619,22 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           encodeURIComponent(email)
         )
 
+
         .then(
           response =>
             response.json()
         )
 
+
         .then(
           result => {
+
 
             console.log(
               "Hasil pengecekan USER:",
               result
             );
+
 
             console.log(
               "Data USER:",
@@ -591,6 +647,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
               result.data
             ) {
 
+
               /* Simpan session */
 
               sessionStorage.setItem(
@@ -598,15 +655,18 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
                 "true"
               );
 
+
               sessionStorage.setItem(
                 "userEmail",
                 result.data.EMAIL
               );
 
+
               sessionStorage.setItem(
                 "userNama",
                 result.data.NAMA
               );
+
 
               sessionStorage.setItem(
                 "userRole",
@@ -622,6 +682,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
             else {
 
+
               alert(
                 "Email Google belum terdaftar pada USER."
               );
@@ -631,13 +692,16 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           }
         )
 
+
         .catch(
           error => {
+
 
             console.error(
               "Gagal menghubungi API USER:",
               error
             );
+
 
             alert(
               "Gagal menghubungi server."
@@ -646,14 +710,17 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           }
         );
 
+
       }
 
       catch (error) {
+
 
         console.error(
           "Gagal membaca credential Google:",
           error
         );
+
 
       }
 
@@ -666,6 +733,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
     function tampilkanAplikasi() {
 
+
       document.getElementById(
         "googleLogin"
       ).style.display = "none";
@@ -674,6 +742,7 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       document.getElementById(
         "app"
       ).style.display = "block";
+
 
     }
 
@@ -684,11 +753,13 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
     function cekStatusLogin() {
 
+
       return (
         sessionStorage.getItem(
           "isLoggedIn"
         ) === "true"
       );
+
 
     }
 
@@ -699,9 +770,11 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
     function tampilkanDashboard() {
 
+
       document.getElementById(
         "formPemeriksaan"
       ).style.display = "none";
+
 
     }
 
@@ -710,146 +783,24 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
        FORM PEMERIKSAAN
     ========================================== */
 
-function tampilkanFormPemeriksaan() {
-
-  document.getElementById(
-    "formPemeriksaan"
-  ).style.display = "block";
-
-  loadStasiun();
-  loadLokomotif();
-  loadPegawai();
-
-}
-    function loadPegawai() {
-
-  const masinisSelect =
-    document.getElementById(
-      "masinisPemeriksaan"
-    );
-
-  const asistenSelect =
-    document.getElementById(
-      "asistenMasinisPemeriksaan"
-    );
+    function tampilkanFormPemeriksaan() {
 
 
-  masinisSelect.innerHTML =
-    '<option value="">Memuat data pegawai...</option>';
-
-  asistenSelect.innerHTML =
-    '<option value="">Memuat data pegawai...</option>';
+      document.getElementById(
+        "formPemeriksaan"
+      ).style.display = "block";
 
 
-  fetch(
-    API_URL +
-    "?action=master_pegawai"
-  )
+      /* Load data master */
 
-  .then(
-    response =>
-      response.json()
-  )
+      loadStasiun();
 
-  .then(
-    result => {
+      loadLokomotif();
 
-      console.log(
-        "Data MASTER_PEGAWAI:",
-        result
-      );
+      loadPegawai();
 
-
-      masinisSelect.innerHTML =
-        '<option value="">Pilih Masinis</option>';
-
-      asistenSelect.innerHTML =
-        '<option value="">Pilih Asisten Masinis</option>';
-
-
-      if (
-        result.success &&
-        Array.isArray(result.data) &&
-        result.data.length > 0
-      ) {
-
-        result.data.forEach(
-          item => {
-
-            const optionMasinis =
-              document.createElement(
-                "option"
-              );
-
-            optionMasinis.value =
-              item.ID || "";
-
-            optionMasinis.textContent =
-              item.NAMA || "";
-
-            masinisSelect.appendChild(
-              optionMasinis
-            );
-
-
-            const optionAsisten =
-              document.createElement(
-                "option"
-              );
-
-            optionAsisten.value =
-              item.ID || "";
-
-            optionAsisten.textContent =
-              item.NAMA || "";
-
-            asistenSelect.appendChild(
-              optionAsisten
-            );
-
-          }
-        );
-
-
-        console.log(
-          "Jumlah pegawai:",
-          result.data.length
-        );
-
-      }
-
-      else {
-
-        masinisSelect.innerHTML =
-          '<option value="">Data pegawai belum tersedia</option>';
-
-        asistenSelect.innerHTML =
-          '<option value="">Data pegawai belum tersedia</option>';
-
-      }
 
     }
-  )
-
-  .catch(
-    error => {
-
-      console.error(
-        "Gagal mengambil data pegawai:",
-        error
-      );
-
-
-      masinisSelect.innerHTML =
-        '<option value="">Gagal memuat pegawai</option>';
-
-      asistenSelect.innerHTML =
-        '<option value="">Gagal memuat pegawai</option>';
-
-    }
-  );
-
-}
 
 
     /* ==========================================
@@ -858,29 +809,15 @@ function tampilkanFormPemeriksaan() {
 
     function loadStasiun() {
 
+
       const select =
         document.getElementById(
           "stasiunPemeriksaan"
         );
 
 
-      /* Tampilkan status loading */
-
-      select.innerHTML = "";
-
-      const loadingOption =
-        document.createElement(
-          "option"
-        );
-
-      loadingOption.value = "";
-
-      loadingOption.textContent =
-        "Memuat data stasiun...";
-
-      select.appendChild(
-        loadingOption
-      );
+      select.innerHTML =
+        '<option value="">Memuat data stasiun...</option>';
 
 
       fetch(
@@ -888,13 +825,16 @@ function tampilkanFormPemeriksaan() {
         "?action=master_stasiun"
       )
 
+
       .then(
         response =>
           response.json()
       )
 
+
       .then(
         result => {
+
 
           console.log(
             "Data MASTER_STASIUN:",
@@ -902,29 +842,9 @@ function tampilkanFormPemeriksaan() {
           );
 
 
-          /* Reset dropdown */
+          select.innerHTML =
+            '<option value="">Pilih Stasiun</option>';
 
-          select.innerHTML = "";
-
-
-          /* Option awal */
-
-          const defaultOption =
-            document.createElement(
-              "option"
-            );
-
-          defaultOption.value = "";
-
-          defaultOption.textContent =
-            "Pilih Stasiun";
-
-          select.appendChild(
-            defaultOption
-          );
-
-
-          /* Periksa data */
 
           if (
             result.success &&
@@ -932,8 +852,10 @@ function tampilkanFormPemeriksaan() {
             result.data.length > 0
           ) {
 
+
             result.data.forEach(
               item => {
+
 
                 const option =
                   document.createElement(
@@ -953,6 +875,7 @@ function tampilkanFormPemeriksaan() {
                   option
                 );
 
+
               }
             );
 
@@ -962,21 +885,26 @@ function tampilkanFormPemeriksaan() {
               result.data.length
             );
 
+
           }
 
           else {
 
-            console.warn(
-              "MASTER_STASIUN tidak memiliki data."
-            );
+
+            select.innerHTML =
+              '<option value="">Data stasiun belum tersedia</option>';
+
 
           }
+
 
         }
       )
 
+
       .catch(
         error => {
+
 
           console.error(
             "Gagal mengambil data stasiun:",
@@ -984,25 +912,13 @@ function tampilkanFormPemeriksaan() {
           );
 
 
-          select.innerHTML = "";
+          select.innerHTML =
+            '<option value="">Gagal memuat stasiun</option>';
 
-
-          const option =
-            document.createElement(
-              "option"
-            );
-
-          option.value = "";
-
-          option.textContent =
-            "Gagal memuat stasiun";
-
-          select.appendChild(
-            option
-          );
 
         }
       );
+
 
     }
 
@@ -1013,30 +929,15 @@ function tampilkanFormPemeriksaan() {
 
     function loadLokomotif() {
 
+
       const select =
         document.getElementById(
           "lokomotifPemeriksaan"
         );
 
 
-      /* Tampilkan status loading */
-
-      select.innerHTML = "";
-
-
-      const loadingOption =
-        document.createElement(
-          "option"
-        );
-
-      loadingOption.value = "";
-
-      loadingOption.textContent =
-        "Memuat data lokomotif...";
-
-      select.appendChild(
-        loadingOption
-      );
+      select.innerHTML =
+        '<option value="">Memuat data lokomotif...</option>';
 
 
       fetch(
@@ -1044,13 +945,16 @@ function tampilkanFormPemeriksaan() {
         "?action=master_lokomotif"
       )
 
+
       .then(
         response =>
           response.json()
       )
 
+
       .then(
         result => {
+
 
           console.log(
             "Data MASTER_LOKOMOTIF:",
@@ -1058,29 +962,9 @@ function tampilkanFormPemeriksaan() {
           );
 
 
-          /* Reset dropdown */
+          select.innerHTML =
+            '<option value="">Pilih Lokomotif</option>';
 
-          select.innerHTML = "";
-
-
-          /* Option awal */
-
-          const defaultOption =
-            document.createElement(
-              "option"
-            );
-
-          defaultOption.value = "";
-
-          defaultOption.textContent =
-            "Pilih Lokomotif";
-
-          select.appendChild(
-            defaultOption
-          );
-
-
-          /* Periksa data */
 
           if (
             result.success &&
@@ -1088,8 +972,10 @@ function tampilkanFormPemeriksaan() {
             result.data.length > 0
           ) {
 
+
             result.data.forEach(
               item => {
+
 
                 const option =
                   document.createElement(
@@ -1109,6 +995,7 @@ function tampilkanFormPemeriksaan() {
                   option
                 );
 
+
               }
             );
 
@@ -1118,21 +1005,26 @@ function tampilkanFormPemeriksaan() {
               result.data.length
             );
 
+
           }
 
           else {
 
-            console.warn(
-              "MASTER_LOKOMOTIF tidak memiliki data."
-            );
+
+            select.innerHTML =
+              '<option value="">Data lokomotif belum tersedia</option>';
+
 
           }
+
 
         }
       )
 
+
       .catch(
         error => {
+
 
           console.error(
             "Gagal mengambil data lokomotif:",
@@ -1140,25 +1032,197 @@ function tampilkanFormPemeriksaan() {
           );
 
 
-          select.innerHTML = "";
+          select.innerHTML =
+            '<option value="">Gagal memuat lokomotif</option>';
 
-
-          const option =
-            document.createElement(
-              "option"
-            );
-
-          option.value = "";
-
-          option.textContent =
-            "Gagal memuat lokomotif";
-
-          select.appendChild(
-            option
-          );
 
         }
       );
+
+
+    }
+
+
+    /* ==========================================
+       LOAD MASTER PEGAWAI
+    ========================================== */
+
+    function loadPegawai() {
+
+
+      const masinisSelect =
+        document.getElementById(
+          "masinisPemeriksaan"
+        );
+
+
+      const asistenSelect =
+        document.getElementById(
+          "asistenMasinisPemeriksaan"
+        );
+
+
+      if (
+        !masinisSelect ||
+        !asistenSelect
+      ) {
+
+        console.error(
+          "Dropdown pegawai tidak ditemukan."
+        );
+
+        return;
+
+      }
+
+
+      masinisSelect.innerHTML =
+        '<option value="">Memuat data pegawai...</option>';
+
+
+      asistenSelect.innerHTML =
+        '<option value="">Memuat data pegawai...</option>';
+
+
+      fetch(
+        API_URL +
+        "?action=master_pegawai"
+      )
+
+
+      .then(
+        response =>
+          response.json()
+      )
+
+
+      .then(
+        result => {
+
+
+          console.log(
+            "Data MASTER_PEGAWAI:",
+            result
+          );
+
+
+          masinisSelect.innerHTML =
+            '<option value="">Pilih Masinis</option>';
+
+
+          asistenSelect.innerHTML =
+            '<option value="">Pilih Asisten Masinis</option>';
+
+
+          if (
+            result.success &&
+            Array.isArray(result.data) &&
+            result.data.length > 0
+          ) {
+
+
+            result.data.forEach(
+              item => {
+
+
+                /* MASINIS */
+
+                const optionMasinis =
+                  document.createElement(
+                    "option"
+                  );
+
+
+                optionMasinis.value =
+                  item.ID || "";
+
+
+                optionMasinis.textContent =
+                  item.NAMA || "";
+
+
+                masinisSelect.appendChild(
+                  optionMasinis
+                );
+
+
+                /* ASISTEN MASINIS */
+
+                const optionAsisten =
+                  document.createElement(
+                    "option"
+                  );
+
+
+                optionAsisten.value =
+                  item.ID || "";
+
+
+                optionAsisten.textContent =
+                  item.NAMA || "";
+
+
+                asistenSelect.appendChild(
+                  optionAsisten
+                );
+
+
+              }
+            );
+
+
+            console.log(
+              "Jumlah pegawai:",
+              result.data.length
+            );
+
+
+          }
+
+          else {
+
+
+            masinisSelect.innerHTML =
+              '<option value="">Data pegawai belum tersedia</option>';
+
+
+            asistenSelect.innerHTML =
+              '<option value="">Data pegawai belum tersedia</option>';
+
+
+            console.warn(
+              "MASTER_PEGAWAI belum memiliki data."
+            );
+
+
+          }
+
+
+        }
+      )
+
+
+      .catch(
+        error => {
+
+
+          console.error(
+            "Gagal mengambil data pegawai:",
+            error
+          );
+
+
+          masinisSelect.innerHTML =
+            '<option value="">Gagal memuat pegawai</option>';
+
+
+          asistenSelect.innerHTML =
+            '<option value="">Gagal memuat pegawai</option>';
+
+
+        }
+      );
+
 
     }
 
@@ -1169,49 +1233,60 @@ function tampilkanFormPemeriksaan() {
 
     function tampilkanRiwayatPemeriksaan() {
 
+
       alert(
         "Riwayat Pemeriksaan akan dibuat pada tahap berikutnya."
       );
+
 
     }
 
 
     function tampilkanRekapPemeriksaan() {
 
+
       alert(
         "Rekap Pemeriksaan akan dibuat pada tahap berikutnya."
       );
+
 
     }
 
 
     function tampilkanDataPegawai() {
 
+
       alert(
         "Data Pegawai akan dibuat pada tahap berikutnya."
       );
+
 
     }
 
 
     function tampilkanDataStasiun() {
 
+
       alert(
         "Data Stasiun akan dibuat pada tahap berikutnya."
       );
+
 
     }
 
 
     function tampilkanDataLokomotif() {
 
+
       alert(
         "Data Lokomotif akan dibuat pada tahap berikutnya."
       );
+
 
     }
 
   </script>
 
 </body>
+
 </html>
