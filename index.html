@@ -1,22 +1,24 @@
-```html
 <!DOCTYPE html>
+
 <html lang="id">
 
 <head>
 
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
 
   <title>Checklist Pengawasan Kegiatan Langsir</title>
 
-  <meta
-    name="google-signin-client_id"
-    content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
-  >
+<meta
+name="google-signin-client_id"
+content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
+
+>
 
   <style>
 
@@ -215,17 +217,6 @@
     }
 
     /* =========================
-       STATUS
-    ========================= */
-
-    #statusSimpanPemeriksaan {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-      color: #1976d2;
-    }
-
-    /* =========================
        RESPONSIVE
     ========================= */
 
@@ -259,10 +250,7 @@
 
   </style>
 
-
-  <!-- =========================
-       GOOGLE IDENTITY SERVICES
-  ========================= -->
+  <!-- GOOGLE IDENTITY SERVICES -->
 
   <script
     src="https://accounts.google.com/gsi/client"
@@ -272,363 +260,329 @@
 
 </head>
 
-
 <body>
 
   <div class="container">
 
+```
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+  <h1>
+    Checklist Pengawasan Kegiatan Langsir
+  </h1>
+
+  <p>
+    Sistem Informasi Pengawasan Kegiatan Langsir
+  </p>
+
+</div>
+
+
+<!-- =========================
+     CARD UTAMA
+========================= -->
+
+<div class="card">
+
+
+  <!-- GOOGLE LOGIN -->
+
+  <div id="googleLogin"></div>
+
+
+  <!-- INFORMASI USER -->
+
+  <div
+    id="userInfo"
+    style="display: none;">
+  </div>
+
+
+  <!-- =========================
+       APLIKASI
+  ========================= -->
+
+  <div
+    id="app"
+    style="display: none;">
+
 
     <!-- =========================
-         HEADER
+         DASHBOARD
     ========================= -->
 
-    <div class="header">
+    <div class="dashboard">
 
       <h1>
-        Checklist Pengawasan Kegiatan Langsir
+        Dashboard
       </h1>
 
       <p>
         Sistem Informasi Pengawasan Kegiatan Langsir
       </p>
 
+
+      <!-- =========================
+           MENU UTAMA
+      ========================= -->
+
+      <div id="menuUtama">
+
+        <button
+          onclick="tampilkanDashboard()">
+          Dashboard
+        </button>
+
+        <button
+          onclick="tampilkanFormPemeriksaan()">
+          Form Pemeriksaan
+        </button>
+
+        <button
+          onclick="tampilkanRiwayatPemeriksaan()">
+          Riwayat Pemeriksaan
+        </button>
+
+        <button
+          onclick="tampilkanRekapPemeriksaan()">
+          Rekap Pemeriksaan
+        </button>
+
+        <button
+          onclick="tampilkanDataPegawai()">
+          Data Pegawai
+        </button>
+
+        <button
+          onclick="tampilkanDataStasiun()">
+          Data Stasiun
+        </button>
+
+        <button
+          onclick="tampilkanDataLokomotif()">
+          Data Lokomotif
+        </button>
+
+      </div>
+
     </div>
 
 
     <!-- =========================
-         CARD UTAMA
+         FORM PEMERIKSAAN
     ========================= -->
 
-    <div class="card">
+    <div
+      id="formPemeriksaan"
+      style="display: none;">
 
 
-      <!-- =========================
-           GOOGLE LOGIN
-      ========================= -->
+      <h2>
+        Form Pemeriksaan
+      </h2>
 
-      <div id="googleLogin"></div>
-
-
-      <!-- =========================
-           INFORMASI USER
-      ========================= -->
-
-      <div
-        id="userInfo"
-        style="display: none;">
-      </div>
+      <p>
+        Form pemeriksaan kegiatan langsir
+      </p>
 
 
-      <!-- =========================
-           APLIKASI
-      ========================= -->
-
-      <div
-        id="app"
-        style="display: none;">
+      <div id="identitasPemeriksaan">
 
 
         <!-- =========================
-             DASHBOARD
+             IDENTITAS PEMERIKSAAN
         ========================= -->
 
-        <div class="dashboard">
-
-          <h1>
-            Dashboard
-          </h1>
-
-          <p>
-            Sistem Informasi Pengawasan Kegiatan Langsir
-          </p>
+        <div class="section-title">
+          Identitas Pemeriksaan
+        </div>
 
 
-          <!-- =========================
-               MENU UTAMA
-          ========================= -->
+        <!-- TANGGAL -->
 
-          <div id="menuUtama">
+        <div class="form-group">
 
-            <button
-              onclick="tampilkanDashboard()">
-              Dashboard
-            </button>
+          <label for="tanggalPemeriksaan">
+            Tanggal Pemeriksaan
+          </label>
 
-            <button
-              onclick="tampilkanFormPemeriksaan()">
-              Form Pemeriksaan
-            </button>
+          <input
+            type="date"
+            id="tanggalPemeriksaan"
+          >
 
-            <button
-              onclick="tampilkanRiwayatPemeriksaan()">
-              Riwayat Pemeriksaan
-            </button>
+        </div>
 
-            <button
-              onclick="tampilkanRekapPemeriksaan()">
-              Rekap Pemeriksaan
-            </button>
 
-            <button
-              onclick="tampilkanDataPegawai()">
-              Data Pegawai
-            </button>
+        <!-- STASIUN -->
 
-            <button
-              onclick="tampilkanDataStasiun()">
-              Data Stasiun
-            </button>
+        <div class="form-group">
 
-            <button
-              onclick="tampilkanDataLokomotif()">
-              Data Lokomotif
-            </button>
+          <label for="stasiunPemeriksaan">
+            Stasiun
+          </label>
 
-          </div>
+          <select
+            id="stasiunPemeriksaan">
+
+            <option value="">
+              Pilih Stasiun
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- LOKOMOTIF -->
+
+        <div class="form-group">
+
+          <label for="lokomotifPemeriksaan">
+            Lokomotif
+          </label>
+
+          <select
+            id="lokomotifPemeriksaan">
+
+            <option value="">
+              Pilih Lokomotif
+            </option>
+
+          </select>
 
         </div>
 
 
         <!-- =========================
-             FORM PEMERIKSAAN
+             PETUGAS
         ========================= -->
 
-        <div
-          id="formPemeriksaan"
-          style="display: none;">
+        <div class="section-title">
+          Data Petugas
+        </div>
 
 
-          <h2>
-            Form Pemeriksaan
-          </h2>
+        <!-- MASINIS -->
 
-          <p>
-            Form pemeriksaan kegiatan langsir
-          </p>
+        <div class="form-group">
 
+          <label for="masinisPemeriksaan">
+            Masinis
+          </label>
 
-          <div id="identitasPemeriksaan">
+          <select
+            id="masinisPemeriksaan">
 
+            <option value="">
+              Pilih Masinis
+            </option>
 
-            <!-- =========================
-                 IDENTITAS PEMERIKSAAN
-            ========================= -->
+          </select>
 
-            <div class="section-title">
-              Identitas Pemeriksaan
-            </div>
+        </div>
 
 
-            <!-- TANGGAL -->
+        <!-- ASISTEN MASINIS -->
 
-            <div class="form-group">
+        <div class="form-group">
 
-              <label for="tanggalPemeriksaan">
-                Tanggal Pemeriksaan
-              </label>
+          <label for="asistenMasinisPemeriksaan">
+            Asisten Masinis
+          </label>
 
-              <input
-                type="date"
-                id="tanggalPemeriksaan"
-              >
+          <select
+            id="asistenMasinisPemeriksaan">
 
-            </div>
+            <option value="">
+              Pilih Asisten Masinis
+            </option>
 
+          </select>
 
-            <!-- STASIUN -->
+        </div>
 
-            <div class="form-group">
 
-              <label for="stasiunPemeriksaan">
-                Stasiun
-              </label>
+        <!-- PLR 1 -->
 
-              <select
-                id="stasiunPemeriksaan">
+        <div class="form-group">
 
-                <option value="">
-                  Pilih Stasiun
-                </option>
+          <label for="plr1Pemeriksaan">
+            PLR 1
+          </label>
 
-              </select>
+          <select
+            id="plr1Pemeriksaan">
 
-            </div>
+            <option value="">
+              Pilih PLR 1
+            </option>
 
+          </select>
 
-            <!-- LOKOMOTIF -->
+        </div>
 
-            <div class="form-group">
 
-              <label for="lokomotifPemeriksaan">
-                Lokomotif
-              </label>
+        <!-- PLR 2 -->
 
-              <select
-                id="lokomotifPemeriksaan">
+        <div class="form-group">
 
-                <option value="">
-                  Pilih Lokomotif
-                </option>
+          <label for="plr2Pemeriksaan">
+            PLR 2
+          </label>
 
-              </select>
+          <select
+            id="plr2Pemeriksaan">
 
-            </div>
+            <option value="">
+              Pilih PLR 2
+            </option>
 
+          </select>
 
-            <!-- =========================
-                 DATA PETUGAS
-            ========================= -->
+        </div>
 
-            <div class="section-title">
-              Data Petugas
-            </div>
 
+        <!-- PLR DIPO -->
 
-            <!-- MASINIS -->
+        <div class="form-group">
 
-            <div class="form-group">
+          <label for="plrDipoPemeriksaan">
+            PLR DIPO
+          </label>
 
-              <label for="masinisPemeriksaan">
-                Masinis
-              </label>
+          <select
+            id="plrDipoPemeriksaan">
 
-              <select
-                id="masinisPemeriksaan">
+            <option value="">
+              Pilih PLR DIPO
+            </option>
 
-                <option value="">
-                  Pilih Masinis
-                </option>
+          </select>
 
-              </select>
+        </div>
 
-            </div>
 
+        <!-- PETUGAS SCHOWING -->
 
-            <!-- ASISTEN MASINIS -->
+        <div class="form-group">
 
-            <div class="form-group">
+          <label for="petugasSchowingPemeriksaan">
+            Petugas Schowing
+          </label>
 
-              <label for="asistenMasinisPemeriksaan">
-                Asisten Masinis
-              </label>
+          <select
+            id="petugasSchowingPemeriksaan">
 
-              <select
-                id="asistenMasinisPemeriksaan">
+            <option value="">
+              Pilih Petugas Schowing
+            </option>
 
-                <option value="">
-                  Pilih Asisten Masinis
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- PLR 1 -->
-
-            <div class="form-group">
-
-              <label for="plr1Pemeriksaan">
-                PLR 1
-              </label>
-
-              <select
-                id="plr1Pemeriksaan">
-
-                <option value="">
-                  Pilih PLR 1
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- PLR 2 -->
-
-            <div class="form-group">
-
-              <label for="plr2Pemeriksaan">
-                PLR 2
-              </label>
-
-              <select
-                id="plr2Pemeriksaan">
-
-                <option value="">
-                  Pilih PLR 2
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- PLR DIPO -->
-
-            <div class="form-group">
-
-              <label for="plrDipoPemeriksaan">
-                PLR DIPO
-              </label>
-
-              <select
-                id="plrDipoPemeriksaan">
-
-                <option value="">
-                  Pilih PLR DIPO
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- PETUGAS SCHOWING -->
-
-            <div class="form-group">
-
-              <label for="petugasSchowingPemeriksaan">
-                Petugas Schowing
-              </label>
-
-              <select
-                id="petugasSchowingPemeriksaan">
-
-                <option value="">
-                  Pilih Petugas Schowing
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- =========================
-                 SIMPAN PEMERIKSAAN
-            ========================= -->
-
-            <div class="section-title">
-              Mulai Pemeriksaan
-            </div>
-
-
-            <button
-              type="button"
-              class="btn-primary"
-              onclick="simpanIdentitasPemeriksaan()">
-
-              Simpan & Lanjut Checklist
-
-            </button>
-
-
-            <div
-              id="statusSimpanPemeriksaan">
-            </div>
-
-
-          </div>
+          </select>
 
         </div>
 
@@ -637,8 +591,13 @@
 
     </div>
 
+
   </div>
 
+</div>
+```
+
+  </div>
 
   <!-- =========================
        JAVASCRIPT
@@ -1341,7 +1300,9 @@
               }
 
 
-              /* MASINIS */
+              /* ==================================
+                 MASINIS
+              ================================== */
 
               if (
                 jabatan === "MASINIS"
@@ -1356,7 +1317,9 @@
               }
 
 
-              /* ASISTEN MASINIS */
+              /* ==================================
+                 ASISTEN MASINIS
+              ================================== */
 
               if (
                 jabatan === "ASISTEN MASINIS"
@@ -1371,7 +1334,9 @@
               }
 
 
-              /* PLR 1 */
+              /* ==================================
+                 PLR 1
+              ================================== */
 
               if (
                 jabatan === "PLR 1"
@@ -1386,7 +1351,9 @@
               }
 
 
-              /* PLR 2 */
+              /* ==================================
+                 PLR 2
+              ================================== */
 
               if (
                 jabatan === "PLR 2"
@@ -1401,7 +1368,9 @@
               }
 
 
-              /* PLR DIPO */
+              /* ==================================
+                 PLR DIPO
+              ================================== */
 
               if (
                 jabatan === "PLR DIPO"
@@ -1416,7 +1385,9 @@
               }
 
 
-              /* PETUGAS SCHOWING */
+              /* ==================================
+                 PETUGAS SCHOWING
+              ================================== */
 
               if (
                 jabatan === "PETUGAS SCHOWING"
@@ -1596,394 +1567,6 @@
 
 
     /* ==========================================
-       SIMPAN IDENTITAS PEMERIKSAAN
-    ========================================== */
-
-    function simpanIdentitasPemeriksaan() {
-
-
-      /* ==========================================
-         AMBIL DATA FORM
-      ========================================== */
-
-      const tanggal =
-        document.getElementById(
-          "tanggalPemeriksaan"
-        ).value;
-
-
-      const stasiun =
-        document.getElementById(
-          "stasiunPemeriksaan"
-        ).value;
-
-
-      const lokomotif =
-        document.getElementById(
-          "lokomotifPemeriksaan"
-        ).value;
-
-
-      const masinis =
-        document.getElementById(
-          "masinisPemeriksaan"
-        ).value;
-
-
-      const asistenMasinis =
-        document.getElementById(
-          "asistenMasinisPemeriksaan"
-        ).value;
-
-
-      const plr1 =
-        document.getElementById(
-          "plr1Pemeriksaan"
-        ).value;
-
-
-      const plr2 =
-        document.getElementById(
-          "plr2Pemeriksaan"
-        ).value;
-
-
-      const plrDipo =
-        document.getElementById(
-          "plrDipoPemeriksaan"
-        ).value;
-
-
-      const petugasSchowing =
-        document.getElementById(
-          "petugasSchowingPemeriksaan"
-        ).value;
-
-
-      /* ==========================================
-         VALIDASI
-      ========================================== */
-
-      if (!tanggal) {
-
-        alert(
-          "Tanggal Pemeriksaan wajib dipilih."
-        );
-
-        return;
-
-      }
-
-
-      if (!stasiun) {
-
-        alert(
-          "Stasiun wajib dipilih."
-        );
-
-        return;
-
-      }
-
-
-      if (!lokomotif) {
-
-        alert(
-          "Lokomotif wajib dipilih."
-        );
-
-        return;
-
-      }
-
-
-      if (!masinis) {
-
-        alert(
-          "Masinis wajib dipilih."
-        );
-
-        return;
-
-      }
-
-
-      if (!asistenMasinis) {
-
-        alert(
-          "Asisten Masinis wajib dipilih."
-        );
-
-        return;
-
-      }
-
-
-      /* ==========================================
-         DATA TRANSAKSI
-      ========================================== */
-
-      const data = {
-
-        TANGGAL:
-          tanggal,
-
-        STASIUN:
-          stasiun,
-
-        LOKOMOTIF:
-          lokomotif,
-
-        MASINIS:
-          masinis,
-
-        ASISTEN_MASINIS:
-          asistenMasinis,
-
-        PLR1:
-          plr1,
-
-        PLR2:
-          plr2,
-
-        PLR_DIPO:
-          plrDipo,
-
-        PETUGAS_SCHOWING:
-          petugasSchowing,
-
-        STATUS:
-          "DRAFT",
-
-        TTD:
-          ""
-
-      };
-
-
-      console.log(
-        "Data yang akan disimpan:",
-        data
-      );
-
-
-      const status =
-        document.getElementById(
-          "statusSimpanPemeriksaan"
-        );
-
-
-      status.textContent =
-        "Menyimpan pemeriksaan...";
-
-
-      /* ==========================================
-         NONAKTIFKAN TOMBOL SEMENTARA
-      ========================================== */
-
-      const tombol =
-        document.querySelector(
-          '#identitasPemeriksaan button[onclick="simpanIdentitasPemeriksaan()"]'
-        );
-
-
-      if (tombol) {
-
-        tombol.disabled = true;
-
-        tombol.textContent =
-          "Menyimpan...";
-
-      }
-
-
-      /* ==========================================
-         KIRIM KE APPS SCRIPT
-      ========================================== */
-
-      fetch(
-        API_URL,
-        {
-
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "text/plain;charset=utf-8"
-          },
-
-          body:
-            JSON.stringify({
-
-              action:
-                "create_transaksi",
-
-              data:
-                data
-
-            })
-
-        }
-      )
-
-      .then(
-        response => {
-
-          if (!response.ok) {
-
-            throw new Error(
-              "HTTP Error " +
-              response.status
-            );
-
-          }
-
-          return response.json();
-
-        }
-      )
-
-      .then(
-        result => {
-
-          console.log(
-            "Hasil create_transaksi:",
-            result
-          );
-
-
-          if (
-            result.success
-          ) {
-
-
-            /* ==================================
-               AMBIL ID PEMERIKSAAN
-            ================================== */
-
-            const idPemeriksaan =
-              result.id_pemeriksaan;
-
-
-            /* ==================================
-               SIMPAN ID KE SESSION
-            ================================== */
-
-            sessionStorage.setItem(
-              "idPemeriksaan",
-              idPemeriksaan
-            );
-
-
-            status.textContent =
-              "Pemeriksaan berhasil dibuat. ID: " +
-              idPemeriksaan;
-
-
-            console.log(
-              "ID_PEMERIKSAAN:",
-              idPemeriksaan
-            );
-
-
-            /* ==================================
-               BERHASIL
-            ================================== */
-
-            alert(
-              "Pemeriksaan berhasil dibuat.\n\n" +
-              "ID Pemeriksaan: " +
-              idPemeriksaan
-            );
-
-
-            /* ==================================
-               LANJUT KE CHECKLIST
-            ================================== */
-
-            tampilkanChecklist();
-
-
-          } else {
-
-
-            status.textContent =
-              "Gagal menyimpan pemeriksaan.";
-
-
-            alert(
-              result.message ||
-              "Gagal menyimpan pemeriksaan."
-            );
-
-
-            /* Aktifkan tombol kembali */
-
-            if (tombol) {
-
-              tombol.disabled = false;
-
-              tombol.textContent =
-                "Simpan & Lanjut Checklist";
-
-            }
-
-          }
-
-        }
-      )
-
-      .catch(
-        error => {
-
-          console.error(
-            "Gagal menyimpan transaksi:",
-            error
-          );
-
-
-          status.textContent =
-            "Gagal menghubungi server.";
-
-
-          alert(
-            "Gagal menghubungi server.\n\n" +
-            error.message
-          );
-
-
-          /* Aktifkan tombol kembali */
-
-          if (tombol) {
-
-            tombol.disabled = false;
-
-            tombol.textContent =
-              "Simpan & Lanjut Checklist";
-
-          }
-
-        }
-      );
-
-    }
-
-
-    /* ==========================================
-       TAMPILKAN CHECKLIST
-    ========================================== */
-
-    function tampilkanChecklist() {
-
-      alert(
-        "Identitas pemeriksaan berhasil disimpan.\n\n" +
-        "Tahap berikutnya adalah menampilkan checklist pemeriksaan."
-      );
-
-    }
-
-
-    /* ==========================================
        MENU RIWAYAT
     ========================================== */
 
@@ -2047,9 +1630,9 @@
 
     }
 
+
   </script>
 
 </body>
 
 </html>
-```
