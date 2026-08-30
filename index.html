@@ -90,6 +90,42 @@
       opacity: 0.9;
     }
 
+    #formPemeriksaan {
+      margin-top: 25px;
+      text-align: left;
+    }
+
+    #formPemeriksaan h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    #formPemeriksaan > p {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    #identitasPemeriksaan {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #identitasPemeriksaan label {
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    #identitasPemeriksaan input,
+    #identitasPemeriksaan select {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
     .status {
       display: inline-block;
       padding: 8px 14px;
@@ -185,30 +221,64 @@
 
         </div>
 
+
+        <!-- FORM PEMERIKSAAN -->
+
+        <div id="formPemeriksaan" style="display:none;">
+
+          <h2>Form Pemeriksaan</h2>
+
+          <p>
+            Form pemeriksaan kegiatan langsir
+          </p>
+
+          <div id="identitasPemeriksaan">
+
+            <label for="tanggalPemeriksaan">
+              Tanggal Pemeriksaan
+            </label>
+
+            <input
+              type="date"
+              id="tanggalPemeriksaan"
+            >
+
+
+            <label for="stasiunPemeriksaan">
+              Stasiun
+            </label>
+
+            <select id="stasiunPemeriksaan">
+
+              <option value="">
+                Pilih Stasiun
+              </option>
+
+            </select>
+
+
+            <label for="lokomotifPemeriksaan">
+              Lokomotif
+            </label>
+
+            <select id="lokomotifPemeriksaan">
+
+              <option value="">
+                Pilih Lokomotif
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
       </div>
-<div id="formPemeriksaan" style="display:none;">
-  <h2>Form Pemeriksaan</h2>
-  <p>Form pemeriksaan kegiatan langsir</p>
-  <div id="identitasPemeriksaan">
 
-  <label>Tanggal Pemeriksaan</label>
-  <input type="date" id="tanggalPemeriksaan">
-
-  <label>Stasiun</label>
-  <select id="stasiunPemeriksaan">
-    <option value="">Pilih Stasiun</option>
-  </select>
-
-  <label>Lokomotif</label>
-  <select id="lokomotifPemeriksaan">
-    <option value="">Pilih Lokomotif</option>
-  </select>
-
-</div>
-</div>
     </div>
 
   </div>
+
 
   <script>
 
@@ -217,8 +287,10 @@
       google.accounts.id.initialize({
         client_id:
           "566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com",
+
         callback: handleCredentialResponse
       });
+
 
       google.accounts.id.renderButton(
         document.getElementById("googleLogin"),
@@ -235,85 +307,98 @@
 
     function handleCredentialResponse(response) {
 
-      console.log("Google Login berhasil:", response);
+      console.log(
+        "Google Login berhasil:",
+        response
+      );
 
-      // Decode credential Google
+
       const payload =
-        JSON.parse(atob(response.credential.split(".")[1]));
+        JSON.parse(
+          atob(
+            response.credential.split(".")[1]
+          )
+        );
 
-      // Ambil email Google
+
       const email = payload.email;
 
-      console.log("Email Google:", email);
+
+      console.log(
+        "Email Google:",
+        email
+      );
 
 
-      // URL API Apps Script
       const API_URL =
         "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
 
 
-      // Hubungkan email dengan API USER
       fetch(
         API_URL +
         "?action=user&email=" +
         encodeURIComponent(email)
       )
 
-        .then(response => response.json())
+      .then(response => response.json())
 
-        .then(result => {
+      .then(result => {
 
-          console.log("Hasil pengecekan USER:", result);
-          console.log("Data USER:", result.data);
+        console.log(
+          "Hasil pengecekan USER:",
+          result
+        );
 
-
-          if (result.success && result.data) {
-
-            // Simpan status login
-            sessionStorage.setItem(
-              "isLoggedIn",
-              "true"
-            );
-
-            sessionStorage.setItem(
-              "userEmail",
-              result.data.EMAIL
-            );
-
-            sessionStorage.setItem(
-              "userNama",
-              result.data.NAMA
-            );
-
-            sessionStorage.setItem(
-              "userRole",
-              result.data.ROLE
-            );
+        console.log(
+          "Data USER:",
+          result.data
+        );
 
 
-            // Sembunyikan login Google
-            document.getElementById(
-              "googleLogin"
-            ).style.display = "none";
+        if (result.success && result.data) {
 
-
-            // Tampilkan aplikasi
-            document.getElementById(
-              "app"
-            ).style.display = "block";
-
-          }
-
-        })
-
-        .catch(error => {
-
-          console.error(
-            "Gagal menghubungi API USER:",
-            error
+          sessionStorage.setItem(
+            "isLoggedIn",
+            "true"
           );
 
-        });
+          sessionStorage.setItem(
+            "userEmail",
+            result.data.EMAIL
+          );
+
+          sessionStorage.setItem(
+            "userNama",
+            result.data.NAMA
+          );
+
+          sessionStorage.setItem(
+            "userRole",
+            result.data.ROLE
+          );
+
+
+          document.getElementById(
+            "googleLogin"
+          ).style.display = "none";
+
+
+          document.getElementById(
+            "app"
+          ).style.display = "block";
+
+        }
+
+      })
+
+      .catch(error => {
+
+        console.error(
+          "Gagal menghubungi API USER:",
+          error
+        );
+
+      });
 
     }
 
@@ -321,24 +406,27 @@
     function cekStatusLogin() {
 
       const isLoggedIn =
-        sessionStorage.getItem("isLoggedIn");
+        sessionStorage.getItem(
+          "isLoggedIn"
+        );
+
 
       if (isLoggedIn === "true") {
         return true;
       }
+
 
       return false;
 
     }
 
 
-    // Jika sudah login sebelumnya,
-    // langsung tampilkan aplikasi
     if (cekStatusLogin()) {
 
       document.getElementById(
         "app"
       ).style.display = "block";
+
 
       document.getElementById(
         "googleLogin"
@@ -350,15 +438,19 @@
     function tampilkanDashboard() {
 
       document.getElementById(
-        "app"
-      ).style.display = "block";
+        "formPemeriksaan"
+      ).style.display = "none";
 
     }
 
 
-function tampilkanFormPemeriksaan() {
-  document.getElementById("formPemeriksaan").style.display = "block";
-}
+    function tampilkanFormPemeriksaan() {
+
+      document.getElementById(
+        "formPemeriksaan"
+      ).style.display = "block";
+
+    }
 
 
     function tampilkanRiwayatPemeriksaan() {
