@@ -670,64 +670,51 @@
           <!-- TANGGAL -->
 
           <div class="form-group">
+  <label for="tanggalPemeriksaan">
+    Hari / Tanggal
+  </label>
 
-          <label for="tanggalPemeriksaan">
-  Hari / Tanggal
-</label>
+  <input
+    type="date"
+    id="tanggalPemeriksaan"
+  >
+</div>
 
-            <input
-              type="date"
-              id="tanggalPemeriksaan"
-            >
-
-          </div>
 <div class="form-group">
   <label for="dinasLangsirPemeriksaan">
     Dinas Langsir
   </label>
 
-  <input
-    type="text"
-    id="dinasLangsirPemeriksaan"
-    placeholder="Masukkan Dinas Langsir">
+  <select id="dinasLangsirPemeriksaan">
+    <option value="">
+      Pilih Dinas Langsir
+    </option>
+
+    <option value="DINAS PAGI">
+      DINAS PAGI
+    </option>
+
+    <option value="DINAS SIANG">
+      DINAS SIANG
+    </option>
+
+    <option value="DINAS MALAM">
+      DINAS MALAM
+    </option>
+  </select>
 </div>
 
-          <!-- STASIUN -->
+<div class="form-group">
+  <label for="stasiunPemeriksaan">
+    Stasiun / Emplasemen
+  </label>
 
-          <div class="form-group">
-
-<label for="stasiunPemeriksaan">
-  Stasiun / Emplasemen
-</label>
-
-            <select id="stasiunPemeriksaan">
-
-              <option value="">
-                Pilih Stasiun
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <!-- LOKOMOTIF -->
-
-          <div class="form-group">
-
-            <label for="lokomotifPemeriksaan">
-              Lokomotif
-            </label>
-
-            <select id="lokomotifPemeriksaan">
-
-              <option value="">
-                Pilih Lokomotif
-              </option>
-
-            </select>
-
-          </div>
+  <select id="stasiunPemeriksaan">
+    <option value="">
+      Pilih Stasiun / Emplasemen
+    </option>
+  </select>
+</div>
 
 
           <!-- =================================================
