@@ -186,7 +186,26 @@
         </div>
 
       </div>
+<div id="formPemeriksaan" style="display:none;">
+  <h2>Form Pemeriksaan</h2>
+  <p>Form pemeriksaan kegiatan langsir</p>
+  <div id="identitasPemeriksaan">
 
+  <label>Tanggal Pemeriksaan</label>
+  <input type="date" id="tanggalPemeriksaan">
+
+  <label>Stasiun</label>
+  <select id="stasiunPemeriksaan">
+    <option value="">Pilih Stasiun</option>
+  </select>
+
+  <label>Lokomotif</label>
+  <select id="lokomotifPemeriksaan">
+    <option value="">Pilih Lokomotif</option>
+  </select>
+
+</div>
+</div>
     </div>
 
   </div>
@@ -337,13 +356,9 @@
     }
 
 
-    function tampilkanFormPemeriksaan() {
-
-      alert(
-        "Form Pemeriksaan akan dibuat pada tahap berikutnya."
-      );
-
-    }
+function tampilkanFormPemeriksaan() {
+  document.getElementById("formPemeriksaan").style.display = "block";
+}
 
 
     function tampilkanRiwayatPemeriksaan() {
