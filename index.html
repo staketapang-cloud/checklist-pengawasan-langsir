@@ -444,13 +444,14 @@
     }
 
 
-  function tampilkanFormPemeriksaan() {
+function tampilkanFormPemeriksaan() {
 
   document.getElementById(
     "formPemeriksaan"
   ).style.display = "block";
 
   loadStasiun();
+  loadLokomotif();
 
 }
 
@@ -524,6 +525,37 @@ function loadStasiun() {
       console.error("Gagal mengambil data stasiun:", error);
     });
 }
+function loadLokomotif() {
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+
+  fetch(API_URL + "?action=master_lokomotif")
+    .then(response => response.json())
+    .then(result => {
+      console.log("Data MASTER_LOKOMOTIF:", result);
+
+      if (result.success && result.data) {
+        const select =
+          document.getElementById("lokomotifPemeriksaan");
+
+        result.data.forEach(item => {
+          const option = document.createElement("option");
+
+          option.value = item.ID;
+          option.textContent = item.NOMOR_LOK;
+
+          select.appendChild(option);
+        });
+      }
+    })
+    .catch(error => {
+      console.error(
+        "Gagal mengambil data lokomotif:",
+        error
+      );
+    });
+}
+    
   </script>
 
 </body>
