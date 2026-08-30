@@ -417,7 +417,38 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
           </select>
 
         </div>
+<div class="form-group">
 
+  <label for="masinisPemeriksaan">
+    Masinis
+  </label>
+
+  <select id="masinisPemeriksaan">
+
+    <option value="">
+      Pilih Masinis
+    </option>
+
+  </select>
+
+</div>
+
+
+<div class="form-group">
+
+  <label for="asistenMasinisPemeriksaan">
+    Asisten Masinis
+  </label>
+
+  <select id="asistenMasinisPemeriksaan">
+
+    <option value="">
+      Pilih Asisten Masinis
+    </option>
+
+  </select>
+
+</div>
       </div>
 
     </div>
@@ -679,20 +710,146 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
        FORM PEMERIKSAAN
     ========================================== */
 
-    function tampilkanFormPemeriksaan() {
+function tampilkanFormPemeriksaan() {
 
-      document.getElementById(
-        "formPemeriksaan"
-      ).style.display = "block";
+  document.getElementById(
+    "formPemeriksaan"
+  ).style.display = "block";
+
+  loadStasiun();
+  loadLokomotif();
+  loadPegawai();
+
+}
+    function loadPegawai() {
+
+  const masinisSelect =
+    document.getElementById(
+      "masinisPemeriksaan"
+    );
+
+  const asistenSelect =
+    document.getElementById(
+      "asistenMasinisPemeriksaan"
+    );
 
 
-      /* Load data master */
+  masinisSelect.innerHTML =
+    '<option value="">Memuat data pegawai...</option>';
 
-      loadStasiun();
+  asistenSelect.innerHTML =
+    '<option value="">Memuat data pegawai...</option>';
 
-      loadLokomotif();
+
+  fetch(
+    API_URL +
+    "?action=master_pegawai"
+  )
+
+  .then(
+    response =>
+      response.json()
+  )
+
+  .then(
+    result => {
+
+      console.log(
+        "Data MASTER_PEGAWAI:",
+        result
+      );
+
+
+      masinisSelect.innerHTML =
+        '<option value="">Pilih Masinis</option>';
+
+      asistenSelect.innerHTML =
+        '<option value="">Pilih Asisten Masinis</option>';
+
+
+      if (
+        result.success &&
+        Array.isArray(result.data) &&
+        result.data.length > 0
+      ) {
+
+        result.data.forEach(
+          item => {
+
+            const optionMasinis =
+              document.createElement(
+                "option"
+              );
+
+            optionMasinis.value =
+              item.ID || "";
+
+            optionMasinis.textContent =
+              item.NAMA || "";
+
+            masinisSelect.appendChild(
+              optionMasinis
+            );
+
+
+            const optionAsisten =
+              document.createElement(
+                "option"
+              );
+
+            optionAsisten.value =
+              item.ID || "";
+
+            optionAsisten.textContent =
+              item.NAMA || "";
+
+            asistenSelect.appendChild(
+              optionAsisten
+            );
+
+          }
+        );
+
+
+        console.log(
+          "Jumlah pegawai:",
+          result.data.length
+        );
+
+      }
+
+      else {
+
+        masinisSelect.innerHTML =
+          '<option value="">Data pegawai belum tersedia</option>';
+
+        asistenSelect.innerHTML =
+          '<option value="">Data pegawai belum tersedia</option>';
+
+      }
 
     }
+  )
+
+  .catch(
+    error => {
+
+      console.error(
+        "Gagal mengambil data pegawai:",
+        error
+      );
+
+
+      masinisSelect.innerHTML =
+        '<option value="">Gagal memuat pegawai</option>';
+
+      asistenSelect.innerHTML =
+        '<option value="">Gagal memuat pegawai</option>';
+
+    }
+  );
+
+}
 
 
     /* ==========================================
