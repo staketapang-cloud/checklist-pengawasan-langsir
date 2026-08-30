@@ -11,25 +11,18 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Checklist Pengawasan Kegiatan Langsir
-  </title>
-
-
-  <!-- GOOGLE CLIENT ID -->
+  <title>Checklist Pengawasan Kegiatan Langsir</title>
 
   <meta
     name="google-signin-client_id"
     content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
   >
 
-
   <style>
 
     * {
       box-sizing: border-box;
     }
-
 
     body {
       margin: 0;
@@ -38,13 +31,11 @@
       color: #222;
     }
 
-
     .container {
       max-width: 1100px;
       margin: 0 auto;
       padding: 20px;
     }
-
 
     /* =========================
        HEADER
@@ -55,22 +46,18 @@
       border-radius: 12px;
       padding: 30px 20px;
       text-align: center;
-      box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
-
 
     .header h1 {
       margin: 0 0 10px;
       font-size: 28px;
     }
 
-
     .header p {
       margin: 0;
       color: #666666;
     }
-
 
     /* =========================
        CARD
@@ -81,10 +68,8 @@
       margin-top: 20px;
       padding: 25px;
       border-radius: 12px;
-      box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
-
 
     /* =========================
        GOOGLE LOGIN
@@ -96,7 +81,6 @@
       align-items: center;
     }
 
-
     /* =========================
        DASHBOARD
     ========================= */
@@ -105,16 +89,13 @@
       text-align: center;
     }
 
-
     .dashboard h1 {
       margin: 0 0 10px;
     }
 
-
     .dashboard p {
       color: #666666;
     }
-
 
     /* =========================
        MENU
@@ -128,7 +109,6 @@
       margin-top: 25px;
     }
 
-
     #menuUtama button {
       padding: 10px 16px;
       border: none;
@@ -139,11 +119,9 @@
       font-size: 14px;
     }
 
-
     #menuUtama button:hover {
       background: #1565c0;
     }
-
 
     /* =========================
        FORM PEMERIKSAAN
@@ -153,14 +131,13 @@
       margin-top: 30px;
       padding-top: 25px;
       border-top: 1px solid #dddddd;
+      text-align: left;
     }
-
 
     #formPemeriksaan h2 {
       margin: 0 0 10px;
       text-align: center;
     }
-
 
     #formPemeriksaan > p {
       margin-bottom: 25px;
@@ -168,24 +145,24 @@
       color: #666666;
     }
 
+    /* =========================
+       IDENTITAS
+    ========================= */
 
     #identitasPemeriksaan {
       max-width: 700px;
       margin: 0 auto;
     }
 
-
     .form-group {
       margin-bottom: 18px;
     }
-
 
     .form-group label {
       display: block;
       margin-bottom: 7px;
       font-weight: bold;
     }
-
 
     .form-group input,
     .form-group select {
@@ -197,36 +174,20 @@
       font-size: 14px;
     }
 
-
     .form-group input:focus,
     .form-group select:focus {
       outline: none;
       border-color: #1976d2;
     }
 
-
     /* =========================
-       TOMBOL
+       LOADING
     ========================= */
 
-    .btn-simpan {
-      width: 100%;
-      margin-top: 10px;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #2e7d32;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
+    .loading {
+      color: #777777;
+      font-size: 13px;
     }
-
-
-    .btn-simpan:hover {
-      background: #1b5e20;
-    }
-
 
     /* =========================
        RESPONSIVE
@@ -238,26 +199,21 @@
         padding: 12px;
       }
 
-
       .header {
         padding: 25px 15px;
       }
-
 
       .header h1 {
         font-size: 22px;
       }
 
-
       .card {
         padding: 20px 15px;
       }
 
-
       #menuUtama {
         flex-direction: column;
       }
-
 
       #menuUtama button {
         width: 100%;
@@ -266,7 +222,6 @@
     }
 
   </style>
-
 
   <!-- GOOGLE IDENTITY SERVICES -->
 
@@ -281,9 +236,7 @@
 
 <body>
 
-
   <div class="container">
-
 
     <!-- =========================
          HEADER
@@ -308,13 +261,12 @@
 
     <div class="card">
 
-
       <!-- GOOGLE LOGIN -->
 
       <div id="googleLogin"></div>
 
 
-      <!-- USER INFO -->
+      <!-- INFORMASI USER -->
 
       <div
         id="userInfo"
@@ -329,7 +281,6 @@
       <div
         id="app"
         style="display:none;">
-
 
         <!-- =========================
              DASHBOARD
@@ -346,7 +297,9 @@
           </p>
 
 
-          <!-- MENU -->
+          <!-- =========================
+               MENU UTAMA
+          ========================= -->
 
           <div id="menuUtama">
 
@@ -355,36 +308,30 @@
               Dashboard
             </button>
 
-
             <button
               onclick="tampilkanFormPemeriksaan()">
               Form Pemeriksaan
             </button>
-
 
             <button
               onclick="tampilkanRiwayatPemeriksaan()">
               Riwayat Pemeriksaan
             </button>
 
-
             <button
               onclick="tampilkanRekapPemeriksaan()">
               Rekap Pemeriksaan
             </button>
-
 
             <button
               onclick="tampilkanDataPegawai()">
               Data Pegawai
             </button>
 
-
             <button
               onclick="tampilkanDataStasiun()">
               Data Stasiun
             </button>
-
 
             <button
               onclick="tampilkanDataLokomotif()">
@@ -404,20 +351,16 @@
           id="formPemeriksaan"
           style="display:none;">
 
-
           <h2>
             Form Pemeriksaan
           </h2>
-
 
           <p>
             Form pemeriksaan kegiatan langsir
           </p>
 
 
-          <!-- =========================
-               IDENTITAS PEMERIKSAAN
-          ========================= -->
+          <!-- IDENTITAS PEMERIKSAAN -->
 
           <div id="identitasPemeriksaan">
 
@@ -426,13 +369,9 @@
 
             <div class="form-group">
 
-              <label
-                for="tanggalPemeriksaan">
-
+              <label for="tanggalPemeriksaan">
                 Tanggal Pemeriksaan
-
               </label>
-
 
               <input
                 type="date"
@@ -446,13 +385,9 @@
 
             <div class="form-group">
 
-              <label
-                for="stasiunPemeriksaan">
-
+              <label for="stasiunPemeriksaan">
                 Stasiun
-
               </label>
-
 
               <select
                 id="stasiunPemeriksaan">
@@ -470,13 +405,9 @@
 
             <div class="form-group">
 
-              <label
-                for="lokomotifPemeriksaan">
-
+              <label for="lokomotifPemeriksaan">
                 Lokomotif
-
               </label>
-
 
               <select
                 id="lokomotifPemeriksaan">
@@ -494,13 +425,9 @@
 
             <div class="form-group">
 
-              <label
-                for="masinisPemeriksaan">
-
+              <label for="masinisPemeriksaan">
                 Masinis
-
               </label>
-
 
               <select
                 id="masinisPemeriksaan">
@@ -518,13 +445,9 @@
 
             <div class="form-group">
 
-              <label
-                for="asistenMasinisPemeriksaan">
-
+              <label for="asistenMasinisPemeriksaan">
                 Asisten Masinis
-
               </label>
-
 
               <select
                 id="asistenMasinisPemeriksaan">
@@ -542,13 +465,9 @@
 
             <div class="form-group">
 
-              <label
-                for="plr1Pemeriksaan">
-
+              <label for="plr1Pemeriksaan">
                 PLR 1
-
               </label>
-
 
               <select
                 id="plr1Pemeriksaan">
@@ -566,13 +485,9 @@
 
             <div class="form-group">
 
-              <label
-                for="plr2Pemeriksaan">
-
+              <label for="plr2Pemeriksaan">
                 PLR 2
-
               </label>
-
 
               <select
                 id="plr2Pemeriksaan">
@@ -590,13 +505,9 @@
 
             <div class="form-group">
 
-              <label
-                for="plrDipoPemeriksaan">
-
+              <label for="plrDipoPemeriksaan">
                 PLR DIPO
-
               </label>
-
 
               <select
                 id="plrDipoPemeriksaan">
@@ -614,13 +525,9 @@
 
             <div class="form-group">
 
-              <label
-                for="petugasSchowingPemeriksaan">
-
-                Petugas Schowing
-
+              <label for="petugasSchowingPemeriksaan">
+                PETUGAS SCHOWING
               </label>
-
 
               <select
                 id="petugasSchowingPemeriksaan">
@@ -632,17 +539,6 @@
               </select>
 
             </div>
-
-
-            <!-- TOMBOL SIMPAN -->
-
-            <button
-              class="btn-simpan"
-              onclick="simpanPemeriksaan()">
-
-              Simpan Pemeriksaan
-
-            </button>
 
 
           </div>
@@ -662,7 +558,6 @@
 
   <script>
 
-
     /* ==========================================
        KONFIGURASI
     ========================================== */
@@ -676,11 +571,10 @@
 
 
     /* ==========================================
-       GOOGLE LOGIN
+       WINDOW LOAD
     ========================================== */
 
     window.onload = function () {
-
 
       google.accounts.id.initialize({
 
@@ -699,19 +593,16 @@
         ),
 
         {
-
           theme: "outline",
-
           size: "large",
-
           text: "signin_with",
-
           shape: "rectangular"
-
         }
 
       );
 
+
+      /* CEK LOGIN SEBELUMNYA */
 
       if (cekStatusLogin()) {
 
@@ -723,13 +614,12 @@
 
 
     /* ==========================================
-       HANDLE GOOGLE LOGIN
+       GOOGLE LOGIN
     ========================================== */
 
     function handleCredentialResponse(
       response
     ) {
-
 
       console.log(
         "Google Login berhasil:",
@@ -738,7 +628,6 @@
 
 
       try {
-
 
         const payload =
           JSON.parse(
@@ -765,20 +654,23 @@
           encodeURIComponent(email)
         )
 
-
         .then(
           response =>
             response.json()
         )
 
-
         .then(
           result => {
-
 
             console.log(
               "Hasil pengecekan USER:",
               result
+            );
+
+
+            console.log(
+              "Data USER:",
+              result.data
             );
 
 
@@ -787,6 +679,7 @@
               result.data
             ) {
 
+              /* SIMPAN SESSION */
 
               sessionStorage.setItem(
                 "isLoggedIn",
@@ -812,13 +705,13 @@
               );
 
 
-              tampilkanAplikasi();
+              /* TAMPILKAN APLIKASI */
 
+              tampilkanAplikasi();
 
             }
 
             else {
-
 
               alert(
                 "Email Google belum terdaftar pada USER."
@@ -827,9 +720,7 @@
             }
 
           }
-
         )
-
 
         .catch(
           error => {
@@ -847,11 +738,9 @@
           }
         );
 
-
       }
 
       catch (error) {
-
 
         console.error(
           "Gagal membaca credential Google:",
@@ -868,7 +757,6 @@
     ========================================== */
 
     function tampilkanAplikasi() {
-
 
       document.getElementById(
         "googleLogin"
@@ -903,7 +791,6 @@
 
     function tampilkanDashboard() {
 
-
       document.getElementById(
         "formPemeriksaan"
       ).style.display = "none";
@@ -917,11 +804,52 @@
 
     function tampilkanFormPemeriksaan() {
 
-
       document.getElementById(
         "formPemeriksaan"
       ).style.display = "block";
 
+
+      /* TANGGAL OTOMATIS */
+
+      const tanggal =
+        document.getElementById(
+          "tanggalPemeriksaan"
+        );
+
+
+      if (!tanggal.value) {
+
+        const today =
+          new Date();
+
+
+        const tahun =
+          today.getFullYear();
+
+
+        const bulan =
+          String(
+            today.getMonth() + 1
+          ).padStart(2, "0");
+
+
+        const hari =
+          String(
+            today.getDate()
+          ).padStart(2, "0");
+
+
+        tanggal.value =
+          tahun +
+          "-" +
+          bulan +
+          "-" +
+          hari;
+
+      }
+
+
+      /* LOAD MASTER */
 
       loadStasiun();
 
@@ -933,11 +861,10 @@
 
 
     /* ==========================================
-       LOAD STASIUN
+       LOAD MASTER STASIUN
     ========================================== */
 
     function loadStasiun() {
-
 
       const select =
         document.getElementById(
@@ -954,16 +881,13 @@
         "?action=master_stasiun"
       )
 
-
       .then(
         response =>
           response.json()
       )
 
-
       .then(
         result => {
-
 
           console.log(
             "Data MASTER_STASIUN:",
@@ -977,13 +901,12 @@
 
           if (
             result.success &&
-            Array.isArray(result.data)
+            Array.isArray(result.data) &&
+            result.data.length > 0
           ) {
-
 
             result.data.forEach(
               item => {
-
 
                 const option =
                   document.createElement(
@@ -1006,15 +929,26 @@
               }
             );
 
+
+            console.log(
+              "Jumlah stasiun:",
+              result.data.length
+            );
+
+          }
+
+          else {
+
+            select.innerHTML =
+              '<option value="">Data stasiun belum tersedia</option>';
+
           }
 
         }
       )
 
-
       .catch(
         error => {
-
 
           console.error(
             "Gagal mengambil data stasiun:",
@@ -1032,11 +966,10 @@
 
 
     /* ==========================================
-       LOAD LOKOMOTIF
+       LOAD MASTER LOKOMOTIF
     ========================================== */
 
     function loadLokomotif() {
-
 
       const select =
         document.getElementById(
@@ -1053,16 +986,13 @@
         "?action=master_lokomotif"
       )
 
-
       .then(
         response =>
           response.json()
       )
 
-
       .then(
         result => {
-
 
           console.log(
             "Data MASTER_LOKOMOTIF:",
@@ -1076,13 +1006,12 @@
 
           if (
             result.success &&
-            Array.isArray(result.data)
+            Array.isArray(result.data) &&
+            result.data.length > 0
           ) {
-
 
             result.data.forEach(
               item => {
-
 
                 const option =
                   document.createElement(
@@ -1105,15 +1034,26 @@
               }
             );
 
+
+            console.log(
+              "Jumlah lokomotif:",
+              result.data.length
+            );
+
+          }
+
+          else {
+
+            select.innerHTML =
+              '<option value="">Data lokomotif belum tersedia</option>';
+
           }
 
         }
       )
 
-
       .catch(
         error => {
-
 
           console.error(
             "Gagal mengambil data lokomotif:",
@@ -1136,90 +1076,57 @@
 
     function loadPegawai() {
 
+      const ids = [
 
-      const masinis =
-        document.getElementById(
-          "masinisPemeriksaan"
-        );
+        "masinisPemeriksaan",
 
+        "asistenMasinisPemeriksaan",
 
-      const asisten =
-        document.getElementById(
-          "asistenMasinisPemeriksaan"
-        );
+        "plr1Pemeriksaan",
 
+        "plr2Pemeriksaan",
 
-      const plr1 =
-        document.getElementById(
-          "plr1Pemeriksaan"
-        );
+        "plrDipoPemeriksaan",
+
+        "petugasSchowingPemeriksaan"
+
+      ];
 
 
-      const plr2 =
-        document.getElementById(
-          "plr2Pemeriksaan"
-        );
+      /* Tampilkan loading */
+
+      ids.forEach(
+        id => {
+
+          const select =
+            document.getElementById(
+              id
+            );
 
 
-      const plrDipo =
-        document.getElementById(
-          "plrDipoPemeriksaan"
-        );
+          if (select) {
 
+            select.innerHTML =
+              '<option value="">Memuat data pegawai...</option>';
 
-      const schowing =
-        document.getElementById(
-          "petugasSchowingPemeriksaan"
-        );
+          }
 
+        }
+      );
 
-      /* =========================
-         LOADING
-      ========================= */
-
-      masinis.innerHTML =
-        '<option value="">Memuat...</option>';
-
-
-      asisten.innerHTML =
-        '<option value="">Memuat...</option>';
-
-
-      plr1.innerHTML =
-        '<option value="">Memuat...</option>';
-
-
-      plr2.innerHTML =
-        '<option value="">Memuat...</option>';
-
-
-      plrDipo.innerHTML =
-        '<option value="">Memuat...</option>';
-
-
-      schowing.innerHTML =
-        '<option value="">Memuat...</option>';
-
-
-      /* =========================
-         AMBIL DATA API
-      ========================= */
 
       fetch(
         API_URL +
         "?action=master_pegawai"
       )
 
-
       .then(
         response =>
           response.json()
       )
 
-
       .then(
         result => {
-
 
           console.log(
             "Data MASTER_PEGAWAI:",
@@ -1227,226 +1134,137 @@
           );
 
 
-          /* RESET */
+          /* RESET DROPDOWN */
 
-          masinis.innerHTML =
+          document.getElementById(
+            "masinisPemeriksaan"
+          ).innerHTML =
             '<option value="">Pilih Masinis</option>';
 
 
-          asisten.innerHTML =
+          document.getElementById(
+            "asistenMasinisPemeriksaan"
+          ).innerHTML =
             '<option value="">Pilih Asisten Masinis</option>';
 
 
-          plr1.innerHTML =
+          document.getElementById(
+            "plr1Pemeriksaan"
+          ).innerHTML =
             '<option value="">Pilih PLR 1</option>';
 
 
-          plr2.innerHTML =
+          document.getElementById(
+            "plr2Pemeriksaan"
+          ).innerHTML =
             '<option value="">Pilih PLR 2</option>';
 
 
-          plrDipo.innerHTML =
+          document.getElementById(
+            "plrDipoPemeriksaan"
+          ).innerHTML =
             '<option value="">Pilih PLR DIPO</option>';
 
 
-          schowing.innerHTML =
+          document.getElementById(
+            "petugasSchowingPemeriksaan"
+          ).innerHTML =
             '<option value="">Pilih Petugas Schowing</option>';
 
 
+          /* CEK DATA */
+
           if (
-            !result.success ||
-            !Array.isArray(result.data)
+            result.success &&
+            Array.isArray(result.data) &&
+            result.data.length > 0
           ) {
 
 
-            console.warn(
-              "Data MASTER_PEGAWAI tidak tersedia."
+            result.data.forEach(
+              item => {
+
+                /* ======================
+                   MASINIS
+                ====================== */
+
+                tambahPegawai(
+                  "masinisPemeriksaan",
+                  item
+                );
+
+
+                /* ======================
+                   ASISTEN MASINIS
+                ====================== */
+
+                tambahPegawai(
+                  "asistenMasinisPemeriksaan",
+                  item
+                );
+
+
+                /* ======================
+                   PLR 1
+                ====================== */
+
+                tambahPegawai(
+                  "plr1Pemeriksaan",
+                  item
+                );
+
+
+                /* ======================
+                   PLR 2
+                ====================== */
+
+                tambahPegawai(
+                  "plr2Pemeriksaan",
+                  item
+                );
+
+
+                /* ======================
+                   PLR DIPO
+                ====================== */
+
+                tambahPegawai(
+                  "plrDipoPemeriksaan",
+                  item
+                );
+
+
+                /* ======================
+                   PETUGAS SCHOWING
+                ====================== */
+
+                tambahPegawai(
+                  "petugasSchowingPemeriksaan",
+                  item
+                );
+
+              }
             );
 
 
-            return;
+            console.log(
+              "Jumlah pegawai:",
+              result.data.length
+            );
 
           }
 
+          else {
 
-          /* =========================
-             LOOP PEGAWAI
-          ========================= */
+            tampilkanDataPegawaiKosong();
 
-          result.data.forEach(
-            item => {
-
-
-              const id =
-                item.ID || "";
-
-
-              const nama =
-                item.NAMA || "";
-
-
-              const jabatan =
-                String(
-                  item.JABATAN || ""
-                )
-                .trim()
-                .toUpperCase();
-
-
-              const status =
-                String(
-                  item.STATUS || ""
-                )
-                .trim()
-                .toUpperCase();
-
-
-              /* HANYA AKTIF */
-
-              if (
-                status !== "AKTIF"
-              ) {
-
-                return;
-
-              }
-
-
-              /* =========================
-                 BUAT OPTION
-              ========================= */
-
-              function buatOption() {
-
-
-                const option =
-                  document.createElement(
-                    "option"
-                  );
-
-
-                option.value = id;
-
-                option.textContent = nama;
-
-
-                return option;
-
-              }
-
-
-              /* =========================
-                 MASINIS
-              ========================= */
-
-              if (
-                jabatan === "MASINIS"
-              ) {
-
-
-                masinis.appendChild(
-                  buatOption()
-                );
-
-              }
-
-
-              /* =========================
-                 ASISTEN MASINIS
-              ========================= */
-
-              if (
-                jabatan ===
-                "ASISTEN MASINIS"
-              ) {
-
-
-                asisten.appendChild(
-                  buatOption()
-                );
-
-              }
-
-
-              /* =========================
-                 PLR 1
-              ========================= */
-
-              if (
-                jabatan === "PLR 1" ||
-                jabatan === "PLR1"
-              ) {
-
-
-                plr1.appendChild(
-                  buatOption()
-                );
-
-              }
-
-
-              /* =========================
-                 PLR 2
-              ========================= */
-
-              if (
-                jabatan === "PLR 2" ||
-                jabatan === "PLR2"
-              ) {
-
-
-                plr2.appendChild(
-                  buatOption()
-                );
-
-              }
-
-
-              /* =========================
-                 PLR DIPO
-              ========================= */
-
-              if (
-                jabatan === "PLR DIPO" ||
-                jabatan === "PLR_DIPO" ||
-                jabatan === "PLRDIPO"
-              ) {
-
-
-                plrDipo.appendChild(
-                  buatOption()
-                );
-
-              }
-
-
-              /* =========================
-                 PETUGAS SCHOWING
-              ========================= */
-
-              if (
-                jabatan === "PETUGAS SCHOWING" ||
-                jabatan === "SCHOWING" ||
-                jabatan === "PETUGAS SHOWING"
-              ) {
-
-
-                schowing.appendChild(
-                  buatOption()
-                );
-
-              }
-
-            }
-          );
+          }
 
         }
       )
 
-
       .catch(
         error => {
-
 
           console.error(
             "Gagal mengambil data pegawai:",
@@ -1454,28 +1272,7 @@
           );
 
 
-          masinis.innerHTML =
-            '<option value="">Gagal memuat data</option>';
-
-
-          asisten.innerHTML =
-            '<option value="">Gagal memuat data</option>';
-
-
-          plr1.innerHTML =
-            '<option value="">Gagal memuat data</option>';
-
-
-          plr2.innerHTML =
-            '<option value="">Gagal memuat data</option>';
-
-
-          plrDipo.innerHTML =
-            '<option value="">Gagal memuat data</option>';
-
-
-          schowing.innerHTML =
-            '<option value="">Gagal memuat data</option>';
+          tampilkanPegawaiGagal();
 
         }
       );
@@ -1484,25 +1281,149 @@
 
 
     /* ==========================================
-       SIMPAN PEMERIKSAAN
+       TAMBAH PEGAWAI KE DROPDOWN
     ========================================== */
 
-    function simpanPemeriksaan() {
+    function tambahPegawai(
+      idSelect,
+      item
+    ) {
+
+      const select =
+        document.getElementById(
+          idSelect
+        );
 
 
-      alert(
-        "Tahap penyimpanan pemeriksaan akan kita buat setelah seluruh identitas pemeriksaan selesai."
+      if (!select) {
+        return;
+      }
+
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        item.ID || "";
+
+
+      option.textContent =
+        item.NAMA || "";
+
+
+      select.appendChild(
+        option
       );
 
     }
 
 
     /* ==========================================
-       MENU LAIN
+       DATA PEGAWAI KOSONG
+    ========================================== */
+
+    function tampilkanDataPegawaiKosong() {
+
+      const data = {
+
+        "masinisPemeriksaan":
+          "Data pegawai belum tersedia",
+
+        "asistenMasinisPemeriksaan":
+          "Data pegawai belum tersedia",
+
+        "plr1Pemeriksaan":
+          "Data pegawai belum tersedia",
+
+        "plr2Pemeriksaan":
+          "Data pegawai belum tersedia",
+
+        "plrDipoPemeriksaan":
+          "Data pegawai belum tersedia",
+
+        "petugasSchowingPemeriksaan":
+          "Data pegawai belum tersedia"
+
+      };
+
+
+      Object.keys(data).forEach(
+        id => {
+
+          const select =
+            document.getElementById(
+              id
+            );
+
+
+          if (select) {
+
+            select.innerHTML =
+              '<option value="">' +
+              data[id] +
+              '</option>';
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* ==========================================
+       PEGAWAI GAGAL
+    ========================================== */
+
+    function tampilkanPegawaiGagal() {
+
+      const ids = [
+
+        "masinisPemeriksaan",
+
+        "asistenMasinisPemeriksaan",
+
+        "plr1Pemeriksaan",
+
+        "plr2Pemeriksaan",
+
+        "plrDipoPemeriksaan",
+
+        "petugasSchowingPemeriksaan"
+
+      ];
+
+
+      ids.forEach(
+        id => {
+
+          const select =
+            document.getElementById(
+              id
+            );
+
+
+          if (select) {
+
+            select.innerHTML =
+              '<option value="">Gagal memuat pegawai</option>';
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* ==========================================
+       MENU LAINNYA
     ========================================== */
 
     function tampilkanRiwayatPemeriksaan() {
-
 
       alert(
         "Riwayat Pemeriksaan akan dibuat pada tahap berikutnya."
@@ -1513,7 +1434,6 @@
 
     function tampilkanRekapPemeriksaan() {
 
-
       alert(
         "Rekap Pemeriksaan akan dibuat pada tahap berikutnya."
       );
@@ -1523,9 +1443,8 @@
 
     function tampilkanDataPegawai() {
 
-
       alert(
-        "Data Pegawai dikelola melalui MASTER_PEGAWAI."
+        "Data Pegawai akan dibuat pada tahap berikutnya."
       );
 
     }
@@ -1533,9 +1452,8 @@
 
     function tampilkanDataStasiun() {
 
-
       alert(
-        "Data Stasiun dikelola melalui MASTER_STASIUN."
+        "Data Stasiun akan dibuat pada tahap berikutnya."
       );
 
     }
@@ -1543,9 +1461,8 @@
 
     function tampilkanDataLokomotif() {
 
-
       alert(
-        "Data Lokomotif dikelola melalui MASTER_LOKOMOTIF."
+        "Data Lokomotif akan dibuat pada tahap berikutnya."
       );
 
     }
