@@ -398,6 +398,40 @@
         width: 100%;
       }
     }
+    /* =========================================================
+   CATATAN UMUM PEMERIKSAAN
+========================================================= */
+
+.catatan-umum {
+  margin-top: 25px;
+  padding: 18px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.catatan-umum label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#catatanPemeriksaan {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+#catatanPemeriksaan:focus {
+  outline: none;
+  border-color: #1976d2;
+}
   </style>
 
   <script
@@ -603,7 +637,18 @@
             <div class="loading">
               Klik Form Pemeriksaan untuk memuat checklist...
             </div>
+<div class="catatan-umum">
 
+  <label for="catatanPemeriksaan">
+    CATATAN:
+  </label>
+
+  <textarea
+    id="catatanPemeriksaan"
+    placeholder="Tulis catatan / temuan pemeriksaan..."
+  ></textarea>
+
+</div>
           </div>
 
           <div
