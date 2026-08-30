@@ -1827,25 +1827,7 @@ function loadChecklist() {
           item.URUTAN || "";
 
 
-        const aktif =
-          String(
-            item.AKTIF || ""
-          )
-          .trim()
-          .toUpperCase();
 
-
-        if (
-          aktif &&
-          aktif !== "YA" &&
-          aktif !== "AKTIF" &&
-          aktif !== "TRUE" &&
-          aktif !== "1"
-        ) {
-
-          return;
-
-        }
 
 
         nomorTampil++;
