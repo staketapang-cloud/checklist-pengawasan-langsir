@@ -444,13 +444,15 @@
     }
 
 
-    function tampilkanFormPemeriksaan() {
+  function tampilkanFormPemeriksaan() {
 
-      document.getElementById(
-        "formPemeriksaan"
-      ).style.display = "block";
+  document.getElementById(
+    "formPemeriksaan"
+  ).style.display = "block";
 
-    }
+  loadStasiun();
+
+}
 
 
     function tampilkanRiwayatPemeriksaan() {
@@ -496,7 +498,32 @@
       );
 
     }
+function loadStasiun() {
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
 
+  fetch(API_URL + "?action=master_stasiun")
+    .then(response => response.json())
+    .then(result => {
+      console.log("Data MASTER_STASIUN:", result);
+
+      if (result.success && result.data) {
+        const select = document.getElementById("stasiunPemeriksaan");
+
+        result.data.forEach(item => {
+          const option = document.createElement("option");
+
+          option.value = item.ID;
+          option.textContent = item.STASIUN;
+
+          select.appendChild(option);
+        });
+      }
+    })
+    .catch(error => {
+      console.error("Gagal mengambil data stasiun:", error);
+    });
+}
   </script>
 
 </body>
