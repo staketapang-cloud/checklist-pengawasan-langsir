@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Checklist Pengawasan Kegiatan Langsir</title>
-  
-  <meta name="google-signin-client_id" content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com">
+
+  <meta
+    name="google-signin-client_id"
+    content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
+  >
 
   <style>
     * {
@@ -20,17 +23,6 @@
       color: #222;
     }
 
-    <script>
-  if (!cekStatusLogin()) {
-    document.body.innerHTML = `
-      <div style="text-align:center; padding:50px;">
-        <h2>Akses Ditolak</h2>
-        <p>Silakan login terlebih dahulu.</p>
-      </div>
-    `;
-  }
-</script>
-    
     .container {
       max-width: 1100px;
       margin: 0 auto;
@@ -64,6 +56,40 @@
       text-align: center;
     }
 
+    .dashboard {
+      margin-top: 10px;
+    }
+
+    .dashboard h1 {
+      margin-bottom: 10px;
+    }
+
+    .dashboard p {
+      color: #666;
+    }
+
+    #menuUtama {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    #menuUtama button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #1976d2;
+      color: white;
+      font-size: 14px;
+    }
+
+    #menuUtama button:hover {
+      opacity: 0.9;
+    }
+
     .status {
       display: inline-block;
       padding: 8px 14px;
@@ -86,8 +112,17 @@
       .card {
         padding: 20px 15px;
       }
+
+      #menuUtama {
+        flex-direction: column;
+      }
+
+      #menuUtama button {
+        width: 100%;
+      }
     }
   </style>
+
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
@@ -101,120 +136,261 @@
     </div>
 
     <div class="card">
+
       <div id="googleLogin"></div>
+
       <div id="userInfo" style="display:none;"></div>
 
-<div id="app" style="display:none;">
-  <div class="dashboard">
-    <h1>Dashboard</h1>
-    <p>Sistem Informasi Pengawasan Kegiatan Langsir</p>
+      <div id="app" style="display:none;">
 
-<div id="menuUtama">
-  <button onclick="tampilkanDashboard()">Dashboard</button>
-  <button onclick="tampilkanFormPemeriksaan()">Form Pemeriksaan</button>
-  <button onclick="tampilkanRiwayatPemeriksaan()">Riwayat Pemeriksaan</button>
-  <button onclick="tampilkanRekapPemeriksaan()">Rekap Pemeriksaan</button>
-  <button onclick="tampilkanDataPegawai()">Data Pegawai</button>
-  <button onclick="tampilkanDataStasiun()">Data Stasiun</button>
-  <button onclick="tampilkanDataLokomotif()">Data Lokomotif</button>
-</div>
-  </div>
-</div>
+        <div class="dashboard">
+
+          <h1>Dashboard</h1>
+
+          <p>
+            Sistem Informasi Pengawasan Kegiatan Langsir
+          </p>
+
+          <div id="menuUtama">
+
+            <button onclick="tampilkanDashboard()">
+              Dashboard
+            </button>
+
+            <button onclick="tampilkanFormPemeriksaan()">
+              Form Pemeriksaan
+            </button>
+
+            <button onclick="tampilkanRiwayatPemeriksaan()">
+              Riwayat Pemeriksaan
+            </button>
+
+            <button onclick="tampilkanRekapPemeriksaan()">
+              Rekap Pemeriksaan
+            </button>
+
+            <button onclick="tampilkanDataPegawai()">
+              Data Pegawai
+            </button>
+
+            <button onclick="tampilkanDataStasiun()">
+              Data Stasiun
+            </button>
+
+            <button onclick="tampilkanDataLokomotif()">
+              Data Lokomotif
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
   </div>
-<script>
-  window.onload = function () {
-    google.accounts.id.initialize({
-      client_id: "566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com",
-      callback: handleCredentialResponse
-    });
 
-    google.accounts.id.renderButton(
-      document.getElementById("googleLogin"),
-      {
-        theme: "outline",
-        size: "large",
-        text: "signin_with",
-        shape: "rectangular"
+  <script>
+
+    window.onload = function () {
+
+      google.accounts.id.initialize({
+        client_id:
+          "566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("googleLogin"),
+        {
+          theme: "outline",
+          size: "large",
+          text: "signin_with",
+          shape: "rectangular"
+        }
+      );
+
+    };
+
+
+    function handleCredentialResponse(response) {
+
+      console.log("Google Login berhasil:", response);
+
+      // Decode credential Google
+      const payload =
+        JSON.parse(atob(response.credential.split(".")[1]));
+
+      // Ambil email Google
+      const email = payload.email;
+
+      console.log("Email Google:", email);
+
+
+      // URL API Apps Script
+      const API_URL =
+        "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+
+
+      // Hubungkan email dengan API USER
+      fetch(
+        API_URL +
+        "?action=user&email=" +
+        encodeURIComponent(email)
+      )
+
+        .then(response => response.json())
+
+        .then(result => {
+
+          console.log("Hasil pengecekan USER:", result);
+          console.log("Data USER:", result.data);
+
+
+          if (result.success && result.data) {
+
+            // Simpan status login
+            sessionStorage.setItem(
+              "isLoggedIn",
+              "true"
+            );
+
+            sessionStorage.setItem(
+              "userEmail",
+              result.data.EMAIL
+            );
+
+            sessionStorage.setItem(
+              "userNama",
+              result.data.NAMA
+            );
+
+            sessionStorage.setItem(
+              "userRole",
+              result.data.ROLE
+            );
+
+
+            // Sembunyikan login Google
+            document.getElementById(
+              "googleLogin"
+            ).style.display = "none";
+
+
+            // Tampilkan aplikasi
+            document.getElementById(
+              "app"
+            ).style.display = "block";
+
+          }
+
+        })
+
+        .catch(error => {
+
+          console.error(
+            "Gagal menghubungi API USER:",
+            error
+          );
+
+        });
+
+    }
+
+
+    function cekStatusLogin() {
+
+      const isLoggedIn =
+        sessionStorage.getItem("isLoggedIn");
+
+      if (isLoggedIn === "true") {
+        return true;
       }
-    );
-  };
 
-function handleCredentialResponse(response) {
-  console.log("Google Login berhasil:", response);
+      return false;
 
-  // Decode credential Google (JWT)
-  const payload = JSON.parse(atob(response.credential.split(".")[1]));
+    }
 
-  // Ambil email user
-  const email = payload.email;
 
-  console.log("Email Google:", email);
+    // Jika sudah login sebelumnya,
+    // langsung tampilkan aplikasi
+    if (cekStatusLogin()) {
 
-  // URL API Apps Script
-  const API_URL =
-    "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+      document.getElementById(
+        "app"
+      ).style.display = "block";
 
-  // Hubungkan email dengan API USER
-  fetch(API_URL + "?action=user&email=" + encodeURIComponent(email))
-    .then(response => response.json())
-.then(result => {
-  console.log("Hasil pengecekan USER:", result);
-  console.log("Data USER:", result.data);
+      document.getElementById(
+        "googleLogin"
+      ).style.display = "none";
 
-if (result.success && result.data) {
+    }
 
-  // Simpan status login
-  sessionStorage.setItem("isLoggedIn", "true");
-  sessionStorage.setItem("userEmail", result.data.EMAIL);
-  sessionStorage.setItem("userNama", result.data.NAMA);
-  sessionStorage.setItem("userRole", result.data.ROLE);
 
-  const userInfo = document.getElementById("userInfo");
+    function tampilkanDashboard() {
 
-userInfo.style.display = "none";
-  document.getElementById("googleLogin").style.display = "none";
-  document.getElementById("app").style.display = "block";
-}
-})
-    .catch(error => {
-  console.error("Gagal menghubungi API USER:", error);
-});
-}
-  function cekStatusLogin() {
-  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+      document.getElementById(
+        "app"
+      ).style.display = "block";
 
-  if (isLoggedIn === "true") {
-    return true;
-  }
+    }
 
-  return false;
-}
-  if (cekStatusLogin()) {
-  document.getElementById("app").style.display = "block";
-}
-  function tampilkanDashboard() {
-  document.getElementById("app").style.display = "block";
-}
-function tampilkanFormPemeriksaan() {
-  alert("Form Pemeriksaan akan dibuat pada tahap berikutnya.");
-}
-  function tampilkanRiwayatPemeriksaan() {
-  alert("Riwayat Pemeriksaan akan dibuat pada tahap berikutnya.");
-}
-  function tampilkanRekapPemeriksaan() {
-  alert("Rekap Pemeriksaan akan dibuat pada tahap berikutnya.");
-}
-  function tampilkanDataPegawai() {
-  alert("Rekap Pegawai akan dibuat pada tahap berikutnya.");
-}
-  function tampilkanDataStasiun() {
-  alert("Rekap Stasiun akan dibuat pada tahap berikutnya.");
-}
-  function tampilkanDataLokomotif() {
-  alert("Rekap Lokomotif akan dibuat pada tahap berikutnya.");
-}
-</script>
+
+    function tampilkanFormPemeriksaan() {
+
+      alert(
+        "Form Pemeriksaan akan dibuat pada tahap berikutnya."
+      );
+
+    }
+
+
+    function tampilkanRiwayatPemeriksaan() {
+
+      alert(
+        "Riwayat Pemeriksaan akan dibuat pada tahap berikutnya."
+      );
+
+    }
+
+
+    function tampilkanRekapPemeriksaan() {
+
+      alert(
+        "Rekap Pemeriksaan akan dibuat pada tahap berikutnya."
+      );
+
+    }
+
+
+    function tampilkanDataPegawai() {
+
+      alert(
+        "Rekap Pegawai akan dibuat pada tahap berikutnya."
+      );
+
+    }
+
+
+    function tampilkanDataStasiun() {
+
+      alert(
+        "Rekap Stasiun akan dibuat pada tahap berikutnya."
+      );
+
+    }
+
+
+    function tampilkanDataLokomotif() {
+
+      alert(
+        "Rekap Lokomotif akan dibuat pada tahap berikutnya."
+      );
+
+    }
+
+  </script>
+
 </body>
 </html>
