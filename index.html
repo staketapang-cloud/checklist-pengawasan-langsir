@@ -667,7 +667,25 @@
               </option>
 
             </select>
+<div class="section-title">
+  Mulai Pemeriksaan
+</div>
 
+<button
+  type="button"
+  class="btn-primary"
+  onclick="simpanIdentitasPemeriksaan()">
+  Simpan & Lanjut Checklist
+</button>
+
+<div
+  id="statusSimpanPemeriksaan"
+  style="
+    margin-top:15px;
+    text-align:center;
+    font-weight:bold;
+  ">
+</div>
           </div>
 
 
@@ -1912,7 +1930,243 @@
     );
 
   }
+/* ==========================================
+   SIMPAN IDENTITAS PEMERIKSAAN
+========================================== */
 
+function simpanIdentitasPemeriksaan() {
+
+  const tanggal =
+    document.getElementById(
+      "tanggalPemeriksaan"
+    ).value;
+
+  const stasiun =
+    document.getElementById(
+      "stasiunPemeriksaan"
+    ).value;
+
+  const lokomotif =
+    document.getElementById(
+      "lokomotifPemeriksaan"
+    ).value;
+
+  const masinis =
+    document.getElementById(
+      "masinisPemeriksaan"
+    ).value;
+
+  const asistenMasinis =
+    document.getElementById(
+      "asistenMasinisPemeriksaan"
+    ).value;
+
+  const plr1 =
+    document.getElementById(
+      "plr1Pemeriksaan"
+    ).value;
+
+  const plr2 =
+    document.getElementById(
+      "plr2Pemeriksaan"
+    ).value;
+
+  const plrDipo =
+    document.getElementById(
+      "plrDipoPemeriksaan"
+    ).value;
+
+  const petugasSchowing =
+    document.getElementById(
+      "petugasSchowingPemeriksaan"
+    ).value;
+
+
+  /* ==========================================
+     VALIDASI
+  ========================================== */
+
+  if (!tanggal) {
+    alert("Tanggal Pemeriksaan wajib dipilih.");
+    return;
+  }
+
+  if (!stasiun) {
+    alert("Stasiun wajib dipilih.");
+    return;
+  }
+
+  if (!lokomotif) {
+    alert("Lokomotif wajib dipilih.");
+    return;
+  }
+
+  if (!masinis) {
+    alert("Masinis wajib dipilih.");
+    return;
+  }
+
+  if (!asistenMasinis) {
+    alert("Asisten Masinis wajib dipilih.");
+    return;
+  }
+
+
+  /* ==========================================
+     DATA TRANSAKSI
+  ========================================== */
+
+  const data = {
+
+    TANGGAL: tanggal,
+
+    STASIUN: stasiun,
+
+    LOKOMOTIF: lokomotif,
+
+    MASINIS: masinis,
+
+    ASISTEN_MASINIS: asistenMasinis,
+
+    PLR1: plr1,
+
+    PLR2: plr2,
+
+    PLR_DIPO: plrDipo,
+
+    PETUGAS_SCHOWING: petugasSchowing,
+
+    STATUS: "DRAFT",
+
+    TTD: ""
+
+  };
+
+
+  console.log(
+    "Data yang akan disimpan:",
+    data
+  );
+
+
+  const status =
+    document.getElementById(
+      "statusSimpanPemeriksaan"
+    );
+
+
+  status.textContent =
+    "Menyimpan pemeriksaan...";
+
+
+  /* ==========================================
+     KIRIM KE APPS SCRIPT
+  ========================================== */
+
+  fetch(
+    API_URL,
+    {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+
+      body: JSON.stringify({
+
+        action: "create_transaksi",
+
+        data: data
+
+      })
+
+    }
+  )
+
+  .then(
+    response => response.json()
+  )
+
+  .then(
+    result => {
+
+      console.log(
+        "Hasil create_transaksi:",
+        result
+      );
+
+
+      if (
+        result.success
+      ) {
+
+        const idPemeriksaan =
+          result.id_pemeriksaan;
+
+
+        /* Simpan ID pemeriksaan */
+
+        sessionStorage.setItem(
+          "idPemeriksaan",
+          idPemeriksaan
+        );
+
+
+        status.textContent =
+          "Pemeriksaan berhasil dibuat. ID: " +
+          idPemeriksaan;
+
+
+        alert(
+          "Pemeriksaan berhasil dibuat.\n\nID Pemeriksaan: " +
+          idPemeriksaan
+        );
+
+
+        /* ==================================
+           LANJUT KE CHECKLIST
+        ================================== */
+
+        tampilkanChecklist();
+
+      } else {
+
+        status.textContent =
+          "Gagal menyimpan pemeriksaan.";
+
+
+        alert(
+          result.message ||
+          "Gagal menyimpan pemeriksaan."
+        );
+
+      }
+
+    }
+  )
+
+  .catch(
+    error => {
+
+      console.error(
+        "Gagal menyimpan transaksi:",
+        error
+      );
+
+
+      status.textContent =
+        "Gagal menghubungi server.";
+
+
+      alert(
+        "Gagal menghubungi server.\n\n" +
+        error.message
+      );
+
+    }
+  );
+
+}
 </script>
 
 </body>
