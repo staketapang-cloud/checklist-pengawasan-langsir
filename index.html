@@ -167,12 +167,8 @@ if (result.success && result.data) {
 
   const userInfo = document.getElementById("userInfo");
 
-  userInfo.innerHTML =
-    "Login berhasil<br>" +
-    "Nama: " + result.data.NAMA + "<br>" +
-    "Role: " + result.data.ROLE;
-
-  userInfo.style.display = "block";
+userInfo.style.display = "none";
+  document.getElementById("googleLogin").style.display = "none";
   document.getElementById("app").style.display = "block";
 }
 })
