@@ -1,23 +1,21 @@
+```html
 <!DOCTYPE html>
-
 <html lang="id">
 <head>
 
   <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Checklist Pengawasan Kegiatan Langsir</title>
 
-<meta
-name="google-signin-client_id"
-content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
-
->
+  <meta
+    name="google-signin-client_id"
+    content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.com"
+  >
 
   <style>
 
@@ -425,10 +423,6 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
         width: 100%;
       }
 
-      .checklist-header {
-        align-items: flex-start;
-      }
-
       .checklist-choice {
         flex-direction: column;
       }
@@ -467,377 +461,373 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
   <div class="header">
 
-```
-<h1>
-  Checklist Pengawasan Kegiatan Langsir
-</h1>
-
-<p>
-  Sistem Informasi Pengawasan Kegiatan Langsir
-</p>
-```
-
-  </div>
-
-  <div class="card">
-
-```
-<div id="googleLogin"></div>
-
-<div
-  id="app"
-  style="display:none;"
->
-
-  <div class="dashboard">
-
     <h1>
-      Dashboard
+      Checklist Pengawasan Kegiatan Langsir
     </h1>
 
     <p>
       Sistem Informasi Pengawasan Kegiatan Langsir
     </p>
 
-    <div
-      id="infoUser"
-      class="info-user">
-    </div>
-
-    <div id="menuUtama">
-
-      <button onclick="tampilkanDashboard()">
-        Dashboard
-      </button>
-
-      <button onclick="tampilkanFormPemeriksaan()">
-        Form Pemeriksaan
-      </button>
-
-      <button onclick="tampilkanRiwayatPemeriksaan()">
-        Riwayat Pemeriksaan
-      </button>
-
-      <button onclick="tampilkanRekapPemeriksaan()">
-        Rekap Pemeriksaan
-      </button>
-
-      <button onclick="tampilkanDataPegawai()">
-        Data Pegawai
-      </button>
-
-      <button onclick="tampilkanDataStasiun()">
-        Data Stasiun
-      </button>
-
-      <button onclick="tampilkanDataLokomotif()">
-        Data Lokomotif
-      </button>
-
-    </div>
-
   </div>
 
-  <div
-    id="formPemeriksaan"
-    style="display:none;"
-  >
+  <div class="card">
 
-    <h2>
-      Form Pemeriksaan
-    </h2>
+    <div id="googleLogin"></div>
 
-    <p>
-      Form pemeriksaan kegiatan langsir
-    </p>
+    <div
+      id="app"
+      style="display:none;"
+    >
 
-    <div id="identitasPemeriksaan">
+      <div class="dashboard">
 
-      <div class="section-title">
-        Identitas Pemeriksaan
-      </div>
-
-      <div class="form-group">
-
-        <label for="tanggalPemeriksaan">
-          Hari / Tanggal
-        </label>
-
-        <input
-          type="date"
-          id="tanggalPemeriksaan"
-        >
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="dinasLangsirPemeriksaan">
-          Dinas Langsir
-        </label>
-
-        <select id="dinasLangsirPemeriksaan">
-
-          <option value="">
-            Pilih Dinas Langsir
-          </option>
-
-          <option value="DINAS PAGI">
-            DINAS PAGI
-          </option>
-
-          <option value="DINAS SIANG">
-            DINAS SIANG
-          </option>
-
-          <option value="DINAS MALAM">
-            DINAS MALAM
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="stasiunPemeriksaan">
-          Stasiun / Emplasemen
-        </label>
-
-        <select id="stasiunPemeriksaan">
-
-          <option value="">
-            Pilih Stasiun / Emplasemen
-          </option>
-
-        </select>
-
-      </div>
-
-      <!-- =================================================
-           LOKOMOTIF
-      ================================================= -->
-
-      <div class="form-group">
-
-        <label for="lokomotifPemeriksaan">
-          Lokomotif
-        </label>
-
-        <select id="lokomotifPemeriksaan">
-
-          <option value="">
-            Pilih Lokomotif
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="section-title">
-        Data Petugas
-      </div>
-
-      <div class="form-group">
-
-        <label for="masinisPemeriksaan">
-          Masinis
-        </label>
-
-        <select id="masinisPemeriksaan">
-
-          <option value="">
-            Pilih Masinis
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="asistenMasinisPemeriksaan">
-          Asisten Masinis
-        </label>
-
-        <select id="asistenMasinisPemeriksaan">
-
-          <option value="">
-            Pilih Asisten Masinis
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="plr1Pemeriksaan">
-          PLR 1
-        </label>
-
-        <select id="plr1Pemeriksaan">
-
-          <option value="">
-            Pilih PLR 1
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="plr2Pemeriksaan">
-          PLR 2
-        </label>
-
-        <select id="plr2Pemeriksaan">
-
-          <option value="">
-            Pilih PLR 2
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="plrDipoPemeriksaan">
-          PLR DIPO
-        </label>
-
-        <select id="plrDipoPemeriksaan">
-
-          <option value="">
-            Pilih PLR DIPO
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-
-        <label for="petugasSchowingPemeriksaan">
-          Petugas Schowing
-        </label>
-
-        <select id="petugasSchowingPemeriksaan">
-
-          <option value="">
-            Pilih Petugas Schowing
-          </option>
-
-        </select>
-
-      </div>
-
-      <div class="section-title">
-        Checklist Pengawasan
-      </div>
-
-      <div
-        id="checklistContainer"
-        class="checklist-container"
-      >
-
-        <div class="loading">
-          Klik Form Pemeriksaan untuk memuat checklist...
-        </div>
-
-      </div>
-
-      <div class="catatan-umum">
-
-        <label for="catatanPemeriksaan">
-          CATATAN:
-        </label>
-
-        <textarea
-          id="catatanPemeriksaan"
-          placeholder="Tulis catatan / temuan pemeriksaan..."
-        ></textarea>
-
-      </div>
-
-      <div
-        id="statusBox"
-        class="status-box">
-      </div>
-
-      <div class="button-group">
-
-        <button
-          type="button"
-          class="btn btn-draft"
-          onclick="simpanDraft()"
-        >
-          Simpan Draft
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-simpan"
-          onclick="simpanPemeriksaan()"
-        >
-          Simpan Pemeriksaan
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-ttd"
-          onclick="tampilkanTTD()"
-        >
-          TTD
-        </button>
-
-      </div>
-
-      <div
-        id="ttdBox"
-        class="ttd-box"
-      >
-
-        <h3>
-          Tanda Tangan Digital
-        </h3>
+        <h1>
+          Dashboard
+        </h1>
 
         <p>
-          Silakan tanda tangan pada kotak berikut.
+          Sistem Informasi Pengawasan Kegiatan Langsir
         </p>
 
-        <canvas id="signatureCanvas"></canvas>
+        <div
+          id="infoUser"
+          class="info-user">
+        </div>
 
-        <div class="ttd-buttons">
+        <div id="menuUtama">
 
-          <button
-            type="button"
-            class="btn-clear"
-            onclick="clearSignature()"
-          >
-            Hapus
+          <button onclick="tampilkanDashboard()">
+            Dashboard
           </button>
 
-          <button
-            type="button"
-            class="btn-save-ttd"
-            onclick="simpanTTD()"
-          >
-            Simpan TTD
+          <button onclick="tampilkanFormPemeriksaan()">
+            Form Pemeriksaan
+          </button>
+
+          <button onclick="tampilkanRiwayatPemeriksaan()">
+            Riwayat Pemeriksaan
+          </button>
+
+          <button onclick="tampilkanRekapPemeriksaan()">
+            Rekap Pemeriksaan
+          </button>
+
+          <button onclick="tampilkanDataPegawai()">
+            Data Pegawai
+          </button>
+
+          <button onclick="tampilkanDataStasiun()">
+            Data Stasiun
+          </button>
+
+          <button onclick="tampilkanDataLokomotif()">
+            Data Lokomotif
           </button>
 
         </div>
 
       </div>
 
+      <div
+        id="formPemeriksaan"
+        style="display:none;"
+      >
+
+        <h2>
+          Form Pemeriksaan
+        </h2>
+
+        <p>
+          Form pemeriksaan kegiatan langsir
+        </p>
+
+        <div id="identitasPemeriksaan">
+
+          <div class="section-title">
+            Identitas Pemeriksaan
+          </div>
+
+          <div class="form-group">
+
+            <label for="tanggalPemeriksaan">
+              Hari / Tanggal
+            </label>
+
+            <input
+              type="date"
+              id="tanggalPemeriksaan"
+            >
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="dinasLangsirPemeriksaan">
+              Dinas Langsir
+            </label>
+
+            <select id="dinasLangsirPemeriksaan">
+
+              <option value="">
+                Pilih Dinas Langsir
+              </option>
+
+              <option value="DINAS PAGI">
+                DINAS PAGI
+              </option>
+
+              <option value="DINAS SIANG">
+                DINAS SIANG
+              </option>
+
+              <option value="DINAS MALAM">
+                DINAS MALAM
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="stasiunPemeriksaan">
+              Stasiun / Emplasemen
+            </label>
+
+            <select id="stasiunPemeriksaan">
+
+              <option value="">
+                Pilih Stasiun / Emplasemen
+              </option>
+
+            </select>
+
+          </div>
+
+          <!-- =================================================
+               LOKOMOTIF
+          ================================================= -->
+
+          <div class="form-group">
+
+            <label for="lokomotifPemeriksaan">
+              Lokomotif
+            </label>
+
+            <select id="lokomotifPemeriksaan">
+
+              <option value="">
+                Pilih Lokomotif
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="section-title">
+            Data Petugas
+          </div>
+
+          <div class="form-group">
+
+            <label for="masinisPemeriksaan">
+              Masinis
+            </label>
+
+            <select id="masinisPemeriksaan">
+
+              <option value="">
+                Pilih Masinis
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="asistenMasinisPemeriksaan">
+              Asisten Masinis
+            </label>
+
+            <select id="asistenMasinisPemeriksaan">
+
+              <option value="">
+                Pilih Asisten Masinis
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="plr1Pemeriksaan">
+              PLR 1
+            </label>
+
+            <select id="plr1Pemeriksaan">
+
+              <option value="">
+                Pilih PLR 1
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="plr2Pemeriksaan">
+              PLR 2
+            </label>
+
+            <select id="plr2Pemeriksaan">
+
+              <option value="">
+                Pilih PLR 2
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="plrDipoPemeriksaan">
+              PLR DIPO
+            </label>
+
+            <select id="plrDipoPemeriksaan">
+
+              <option value="">
+                Pilih PLR DIPO
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="form-group">
+
+            <label for="petugasSchowingPemeriksaan">
+              Petugas Schowing
+            </label>
+
+            <select id="petugasSchowingPemeriksaan">
+
+              <option value="">
+                Pilih Petugas Schowing
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="section-title">
+            Checklist Pengawasan
+          </div>
+
+          <div
+            id="checklistContainer"
+            class="checklist-container"
+          >
+
+            <div class="loading">
+              Klik Form Pemeriksaan untuk memuat checklist...
+            </div>
+
+          </div>
+
+          <div class="catatan-umum">
+
+            <label for="catatanPemeriksaan">
+              CATATAN:
+            </label>
+
+            <textarea
+              id="catatanPemeriksaan"
+              placeholder="Tulis catatan / temuan pemeriksaan..."
+            ></textarea>
+
+          </div>
+
+          <div
+            id="statusBox"
+            class="status-box">
+          </div>
+
+          <div class="button-group">
+
+            <button
+              type="button"
+              class="btn btn-draft"
+              onclick="simpanDraft()"
+            >
+              Simpan Draft
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-simpan"
+              onclick="simpanPemeriksaan()"
+            >
+              Simpan Pemeriksaan
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-ttd"
+              onclick="tampilkanTTD()"
+            >
+              TTD
+            </button>
+
+          </div>
+
+          <div
+            id="ttdBox"
+            class="ttd-box"
+          >
+
+            <h3>
+              Tanda Tangan Digital
+            </h3>
+
+            <p>
+              Silakan tanda tangan pada kotak berikut.
+            </p>
+
+            <canvas id="signatureCanvas"></canvas>
+
+            <div class="ttd-buttons">
+
+              <button
+                type="button"
+                class="btn-clear"
+                onclick="clearSignature()"
+              >
+                Hapus
+              </button>
+
+              <button
+                type="button"
+                class="btn-save-ttd"
+                onclick="simpanTTD()"
+              >
+                Simpan TTD
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
-
-  </div>
-
-</div>
-```
 
   </div>
 
@@ -870,7 +860,7 @@ let sedangMenggambar = false;
 
 
 /* =========================================================
-   SAAT HALAMAN SELESAI
+   LOAD SAAT HALAMAN
 ========================================================= */
 
 window.addEventListener(
@@ -888,7 +878,7 @@ window.addEventListener(
 
 
 /* =========================================================
-   TUNGGU GOOGLE LOGIN
+   TUNGGU GOOGLE
 ========================================================= */
 
 function tungguGoogleLogin() {
@@ -918,10 +908,6 @@ function tungguGoogleLogin() {
         if (percobaan >= 30) {
 
           clearInterval(timer);
-
-          console.error(
-            "Google Identity Services tidak tersedia."
-          );
 
           const login =
             document.getElementById(
@@ -968,32 +954,21 @@ function mulaiGoogleLogin() {
     );
 
   if (!login) {
-
-    console.error(
-      "googleLogin tidak ditemukan."
-    );
-
     return;
-
   }
 
   google.accounts.id.renderButton(
-
     login,
-
     {
       theme: "outline",
       size: "large",
       text: "signin_with",
       shape: "rectangular"
     }
-
   );
 
   if (cekStatusLogin()) {
-
     tampilkanAplikasi();
-
   }
 
 }
@@ -1003,15 +978,9 @@ function mulaiGoogleLogin() {
    RESPONSE GOOGLE
 ========================================================= */
 
-function handleCredentialResponse(
-  response
-) {
+function handleCredentialResponse(response) {
 
   try {
-
-    console.log(
-      "Google login berhasil diterima."
-    );
 
     if (
       !response ||
@@ -1119,8 +1088,7 @@ function handleCredentialResponse(
             result.data.ROLE || ""
           );
 
-          idPemeriksaanAktif =
-            "";
+          idPemeriksaanAktif = "";
 
           tampilkanAplikasi();
 
@@ -1175,12 +1143,10 @@ function handleCredentialResponse(
 
 
 /* =========================================================
-   BASE64 URL DECODE
+   BASE64
 ========================================================= */
 
-function base64UrlDecode(
-  value
-) {
+function base64UrlDecode(value) {
 
   let base64 =
     value
@@ -1219,9 +1185,7 @@ function cekStatusLogin() {
    STATUS LOGIN
 ========================================================= */
 
-function tampilkanStatusLogin(
-  pesan
-) {
+function tampilkanStatusLogin(pesan) {
 
   const login =
     document.getElementById(
@@ -1257,17 +1221,11 @@ function tampilkanAplikasi() {
     );
 
   if (login) {
-
-    login.style.display =
-      "none";
-
+    login.style.display = "none";
   }
 
   if (app) {
-
-    app.style.display =
-      "block";
-
+    app.style.display = "block";
   }
 
   tampilkanInfoUser();
@@ -1289,9 +1247,7 @@ function tampilkanInfoUser() {
     );
 
   if (!info) {
-
     return;
-
   }
 
   const nama =
@@ -1332,18 +1288,12 @@ function tampilkanDashboard() {
     );
 
   if (form) {
-
-    form.style.display =
-      "none";
-
+    form.style.display = "none";
   }
 
   window.scrollTo({
-
     top: 0,
-
     behavior: "smooth"
-
   });
 
 }
@@ -1361,17 +1311,10 @@ function tampilkanFormPemeriksaan() {
     );
 
   if (!form) {
-
-    console.error(
-      "formPemeriksaan tidak ditemukan."
-    );
-
     return;
-
   }
 
-  form.style.display =
-    "block";
+  form.style.display = "block";
 
   const tanggal =
     document.getElementById(
@@ -1392,18 +1335,12 @@ function tampilkanFormPemeriksaan() {
     const bulan =
       String(
         sekarang.getMonth() + 1
-      ).padStart(
-        2,
-        "0"
-      );
+      ).padStart(2, "0");
 
     const hari =
       String(
         sekarang.getDate()
-      ).padStart(
-        2,
-        "0"
-      );
+      ).padStart(2, "0");
 
     tanggal.value =
       tahun +
@@ -1414,6 +1351,10 @@ function tampilkanFormPemeriksaan() {
 
   }
 
+  /*
+   * LOAD SEMUA MASTER
+   */
+
   loadStasiun();
 
   loadLokomotif();
@@ -1423,11 +1364,8 @@ function tampilkanFormPemeriksaan() {
   loadChecklist();
 
   form.scrollIntoView({
-
     behavior: "smooth",
-
     block: "start"
-
   });
 
 }
@@ -1445,9 +1383,7 @@ function loadStasiun() {
     );
 
   if (!select) {
-
     return;
-
   }
 
   select.innerHTML =
@@ -1498,33 +1434,33 @@ function loadStasiun() {
         result.data.forEach(
           function (item) {
 
+            const id =
+              item.ID || "";
+
+            const nama =
+              item.STASIUN ||
+              item.NAMA_STASIUN ||
+              item.NAMA ||
+              "";
+
+            if (!id && !nama) {
+              return;
+            }
+
             const option =
               document.createElement(
                 "option"
               );
 
             option.value =
-              item.ID ||
-              item.STASIUN ||
-              item.NAMA ||
-              "";
+              id;
 
             option.textContent =
-              item.STASIUN ||
-              item.NAMA ||
-              item.NAMA_STASIUN ||
-              "";
+              nama;
 
-            if (
-              option.value &&
-              option.textContent
-            ) {
-
-              select.appendChild(
-                option
-              );
-
-            }
+            select.appendChild(
+              option
+            );
 
           }
         );
@@ -1555,9 +1491,14 @@ function loadStasiun() {
 
 /* =========================================================
    LOAD LOKOMOTIF
+   PERBAIKAN UTAMA
 ========================================================= */
 
 function loadLokomotif() {
+
+  console.log(
+    "Mulai loadLokomotif()..."
+  );
 
   const select =
     document.getElementById(
@@ -1567,7 +1508,7 @@ function loadLokomotif() {
   if (!select) {
 
     console.error(
-      "Element lokomotifPemeriksaan tidak ditemukan."
+      "ERROR: elemen lokomotifPemeriksaan tidak ditemukan."
     );
 
     return;
@@ -1579,10 +1520,6 @@ function loadLokomotif() {
     "Memuat data lokomotif..." +
     "</option>";
 
-  console.log(
-    "Memuat data lokomotif dari API..."
-  );
-
   fetch(
     API_URL +
     "?action=master_lokomotif"
@@ -1590,6 +1527,11 @@ function loadLokomotif() {
 
   .then(
     function (response) {
+
+      console.log(
+        "HTTP LOKOMOTIF:",
+        response.status
+      );
 
       if (!response.ok) {
 
@@ -1609,7 +1551,7 @@ function loadLokomotif() {
     function (result) {
 
       console.log(
-        "DATA LOKOMOTIF:",
+        "HASIL API LOKOMOTIF:",
         result
       );
 
@@ -1618,36 +1560,54 @@ function loadLokomotif() {
         "Pilih Lokomotif" +
         "</option>";
 
+      /*
+       * Pastikan response benar
+       */
+
       if (
+        !result ||
         !result.success
       ) {
 
         console.error(
           "API lokomotif gagal:",
-          result.message
+          result
         );
 
         select.innerHTML =
           "<option value=''>" +
-          "Data lokomotif gagal dimuat" +
+          "Data lokomotif tidak tersedia" +
           "</option>";
 
         return;
 
       }
 
+      /*
+       * Pastikan data berupa array
+       */
+
       if (
         !Array.isArray(result.data)
       ) {
 
         console.error(
-          "Data lokomotif bukan array:",
+          "result.data bukan array:",
           result.data
         );
+
+        select.innerHTML =
+          "<option value=''>" +
+          "Format data lokomotif salah" +
+          "</option>";
 
         return;
 
       }
+
+      /*
+       * Tidak ada data
+       */
 
       if (
         result.data.length === 0
@@ -1655,15 +1615,112 @@ function loadLokomotif() {
 
         select.innerHTML =
           "<option value=''>" +
-          "Data lokomotif belum tersedia" +
+          "Belum ada lokomotif aktif" +
           "</option>";
 
         return;
 
       }
 
+      let jumlah =
+        0;
+
+      /*
+       * BACA DATA LOKOMOTIF
+       */
+
       result.data.forEach(
         function (item) {
+
+          console.log(
+            "ITEM LOKOMOTIF:",
+            item
+          );
+
+          /*
+           * Sesuai schema:
+           *
+           * ID
+           * NOMOR_LOK
+           * JENIS
+           * STATUS
+           */
+
+          const id =
+            String(
+              item.ID || ""
+            ).trim();
+
+          const nomorLok =
+            String(
+              item.NOMOR_LOK ||
+              item.NOMOR_LOKOMOTIF ||
+              ""
+            ).trim();
+
+          const jenis =
+            String(
+              item.JENIS || ""
+            ).trim();
+
+          const status =
+            String(
+              item.STATUS || ""
+            )
+            .trim()
+            .toUpperCase();
+
+          /*
+           * Lewati baris kosong
+           */
+
+          if (
+            !id &&
+            !nomorLok
+          ) {
+
+            return;
+
+          }
+
+          /*
+           * Hanya STATUS AKTIF
+           *
+           * Jika STATUS kosong,
+           * tetap ditampilkan supaya
+           * data tidak hilang.
+           */
+
+          if (
+            status &&
+            status !== "AKTIF"
+          ) {
+
+            console.log(
+              "Lokomotif dilewati karena status:",
+              status,
+              item
+            );
+
+            return;
+
+          }
+
+          /*
+           * Jika nomor lok kosong,
+           * jangan tampilkan baris kosong.
+           */
+
+          if (!nomorLok) {
+
+            console.warn(
+              "NOMOR_LOK kosong:",
+              item
+            );
+
+            return;
+
+          }
 
           const option =
             document.createElement(
@@ -1671,45 +1728,66 @@ function loadLokomotif() {
             );
 
           /*
-             ID digunakan sebagai VALUE
-             sedangkan nomor lokomotif
-             digunakan sebagai tampilan.
-          */
+           * NILAI YANG DISIMPAN
+           *
+           * Contoh:
+           * LOK001
+           */
 
           option.value =
-            item.ID ||
-            item.ID_LOKOMOTIF ||
-            item.NOMOR_LOK ||
-            item.NOMOR_LOKOMOTIF ||
-            item.LOKOMOTIF ||
-            "";
+            id;
+
+          /*
+           * YANG DITAMPILKAN
+           *
+           * Contoh:
+           * CC 201 01
+           */
 
           option.textContent =
-            item.NOMOR_LOK ||
-            item.NOMOR_LOKOMOTIF ||
-            item.LOKOMOTIF ||
-            item.NAMA ||
-            item.NO_LOK ||
-            "";
+            nomorLok;
 
-          if (
-            option.value &&
-            option.textContent
-          ) {
+          /*
+           * Tambahkan jenis
+           * sebagai informasi tambahan
+           * tanpa mengubah value.
+           */
 
-            select.appendChild(
-              option
-            );
+          if (jenis) {
+
+            option.title =
+              jenis;
 
           }
+
+          select.appendChild(
+            option
+          );
+
+          jumlah++;
 
         }
       );
 
       console.log(
-        "Jumlah lokomotif tampil:",
-        select.options.length - 1
+        "JUMLAH LOKOMOTIF DITAMPILKAN:",
+        jumlah
       );
+
+      /*
+       * Jika tidak ada yang tampil
+       */
+
+      if (
+        jumlah === 0
+      ) {
+
+        select.innerHTML =
+          "<option value=''>" +
+          "Belum ada lokomotif aktif" +
+          "</option>";
+
+      }
 
     }
   )
@@ -1718,7 +1796,7 @@ function loadLokomotif() {
     function (error) {
 
       console.error(
-        "Gagal mengambil data lokomotif:",
+        "GAGAL LOAD LOKOMOTIF:",
         error
       );
 
@@ -1937,13 +2015,7 @@ function loadChecklist() {
     );
 
   if (!container) {
-
-    console.error(
-      "checklistContainer tidak ditemukan."
-    );
-
     return;
-
   }
 
   container.innerHTML =
@@ -1981,8 +2053,7 @@ function loadChecklist() {
         result
       );
 
-      container.innerHTML =
-        "";
+      container.innerHTML = "";
 
       if (
         !result.success ||
@@ -2004,35 +2075,8 @@ function loadChecklist() {
       result.data.forEach(
         function (item) {
 
-          const aktif =
-            String(
-              item.AKTIF == null
-                ? ""
-                : item.AKTIF
-            )
-            .trim()
-            .toUpperCase();
-
-          if (
-            aktif &&
-            aktif !== "YA" &&
-            aktif !== "AKTIF" &&
-            aktif !== "TRUE" &&
-            aktif !== "1"
-          ) {
-
-            return;
-
-          }
-
           const id =
             item.ID || "";
-
-          if (!id) {
-
-            return;
-
-          }
 
           const kategori =
             item.KATEGORI || "";
@@ -2134,15 +2178,12 @@ function loadChecklist() {
               "<label class='choice-label'>" +
 
                 "<input " +
-
                   "type='radio' " +
-
                   "name='" +
                     escapeHtml(
                       namaRadio
                     ) +
                   "' " +
-
                   "value='YA'>" +
 
                 "<span>YA</span>" +
@@ -2152,15 +2193,12 @@ function loadChecklist() {
               "<label class='choice-label'>" +
 
                 "<input " +
-
                   "type='radio' " +
-
                   "name='" +
                     escapeHtml(
                       namaRadio
                     ) +
                   "' " +
-
                   "value='TIDAK'>" +
 
                 "<span>TIDAK</span>" +
@@ -2170,1138 +2208,1016 @@ function loadChecklist() {
             "</div>" +
 
             "<textarea " +
-
               "class='temuan-input' " +
-
               "data-id='" +
-                escapeHtml(
-                  id
-                ) +
+                escapeHtml(id) +
               "' " +
-
               "placeholder='Keterangan / temuan (opsional)'>" +
-
             "</textarea>";
 
-```
-      container.appendChild(
-        div
+          container.appendChild(
+            div
+          );
+
+        }
       );
+
+    }
+  )
+
+  .catch(
+    function (error) {
+
+      console.error(
+        "Gagal mengambil checklist:",
+        error
+      );
+
+      container.innerHTML =
+        "<div class='loading'>" +
+        "Gagal memuat checklist. " +
+        "Periksa koneksi API." +
+        "</div>";
 
     }
   );
 
-  if (
-    nomorTampil === 0
-  ) {
-
-    container.innerHTML =
-      "<div class='loading'>" +
-      "Tidak ada checklist aktif." +
-      "</div>";
-
-  }
-
 }
-```
 
-)
-
-.catch(
-function (error) {
-
-```
-  console.error(
-    "Gagal mengambil checklist:",
-    error
-  );
-
-  container.innerHTML =
-    "<div class='loading'>" +
-    "Gagal memuat checklist. " +
-    "Periksa koneksi API." +
-    "</div>";
-
-}
-```
-
-);
-
-}
 
 /* =========================================================
-ESCAPE HTML
+   ESCAPE HTML
 ========================================================= */
 
-function escapeHtml(
-text
-) {
+function escapeHtml(text) {
 
-const div =
-document.createElement(
-"div"
-);
+  const div =
+    document.createElement(
+      "div"
+    );
 
-div.textContent =
-text == null
-? ""
-: String(text);
+  div.textContent =
+    text == null
+      ? ""
+      : String(text);
 
-return div.innerHTML;
+  return div.innerHTML;
 
 }
 
+
 /* =========================================================
-AMBIL DATA FORM
+   AMBIL DATA FORM
 ========================================================= */
 
 function ambilDataForm() {
 
-const checklist = [];
+  const checklist = [];
 
-document
-.querySelectorAll(
-".checklist-item"
-)
-.forEach(
-function (item) {
+  document
+    .querySelectorAll(
+      ".checklist-item"
+    )
+    .forEach(
+      function (item) {
 
-```
+        const id =
+          item.dataset.id;
+
+        const pilihan =
+          item.querySelector(
+            "input[name='hasil_" +
+            CSS.escape(id) +
+            "']:checked"
+          );
+
+        const temuan =
+          item.querySelector(
+            ".temuan-input"
+          );
+
+        checklist.push({
+
+          ID_CHECKLIST:
+            id,
+
+          HASIL:
+            pilihan
+              ? pilihan.value
+              : "",
+
+          TEMUAN:
+            temuan
+              ? temuan.value.trim()
+              : ""
+
+        });
+
+      }
+    );
+
+  return {
+
+    ID_PEMERIKSAAN:
+      idPemeriksaanAktif,
+
+    TANGGAL:
+      document.getElementById(
+        "tanggalPemeriksaan"
+      ).value,
+
+    DINAS_LANGSIR:
+      document.getElementById(
+        "dinasLangsirPemeriksaan"
+      ).value,
+
+    STASIUN:
+      document.getElementById(
+        "stasiunPemeriksaan"
+      ).value,
+
+    /*
+     * PENTING:
+     * Yang dikirim adalah ID lokomotif.
+     *
+     * Contoh:
+     * LOK001
+     */
+
+    LOKOMOTIF:
+      document.getElementById(
+        "lokomotifPemeriksaan"
+      ).value,
+
+    MASINIS:
+      document.getElementById(
+        "masinisPemeriksaan"
+      ).value,
+
+    ASISTEN_MASINIS:
+      document.getElementById(
+        "asistenMasinisPemeriksaan"
+      ).value,
+
+    PLR_1:
+      document.getElementById(
+        "plr1Pemeriksaan"
+      ).value,
+
+    PLR_2:
+      document.getElementById(
+        "plr2Pemeriksaan"
+      ).value,
+
+    PLR_DIPO:
+      document.getElementById(
+        "plrDipoPemeriksaan"
+      ).value,
+
+    PETUGAS_SCHOWING:
+      document.getElementById(
+        "petugasSchowingPemeriksaan"
+      ).value,
+
+    EMAIL:
+      sessionStorage.getItem(
+        "userEmail"
+      ) || "",
+
+    NAMA:
+      sessionStorage.getItem(
+        "userNama"
+      ) || "",
+
+    CHECKLIST:
+      checklist
+
+  };
+
+}
+
+
+/* =========================================================
+   VALIDASI IDENTITAS
+========================================================= */
+
+function validasiIdentitas() {
+
+  const fields = [
+
+    [
+      "tanggalPemeriksaan",
+      "Tanggal Pemeriksaan"
+    ],
+
+    [
+      "dinasLangsirPemeriksaan",
+      "Dinas Langsir"
+    ],
+
+    [
+      "stasiunPemeriksaan",
+      "Stasiun"
+    ],
+
+    [
+      "lokomotifPemeriksaan",
+      "Lokomotif"
+    ],
+
+    [
+      "masinisPemeriksaan",
+      "Masinis"
+    ],
+
+    [
+      "asistenMasinisPemeriksaan",
+      "Asisten Masinis"
+    ],
+
+    [
+      "plr1Pemeriksaan",
+      "PLR 1"
+    ],
+
+    [
+      "plr2Pemeriksaan",
+      "PLR 2"
+    ],
+
+    [
+      "plrDipoPemeriksaan",
+      "PLR DIPO"
+    ],
+
+    [
+      "petugasSchowingPemeriksaan",
+      "Petugas Schowing"
+    ]
+
+  ];
+
+  for (
+    let i = 0;
+    i < fields.length;
+    i++
+  ) {
+
+    const element =
+      document.getElementById(
+        fields[i][0]
+      );
+
+    if (
+      !element ||
+      !element.value
+    ) {
+
+      alert(
+        fields[i][1] +
+        " wajib diisi."
+      );
+
+      if (element) {
+        element.focus();
+      }
+
+      return false;
+
+    }
+
+  }
+
+  return true;
+
+}
+
+
+/* =========================================================
+   VALIDASI CHECKLIST
+========================================================= */
+
+function validasiChecklist() {
+
+  const items =
+    document.querySelectorAll(
+      ".checklist-item"
+    );
+
+  if (
+    items.length === 0
+  ) {
+
+    alert(
+      "Checklist belum tersedia."
+    );
+
+    return false;
+
+  }
+
+  for (
+    let i = 0;
+    i < items.length;
+    i++
+  ) {
+
     const id =
-      item.dataset.id;
+      items[i].dataset.id;
 
     const pilihan =
-      item.querySelector(
+      items[i].querySelector(
         "input[name='hasil_" +
         CSS.escape(id) +
         "']:checked"
       );
 
-    const temuan =
-      item.querySelector(
-        ".temuan-input"
+    if (!pilihan) {
+
+      alert(
+        "Checklist nomor " +
+        (i + 1) +
+        " belum diisi."
       );
 
-    checklist.push({
+      items[i].scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
 
-      ID_CHECKLIST:
-        id,
+      return false;
 
-      HASIL:
-        pilihan
-          ? pilihan.value
-          : "",
-
-      KETERANGAN:
-        temuan
-          ? temuan.value.trim()
-          : "",
-
-      TEMUAN:
-        temuan
-          ? temuan.value.trim()
-          : ""
-
-    });
-
-  }
-);
-```
-
-return {
-
-```
-ID_PEMERIKSAAN:
-  idPemeriksaanAktif,
-
-TANGGAL:
-  document.getElementById(
-    "tanggalPemeriksaan"
-  ).value,
-
-DINAS_LANGSIR:
-  document.getElementById(
-    "dinasLangsirPemeriksaan"
-  ).value,
-
-STASIUN:
-  document.getElementById(
-    "stasiunPemeriksaan"
-  ).value,
-
-LOKOMOTIF:
-  document.getElementById(
-    "lokomotifPemeriksaan"
-  ).value,
-
-MASINIS:
-  document.getElementById(
-    "masinisPemeriksaan"
-  ).value,
-
-ASISTEN_MASINIS:
-  document.getElementById(
-    "asistenMasinisPemeriksaan"
-  ).value,
-
-PLR_1:
-  document.getElementById(
-    "plr1Pemeriksaan"
-  ).value,
-
-PLR_2:
-  document.getElementById(
-    "plr2Pemeriksaan"
-  ).value,
-
-PLR_DIPO:
-  document.getElementById(
-    "plrDipoPemeriksaan"
-  ).value,
-
-PETUGAS_SCHOWING:
-  document.getElementById(
-    "petugasSchowingPemeriksaan"
-  ).value,
-
-EMAIL:
-  sessionStorage.getItem(
-    "userEmail"
-  ) || "",
-
-NAMA:
-  sessionStorage.getItem(
-    "userNama"
-  ) || "",
-
-CATATAN:
-  document.getElementById(
-    "catatanPemeriksaan"
-  ).value.trim(),
-
-CHECKLIST:
-  checklist
-```
-
-};
-
-}
-
-/* =========================================================
-VALIDASI IDENTITAS
-========================================================= */
-
-function validasiIdentitas() {
-
-const fields = [
-
-```
-[
-  "tanggalPemeriksaan",
-  "Tanggal Pemeriksaan"
-],
-
-[
-  "dinasLangsirPemeriksaan",
-  "Dinas Langsir"
-],
-
-[
-  "stasiunPemeriksaan",
-  "Stasiun"
-],
-
-[
-  "lokomotifPemeriksaan",
-  "Lokomotif"
-],
-
-[
-  "masinisPemeriksaan",
-  "Masinis"
-],
-
-[
-  "asistenMasinisPemeriksaan",
-  "Asisten Masinis"
-],
-
-[
-  "plr1Pemeriksaan",
-  "PLR 1"
-],
-
-[
-  "plr2Pemeriksaan",
-  "PLR 2"
-],
-
-[
-  "plrDipoPemeriksaan",
-  "PLR DIPO"
-],
-
-[
-  "petugasSchowingPemeriksaan",
-  "Petugas Schowing"
-]
-```
-
-];
-
-for (
-let i = 0;
-i < fields.length;
-i++
-) {
-
-```
-const element =
-  document.getElementById(
-    fields[i][0]
-  );
-
-if (
-  !element ||
-  !element.value
-) {
-
-  alert(
-    fields[i][1] +
-    " wajib diisi."
-  );
-
-  if (element) {
-
-    element.focus();
+    }
 
   }
 
-  return false;
-
-}
-```
+  return true;
 
 }
 
-return true;
-
-}
 
 /* =========================================================
-VALIDASI CHECKLIST
-========================================================= */
-
-function validasiChecklist() {
-
-const items =
-document.querySelectorAll(
-".checklist-item"
-);
-
-if (
-items.length === 0
-) {
-
-```
-alert(
-  "Checklist belum tersedia."
-);
-
-return false;
-```
-
-}
-
-for (
-let i = 0;
-i < items.length;
-i++
-) {
-
-```
-const id =
-  items[i].dataset.id;
-
-const pilihan =
-  items[i].querySelector(
-    "input[name='hasil_" +
-    CSS.escape(id) +
-    "']:checked"
-  );
-
-if (!pilihan) {
-
-  alert(
-    "Checklist nomor " +
-    (i + 1) +
-    " belum diisi."
-  );
-
-  items[i].scrollIntoView({
-
-    behavior: "smooth",
-
-    block: "center"
-
-  });
-
-  return false;
-
-}
-```
-
-}
-
-return true;
-
-}
-
-/* =========================================================
-BUAT ID PEMERIKSAAN
+   BUAT ID
 ========================================================= */
 
 function buatIdPemeriksaan() {
 
-return (
-"TRX" +
-Date.now()
-);
+  return (
+    "TRX" +
+    Date.now()
+  );
 
 }
 
+
 /* =========================================================
-SIMPAN DRAFT
+   SIMPAN DRAFT
 ========================================================= */
 
 function simpanDraft() {
 
-if (
-!validasiIdentitas()
-) {
+  if (
+    !validasiIdentitas()
+  ) {
+    return;
+  }
 
-```
-return;
-```
+  const data =
+    ambilDataForm();
 
-}
+  if (
+    !data.ID_PEMERIKSAAN
+  ) {
 
-const data =
-ambilDataForm();
+    idPemeriksaanAktif =
+      buatIdPemeriksaan();
 
-if (
-!data.ID_PEMERIKSAAN
-) {
+    data.ID_PEMERIKSAAN =
+      idPemeriksaanAktif;
 
-```
-idPemeriksaanAktif =
-  buatIdPemeriksaan();
+  }
 
-data.ID_PEMERIKSAAN =
-  idPemeriksaanAktif;
-```
+  data.STATUS =
+    "DRAFT";
 
-}
+  tampilkanStatus(
+    "Menyimpan Draft..."
+  );
 
-data.STATUS =
-"DRAFT";
-
-tampilkanStatus(
-"Menyimpan Draft..."
-);
-
-kirimPemeriksaan(
-data,
-"Draft berhasil disimpan."
-);
+  kirimPemeriksaan(
+    data,
+    "Draft berhasil disimpan."
+  );
 
 }
+
 
 /* =========================================================
-SIMPAN PEMERIKSAAN
+   SIMPAN PEMERIKSAAN
 ========================================================= */
 
 function simpanPemeriksaan() {
 
-if (
-!validasiIdentitas()
-) {
-
-```
-return;
-```
-
-}
-
-if (
-!validasiChecklist()
-) {
-
-```
-return;
-```
-
-}
-
-const data =
-ambilDataForm();
-
-if (
-!data.ID_PEMERIKSAAN
-) {
-
-```
-idPemeriksaanAktif =
-  buatIdPemeriksaan();
-
-data.ID_PEMERIKSAAN =
-  idPemeriksaanAktif;
-```
-
-}
-
-data.STATUS =
-"SELESAI";
-
-tampilkanStatus(
-"Menyimpan pemeriksaan..."
-);
-
-kirimPemeriksaan(
-data,
-"Pemeriksaan berhasil disimpan."
-);
-
-}
-
-/* =========================================================
-KIRIM PEMERIKSAAN
-========================================================= */
-
-function kirimPemeriksaan(
-data,
-pesanBerhasil
-) {
-
-fetch(
-API_URL +
-"?action=simpan_pemeriksaan",
-{
-
-```
-  method: "POST",
-
-  headers: {
-
-    "Content-Type":
-      "text/plain;charset=utf-8"
-
-  },
-
-  body:
-    JSON.stringify(data)
-
-}
-```
-
-)
-
-.then(
-function (response) {
-
-```
-  if (!response.ok) {
-
-    throw new Error(
-      "HTTP " +
-      response.status
-    );
-
+  if (
+    !validasiIdentitas()
+  ) {
+    return;
   }
 
-  return response.json();
+  if (
+    !validasiChecklist()
+  ) {
+    return;
+  }
 
-}
-```
-
-)
-
-.then(
-function (result) {
-
-```
-  console.log(
-    "HASIL SIMPAN:",
-    result
-  );
+  const data =
+    ambilDataForm();
 
   if (
-    result.success
+    !data.ID_PEMERIKSAAN
   ) {
 
     idPemeriksaanAktif =
-      result.id_pemeriksaan ||
-      result.ID_PEMERIKSAAN ||
-      data.ID_PEMERIKSAAN;
+      buatIdPemeriksaan();
 
-    tampilkanStatus(
-
-      pesanBerhasil +
-
-      " ID Pemeriksaan: " +
-
-      idPemeriksaanAktif
-
-    );
-
-    alert(
-
-      pesanBerhasil +
-
-      "\nID Pemeriksaan: " +
-
-      idPemeriksaanAktif
-
-    );
+    data.ID_PEMERIKSAAN =
+      idPemeriksaanAktif;
 
   }
 
-  else {
+  data.STATUS =
+    "SELESAI";
 
-    alert(
-
-      result.message ||
-
-      "Gagal menyimpan pemeriksaan."
-
-    );
-
-  }
-
-}
-```
-
-)
-
-.catch(
-function (error) {
-
-```
-  console.error(
-    "Gagal simpan:",
-    error
+  tampilkanStatus(
+    "Menyimpan pemeriksaan..."
   );
 
-  alert(
-    "Gagal menghubungi server saat menyimpan data."
+  kirimPemeriksaan(
+    data,
+    "Pemeriksaan berhasil disimpan."
   );
 
 }
-```
 
-);
-
-}
 
 /* =========================================================
-STATUS
+   KIRIM PEMERIKSAAN
 ========================================================= */
 
-function tampilkanStatus(
-pesan
+function kirimPemeriksaan(
+  data,
+  pesanBerhasil
 ) {
 
-const box =
-document.getElementById(
-"statusBox"
-);
+  console.log(
+    "DATA PEMERIKSAAN YANG DIKIRIM:",
+    data
+  );
 
-if (!box) {
+  fetch(
+    API_URL +
+    "?action=simpan_pemeriksaan",
+    {
 
-```
-return;
-```
+      method: "POST",
+
+      headers: {
+        "Content-Type":
+          "text/plain;charset=utf-8"
+      },
+
+      body:
+        JSON.stringify(data)
+
+    }
+  )
+
+  .then(
+    function (response) {
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTP " +
+          response.status
+        );
+
+      }
+
+      return response.json();
+
+    }
+  )
+
+  .then(
+    function (result) {
+
+      console.log(
+        "HASIL SIMPAN:",
+        result
+      );
+
+      if (
+        result.success
+      ) {
+
+        idPemeriksaanAktif =
+          result.id_pemeriksaan ||
+          result.ID_PEMERIKSAAN ||
+          data.ID_PEMERIKSAAN;
+
+        tampilkanStatus(
+          pesanBerhasil +
+          " ID Pemeriksaan: " +
+          idPemeriksaanAktif
+        );
+
+        alert(
+          pesanBerhasil +
+          "\nID Pemeriksaan: " +
+          idPemeriksaanAktif
+        );
+
+      }
+
+      else {
+
+        alert(
+          result.message ||
+          "Gagal menyimpan pemeriksaan."
+        );
+
+      }
+
+    }
+  )
+
+  .catch(
+    function (error) {
+
+      console.error(
+        "Gagal simpan:",
+        error
+      );
+
+      alert(
+        "Gagal menghubungi server saat menyimpan data."
+      );
+
+    }
+  );
 
 }
 
-box.textContent =
-pesan;
-
-box.style.display =
-"block";
-
-}
 
 /* =========================================================
-TAMPILKAN TTD
+   STATUS
+========================================================= */
+
+function tampilkanStatus(pesan) {
+
+  const box =
+    document.getElementById(
+      "statusBox"
+    );
+
+  if (!box) {
+    return;
+  }
+
+  box.textContent =
+    pesan;
+
+  box.style.display =
+    "block";
+
+}
+
+
+/* =========================================================
+   TAMPILKAN TTD
 ========================================================= */
 
 function tampilkanTTD() {
 
-if (
-!idPemeriksaanAktif
-) {
+  if (
+    !idPemeriksaanAktif
+  ) {
 
-```
-alert(
-  "Simpan Draft atau Simpan Pemeriksaan terlebih dahulu."
-);
+    alert(
+      "Simpan Draft atau Simpan Pemeriksaan terlebih dahulu."
+    );
 
-return;
-```
+    return;
 
-}
+  }
 
-const box =
-document.getElementById(
-"ttdBox"
-);
+  const box =
+    document.getElementById(
+      "ttdBox"
+    );
 
-if (!box) {
+  if (!box) {
+    return;
+  }
 
-```
-return;
-```
+  box.style.display =
+    "block";
 
-}
+  initSignature();
 
-box.style.display =
-"block";
-
-initSignature();
-
-box.scrollIntoView({
-
-```
-behavior: "smooth",
-
-block: "center"
-```
-
-});
+  box.scrollIntoView({
+    behavior: "smooth",
+    block: "center"
+  });
 
 }
+
 
 /* =========================================================
-INIT SIGNATURE
+   INIT SIGNATURE
 ========================================================= */
 
 function initSignature() {
 
-signatureCanvas =
-document.getElementById(
-"signatureCanvas"
-);
+  signatureCanvas =
+    document.getElementById(
+      "signatureCanvas"
+    );
 
-if (!signatureCanvas) {
+  if (!signatureCanvas) {
+    return;
+  }
 
-```
-return;
-```
+  const ratio =
+    Math.max(
+      window.devicePixelRatio || 1,
+      1
+    );
 
-}
+  const rect =
+    signatureCanvas.getBoundingClientRect();
 
-const ratio =
-Math.max(
-window.devicePixelRatio || 1,
-1
-);
+  signatureCanvas.width =
+    rect.width * ratio;
 
-const rect =
-signatureCanvas.getBoundingClientRect();
+  signatureCanvas.height =
+    rect.height * ratio;
 
-signatureCanvas.width =
-rect.width * ratio;
+  signatureContext =
+    signatureCanvas.getContext(
+      "2d"
+    );
 
-signatureCanvas.height =
-rect.height * ratio;
+  signatureContext.setTransform(
+    1,
+    0,
+    0,
+    1,
+    0,
+    0
+  );
 
-signatureContext =
-signatureCanvas.getContext(
-"2d"
-);
+  signatureContext.scale(
+    ratio,
+    ratio
+  );
 
-signatureContext.setTransform(
-1,
-0,
-0,
-1,
-0,
-0
-);
+  signatureContext.lineWidth =
+    2;
 
-signatureContext.scale(
-ratio,
-ratio
-);
+  signatureContext.lineCap =
+    "round";
 
-signatureContext.lineWidth =
-2;
+  signatureContext.lineJoin =
+    "round";
 
-signatureContext.lineCap =
-"round";
+  signatureCanvas.onpointerdown =
+    mulaiGambar;
 
-signatureContext.lineJoin =
-"round";
+  signatureCanvas.onpointermove =
+    gambar;
 
-signatureCanvas.onpointerdown =
-mulaiGambar;
+  signatureCanvas.onpointerup =
+    selesaiGambar;
 
-signatureCanvas.onpointermove =
-gambar;
-
-signatureCanvas.onpointerup =
-selesaiGambar;
-
-signatureCanvas.onpointerleave =
-selesaiGambar;
+  signatureCanvas.onpointerleave =
+    selesaiGambar;
 
 }
+
 
 /* =========================================================
-MULAI TTD
+   MULAI GAMBAR
 ========================================================= */
 
-function mulaiGambar(
-event
-) {
+function mulaiGambar(event) {
 
-if (
-!signatureContext
-) {
+  if (!signatureContext) {
+    return;
+  }
 
-```
-return;
-```
+  sedangMenggambar =
+    true;
 
-}
+  const posisi =
+    posisiCanvas(event);
 
-sedangMenggambar =
-true;
+  signatureContext.beginPath();
 
-const posisi =
-posisiCanvas(event);
-
-signatureContext.beginPath();
-
-signatureContext.moveTo(
-posisi.x,
-posisi.y
-);
+  signatureContext.moveTo(
+    posisi.x,
+    posisi.y
+  );
 
 }
+
 
 /* =========================================================
-GAMBAR TTD
+   GAMBAR
 ========================================================= */
 
-function gambar(
-event
-) {
+function gambar(event) {
 
-if (
-!sedangMenggambar ||
-!signatureContext
-) {
+  if (
+    !sedangMenggambar ||
+    !signatureContext
+  ) {
+    return;
+  }
 
-```
-return;
-```
+  const posisi =
+    posisiCanvas(event);
 
-}
+  signatureContext.lineTo(
+    posisi.x,
+    posisi.y
+  );
 
-const posisi =
-posisiCanvas(event);
-
-signatureContext.lineTo(
-posisi.x,
-posisi.y
-);
-
-signatureContext.stroke();
+  signatureContext.stroke();
 
 }
+
 
 /* =========================================================
-SELESAI TTD
+   SELESAI GAMBAR
 ========================================================= */
 
 function selesaiGambar() {
 
-sedangMenggambar =
-false;
+  sedangMenggambar =
+    false;
 
 }
 
+
 /* =========================================================
-POSISI CANVAS
+   POSISI CANVAS
 ========================================================= */
 
-function posisiCanvas(
-event
-) {
+function posisiCanvas(event) {
 
-const rect =
-signatureCanvas.getBoundingClientRect();
+  const rect =
+    signatureCanvas.getBoundingClientRect();
 
-return {
+  return {
 
-```
-x:
-  event.clientX -
-  rect.left,
+    x:
+      event.clientX -
+      rect.left,
 
-y:
-  event.clientY -
-  rect.top
-```
+    y:
+      event.clientY -
+      rect.top
 
-};
+  };
 
 }
 
+
 /* =========================================================
-HAPUS TTD
+   HAPUS TTD
 ========================================================= */
 
 function clearSignature() {
 
-if (
-!signatureCanvas ||
-!signatureContext
-) {
+  if (
+    !signatureCanvas ||
+    !signatureContext
+  ) {
+    return;
+  }
 
-```
-return;
-```
-
-}
-
-signatureContext.clearRect(
-
-```
-0,
-
-0,
-
-signatureCanvas.width,
-
-signatureCanvas.height
-```
-
-);
+  signatureContext.clearRect(
+    0,
+    0,
+    signatureCanvas.width,
+    signatureCanvas.height
+  );
 
 }
+
 
 /* =========================================================
-SIMPAN TTD
+   SIMPAN TTD
 ========================================================= */
 
 function simpanTTD() {
 
-if (
-!idPemeriksaanAktif
-) {
-
-```
-alert(
-  "ID Pemeriksaan belum tersedia."
-);
-
-return;
-```
-
-}
-
-if (
-!signatureCanvas
-) {
-
-```
-alert(
-  "Canvas tanda tangan belum tersedia."
-);
-
-return;
-```
-
-}
-
-const signature =
-signatureCanvas.toDataURL(
-"image/png"
-);
-
-tampilkanStatus(
-"Menyimpan tanda tangan..."
-);
-
-const data = {
-
-```
-ID_PEMERIKSAAN:
-  idPemeriksaanAktif,
-
-TTD:
-  signature,
-
-EMAIL:
-  sessionStorage.getItem(
-    "userEmail"
-  ) || ""
-```
-
-};
-
-fetch(
-API_URL +
-"?action=simpan_ttd",
-{
-
-```
-  method: "POST",
-
-  headers: {
-
-    "Content-Type":
-      "text/plain;charset=utf-8"
-
-  },
-
-  body:
-    JSON.stringify(data)
-
-}
-```
-
-)
-
-.then(
-function (response) {
-
-```
-  if (!response.ok) {
-
-    throw new Error(
-      "HTTP " +
-      response.status
-    );
-
-  }
-
-  return response.json();
-
-}
-```
-
-)
-
-.then(
-function (result) {
-
-```
-  console.log(
-    "HASIL SIMPAN TTD:",
-    result
-  );
-
   if (
-    result.success
+    !idPemeriksaanAktif
   ) {
 
-    tampilkanStatus(
-      "Tanda tangan berhasil disimpan."
+    alert(
+      "ID Pemeriksaan belum tersedia."
     );
 
-    alert(
-      "Tanda tangan berhasil disimpan."
-    );
+    return;
 
   }
 
-  else {
+  if (
+    !signatureCanvas
+  ) {
 
     alert(
-      result.message ||
-      "Gagal menyimpan tanda tangan."
+      "Canvas tanda tangan belum tersedia."
     );
+
+    return;
 
   }
 
-}
-```
+  const signature =
+    signatureCanvas.toDataURL(
+      "image/png"
+    );
 
-)
-
-.catch(
-function (error) {
-
-```
-  console.error(
-    "Gagal menyimpan TTD:",
-    error
+  tampilkanStatus(
+    "Menyimpan tanda tangan..."
   );
 
-  alert(
-    "Gagal menghubungi server."
+  const data = {
+
+    ID_PEMERIKSAAN:
+      idPemeriksaanAktif,
+
+    TTD:
+      signature,
+
+    EMAIL:
+      sessionStorage.getItem(
+        "userEmail"
+      ) || ""
+
+  };
+
+  fetch(
+    API_URL +
+    "?action=simpan_ttd",
+    {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type":
+          "text/plain;charset=utf-8"
+      },
+
+      body:
+        JSON.stringify(data)
+
+    }
+  )
+
+  .then(
+    function (response) {
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTP " +
+          response.status
+        );
+
+      }
+
+      return response.json();
+
+    }
+  )
+
+  .then(
+    function (result) {
+
+      console.log(
+        "HASIL SIMPAN TTD:",
+        result
+      );
+
+      if (
+        result.success
+      ) {
+
+        tampilkanStatus(
+          "Tanda tangan berhasil disimpan."
+        );
+
+        alert(
+          "Tanda tangan berhasil disimpan."
+        );
+
+      }
+
+      else {
+
+        alert(
+          result.message ||
+          "Gagal menyimpan tanda tangan."
+        );
+
+      }
+
+    }
+  )
+
+  .catch(
+    function (error) {
+
+      console.error(
+        "Gagal menyimpan TTD:",
+        error
+      );
+
+      alert(
+        "Gagal menghubungi server."
+      );
+
+    }
   );
 
 }
-```
 
-);
-
-}
 
 /* =========================================================
-MENU LAIN
+   MENU LAIN
 ========================================================= */
 
 function tampilkanRiwayatPemeriksaan() {
 
-alert(
-"Riwayat Pemeriksaan akan dibuat pada tahap berikutnya."
-);
+  alert(
+    "Riwayat Pemeriksaan akan dibuat pada tahap berikutnya."
+  );
 
 }
+
 
 function tampilkanRekapPemeriksaan() {
 
-alert(
-"Rekap Pemeriksaan akan dibuat pada tahap berikutnya."
-);
+  alert(
+    "Rekap Pemeriksaan akan dibuat pada tahap berikutnya."
+  );
 
 }
+
 
 function tampilkanDataPegawai() {
 
-alert(
-"Data Pegawai akan dibuat pada tahap berikutnya."
-);
+  alert(
+    "Data Pegawai akan dibuat pada tahap berikutnya."
+  );
 
 }
+
 
 function tampilkanDataStasiun() {
 
-alert(
-"Data Stasiun akan dibuat pada tahap berikutnya."
-);
+  alert(
+    "Data Stasiun akan dibuat pada tahap berikutnya."
+  );
 
 }
+
 
 function tampilkanDataLokomotif() {
 
-alert(
-"Data Lokomotif akan dibuat pada tahap berikutnya."
-);
+  alert(
+    "Data Lokomotif akan dibuat pada tahap berikutnya."
+  );
 
 }
 
+
+/* =========================================================
+   SELESAI
+========================================================= */
+
 console.log(
-"JavaScript Checklist Pengawasan Kegiatan Langsir siap."
+  "JavaScript Checklist Pengawasan Kegiatan Langsir siap."
 );
 
 </script>
 
 </body>
 </html>
+```
