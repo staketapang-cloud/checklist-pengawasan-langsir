@@ -211,19 +211,44 @@
       margin-bottom: 12px;
     }
 
-    .radio-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 12px;
-    }
+  .radio-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
 
-    .radio-option {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-    }
+.radio-option {
+  flex: 1;
+  cursor: pointer;
+  user-select: none;
+}
+
+.radio-option input {
+  display: none;
+}
+
+.radio-option span {
+  display: block;
+  text-align: center;
+  padding: 12px 20px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.radio-option span:hover {
+  border-color: #1f4e78;
+  background: #eef5fb;
+}
+
+.radio-option input:checked + span {
+  background: #1f4e78;
+  color: white;
+  border-color: #1f4e78;
+}
 
     .temuan-input {
       width: 100%;
