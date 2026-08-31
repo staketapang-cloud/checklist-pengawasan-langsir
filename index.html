@@ -482,12 +482,15 @@
         NIPP
       </label>
 
-      <input
-        type="text"
-        id="loginNipp"
-        placeholder="Masukkan NIPP"
-        autocomplete="off"
-      >
+<input
+  type="text"
+  id="loginNipp"
+  inputmode="numeric"
+  pattern="[0-9]*"
+  autocomplete="off"
+  placeholder="NIPP"
+  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+>
 
     </div>
 
