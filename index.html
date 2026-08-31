@@ -1058,127 +1058,6 @@ let signatureContext = null;
 let sedangMenggambar = false;
 
 
-/* =========================================================
-   GOOGLE LOGIN
-========================================================= */
-
-function handleCredentialResponse(response) {
-
-  try {
-
-    if (
-      !response ||
-      !response.credential
-    ) {
-
-      throw new Error(
-        "Credential Google tidak ditemukan."
-      );
-
-    }
-
-
-    const payload =
-      parseJwt(response.credential);
-
-
-    console.log(
-      "LOGIN GOOGLE:",
-      payload
-    );
-
-
-    const email =
-      payload.email || "";
-
-
-    const nama =
-      payload.name ||
-      payload.given_name ||
-      email;
-
-
-    sessionStorage.setItem(
-      "userEmail",
-      email
-    );
-
-
-    sessionStorage.setItem(
-      "userNama",
-      nama
-    );
-
-
-    const loginBox =
-      document.getElementById(
-        "googleLogin"
-      );
-
-
-    const app =
-      document.getElementById(
-        "app"
-      );
-
-
-    const infoUser =
-      document.getElementById(
-        "infoUser"
-      );
-
-
-    if (loginBox) {
-
-      loginBox.style.display =
-        "none";
-
-    }
-
-
-    if (app) {
-
-      app.style.display =
-        "block";
-
-    }
-
-
-    if (infoUser) {
-
-      infoUser.innerHTML =
-
-        "<strong>Login berhasil</strong><br>" +
-
-        "Nama: " +
-        escapeHtml(nama) +
-        "<br>" +
-
-        "Email: " +
-        escapeHtml(email);
-
-    }
-
-
-    tampilkanDashboard();
-
-
-  } catch (error) {
-
-    console.error(
-      "Gagal memproses login:",
-      error
-    );
-
-
-    alert(
-      "Login berhasil tetapi data pengguna gagal diproses."
-    );
-
-  }
-
-}
-
 
 /* =========================================================
    PARSE JWT
@@ -4095,10 +3974,9 @@ function prosesLoginManual() {
 
   }
 
+  /* LANGSUNG KE FORM PEMERIKSAAN */
 
-  /* LANGSUNG KE DASHBOARD */
-
-  tampilkanDashboard();
+  tampilkanFormPemeriksaan();
 
 }
 /* =========================================================
@@ -4231,7 +4109,7 @@ function loginPengguna() {
      MASUK DASHBOARD
   ------------------------------------------------------- */
 
-  tampilkanDashboard();
+ tampilkanFormPemeriksaan();
 
 }
 /* =========================================================
