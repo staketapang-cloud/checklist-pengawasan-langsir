@@ -2769,36 +2769,6 @@ function kirimPemeriksaan(
 
 
 /* =========================================================
-   STATUS
-========================================================= */
-
-function tampilkanStatus(
-  pesan
-) {
-
-  const box =
-    document.getElementById(
-      "statusBox"
-    );
-
-
-  if (!box) {
-
-    return;
-
-  }
-
-
-  box.textContent =
-    pesan;
-
-
-  box.style.display =
-    "block";
-
-}
-
-/* =========================================================
    TAMPILKAN UPLOAD FOTO
 ========================================================= */
 
@@ -2826,7 +2796,12 @@ function uploadFoto() {
   });
 
 }
-```javascript
+
+
+/* =========================================================
+   KIRIM FOTO
+========================================================= */
+
 function kirimFoto() {
 
   const input =
@@ -2864,18 +2839,19 @@ function kirimFoto() {
 
   }
 
-if (!idPemeriksaanAktif) {
 
-  idPemeriksaanAktif =
-    buatIdPemeriksaan();
+  if (!idPemeriksaanAktif) {
 
-  console.log(
-    "ID PEMERIKSAAN BARU:",
-    idPemeriksaanAktif
-  );
+    idPemeriksaanAktif =
+      buatIdPemeriksaan();
 
-}
- 
+    console.log(
+      "ID PEMERIKSAAN BARU:",
+      idPemeriksaanAktif
+    );
+
+  }
+
 
   if (status) {
 
@@ -2975,17 +2951,18 @@ if (!idPemeriksaanAktif) {
 
 
   alert(
-    "Foto siap dikirim.\nID Pemeriksaan: " +
-    idPemeriksaanAktif
+    "Foto siap dikirim.\n\nID Pemeriksaan: " +
+    idPemeriksaanAktif +
+    "\nJumlah foto: " +
+    files.length
   );
 
 }
-```
 
-  /* =========================================================
+
+/* =========================================================
    PREVIEW FOTO
 ========================================================= */
-
 document.addEventListener(
   "change",
   function(event) {
