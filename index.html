@@ -2833,6 +2833,12 @@ function kirimFoto() {
       "inputFoto"
     );
 
+  const status =
+    document.getElementById(
+      "statusUploadFoto"
+    );
+
+
   if (!input) {
 
     alert(
@@ -2856,6 +2862,42 @@ function kirimFoto() {
     return;
 
   }
+
+
+  if (
+    !idPemeriksaanAktif
+  ) {
+
+    alert(
+      "Simpan Draft atau SIMPAN & SELESAI terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  if (status) {
+
+    status.textContent =
+      "Menyiapkan foto...";
+
+    status.style.display =
+      "block";
+
+  }
+
+
+  console.log(
+    "ID PEMERIKSAAN:",
+    idPemeriksaanAktif
+  );
+
+
+  console.log(
+    "JUMLAH FOTO:",
+    input.files.length
+  );
 
 
   const files =
@@ -2890,20 +2932,26 @@ function kirimFoto() {
                 "img"
               );
 
+
             img.src =
               e.target.result;
+
 
             img.style.width =
               "150px";
 
+
             img.style.height =
               "150px";
+
 
             img.style.objectFit =
               "cover";
 
+
             img.style.borderRadius =
               "8px";
+
 
             img.style.margin =
               "5px";
@@ -2925,39 +2973,6 @@ function kirimFoto() {
 
   }
 
-}
-
-  if (
-    !idPemeriksaanAktif
-  ) {
-
-    alert(
-      "Simpan Draft atau SIMPAN & SELESAI terlebih dahulu."
-    );
-
-    return;
-
-  }
-
-  if (status) {
-
-    status.textContent =
-      "Menyiapkan foto...";
-
-    status.style.display =
-      "block";
-
-  }
-
-  console.log(
-    "ID PEMERIKSAAN:",
-    idPemeriksaanAktif
-  );
-
-  console.log(
-    "JUMLAH FOTO:",
-    input.files.length
-  );
 
   alert(
     "Foto siap dikirim.\nID Pemeriksaan: " +
