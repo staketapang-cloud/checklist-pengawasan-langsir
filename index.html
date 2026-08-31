@@ -835,7 +835,7 @@
   class="btn btn-draft"
   onclick="uploadFoto()"
 >
-  Upload Foto
+ UPLOAD FOTO
 </button>
 
         <button
@@ -851,12 +851,55 @@
           class="btn btn-simpan"
           onclick="tampilkansimpan()"
         >
-          Simpan&Selesai
+          SIMPAN&SELESAI
         </button>
 
       </div>
 
+<!-- =====================================================
+     UPLOAD FOTO
+====================================================== -->
 
+<div
+  id="uploadFotoBox"
+  style="display:none; margin-top:20px;"
+>
+
+  <div class="section-title">
+    Upload Foto Dokumentasi
+  </div>
+
+  <div class="form-group">
+
+    <label for="fotoPemeriksaan">
+      Pilih Foto
+    </label>
+
+    <input
+      type="file"
+      id="fotoPemeriksaan"
+      accept="image/*"
+      multiple
+    >
+
+  </div>
+
+  <div
+    id="previewFoto"
+    style="
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:15px;
+    "
+  ></div>
+
+  <div
+    id="statusUploadFoto"
+    class="status-box"
+  ></div>
+
+</div>
       <!-- TTD -->
 
       <div
@@ -2694,7 +2737,126 @@ function tampilkanStatus(
 
 }
 
+/* =========================================================
+   TAMPILKAN UPLOAD FOTO
+========================================================= */
 
+function uploadFoto() {
+
+  const box =
+    document.getElementById(
+      "uploadFotoBox"
+    );
+
+  if (!box) {
+
+    return;
+
+  }
+
+  box.style.display = "block";
+
+  box.scrollIntoView({
+
+    behavior: "smooth",
+
+    block: "center"
+
+  });
+
+}
+  /* =========================================================
+   PREVIEW FOTO
+========================================================= */
+
+document.addEventListener(
+  "change",
+  function(event) {
+
+    if (
+      event.target.id !==
+      "fotoPemeriksaan"
+    ) {
+
+      return;
+
+    }
+
+    const preview =
+      document.getElementById(
+        "previewFoto"
+      );
+
+    if (!preview) {
+
+      return;
+
+    }
+
+    preview.innerHTML = "";
+
+    const files =
+      event.target.files;
+
+    if (!files || files.length === 0) {
+
+      return;
+
+    }
+
+    Array.from(files).forEach(
+      function(file) {
+
+        if (
+          !file.type.startsWith("image/")
+        ) {
+
+          return;
+
+        }
+
+        const reader =
+          new FileReader();
+
+        reader.onload =
+          function(e) {
+
+            const img =
+              document.createElement(
+                "img"
+              );
+
+            img.src =
+              e.target.result;
+
+            img.style.width =
+              "140px";
+
+            img.style.height =
+              "100px";
+
+            img.style.objectFit =
+              "cover";
+
+            img.style.border =
+              "1px solid #ccc";
+
+            img.style.borderRadius =
+              "8px";
+
+            preview.appendChild(
+              img
+            );
+
+          };
+
+        reader.readAsDataURL(file);
+
+      }
+    );
+
+  }
+);
 /* =========================================================
    TAMPILKAN TTD
 ========================================================= */
