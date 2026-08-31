@@ -2821,6 +2821,7 @@ function uploadFoto() {
 }
 
 
+```javascript
 /* =========================================================
    KIRIM FOTO
 ========================================================= */
@@ -2828,14 +2829,10 @@ function uploadFoto() {
 async function kirimFoto() {
 
   const input =
-    document.getElementById(
-      "fotoPemeriksaan"
-    );
+    document.getElementById("fotoPemeriksaan");
 
   const status =
-    document.getElementById(
-      "statusUploadFoto"
-    );
+    document.getElementById("statusUploadFoto");
 
 
   /* -------------------------------------------------------
@@ -2844,9 +2841,7 @@ async function kirimFoto() {
 
   if (!input) {
 
-    alert(
-      "Input foto tidak ditemukan."
-    );
+    alert("Input foto tidak ditemukan.");
 
     return;
 
@@ -2858,9 +2853,7 @@ async function kirimFoto() {
     input.files.length === 0
   ) {
 
-    alert(
-      "Silakan pilih foto terlebih dahulu."
-    );
+    alert("Silakan pilih foto terlebih dahulu.");
 
     return;
 
@@ -2880,75 +2873,24 @@ async function kirimFoto() {
 
 
   const files =
-    Array.from(
-      input.files
-    );
-
-
-  console.log(
-    "================================="
-  );
-
-  console.log(
-    "UPLOAD FOTO"
-  );
-
-  console.log(
-    "ID PEMERIKSAAN:",
-    idPemeriksaanAktif
-  );
-
-  console.log(
-    "JUMLAH FOTO:",
-    files.length
-  );
-
-  console.log(
-    "================================="
-  );
-
-
-  /* -------------------------------------------------------
-     STATUS
-  ------------------------------------------------------- */
-
-  if (status) {
-
-    status.style.display =
-      "block";
-
-    status.textContent =
-      "Mengupload " +
-      files.length +
-      " foto...";
-
-  }
+    Array.from(input.files);
 
 
   /* -------------------------------------------------------
      URL API
-     
-     PENTING:
-     Jika di HTML Anda sudah mempunyai variabel
-     URL_API / API_URL / SCRIPT_URL,
-     gunakan URL yang sama.
   ------------------------------------------------------- */
 
   const url =
-    API_URL;
+    typeof API_URL !== "undefined"
+      ? API_URL
+      : "";
 
 
   if (!url) {
 
-    if (status) {
-
-      status.textContent =
-        "URL API tidak ditemukan.";
-
-    }
-
     alert(
-      "URL API belum ditemukan. Pastikan variabel API_URL pada HTML sudah ada."
+      "URL API tidak ditemukan.\n\n" +
+      "Pastikan API_URL sudah tersedia."
     );
 
     return;
@@ -2957,17 +2899,28 @@ async function kirimFoto() {
 
 
   /* -------------------------------------------------------
-     UPLOAD SATU PER SATU
-     
-     Foto tidak dikirim bersamaan.
-     Setiap foto dikirim ke Apps Script
-     melalui action upload_foto.
+     STATUS AWAL
   ------------------------------------------------------- */
 
-  let berhasil = 0;
+  if (status) {
 
+    status.style.display = "block";
+
+    status.textContent =
+      "Menyiapkan " +
+      files.length +
+      " foto...";
+
+  }
+
+
+  let berhasil = 0;
   let gagal = 0;
 
+
+  /* =======================================================
+     UPLOAD SATU PER SATU
+  ======================================================= */
 
   for (
     let i = 0;
@@ -2981,6 +2934,60 @@ async function kirimFoto() {
 
     try {
 
+      /* ---------------------------------------------------
+         VALIDASI FILE
+      --------------------------------------------------- */
+
+      if (
+        !file.type ||
+        !file.type.startsWith("image/")
+      ) {
+
+        console.warn(
+          "Bukan file gambar:",
+          file.name
+        );
+
+        gagal++;
+
+        continue;
+
+      }
+
+
+      /* ---------------------------------------------------
+         BATAS UKURAN
+         
+         Apps Script memiliki keterbatasan ukuran request.
+         Kita batasi 5 MB per foto agar lebih aman.
+      --------------------------------------------------- */
+
+      const ukuranMB =
+        file.size /
+        (1024 * 1024);
+
+
+      if (
+        ukuranMB > 5
+      ) {
+
+        console.error(
+          "Foto terlalu besar:",
+          file.name,
+          ukuranMB.toFixed(2) + " MB"
+        );
+
+        gagal++;
+
+        continue;
+
+      }
+
+
+      /* ---------------------------------------------------
+         UPDATE STATUS
+      --------------------------------------------------- */
+
       if (status) {
 
         status.textContent =
@@ -2988,14 +2995,36 @@ async function kirimFoto() {
           (i + 1) +
           " dari " +
           files.length +
-          "...";
+          "...\n" +
+          file.name;
 
       }
 
 
       console.log(
-        "Mulai upload:",
+        "================================"
+      );
+
+      console.log(
+        "UPLOAD FOTO:",
+        i + 1,
+        "dari",
+        files.length
+      );
+
+      console.log(
+        "NAMA:",
         file.name
+      );
+
+      console.log(
+        "UKURAN:",
+        ukuranMB.toFixed(2) + " MB"
+      );
+
+      console.log(
+        "ID:",
+        idPemeriksaanAktif
       );
 
 
@@ -3004,13 +3033,20 @@ async function kirimFoto() {
       --------------------------------------------------- */
 
       const base64 =
-        await fileToBase64(
-          file
+        await fileToBase64(file);
+
+
+      if (!base64) {
+
+        throw new Error(
+          "Base64 foto kosong."
         );
+
+      }
 
 
       /* ---------------------------------------------------
-         DATA YANG DIKIRIM KE APPS SCRIPT
+         PAYLOAD
       --------------------------------------------------- */
 
       const payload = {
@@ -3038,13 +3074,12 @@ async function kirimFoto() {
 
 
       console.log(
-        "Mengirim:",
-        file.name
+        "Mengirim data ke Apps Script..."
       );
 
 
       /* ---------------------------------------------------
-         FETCH API
+         FETCH
       --------------------------------------------------- */
 
       const response =
@@ -3063,26 +3098,62 @@ async function kirimFoto() {
             },
 
             body:
-              JSON.stringify(
-                payload
-              )
+              JSON.stringify(payload)
 
           }
         );
 
 
-      const result =
-        await response.json();
+      /* ---------------------------------------------------
+         CEK HTTP
+      --------------------------------------------------- */
 
+      if (!response.ok) {
 
-      console.log(
-        "RESPON UPLOAD:",
-        result
-      );
+        throw new Error(
+          "HTTP Error: " +
+          response.status
+        );
+
+      }
 
 
       /* ---------------------------------------------------
-         CEK HASIL
+         BACA RESPONSE
+      --------------------------------------------------- */
+
+      const text =
+        await response.text();
+
+
+      console.log(
+        "RESPONSE:",
+        text
+      );
+
+
+      let result;
+
+
+      try {
+
+        result =
+          JSON.parse(text);
+
+      }
+
+      catch (error) {
+
+        throw new Error(
+          "Response API bukan JSON yang valid: " +
+          text.substring(0, 300)
+        );
+
+      }
+
+
+      /* ---------------------------------------------------
+         CEK HASIL API
       --------------------------------------------------- */
 
       if (
@@ -3093,7 +3164,7 @@ async function kirimFoto() {
         berhasil++;
 
         console.log(
-          "BERHASIL:",
+          "UPLOAD BERHASIL:",
           file.name
         );
 
@@ -3104,7 +3175,7 @@ async function kirimFoto() {
         gagal++;
 
         console.error(
-          "GAGAL:",
+          "UPLOAD GAGAL:",
           file.name,
           result
         );
@@ -3119,7 +3190,7 @@ async function kirimFoto() {
       gagal++;
 
       console.error(
-        "ERROR UPLOAD FOTO:",
+        "ERROR UPLOAD:",
         file.name,
         error
       );
@@ -3129,20 +3200,19 @@ async function kirimFoto() {
   }
 
 
-  /* -------------------------------------------------------
-     HASIL AKHIR
-  ------------------------------------------------------- */
+  /* =======================================================
+     SELESAI
+  ======================================================= */
 
   if (status) {
 
-    status.style.display =
-      "block";
+    status.style.display = "block";
 
     status.textContent =
-      "Upload selesai. " +
+      "Upload selesai.\n" +
       "Berhasil: " +
       berhasil +
-      " foto. " +
+      " foto\n" +
       "Gagal: " +
       gagal +
       " foto.";
@@ -3151,7 +3221,7 @@ async function kirimFoto() {
 
 
   console.log(
-    "================================="
+    "================================"
   );
 
   console.log(
@@ -3168,10 +3238,38 @@ async function kirimFoto() {
     gagal
   );
 
-  console.log(
-    "================================="
-  );
 
+  /* -------------------------------------------------------
+     RESET INPUT
+     
+     PENTING:
+     Supaya setelah upload pertama,
+     pengguna bisa memilih foto lagi.
+  ------------------------------------------------------- */
+
+  input.value = "";
+
+
+  /* -------------------------------------------------------
+     RESET PREVIEW
+  ------------------------------------------------------- */
+
+  const preview =
+    document.getElementById(
+      "previewFoto"
+    );
+
+
+  if (preview) {
+
+    preview.innerHTML = "";
+
+  }
+
+
+  /* -------------------------------------------------------
+     NOTIFIKASI
+  ------------------------------------------------------- */
 
   if (
     berhasil > 0 &&
@@ -3209,7 +3307,7 @@ async function kirimFoto() {
 
     alert(
       "Tidak ada foto yang berhasil diupload.\n\n" +
-      "Silakan cek Console browser (F12)."
+      "Silakan tekan F12 → Console untuk melihat detail error."
     );
 
   }
@@ -3231,10 +3329,10 @@ function fileToBase64(file) {
 
 
       reader.onload =
-        function() {
+        function(event) {
 
           resolve(
-            reader.result
+            event.target.result
           );
 
         };
@@ -3258,9 +3356,12 @@ function fileToBase64(file) {
   );
 
 }
+
+
 /* =========================================================
    PREVIEW FOTO
 ========================================================= */
+
 document.addEventListener(
   "change",
   function(event) {
@@ -3274,10 +3375,12 @@ document.addEventListener(
 
     }
 
+
     const preview =
       document.getElementById(
         "previewFoto"
       );
+
 
     if (!preview) {
 
@@ -3285,21 +3388,29 @@ document.addEventListener(
 
     }
 
+
     preview.innerHTML = "";
+
 
     const files =
       event.target.files;
 
-    if (!files || files.length === 0) {
+
+    if (
+      !files ||
+      files.length === 0
+    ) {
 
       return;
 
     }
 
+
     Array.from(files).forEach(
       function(file) {
 
         if (
+          !file.type ||
           !file.type.startsWith("image/")
         ) {
 
@@ -3307,34 +3418,43 @@ document.addEventListener(
 
         }
 
+
         const reader =
           new FileReader();
 
+
         reader.onload =
-          function(e) {
+          function(event) {
 
             const img =
               document.createElement(
                 "img"
               );
 
+
             img.src =
-              e.target.result;
+              event.target.result;
+
 
             img.style.width =
               "140px";
 
+
             img.style.height =
               "100px";
+
 
             img.style.objectFit =
               "cover";
 
+
             img.style.border =
               "1px solid #ccc";
 
+
             img.style.borderRadius =
               "8px";
+
 
             preview.appendChild(
               img
@@ -3342,13 +3462,18 @@ document.addEventListener(
 
           };
 
-        reader.readAsDataURL(file);
+
+        reader.readAsDataURL(
+          file
+        );
 
       }
     );
 
   }
 );
+```
+
 /* =========================================================
    TAMPILKAN TTD
 ========================================================= */
