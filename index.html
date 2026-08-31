@@ -1532,13 +1532,35 @@ function tampilkanNotifFormBerhasil() {
   }
 
 
-  if (message) {
+if (message) {
 
-    message.textContent =
-      "Form Checklist Pengawasan Langsir Anda Telah Terekam.\n\n" +
-      "Apakah Anda yakin ingin keluar?";
+  const sekarang = new Date();
 
-  }
+  const tanggal = sekarang.toLocaleDateString(
+    "id-ID",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    }
+  );
+
+  const waktu = sekarang.toLocaleTimeString(
+    "id-ID",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    }
+  );
+
+  message.textContent =
+    "Form Checklist Pengawasan Langsir Anda Telah Terekam.\n\n" +
+    "Tanggal: " + tanggal + "\n" +
+    "Waktu: " + waktu + "\n\n" +
+    "Apakah Anda yakin ingin keluar?";
+
+}
 
 
   if (button) {
