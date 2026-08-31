@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
 
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Checklist Pengawasan Kegiatan Langsir</title>
 
@@ -291,10 +287,6 @@
       border-color: #1976d2;
     }
 
-    /* =====================================================
-       BUTTON
-    ===================================================== */
-
     .button-group {
       display: flex;
       gap: 10px;
@@ -341,71 +333,6 @@
       display: none;
     }
 
-    /* =====================================================
-       DOKUMENTASI FOTO
-    ===================================================== */
-
-    .dokumentasi-box {
-      margin-top: 20px;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background: #fafafa;
-      display: none;
-    }
-
-    .dokumentasi-box h3 {
-      margin-top: 0;
-      color: #1976d2;
-    }
-
-    .dokumentasi-info {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    #fotoDokumentasi {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: white;
-    }
-
-    #previewFoto {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .foto-preview-item {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      overflow: hidden;
-      background: white;
-    }
-
-    .foto-preview-item img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .foto-preview-item p {
-      margin: 0;
-      padding: 8px;
-      font-size: 12px;
-      color: #666;
-      text-align: center;
-    }
-
-    /* =====================================================
-       TTD
-    ===================================================== */
-
     .ttd-box {
       margin-top: 20px;
       padding: 20px;
@@ -417,7 +344,6 @@
 
     .ttd-box h3 {
       margin-top: 0;
-      color: #2e7d32;
     }
 
     #signatureCanvas {
@@ -427,6 +353,7 @@
       border-radius: 8px;
       background: white;
       touch-action: none;
+      display: block;
     }
 
     .ttd-buttons {
@@ -451,6 +378,27 @@
     .btn-save-ttd {
       background: #2e7d32;
       color: white;
+    }
+
+    .dokumentasi-box {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #fafafa;
+      display: none;
+    }
+
+    .dokumentasi-box h3 {
+      margin-top: 0;
+    }
+
+    .foto-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
     }
 
     .loading {
@@ -563,10 +511,7 @@
           Sistem Informasi Pengawasan Kegiatan Langsir
         </p>
 
-        <div
-          id="infoUser"
-          class="info-user">
-        </div>
+        <div id="infoUser" class="info-user"></div>
 
         <div id="menuUtama">
 
@@ -604,7 +549,8 @@
 
       <div
         id="formPemeriksaan"
-        style="display:none;">
+        style="display:none;"
+      >
 
         <h2>
           Form Pemeriksaan
@@ -676,8 +622,6 @@
             </select>
 
           </div>
-
-          <!-- LOKOMOTIF -->
 
           <div class="form-group">
 
@@ -805,7 +749,8 @@
 
           <div
             id="checklistContainer"
-            class="checklist-container">
+            class="checklist-container"
+          >
 
             <div class="loading">
               Klik Form Pemeriksaan untuk memuat checklist...
@@ -830,10 +775,6 @@
             id="statusBox"
             class="status-box">
           </div>
-
-          <!-- =================================================
-               3 TOMBOL UTAMA
-          ================================================= -->
 
           <div class="button-group">
 
@@ -863,44 +804,40 @@
 
           </div>
 
-          <!-- =================================================
-               DOKUMENTASI FOTO
-          ================================================= -->
-
           <div
-            id="dokumentasiFotoBox"
-            class="dokumentasi-box">
+            id="dokumentasiBox"
+            class="dokumentasi-box"
+          >
 
             <h3>
               Dokumentasi Foto
             </h3>
 
-            <div class="dokumentasi-info">
-              Pilih foto dokumentasi kegiatan langsir.
-              Foto dapat dipilih lebih dari satu.
-            </div>
+            <p>
+              Pilih foto dokumentasi kegiatan pemeriksaan.
+            </p>
 
             <input
               type="file"
               id="fotoDokumentasi"
+              class="foto-input"
               accept="image/*"
               multiple
-              onchange="previewDokumentasiFoto(this)"
             >
 
             <div
-              id="previewFoto">
+              id="infoFoto"
+              class="info-lokomotif"
+            >
+              Foto akan diproses pada tahap pengembangan dokumentasi.
             </div>
 
           </div>
 
-          <!-- =================================================
-               TTD
-          ================================================= -->
-
           <div
             id="ttdBox"
-            class="ttd-box">
+            class="ttd-box"
+          >
 
             <h3>
               Tanda Tangan Digital
@@ -910,9 +847,7 @@
               Silakan tanda tangan pada kotak berikut.
             </p>
 
-            <canvas
-              id="signatureCanvas">
-            </canvas>
+            <canvas id="signatureCanvas"></canvas>
 
             <div class="ttd-buttons">
 
@@ -1401,11 +1336,8 @@ function tampilkanDashboard() {
   }
 
   window.scrollTo({
-
     top: 0,
-
     behavior: "smooth"
-
   });
 
 }
@@ -1479,11 +1411,8 @@ function tampilkanFormPemeriksaan() {
   loadChecklist();
 
   form.scrollIntoView({
-
     behavior: "smooth",
-
     block: "start"
-
   });
 
 }
@@ -1591,6 +1520,9 @@ function loadStasiun() {
 
 /* =========================================================
    LOAD LOKOMOTIF
+
+   DATABASE:
+   ID | NOMOR_LOK | JENIS | STATUS
 ========================================================= */
 
 function loadLokomotif() {
@@ -1678,6 +1610,11 @@ function loadLokomotif() {
     let jumlahAktif = 0;
 
     result.data.forEach(function(item) {
+
+      console.log(
+        "ITEM LOKOMOTIF:",
+        item
+      );
 
       const status =
         String(
@@ -2078,7 +2015,6 @@ function loadChecklist() {
         "hasil_" + id;
 
       div.innerHTML =
-
         "<div class='checklist-header'>" +
 
           "<div class='checklist-number'>" +
@@ -2091,11 +2027,9 @@ function loadChecklist() {
           "<div class='checklist-content'>" +
 
             "<div class='checklist-category'>" +
-
               escapeHtml(
                 kategori
               ) +
-
               (
                 subKategori
                   ? " - " +
@@ -2104,7 +2038,6 @@ function loadChecklist() {
                     )
                   : ""
               ) +
-
             "</div>" +
 
             "<div class='checklist-description'>" +
@@ -2116,16 +2049,13 @@ function loadChecklist() {
             (
               standar
                 ?
-
                 "<div class='checklist-standard'>" +
                   "<strong>STANDAR:</strong> " +
                   escapeHtml(
                     standar
                   ) +
                 "</div>"
-
                 :
-
                 ""
             ) +
 
@@ -2241,9 +2171,7 @@ function ambilDataForm() {
   const checklist = [];
 
   document
-    .querySelectorAll(
-      ".checklist-item"
-    )
+    .querySelectorAll(".checklist-item")
     .forEach(function(item) {
 
       const id =
@@ -2332,6 +2260,11 @@ function ambilDataForm() {
       document.getElementById(
         "petugasSchowingPemeriksaan"
       ).value,
+
+    CATATAN:
+      document.getElementById(
+        "catatanPemeriksaan"
+      ).value.trim(),
 
     EMAIL:
       sessionStorage.getItem(
@@ -2522,7 +2455,128 @@ function buatIdPemeriksaan() {
 
 
 /* =========================================================
-   SIMPAN PEMERIKSAAN
+   DOKUMENTASI FOTO
+========================================================= */
+
+function tampilkanDokumentasiFoto() {
+
+  const box =
+    document.getElementById(
+      "dokumentasiBox"
+    );
+
+  if (!box) {
+
+    return;
+
+  }
+
+  box.style.display =
+    "block";
+
+  box.scrollIntoView({
+
+    behavior: "smooth",
+
+    block: "center"
+
+  });
+
+}
+
+
+/* =========================================================
+   INFORMASI FOTO
+========================================================= */
+
+const inputFoto =
+  document.getElementById(
+    "fotoDokumentasi"
+  );
+
+if (inputFoto) {
+
+  inputFoto.addEventListener(
+    "change",
+    function() {
+
+      const info =
+        document.getElementById(
+          "infoFoto"
+        );
+
+      if (!info) {
+
+        return;
+
+      }
+
+      const jumlah =
+        this.files
+          ? this.files.length
+          : 0;
+
+      if (jumlah === 0) {
+
+        info.textContent =
+          "Belum ada foto dipilih.";
+
+      } else {
+
+        info.textContent =
+          jumlah +
+          " foto dipilih.";
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SIMPAN DRAFT
+========================================================= */
+
+function simpanDraft() {
+
+  if (!validasiIdentitas()) {
+
+    return;
+
+  }
+
+  const data =
+    ambilDataForm();
+
+  if (!data.ID_PEMERIKSAAN) {
+
+    idPemeriksaanAktif =
+      buatIdPemeriksaan();
+
+    data.ID_PEMERIKSAAN =
+      idPemeriksaanAktif;
+
+  }
+
+  data.STATUS =
+    "DRAFT";
+
+  tampilkanStatus(
+    "Menyimpan Draft..."
+  );
+
+  kirimPemeriksaan(
+    data,
+    "Draft berhasil disimpan."
+  );
+
+}
+
+
+/* =========================================================
+   SIMPAN PEMERIKSAAN / SELESAI
 ========================================================= */
 
 function simpanPemeriksaan() {
@@ -2696,141 +2750,6 @@ function tampilkanStatus(pesan) {
 
 
 /* =========================================================
-   DOKUMENTASI FOTO
-========================================================= */
-
-function tampilkanDokumentasiFoto() {
-
-  const box =
-    document.getElementById(
-      "dokumentasiFotoBox"
-    );
-
-  if (!box) {
-
-    console.error(
-      "dokumentasiFotoBox tidak ditemukan."
-    );
-
-    return;
-
-  }
-
-  box.style.display =
-    "block";
-
-  box.scrollIntoView({
-
-    behavior: "smooth",
-
-    block: "center"
-
-  });
-
-}
-
-
-/* =========================================================
-   PREVIEW DOKUMENTASI FOTO
-========================================================= */
-
-function previewDokumentasiFoto(input) {
-
-  const preview =
-    document.getElementById(
-      "previewFoto"
-    );
-
-  if (!preview) {
-
-    return;
-
-  }
-
-  preview.innerHTML = "";
-
-  if (
-    !input.files ||
-    input.files.length === 0
-  ) {
-
-    return;
-
-  }
-
-  Array.from(
-    input.files
-  ).forEach(function(file, index) {
-
-    if (
-      !file.type.startsWith(
-        "image/"
-      )
-    ) {
-
-      return;
-
-    }
-
-    const reader =
-      new FileReader();
-
-    reader.onload =
-      function(event) {
-
-        const wrapper =
-          document.createElement(
-            "div"
-          );
-
-        wrapper.className =
-          "foto-preview-item";
-
-        const img =
-          document.createElement(
-            "img"
-          );
-
-        img.src =
-          event.target.result;
-
-        img.alt =
-          "Dokumentasi " +
-          (index + 1);
-
-        const label =
-          document.createElement(
-            "p"
-          );
-
-        label.textContent =
-          "Foto " +
-          (index + 1);
-
-        wrapper.appendChild(
-          img
-        );
-
-        wrapper.appendChild(
-          label
-        );
-
-        preview.appendChild(
-          wrapper
-        );
-
-      };
-
-    reader.readAsDataURL(
-      file
-    );
-
-  });
-
-}
-
-
-/* =========================================================
    TAMPILKAN TTD
 ========================================================= */
 
@@ -2839,7 +2758,7 @@ function tampilkanTTD() {
   if (!idPemeriksaanAktif) {
 
     alert(
-      "Simpan pemeriksaan terlebih dahulu sebelum melakukan TTD."
+      "Simpan Draft atau Simpan Pemeriksaan terlebih dahulu."
     );
 
     return;
@@ -2852,10 +2771,6 @@ function tampilkanTTD() {
     );
 
   if (!box) {
-
-    console.error(
-      "ttdBox tidak ditemukan."
-    );
 
     return;
 
