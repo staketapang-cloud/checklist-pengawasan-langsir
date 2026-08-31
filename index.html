@@ -2826,23 +2826,23 @@ function uploadFoto() {
   });
 
 }
-  function kirimFoto() {
+function kirimFoto() {
 
   const input =
     document.getElementById(
-      "fotoPemeriksaan"
-    );
-
-  const status =
-    document.getElementById(
-      "statusUploadFoto"
+      "inputFoto"
     );
 
   if (!input) {
 
+    alert(
+      "Input foto tidak ditemukan."
+    );
+
     return;
 
   }
+
 
   if (
     !input.files ||
@@ -2850,12 +2850,82 @@ function uploadFoto() {
   ) {
 
     alert(
-      "Silakan pilih foto terlebih dahulu."
+      "Silahkan pilih foto terlebih dahulu."
     );
 
     return;
 
   }
+
+
+  const files =
+    Array.from(
+      input.files
+    );
+
+
+  const preview =
+    document.getElementById(
+      "previewFoto"
+    );
+
+
+  if (preview) {
+
+    preview.innerHTML = "";
+
+
+    files.forEach(
+      function(file) {
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload =
+          function(e) {
+
+            const img =
+              document.createElement(
+                "img"
+              );
+
+            img.src =
+              e.target.result;
+
+            img.style.width =
+              "150px";
+
+            img.style.height =
+              "150px";
+
+            img.style.objectFit =
+              "cover";
+
+            img.style.borderRadius =
+              "8px";
+
+            img.style.margin =
+              "5px";
+
+
+            preview.appendChild(
+              img
+            );
+
+          };
+
+
+        reader.readAsDataURL(
+          file
+        );
+
+      }
+    );
+
+  }
+
+}
 
   if (
     !idPemeriksaanAktif
