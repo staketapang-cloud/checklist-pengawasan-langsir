@@ -2521,7 +2521,6 @@ function uploadFoto() {
   });
 
 }
-
 /* =========================================================
    KIRIM FOTO - SEMENTARA TANPA DATABASE
 ========================================================= */
@@ -2534,13 +2533,6 @@ function kirimFoto() {
   const status =
     document.getElementById("statusUploadFoto");
 
-  const preview =
-    document.getElementById("previewFoto");
-
-
-  /* -------------------------------------------------------
-     CEK INPUT
-  ------------------------------------------------------- */
 
   if (!input) {
 
@@ -2567,10 +2559,6 @@ function kirimFoto() {
     Array.from(input.files);
 
 
-  /* -------------------------------------------------------
-     VALIDASI FOTO
-  ------------------------------------------------------- */
-
   const fotoValid =
     files.filter(function(file) {
 
@@ -2591,10 +2579,6 @@ function kirimFoto() {
   }
 
 
-  /* -------------------------------------------------------
-     STATUS
-  ------------------------------------------------------- */
-
   if (status) {
 
     status.style.display = "block";
@@ -2605,20 +2589,11 @@ function kirimFoto() {
   }
 
 
-  /* -------------------------------------------------------
-     LOG
-  ------------------------------------------------------- */
-
   console.log(
     "FOTO BERHASIL DIPROSES:",
     fotoValid
   );
 
-
-  /* -------------------------------------------------------
-     NOTIFIKASI
-     BELUM DISIMPAN KE DATABASE
-  ------------------------------------------------------- */
 
   alert(
     "Foto telah berhasil di upload.\n\n" +
@@ -2626,15 +2601,7 @@ function kirimFoto() {
     fotoValid.length
   );
 
-
-  /* -------------------------------------------------------
-     JANGAN HAPUS PREVIEW
-     JANGAN KIRIM KE API
-     JANGAN SIMPAN KE SHEET
-  ------------------------------------------------------- */
-
 }
-
       /* ---------------------------------------------------
          FILE → BASE64
       --------------------------------------------------- */
