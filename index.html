@@ -2524,10 +2524,10 @@ function uploadFoto() {
 
 
 /* =========================================================
-   KIRIM FOTO
+   KIRIM FOTO - SEMENTARA TANPA DATABASE
 ========================================================= */
 
-async function kirimFoto() {
+function kirimFoto() {
 
   const input =
     document.getElementById("fotoPemeriksaan");
@@ -2535,9 +2535,12 @@ async function kirimFoto() {
   const status =
     document.getElementById("statusUploadFoto");
 
+  const preview =
+    document.getElementById("previewFoto");
+
 
   /* -------------------------------------------------------
-     VALIDASI INPUT
+     CEK INPUT
   ------------------------------------------------------- */
 
   if (!input) {
@@ -2561,6 +2564,102 @@ async function kirimFoto() {
   }
 
 
+  const files =
+    Array.from(input.files);
+
+
+  /* -------------------------------------------------------
+     VALIDASI FOTO
+  ------------------------------------------------------- */
+
+  const fotoValid =
+    files.filter(function(file) {
+
+      return (
+        file.type &&
+        file.type.startsWith("image/")
+      );
+
+    });
+
+
+  if (fotoValid.length === 0) {
+
+    alert(
+      "File yang dipilih bukan foto."
+    );
+
+    return;
+
+  }
+
+
+  /* -------------------------------------------------------
+     NOTIFIKASI PROSES
+  ------------------------------------------------------- */
+
+  if (status) {
+
+    status.style.display =
+      "block";
+
+    status.textContent =
+      "Foto siap dikirim. " +
+      fotoValid.length +
+      " foto dipilih.";
+
+  }
+
+
+  /* -------------------------------------------------------
+     UNTUK SEMENTARA:
+     TIDAK DIKIRIM KE API
+     TIDAK DISIMPAN KE SHEET
+  ------------------------------------------------------- */
+
+  console.log(
+    "FOTO SIAP DIKIRIM:",
+    fotoValid
+  );
+
+
+  fotoValid.forEach(function(file) {
+
+    console.log(
+      "Nama:",
+      file.name,
+      "Ukuran:",
+      (
+        file.size /
+        (1024 * 1024)
+      ).toFixed(2) +
+      " MB"
+    );
+
+  });
+
+
+  /* -------------------------------------------------------
+     NOTIFIKASI BERHASIL
+  ------------------------------------------------------- */
+
+  if (status) {
+
+    status.textContent =
+      "Foto berhasil diproses dan siap dikirim.";
+
+  }
+
+
+  alert(
+    "Foto berhasil diproses.\n\n" +
+    "Jumlah foto: " +
+    fotoValid.length +
+    "\n\n" +
+    "Catatan: foto belum disimpan ke database."
+  );
+
+}
 /* -------------------------------------------------------
    CEK ID PEMERIKSAAN
 ------------------------------------------------------- */
