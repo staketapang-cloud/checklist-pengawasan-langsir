@@ -1160,7 +1160,7 @@ body {
 
 
 <!-- =========================================================
-     NOTIFIKASI FOTO
+     NOTIFIKASI UMUM
 ========================================================= -->
 
 <div
@@ -1170,38 +1170,466 @@ body {
 
   <div class="notif-box">
 
-    <div
-      id="notifFotoTitle"
-      class="notif-title"
-    >
-      Informasi
-    </div>
+```
+<div
+  id="notifFotoTitle"
+  class="notif-title"
+>
+  Informasi
+</div>
 
+<div
+  id="notifFotoMessage"
+  class="notif-message"
+></div>
 
-    <div
-      id="notifFotoMessage"
-      class="notif-message"
-    ></div>
+<div class="notif-footer">
 
+  <button
+    type="button"
+    id="notifFotoButton"
+    class="notif-ok"
+    onclick="tutupNotifFoto()"
+  >
+    OK
+  </button>
 
-    <div class="notif-footer">
-
-      <button
-        type="button"
-        class="notif-ok"
-        onclick="tutupNotifFoto()"
-      >
-        OK
-      </button>
-
-    </div>
+</div>
+```
 
   </div>
 
 </div>
 
-
 <script>
+/* =========================================================
+   NOTIFIKASI UMUM
+========================================================= */
+
+function tampilkanNotifFoto(
+  judul,
+  pesan,
+  setelahOK
+) {
+
+  const overlay =
+    document.getElementById("notifFoto");
+
+  const title =
+    document.getElementById("notifFotoTitle");
+
+  const message =
+    document.getElementById("notifFotoMessage");
+
+  const button =
+    document.getElementById("notifFotoButton");
+
+
+  if (!overlay) {
+    return;
+  }
+
+
+  if (title) {
+    title.textContent =
+      judul || "Informasi";
+  }
+
+
+  if (message) {
+    message.textContent =
+      pesan || "";
+  }
+
+
+  /*
+   * Simpan aksi setelah tombol diklik
+   */
+  overlay.dataset.afterOk =
+    setelahOK || "none";
+
+
+  /*
+   * Tombol default
+   */
+  if (button) {
+
+    button.textContent =
+      "OK";
+
+    button.onclick =
+      tutupNotifFoto;
+
+  }
+
+
+  overlay.style.display =
+    "flex";
+
+}
+
+
+/* =========================================================
+   TUTUP NOTIFIKASI
+========================================================= */
+
+function tutupNotifFoto() {
+
+  const overlay =
+    document.getElementById("notifFoto");
+
+  if (!overlay) {
+    return;
+  }
+
+
+  const aksi =
+    overlay.dataset.afterOk || "none";
+
+
+  overlay.style.display =
+    "none";
+
+
+  overlay.dataset.afterOk =
+    "none";
+
+
+  /*
+   * KEMBALI KE FORM
+   */
+  if (aksi === "form") {
+
+    kembaliKeFormPemeriksaan();
+
+    return;
+
+  }
+
+
+  /*
+   * MENU LOGIN
+   */
+  if (aksi === "login") {
+
+    kembaliKeLogin();
+
+    return;
+
+  }
+
+
+  /*
+   * TTD
+   */
+  if (aksi === "ttd") {
+
+    aktifkanTTDSetelahFoto();
+
+    return;
+
+  }
+
+}
+
+
+/* =========================================================
+   KEMBALI KE FORM PEMERIKSAAN
+========================================================= */
+
+function kembaliKeFormPemeriksaan() {
+
+  const login =
+    document.getElementById("googleLogin");
+
+  const app =
+    document.getElementById("app");
+
+  const form =
+    document.getElementById("formPemeriksaan");
+
+  const ttd =
+    document.getElementById("ttdBox");
+
+
+  if (login) {
+    login.style.display =
+      "none";
+  }
+
+
+  if (app) {
+    app.style.display =
+      "block";
+  }
+
+
+  if (form) {
+    form.style.display =
+      "block";
+  }
+
+
+  if (ttd) {
+    ttd.style.display =
+      "none";
+  }
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =========================================================
+   NOTIFIKASI TTD BERHASIL
+========================================================= */
+
+function tampilkanNotifTTDBerhasil(
+  idPemeriksaan
+) {
+
+  tampilkanNotifFoto(
+
+    "Tanda tangan berhasil disimpan",
+
+    "Tanda tangan digital berhasil disimpan.\n\n" +
+    "ID Pemeriksaan: " +
+    idPemeriksaan,
+
+    "form"
+
+  );
+
+}
+
+
+/* =========================================================
+   NOTIFIKASI FORM BERHASIL DIREKAM
+========================================================= */
+
+function tampilkanNotifFormBerhasil() {
+
+  const overlay =
+    document.getElementById("notifFoto");
+
+  const title =
+    document.getElementById("notifFotoTitle");
+
+  const message =
+    document.getElementById("notifFotoMessage");
+
+  const button =
+    document.getElementById("notifFotoButton");
+
+
+  if (!overlay) {
+    return;
+  }
+
+
+  if (title) {
+
+    title.textContent =
+      "Form Checklist Pengawasan Langsir Anda Telah Terekam";
+
+  }
+
+
+  if (message) {
+
+    message.textContent =
+      "Form Checklist Pengawasan Langsir Anda Telah Terekam.\n\n" +
+      "Apakah Anda yakin ingin keluar?";
+
+  }
+
+
+  if (button) {
+
+    button.textContent =
+      "KELUAR";
+
+    button.onclick =
+      keluarKeLogin;
+
+  }
+
+
+  overlay.dataset.afterOk =
+    "login";
+
+
+  overlay.style.display =
+    "flex";
+
+}
+
+
+/* =========================================================
+   KELUAR KE LOGIN
+========================================================= */
+
+function keluarKeLogin() {
+
+  const overlay =
+    document.getElementById("notifFoto");
+
+  if (overlay) {
+
+    overlay.style.display =
+      "none";
+
+  }
+
+
+  /*
+   * HAPUS SESSION USER
+   */
+  sessionStorage.removeItem(
+    "userNama"
+  );
+
+  sessionStorage.removeItem(
+    "userNipp"
+  );
+
+  sessionStorage.removeItem(
+    "userJabatan"
+  );
+
+  sessionStorage.removeItem(
+    "userEmail"
+  );
+
+  sessionStorage.removeItem(
+    "idPemeriksaanAktif"
+  );
+
+
+  /*
+   * RESET VARIABLE
+   */
+  idPemeriksaanAktif =
+    "";
+
+  ttdSiap =
+    false;
+
+
+  /*
+   * TAMPILKAN LOGIN
+   */
+  const login =
+    document.getElementById("googleLogin");
+
+  const app =
+    document.getElementById("app");
+
+  const form =
+    document.getElementById("formPemeriksaan");
+
+  const ttd =
+    document.getElementById("ttdBox");
+
+  const upload =
+    document.getElementById("uploadFotoBox");
+
+
+  if (login) {
+
+    login.style.display =
+      "block";
+
+  }
+
+
+  if (app) {
+
+    app.style.display =
+      "none";
+
+  }
+
+
+  if (form) {
+
+    form.style.display =
+      "none";
+
+  }
+
+
+  if (ttd) {
+
+    ttd.style.display =
+      "none";
+
+  }
+
+
+  if (upload) {
+
+    upload.style.display =
+      "none";
+
+  }
+
+
+  /*
+   * Bersihkan form login
+   */
+  const nama =
+    document.getElementById("loginNama");
+
+  const nipp =
+    document.getElementById("loginNipp");
+
+  const jabatan =
+    document.getElementById("loginJabatan");
+
+
+  if (nama) {
+    nama.value = "";
+  }
+
+
+  if (nipp) {
+    nipp.value = "";
+  }
+
+
+  if (jabatan) {
+    jabatan.value = "";
+  }
+
+
+  /*
+   * Kembali ke bagian paling atas
+   */
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =========================================================
+   ALIAS
+   Supaya fungsi lama tetap aman
+========================================================= */
+
+function kembaliKeLogin() {
+
+  keluarKeLogin();
+
+}
+</script>
+
 
 /* =========================================================
    KONFIGURASI API
@@ -3410,172 +3838,237 @@ function simpanDraft() {
 
 
 /* =========================================================
-   SIMPAN PEMERIKSAAN SELESAI
+   SIMPAN & SELESAI
 ========================================================= */
 
 function simpanPemeriksaan() {
+
+  console.log("=================================");
+  console.log("SIMPAN & SELESAI");
+  console.log("=================================");
+
+
+  /* -------------------------------------------------------
+     VALIDASI IDENTITAS
+  ------------------------------------------------------- */
 
   if (!validasiIdentitas()) {
     return;
   }
 
 
+  /* -------------------------------------------------------
+     VALIDASI CHECKLIST
+  ------------------------------------------------------- */
+
   if (!validasiChecklist()) {
     return;
   }
 
 
-  if (!idPemeriksaanAktif) {
+  /* -------------------------------------------------------
+     PASTIKAN ID PEMERIKSAAN
+  ------------------------------------------------------- */
+
+  pastikanIdPemeriksaan()
+
+  .then(function(id) {
 
     idPemeriksaanAktif =
-      buatIdPemeriksaan();
+      String(id || "").trim();
 
-    sessionStorage.setItem(
-      "idPemeriksaanAktif",
-      idPemeriksaanAktif
+
+    if (!idPemeriksaanAktif) {
+
+      throw new Error(
+        "ID Pemeriksaan tidak ditemukan."
+      );
+
+    }
+
+
+    /* -----------------------------------------------------
+       AMBIL DATA FORM
+    ----------------------------------------------------- */
+
+    const data =
+      ambilDataForm();
+
+
+    data.ID_PEMERIKSAAN =
+      idPemeriksaanAktif;
+
+
+    data.STATUS =
+      "SELESAI";
+
+
+    console.log(
+      "DATA FINAL PEMERIKSAAN:",
+      data
     );
 
-  }
+
+    tampilkanStatus(
+      "Menyimpan pemeriksaan..."
+    );
 
 
-  const data =
-    ambilDataForm();
+    /* -----------------------------------------------------
+       KIRIM KE API
+    ----------------------------------------------------- */
+
+    return fetch(
+
+      API_URL +
+      "?action=simpan_pemeriksaan",
+
+      {
+
+        method:
+          "POST",
+
+        headers: {
+
+          "Content-Type":
+            "text/plain;charset=utf-8"
+
+        },
+
+        body:
+          JSON.stringify(
+            data
+          )
+
+      }
+
+    );
+
+  })
+
+  .then(function(response) {
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
+    }
 
 
-  data.ID_PEMERIKSAAN =
-    idPemeriksaanAktif;
+    return response.text();
+
+  })
+
+  .then(function(text) {
+
+    console.log(
+      "RESPONSE SIMPAN & SELESAI:",
+      text
+    );
 
 
-  data.STATUS =
-    "SELESAI";
+    let result;
 
 
-  tampilkanStatus(
-    "Menyimpan pemeriksaan..."
-  );
+    try {
+
+      result =
+        JSON.parse(text);
+
+    }
+
+    catch (error) {
+
+      throw new Error(
+        "Response API bukan JSON yang valid:\n" +
+        text
+      );
+
+    }
 
 
-  kirimPemeriksaan(
-    data,
-    "Pemeriksaan berhasil disimpan."
-  );
-
-}
-
-
-/* =========================================================
-   KIRIM PEMERIKSAAN
-========================================================= */
-
-function kirimPemeriksaan(
-  data,
-  pesanBerhasil
-) {
-
-  console.log(
-    "================================="
-  );
-
-  console.log(
-    "KIRIM PEMERIKSAAN"
-  );
-
-  console.log(
-    data
-  );
-
-  console.log(
-    "================================="
-  );
-
-
-  kirimRequestPost(
-    "simpan_pemeriksaan",
-    data
-  )
-
-  .then(function(result) {
+    /* -----------------------------------------------------
+       BERHASIL
+    ----------------------------------------------------- */
 
     if (
       result &&
       result.success === true
     ) {
 
-      const idServer =
+      console.log(
+        "PEMERIKSAAN BERHASIL DIREKAM."
+      );
 
+
+      /*
+       * Pastikan ID tetap tersimpan
+       */
+      if (
         result.id_pemeriksaan ||
+        result.ID_PEMERIKSAAN
+      ) {
 
-        result.ID_PEMERIKSAAN ||
+        idPemeriksaanAktif =
 
-        result.data &&
-        (
-          result.data.id_pemeriksaan ||
-          result.data.ID_PEMERIKSAAN
+          result.id_pemeriksaan ||
+
+          result.ID_PEMERIKSAAN;
+
+      }
+
+
+      idPemeriksaanAktif =
+        String(
+          idPemeriksaanAktif || ""
+        ).trim();
+
+
+      /*
+       * Simpan ID terakhir
+       */
+      if (idPemeriksaanAktif) {
+
+        sessionStorage.setItem(
+          "idPemeriksaanAktif",
+          idPemeriksaanAktif
         );
 
-
-      if (idServer) {
-
-        idPemeriksaanAktif =
-          String(
-            idServer
-          ).trim();
-
       }
 
 
-      if (!idPemeriksaanAktif) {
-
-        idPemeriksaanAktif =
-          data.ID_PEMERIKSAAN;
-
-      }
-
-
-      sessionStorage.setItem(
-        "idPemeriksaanAktif",
-        idPemeriksaanAktif
-      );
-
-
+      /*
+       * Tampilkan status
+       */
       tampilkanStatus(
-
-        pesanBerhasil +
-
-        "\nID Pemeriksaan: " +
-
-        idPemeriksaanAktif
-
+        "Form Checklist Pengawasan Langsir Anda Telah Terekam."
       );
 
 
-      alert(
-
-        pesanBerhasil +
-
-        "\n\nID Pemeriksaan: " +
-
-        idPemeriksaanAktif
-
-      );
+      /*
+       * Tampilkan notif selesai
+       */
+      tampilkanNotifSelesai();
 
     }
 
     else {
 
-      throw new Error(
+      const pesan =
 
         result &&
         result.message
 
-        ?
+          ? result.message
 
-        result.message
+          : "Gagal menyimpan pemeriksaan.";
 
-        :
 
-        "Gagal menyimpan pemeriksaan."
-
+      throw new Error(
+        pesan
       );
 
     }
@@ -3585,14 +4078,13 @@ function kirimPemeriksaan(
   .catch(function(error) {
 
     console.error(
-      "GAGAL SIMPAN PEMERIKSAAN:",
+      "GAGAL SIMPAN & SELESAI:",
       error
     );
 
 
     tampilkanStatus(
-      "Gagal menyimpan pemeriksaan.\n" +
-      error.message
+      "Gagal menyimpan pemeriksaan."
     );
 
 
@@ -3606,8 +4098,6 @@ function kirimPemeriksaan(
   });
 
 }
-
-
 /* =========================================================
    STATUS UMUM
 ========================================================= */
