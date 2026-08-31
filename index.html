@@ -2825,11 +2825,11 @@ function uploadFoto() {
    KIRIM FOTO
 ========================================================= */
 
-function kirimFoto() {
+async function kirimFoto() {
 
   const input =
     document.getElementById(
-      "inputFoto"
+      "fotoPemeriksaan"
     );
 
   const status =
@@ -2837,6 +2837,10 @@ function kirimFoto() {
       "statusUploadFoto"
     );
 
+
+  /* -------------------------------------------------------
+     VALIDASI INPUT
+  ------------------------------------------------------- */
 
   if (!input) {
 
@@ -2855,13 +2859,17 @@ function kirimFoto() {
   ) {
 
     alert(
-      "Silahkan pilih foto terlebih dahulu."
+      "Silakan pilih foto terlebih dahulu."
     );
 
     return;
 
   }
 
+
+  /* -------------------------------------------------------
+     ID PEMERIKSAAN
+  ------------------------------------------------------- */
 
   if (!idPemeriksaanAktif) {
 
@@ -2871,104 +2879,382 @@ function kirimFoto() {
   }
 
 
-  if (status) {
-
-    status.textContent =
-      "Menyiapkan foto...";
-
-    status.style.display =
-      "block";
-
-  }
-
-
-  console.log(
-    "ID PEMERIKSAAN:",
-    idPemeriksaanAktif
-  );
-
-
-  console.log(
-    "JUMLAH FOTO:",
-    input.files.length
-  );
-
-
   const files =
     Array.from(
       input.files
     );
 
 
-  const preview =
-    document.getElementById(
-      "previewFoto"
-    );
+  console.log(
+    "================================="
+  );
+
+  console.log(
+    "UPLOAD FOTO"
+  );
+
+  console.log(
+    "ID PEMERIKSAAN:",
+    idPemeriksaanAktif
+  );
+
+  console.log(
+    "JUMLAH FOTO:",
+    files.length
+  );
+
+  console.log(
+    "================================="
+  );
 
 
-  if (preview) {
+  /* -------------------------------------------------------
+     STATUS
+  ------------------------------------------------------- */
 
-    preview.innerHTML = "";
+  if (status) {
 
+    status.style.display =
+      "block";
 
-    files.forEach(
-      function(file) {
-
-        const reader =
-          new FileReader();
-
-
-        reader.onload =
-          function(e) {
-
-            const img =
-              document.createElement(
-                "img"
-              );
-
-
-            img.src =
-              e.target.result;
-
-            img.style.width =
-              "150px";
-
-            img.style.height =
-              "150px";
-
-            img.style.objectFit =
-              "cover";
-
-            img.style.borderRadius =
-              "8px";
-
-            img.style.margin =
-              "5px";
-
-
-            preview.appendChild(
-              img
-            );
-
-          };
-
-
-        reader.readAsDataURL(
-          file
-        );
-
-      }
-    );
+    status.textContent =
+      "Mengupload " +
+      files.length +
+      " foto...";
 
   }
 
 
-  alert(
-    "Foto siap dikirim.\n\n" +
-    "ID Pemeriksaan: " +
-    idPemeriksaanAktif +
-    "\nJumlah foto: " +
-    files.length
+  /* -------------------------------------------------------
+     URL API
+     
+     PENTING:
+     Jika di HTML Anda sudah mempunyai variabel
+     URL_API / API_URL / SCRIPT_URL,
+     gunakan URL yang sama.
+  ------------------------------------------------------- */
+
+  const url =
+    API_URL;
+
+
+  if (!url) {
+
+    if (status) {
+
+      status.textContent =
+        "URL API tidak ditemukan.";
+
+    }
+
+    alert(
+      "URL API belum ditemukan. Pastikan variabel API_URL pada HTML sudah ada."
+    );
+
+    return;
+
+  }
+
+
+  /* -------------------------------------------------------
+     UPLOAD SATU PER SATU
+     
+     Foto tidak dikirim bersamaan.
+     Setiap foto dikirim ke Apps Script
+     melalui action upload_foto.
+  ------------------------------------------------------- */
+
+  let berhasil = 0;
+
+  let gagal = 0;
+
+
+  for (
+    let i = 0;
+    i < files.length;
+    i++
+  ) {
+
+    const file =
+      files[i];
+
+
+    try {
+
+      if (status) {
+
+        status.textContent =
+          "Mengupload foto " +
+          (i + 1) +
+          " dari " +
+          files.length +
+          "...";
+
+      }
+
+
+      console.log(
+        "Mulai upload:",
+        file.name
+      );
+
+
+      /* ---------------------------------------------------
+         FILE → BASE64
+      --------------------------------------------------- */
+
+      const base64 =
+        await fileToBase64(
+          file
+        );
+
+
+      /* ---------------------------------------------------
+         DATA YANG DIKIRIM KE APPS SCRIPT
+      --------------------------------------------------- */
+
+      const payload = {
+
+        action:
+          "upload_foto",
+
+        data: {
+
+          ID_PEMERIKSAAN:
+            idPemeriksaanAktif,
+
+          ID_PEMERIKSA:
+            idPemeriksaanAktif,
+
+          NAMA_FILE:
+            file.name,
+
+          FOTO:
+            base64
+
+        }
+
+      };
+
+
+      console.log(
+        "Mengirim:",
+        file.name
+      );
+
+
+      /* ---------------------------------------------------
+         FETCH API
+      --------------------------------------------------- */
+
+      const response =
+        await fetch(
+          url,
+          {
+
+            method:
+              "POST",
+
+            headers: {
+
+              "Content-Type":
+                "text/plain;charset=utf-8"
+
+            },
+
+            body:
+              JSON.stringify(
+                payload
+              )
+
+          }
+        );
+
+
+      const result =
+        await response.json();
+
+
+      console.log(
+        "RESPON UPLOAD:",
+        result
+      );
+
+
+      /* ---------------------------------------------------
+         CEK HASIL
+      --------------------------------------------------- */
+
+      if (
+        result &&
+        result.success === true
+      ) {
+
+        berhasil++;
+
+        console.log(
+          "BERHASIL:",
+          file.name
+        );
+
+      }
+
+      else {
+
+        gagal++;
+
+        console.error(
+          "GAGAL:",
+          file.name,
+          result
+        );
+
+      }
+
+
+    }
+
+    catch (error) {
+
+      gagal++;
+
+      console.error(
+        "ERROR UPLOAD FOTO:",
+        file.name,
+        error
+      );
+
+    }
+
+  }
+
+
+  /* -------------------------------------------------------
+     HASIL AKHIR
+  ------------------------------------------------------- */
+
+  if (status) {
+
+    status.style.display =
+      "block";
+
+    status.textContent =
+      "Upload selesai. " +
+      "Berhasil: " +
+      berhasil +
+      " foto. " +
+      "Gagal: " +
+      gagal +
+      " foto.";
+
+  }
+
+
+  console.log(
+    "================================="
+  );
+
+  console.log(
+    "UPLOAD SELESAI"
+  );
+
+  console.log(
+    "BERHASIL:",
+    berhasil
+  );
+
+  console.log(
+    "GAGAL:",
+    gagal
+  );
+
+  console.log(
+    "================================="
+  );
+
+
+  if (
+    berhasil > 0 &&
+    gagal === 0
+  ) {
+
+    alert(
+      "Semua foto berhasil diupload.\n\n" +
+      "ID Pemeriksaan: " +
+      idPemeriksaanAktif +
+      "\nJumlah foto: " +
+      berhasil
+    );
+
+  }
+
+  else if (
+    berhasil > 0 &&
+    gagal > 0
+  ) {
+
+    alert(
+      "Upload selesai sebagian.\n\n" +
+      "Berhasil: " +
+      berhasil +
+      " foto\n" +
+      "Gagal: " +
+      gagal +
+      " foto"
+    );
+
+  }
+
+  else {
+
+    alert(
+      "Tidak ada foto yang berhasil diupload.\n\n" +
+      "Silakan cek Console browser (F12)."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   FILE → BASE64
+========================================================= */
+
+function fileToBase64(file) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function() {
+
+          resolve(
+            reader.result
+          );
+
+        };
+
+
+      reader.onerror =
+        function(error) {
+
+          reject(
+            error
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
   );
 
 }
