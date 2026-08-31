@@ -1825,6 +1825,7 @@ function tampilkanStatusLogin(pesan) {
 
 /* =========================================================
    LOGIN MANUAL
+   VERSI AMAN
 ========================================================= */
 
 function loginPengguna() {
@@ -1842,6 +1843,10 @@ function loginPengguna() {
   );
 
 
+  /*
+   * AMBIL ELEMENT FORM LOGIN
+   */
+
   const namaElement =
     document.getElementById("loginNama");
 
@@ -1852,14 +1857,18 @@ function loginPengguna() {
     document.getElementById("loginJabatan");
 
 
-  if (
-    !namaElement ||
-    !nippElement ||
-    !jabatanElement
-  ) {
+  /*
+   * CEK ELEMENT
+   */
+
+  if (!namaElement) {
 
     alert(
-      "Form login tidak ditemukan."
+      "Kolom Nama tidak ditemukan."
+    );
+
+    console.error(
+      "Element #loginNama tidak ditemukan."
     );
 
     return;
@@ -1867,15 +1876,59 @@ function loginPengguna() {
   }
 
 
+  if (!nippElement) {
+
+    alert(
+      "Kolom NIPP tidak ditemukan."
+    );
+
+    console.error(
+      "Element #loginNipp tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  if (!jabatanElement) {
+
+    alert(
+      "Kolom Jabatan tidak ditemukan."
+    );
+
+    console.error(
+      "Element #loginJabatan tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * AMBIL NILAI
+   */
+
   const nama =
-    namaElement.value.trim();
+    String(
+      namaElement.value || ""
+    ).trim();
 
   const nipp =
-    nippElement.value.trim();
+    String(
+      nippElement.value || ""
+    ).trim();
 
   const jabatan =
-    jabatanElement.value.trim();
+    String(
+      jabatanElement.value || ""
+    ).trim();
 
+
+  /*
+   * VALIDASI NAMA
+   */
 
   if (!nama) {
 
@@ -1890,6 +1943,10 @@ function loginPengguna() {
   }
 
 
+  /*
+   * VALIDASI NIPP
+   */
+
   if (!nipp) {
 
     alert(
@@ -1902,6 +1959,10 @@ function loginPengguna() {
 
   }
 
+
+  /*
+   * VALIDASI JABATAN
+   */
 
   if (!jabatan) {
 
@@ -1959,21 +2020,46 @@ function loginPengguna() {
   );
 
 
-  tampilkanStatusLogin(
-    "Login berhasil."
-  );
+  /*
+   * TAMPILKAN STATUS LOGIN
+   */
+
+  if (
+    typeof tampilkanStatusLogin ===
+    "function"
+  ) {
+
+    tampilkanStatusLogin(
+      "Login berhasil."
+    );
+
+  }
 
 
   /*
-   * TAMPILKAN APLIKASI
+   * BUKA APLIKASI
    */
 
-  bukaAplikasi();
+  if (
+    typeof bukaAplikasi ===
+    "function"
+  ) {
 
+    bukaAplikasi();
+
+  } else {
+
+    console.error(
+      "Fungsi bukaAplikasi() tidak ditemukan."
+    );
+
+    alert(
+      "Login berhasil, tetapi aplikasi tidak dapat dibuka."
+    );
+
+  }
 
 }
-
-
 /* =========================================================
    BUKA APLIKASI
 ========================================================= */
