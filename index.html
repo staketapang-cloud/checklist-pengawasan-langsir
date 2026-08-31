@@ -3,65 +3,65 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Checklist Pengawasan Kegiatan Langsir</title>
+<title>Checklist Pengawasan Kegiatan Langsir</title>
 
+<link rel="icon" href="data:,">
 
+<style>
 
-  <!-- =====================================================
-       STYLE
-  ====================================================== -->
+* {
+  box-sizing: border-box;
+}
 
-  <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f9;
+  color: #222;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+/* =========================================================
+   HEADER
+========================================================= */
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f6f9;
-      color: #222;
-    }
+.page-header {
+  background: #1f4e78;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
 
-    .page-header {
-      background: #1f4e78;
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-    }
+.page-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+}
 
-    .page-header h1 {
-      margin: 0 0 8px 0;
-      font-size: 28px;
-    }
+.page-header p {
+  margin: 0;
+  font-size: 15px;
+}
 
-    .page-header p {
-      margin: 0;
-      font-size: 15px;
-    }
+/* =========================================================
+   LOGIN
+========================================================= */
 
-    #googleLogin {
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 20px;
-      text-align: center;
-    }
-    .login-box {
+#googleLogin {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.login-box {
   background: white;
   max-width: 500px;
   margin: 0 auto;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  text-align: left;
 }
 
 .login-box h2 {
@@ -77,153 +77,126 @@
   text-align: center;
 }
 
-.login-box .btn {
-  width: 100%;
-  margin-top: 5px;
+/* =========================================================
+   APP
+========================================================= */
+
+#app {
+  max-width: 1100px;
+  margin: 25px auto;
+  padding: 0 15px 40px 15px;
 }
 
-    #app {
-      max-width: 1100px;
-      margin: 25px auto;
-      padding: 0 15px 40px 15px;
-    }
+.info-user {
+  background: #eef5fb;
+  border-left: 5px solid #1f4e78;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 6px;
+}
 
-    .dashboard {
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      margin-bottom: 20px;
-    }
+/* =========================================================
+   FORM
+========================================================= */
 
-    .dashboard h1 {
-      margin-top: 0;
-    }
+#formPemeriksaan {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
 
-    .info-user {
-      background: #eef5fb;
-      border-left: 5px solid #1f4e78;
-      padding: 12px;
-      margin: 15px 0;
-      border-radius: 6px;
-    }
+#formPemeriksaan h2 {
+  margin-top: 0;
+  color: #1f4e78;
+}
 
-    #menuUtama {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+.section-title {
+  margin-top: 25px;
+  margin-bottom: 15px;
+  padding: 12px 15px;
+  background: #1f4e78;
+  color: white;
+  border-radius: 7px;
+  font-weight: bold;
+}
 
-    #menuUtama button {
-      border: none;
-      background: #1f4e78;
-      color: white;
-      padding: 11px 16px;
-      border-radius: 7px;
-      cursor: pointer;
-      font-size: 14px;
-    }
+.form-group {
+  margin-bottom: 16px;
+}
 
-    #menuUtama button:hover {
-      opacity: 0.9;
-    }
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
 
-    #formPemeriksaan {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
+.form-group input,
+.form-group select,
+.catatan-umum textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+}
 
-    #formPemeriksaan h2 {
-      margin-top: 0;
-      color: #1f4e78;
-    }
+.form-group input:focus,
+.form-group select:focus,
+.catatan-umum textarea:focus {
+  outline: none;
+  border-color: #1f4e78;
+}
 
-    .section-title {
-      margin-top: 25px;
-      margin-bottom: 15px;
-      padding: 12px 15px;
-      background: #1f4e78;
-      color: white;
-      border-radius: 7px;
-      font-weight: bold;
-    }
+/* =========================================================
+   CHECKLIST
+========================================================= */
 
-    .form-group {
-      margin-bottom: 16px;
-    }
+.checklist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-    .form-group label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: bold;
-    }
+.checklist-item {
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  padding: 16px;
+  background: #fafafa;
+}
 
-    .form-group input,
-    .form-group select,
-    .catatan-umum textarea {
-      width: 100%;
-      padding: 11px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-      background: white;
-    }
+.checklist-number {
+  font-weight: bold;
+  color: #1f4e78;
+  margin-bottom: 7px;
+}
 
-    .form-group select:focus,
-    .form-group input:focus,
-    .catatan-umum textarea:focus {
-      outline: none;
-      border-color: #1f4e78;
-    }
+.checklist-category {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 7px;
+}
 
-    .info-lokomotif {
-      margin-top: 6px;
-      font-size: 12px;
-      color: #777;
-    }
+.checklist-question {
+  font-weight: bold;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
 
-    .checklist-container {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+.checklist-standard {
+  font-size: 13px;
+  background: #f0f0f0;
+  padding: 9px;
+  border-radius: 5px;
+  margin-bottom: 12px;
+}
 
-    .checklist-item {
-      border: 1px solid #ddd;
-      border-radius: 9px;
-      padding: 16px;
-      background: #fafafa;
-    }
+/* =========================================================
+   RADIO
+========================================================= */
 
-    .checklist-number {
-      font-weight: bold;
-      color: #1f4e78;
-      margin-bottom: 7px;
-    }
-
-    .checklist-category {
-      font-size: 12px;
-      color: #777;
-      margin-bottom: 7px;
-    }
-
-    .checklist-question {
-      font-weight: bold;
-      margin-bottom: 12px;
-      line-height: 1.5;
-    }
-
-    .checklist-standard {
-      font-size: 13px;
-      background: #f0f0f0;
-      padding: 9px;
-      border-radius: 5px;
-      margin-bottom: 12px;
-    }
-
- .radio-group {
+.radio-group {
   display: flex;
   gap: 10px;
   margin-bottom: 12px;
@@ -249,7 +222,6 @@
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
 .radio-option span:hover {
@@ -261,6 +233,11 @@
   border-color: #1f4e78;
   color: white;
 }
+
+/* =========================================================
+   TEMUAN / CATATAN
+========================================================= */
+
 .temuan-input {
   width: 100%;
   padding: 9px;
@@ -272,163 +249,181 @@
 .catatan-umum {
   margin-top: 20px;
 }
-    .temuan-input {
-      width: 100%;
-      padding: 9px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 13px;
-    }
 
-    .catatan-umum {
-      margin-top: 20px;
-    }
+.catatan-umum label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
 
-    .catatan-umum label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 7px;
-    }
+.catatan-umum textarea {
+  min-height: 100px;
+  resize: vertical;
+}
 
-    .catatan-umum textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .status-box {
-      display: none;
-      margin-top: 20px;
-      padding: 12px;
-      background: #eef5fb;
-      border-left: 5px solid #1f4e78;
-      border-radius: 6px;
-    }
-
-    .button-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .btn {
-      border: none;
-      padding: 12px 18px;
-      border-radius: 7px;
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .btn-draft {
-      background: #777;
-    }
-
-    .btn-simpan {
-      background: #198754;
-    }
-
-    .btn-ttd {
-      background: #6f42c1;
-    }
-
-    .ttd-box {
-      display: none;
-      margin-top: 25px;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 9px;
-      background: #fafafa;
-    }
-
-    #signatureCanvas {
-      display: block;
-      width: 100%;
-      height: 220px;
-      background: white;
-      border: 2px solid #aaa;
-      border-radius: 7px;
-      touch-action: none;
-    }
-
-    .ttd-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .btn-clear {
-      border: none;
-      background: #dc3545;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .btn-save-ttd {
-      border: none;
-      background: #198754;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    .loading {
-      padding: 20px;
-      text-align: center;
-      color: #666;
-      background: #f8f8f8;
-      border-radius: 7px;
-    }
-
-    .error-box {
-      padding: 15px;
-      background: #fff0f0;
-      border-left: 5px solid #dc3545;
-      border-radius: 6px;
-      color: #a00;
-    }
-
-    @media (max-width: 600px) {
-
-      .page-header {
-        padding: 22px 15px;
-      }
-
-      .page-header h1 {
-        font-size: 22px;
-      }
-
-      #app {
-        padding: 0 10px 30px 10px;
-      }
-
-      .dashboard,
-      #formPemeriksaan {
-        padding: 17px;
-      }
-
-      #menuUtama {
-        flex-direction: column;
-      }
-
-      #menuUtama button {
-        width: 100%;
-      }
-
-      .button-group {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-    }
 /* =========================================================
-   NOTIFIKASI FOTO
+   STATUS
+========================================================= */
+
+.status-box {
+  display: none;
+  margin-top: 20px;
+  padding: 12px;
+  background: #eef5fb;
+  border-left: 5px solid #1f4e78;
+  border-radius: 6px;
+  white-space: pre-line;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn-draft {
+  background: #777;
+}
+
+.btn-simpan {
+  background: #198754;
+}
+
+.btn-ttd {
+  background: #6f42c1;
+}
+
+.btn-foto {
+  background: #0d6efd;
+}
+
+/* =========================================================
+   UPLOAD FOTO
+========================================================= */
+
+#uploadFotoBox {
+  display: none;
+  margin-top: 20px;
+  padding: 20px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+}
+
+#previewFoto {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.preview-item {
+  width: 140px;
+  text-align: center;
+}
+
+.preview-item img {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.preview-name {
+  font-size: 11px;
+  margin-top: 5px;
+  word-break: break-word;
+}
+
+/* =========================================================
+   TTD
+========================================================= */
+
+.ttd-box {
+  display: none;
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  background: #fafafa;
+}
+
+#signatureCanvas {
+  display: block;
+  width: 100%;
+  height: 220px;
+  background: white;
+  border: 2px solid #aaa;
+  border-radius: 7px;
+  touch-action: none;
+}
+
+.ttd-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn-clear {
+  border: none;
+  background: #dc3545;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save-ttd {
+  border: none;
+  background: #198754;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* =========================================================
+   LOADING / ERROR
+========================================================= */
+
+.loading {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  background: #f8f8f8;
+  border-radius: 7px;
+}
+
+.error-box {
+  padding: 15px;
+  background: #fff0f0;
+  border-left: 5px solid #dc3545;
+  border-radius: 6px;
+  color: #a00;
+}
+
+/* =========================================================
+   NOTIFIKASI
 ========================================================= */
 
 .notif-overlay {
@@ -436,7 +431,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.35);
-  z-index: 9999;
+  z-index: 99999;
   align-items: center;
   justify-content: center;
 }
@@ -461,6 +456,7 @@
   font-size: 14px;
   color: #444;
   line-height: 1.5;
+  white-space: pre-line;
 }
 
 .notif-footer {
@@ -479,17 +475,68 @@
   font-size: 14px;
   font-weight: bold;
 }
-  </style>
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .page-header {
+    padding: 22px 15px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+  }
+
+  #app {
+    padding: 0 10px 30px 10px;
+  }
+
+  #googleLogin {
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  .login-box,
+  #formPemeriksaan {
+    padding: 17px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .ttd-buttons {
+    flex-direction: column;
+  }
+
+  .ttd-buttons button {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   JAVASCRIPT
+========================================================= */
+
+</style>
 
 </head>
-
 
 <body>
 
 
-<!-- =====================================================
+<!-- =========================================================
      HEADER
-====================================================== -->
+========================================================= -->
 
 <div class="page-header">
 
@@ -497,11 +544,17 @@
     Checklist Pengawasan Kegiatan Langsir
   </h1>
 
-<p>
-  Form Ini Sesuai Dengan Peraturan Tambahan Dinas Operasi (PTDO)
-</p>
+  <p>
+    Form Ini Sesuai Dengan Peraturan Tambahan Dinas Operasi (PTDO)
+  </p>
 
 </div>
+
+
+<!-- =========================================================
+     LOGIN
+========================================================= -->
+
 <div id="googleLogin">
 
   <div class="login-box">
@@ -527,23 +580,24 @@
 
     </div>
 
+
     <div class="form-group">
 
       <label for="loginNipp">
         NIPP
       </label>
 
-<input
-  type="text"
-  id="loginNipp"
-  inputmode="numeric"
-  pattern="[0-9]*"
-  autocomplete="off"
-  placeholder="NIPP"
-  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
->
+      <input
+        type="text"
+        id="loginNipp"
+        inputmode="numeric"
+        autocomplete="off"
+        placeholder="NIPP"
+        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+      >
 
     </div>
+
 
     <div class="form-group">
 
@@ -560,6 +614,7 @@
 
     </div>
 
+
     <button
       type="button"
       class="btn btn-simpan"
@@ -567,6 +622,7 @@
     >
       MASUK
     </button>
+
 
     <div
       id="statusLogin"
@@ -576,41 +632,42 @@
   </div>
 
 </div>
-<!-- =====================================================
+
+
+<!-- =========================================================
      APPLICATION
-====================================================== -->
+========================================================= -->
 
 <div
   id="app"
   style="display:none;"
 >
 
+  <div
+    id="infoUser"
+    class="info-user"
+  ></div>
 
- <div
-  id="infoUser"
-  class="info-user"
-></div>
-  <!-- ===================================================
+
+  <!-- =======================================================
        FORM PEMERIKSAAN
-  ==================================================== -->
+  ======================================================== -->
 
   <div
     id="formPemeriksaan"
     style="display:none;"
   >
 
-<h2>
-  Lampiran Checklist Pengawasan Kegiatan Langsir
-</h2>
+    <h2>
+      Lampiran Checklist Pengawasan Kegiatan Langsir
+    </h2>
 
 
+    <!-- =====================================================
+         IDENTITAS
+    ====================================================== -->
 
     <div id="identitasPemeriksaan">
-
-
-      <!-- IDENTITAS -->
-
-
 
       <div class="form-group">
 
@@ -632,9 +689,7 @@
           Dinas Langsir
         </label>
 
-        <select
-          id="dinasLangsirPemeriksaan"
-        >
+        <select id="dinasLangsirPemeriksaan">
 
           <option value="">
             Pilih Dinas Langsir
@@ -663,9 +718,7 @@
           Stasiun / Emplasemen
         </label>
 
-        <select
-          id="stasiunPemeriksaan"
-        >
+        <select id="stasiunPemeriksaan">
 
           <option value="">
             Pilih Stasiun / Emplasemen
@@ -676,17 +729,13 @@
       </div>
 
 
-      <!-- LOKOMOTIF -->
-
       <div class="form-group">
 
         <label for="lokomotifPemeriksaan">
           Lokomotif
         </label>
 
-        <select
-          id="lokomotifPemeriksaan"
-        >
+        <select id="lokomotifPemeriksaan">
 
           <option value="">
             Pilih Lokomotif
@@ -694,319 +743,369 @@
 
         </select>
 
-
-
       </div>
 
 
-      <!-- DATA PETUGAS -->
+      <!-- ===================================================
+           PETUGAS
+      ==================================================== -->
 
       <div class="section-title">
         Data Petugas
       </div>
 
 
-    <div class="form-group">
+      <div class="form-group">
 
-  <label for="masinisPemeriksaan">
-    Masinis
-  </label>
-
-  <input
-    type="text"
-    id="masinisPemeriksaan"
-    list="listMasinis"
-    placeholder="Ketik Nama atau NIPP Masinis"
-  >
-
-  <datalist id="listMasinis"></datalist>
-
-</div>
-
-
-<div class="form-group">
-
-  <label for="asistenMasinisPemeriksaan">
-    Asisten Masinis
-  </label>
-
-  <input
-    type="text"
-    id="asistenMasinisPemeriksaan"
-    list="listAsistenMasinis"
-    placeholder="Ketik Nama atau NIPP Asisten Masinis"
-  >
-
-  <datalist id="listAsistenMasinis"></datalist>
-
-</div>
-
-
-<div class="form-group">
-
-  <label for="plr1Pemeriksaan">
-    PLR 1
-  </label>
-
-  <input
-    type="text"
-    id="plr1Pemeriksaan"
-    list="listPlr1"
-    placeholder="Ketik Nama atau NIPP PLR 1"
-  >
-
-  <datalist id="listPlr1"></datalist>
-
-</div>
-
-
-<div class="form-group">
-
-  <label for="plr2Pemeriksaan">
-    PLR 2
-  </label>
-
-  <input
-    type="text"
-    id="plr2Pemeriksaan"
-    list="listPlr2"
-    placeholder="Ketik Nama atau NIPP PLR 2"
-  >
-
-  <datalist id="listPlr2"></datalist>
-
-</div>
-
-
-<div class="form-group">
-
-  <label for="plrDipoPemeriksaan">
-    PLR DIPO
-  </label>
-
-  <input
-    type="text"
-    id="plrDipoPemeriksaan"
-    list="listPlrDipo"
-    placeholder="Ketik Nama atau NIPP PLR DIPO"
-  >
-
-  <datalist id="listPlrDipo"></datalist>
-
-</div>
-
-
-<div class="form-group">
-
-  <label for="petugasSchowingPemeriksaan">
-    Petugas Schowing
-  </label>
-
-  <input
-    type="text"
-    id="petugasSchowingPemeriksaan"
-    list="listSchowing"
-    placeholder="Ketik Nama atau NIPP Petugas Schowing"
-  >
-
-  <datalist id="listSchowing"></datalist>
-
-</div>
-
-      </div>
-
-
-      <!-- CHECKLIST -->
-
-      <div class="section-title">
-        Checklist Pengawasan
-      </div>
-
-
-      <div
-        id="checklistContainer"
-        class="checklist-container"
-      >
-
-        <div class="loading">
-          Klik Form Pemeriksaan untuk memuat checklist...
-        </div>
-
-      </div>
-
-
-      <!-- CATATAN -->
-
-      <div class="catatan-umum">
-
-        <label for="catatanPemeriksaan">
-          CATATAN:
+        <label for="masinisPemeriksaan">
+          Masinis
         </label>
 
-        <textarea
-          id="catatanPemeriksaan"
-          placeholder="Tulis catatan / temuan pemeriksaan..."
-        ></textarea>
+        <input
+          type="text"
+          id="masinisPemeriksaan"
+          list="listMasinis"
+          placeholder="Ketik Nama atau NIPP Masinis"
+        >
+
+        <datalist id="listMasinis"></datalist>
 
       </div>
 
 
-      <!-- STATUS -->
+      <div class="form-group">
+
+        <label for="asistenMasinisPemeriksaan">
+          Asisten Masinis
+        </label>
+
+        <input
+          type="text"
+          id="asistenMasinisPemeriksaan"
+          list="listAsistenMasinis"
+          placeholder="Ketik Nama atau NIPP Asisten Masinis"
+        >
+
+        <datalist id="listAsistenMasinis"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="plr1Pemeriksaan">
+          PLR 1
+        </label>
+
+        <input
+          type="text"
+          id="plr1Pemeriksaan"
+          list="listPlr1"
+          placeholder="Ketik Nama atau NIPP PLR 1"
+        >
+
+        <datalist id="listPlr1"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="plr2Pemeriksaan">
+          PLR 2
+        </label>
+
+        <input
+          type="text"
+          id="plr2Pemeriksaan"
+          list="listPlr2"
+          placeholder="Ketik Nama atau NIPP PLR 2"
+        >
+
+        <datalist id="listPlr2"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="plrDipoPemeriksaan">
+          PLR DIPO
+        </label>
+
+        <input
+          type="text"
+          id="plrDipoPemeriksaan"
+          list="listPlrDipo"
+          placeholder="Ketik Nama atau NIPP PLR DIPO"
+        >
+
+        <datalist id="listPlrDipo"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="petugasSchowingPemeriksaan">
+          Petugas Schowing
+        </label>
+
+        <input
+          type="text"
+          id="petugasSchowingPemeriksaan"
+          list="listSchowing"
+          placeholder="Ketik Nama atau NIPP Petugas Schowing"
+        >
+
+        <datalist id="listSchowing"></datalist>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CHECKLIST
+    ====================================================== -->
+
+    <div class="section-title">
+      Checklist Pengawasan
+    </div>
+
+
+    <div
+      id="checklistContainer"
+      class="checklist-container"
+    >
+
+      <div class="loading">
+        Memuat checklist...
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CATATAN
+    ====================================================== -->
+
+    <div class="catatan-umum">
+
+      <label for="catatanPemeriksaan">
+        CATATAN:
+      </label>
+
+      <textarea
+        id="catatanPemeriksaan"
+        placeholder="Tulis catatan / temuan pemeriksaan..."
+      ></textarea>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATUS
+    ====================================================== -->
+
+    <div
+      id="statusBox"
+      class="status-box"
+    ></div>
+
+
+    <!-- =====================================================
+         BUTTON AKSI
+    ====================================================== -->
+
+    <div class="button-group">
+
+      <button
+        type="button"
+        class="btn btn-draft"
+        onclick="simpanDraft()"
+      >
+        SIMPAN DRAFT
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-foto"
+        onclick="uploadFoto()"
+      >
+        UPLOAD FOTO
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-ttd"
+        onclick="tampilkanTTD()"
+      >
+        TTD
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-simpan"
+        onclick="simpanPemeriksaan()"
+      >
+        SIMPAN & SELESAI
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         UPLOAD FOTO
+    ====================================================== -->
+
+    <div
+      id="uploadFotoBox"
+    >
+
+      <div class="section-title">
+        Upload Foto Dokumentasi
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="fotoPemeriksaan">
+          Pilih Foto
+        </label>
+
+        <input
+          type="file"
+          id="fotoPemeriksaan"
+          accept="image/*"
+          multiple
+        >
+
+      </div>
+
+
+      <div id="previewFoto"></div>
+
+
+      <div class="button-group">
+
+        <button
+          type="button"
+          class="btn btn-simpan"
+          onclick="kirimFoto()"
+        >
+          KIRIM FOTO
+        </button>
+
+      </div>
+
 
       <div
-        id="statusBox"
+        id="statusUploadFoto"
         class="status-box"
       ></div>
 
-
-<!-- =====================================================
-     BUTTON AKSI
-====================================================== -->
-
-<div class="button-group">
-
-  <button
-    type="button"
-    class="btn btn-draft"
-    onclick="uploadFoto()"
-  >
-    UPLOAD FOTO
-  </button>
-
-  <button
-    type="button"
-    class="btn btn-ttd"
-    onclick="tampilkanTTD()"
-  >
-    TTD
-  </button>
-
-  <button
-    type="button"
-    class="btn btn-simpan"
-    onclick="simpanPemeriksaan()"
-  >
-    SIMPAN & SELESAI
-  </button>
-
-</div>
+    </div>
 
 
-<!-- =====================================================
-     UPLOAD FOTO
-====================================================== -->
+    <!-- =====================================================
+         TTD
+    ====================================================== -->
 
-<div
-  id="uploadFotoBox"
-  style="display:none; margin-top:20px;"
->
-
-  <div class="section-title">
-    Upload Foto Dokumentasi
-  </div>
-
-  <div class="form-group">
-
-    <label for="fotoPemeriksaan">
-      Pilih Foto
-    </label>
-
-    <input
-      type="file"
-      id="fotoPemeriksaan"
-      accept="image/*"
-      multiple
+    <div
+      id="ttdBox"
+      class="ttd-box"
     >
 
-  </div>
+      <h3>
+        Tanda Tangan Digital
+      </h3>
 
-  <div
-    id="previewFoto"
-    style="
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:15px;
-    "
-  ></div>
-
-  <div class="button-group">
-
-    <button
-      type="button"
-      class="btn btn-simpan"
-      onclick="kirimFoto()"
-    >
-      KIRIM FOTO
-    </button>
-
-  </div>
-
-  <div
-    id="statusUploadFoto"
-    class="status-box"
-  ></div>
-
-</div>
+      <p>
+        Silakan tanda tangan pada kotak berikut.
+      </p>
 
 
-<!-- =====================================================
-     TTD
-====================================================== -->
+      <canvas
+        id="signatureCanvas"
+      ></canvas>
 
 
-      <div
-        id="ttdBox"
-        class="ttd-box"
-      >
+      <div class="ttd-buttons">
 
-        <h3>
-          Tanda Tangan Digital
-        </h3>
-
-        <p>
-          Silakan tanda tangan pada kotak berikut.
-        </p>
-
-        <canvas
-          id="signatureCanvas"
-        ></canvas>
+        <button
+          type="button"
+          class="btn-clear"
+          onclick="clearSignature()"
+        >
+          Hapus
+        </button>
 
 
-        <div class="ttd-buttons">
-
-          <button
-            type="button"
-            class="btn-clear"
-            onclick="clearSignature()"
-          >
-            Hapus
-          </button>
-
-          <button
-            type="button"
-            class="btn-save-ttd"
-            onclick="simpanTTD()"
-          >
-            Simpan TTD
-          </button>
-
-        </div>
+        <button
+          type="button"
+          class="btn-save-ttd"
+          onclick="simpanTTD()"
+        >
+          Simpan TTD
+        </button>
 
       </div>
-
 
     </div>
 
   </div>
 
+</div>
+
+
+<!-- =========================================================
+     NOTIFIKASI FOTO
+========================================================= -->
+
+<div
+  id="notifFoto"
+  class="notif-overlay"
+>
+
+  <div class="notif-box">
+
+    <div
+      id="notifFotoTitle"
+      class="notif-title"
+    >
+      Foto telah berhasil diupload
+    </div>
+
+
+    <div
+      id="notifFotoMessage"
+      class="notif-message"
+    >
+      Foto dokumentasi berhasil disimpan.
+    </div>
+
+
+    <div class="notif-footer">
+
+      <button
+        type="button"
+        class="notif-ok"
+        onclick="tutupNotifFoto()"
+      >
+        OK
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
 
 
-<!-- =====================================================
-     JAVASCRIPT
-====================================================== -->
 <script>
 
 /* =========================================================
@@ -1028,6 +1127,8 @@ let signatureCanvas = null;
 let signatureContext = null;
 
 let sedangMenggambar = false;
+
+let ttdSiap = false;
 
 
 /* =========================================================
@@ -1100,7 +1201,11 @@ function cekSessionLogin() {
       jabatan
     );
 
-  } else {
+    tampilkanFormPemeriksaan();
+
+  }
+
+  else {
 
     if (loginBox) {
       loginBox.style.display = "block";
@@ -1121,7 +1226,9 @@ function cekSessionLogin() {
 
 function loginPengguna() {
 
-  console.log("LOGIN PENGGUNA DIPANGGIL");
+  console.log(
+    "LOGIN PENGGUNA DIPANGGIL"
+  );
 
 
   const namaElement =
@@ -1134,9 +1241,11 @@ function loginPengguna() {
     document.getElementById("loginJabatan");
 
 
-  if (!namaElement ||
-      !nippElement ||
-      !jabatanElement) {
+  if (
+    !namaElement ||
+    !nippElement ||
+    !jabatanElement
+  ) {
 
     alert(
       "Form login tidak ditemukan."
@@ -1156,10 +1265,6 @@ function loginPengguna() {
   const jabatan =
     jabatanElement.value.trim();
 
-
-  /* -------------------------------------------------------
-     VALIDASI
-  ------------------------------------------------------- */
 
   if (!nama) {
 
@@ -1200,10 +1305,6 @@ function loginPengguna() {
   }
 
 
-  /* -------------------------------------------------------
-     SIMPAN SESSION
-  ------------------------------------------------------- */
-
   sessionStorage.setItem(
     "userNama",
     nama
@@ -1219,10 +1320,6 @@ function loginPengguna() {
     jabatan
   );
 
-
-  /* -------------------------------------------------------
-     TAMPILKAN APLIKASI
-  ------------------------------------------------------- */
 
   const loginBox =
     document.getElementById(
@@ -1258,17 +1355,13 @@ function loginPengguna() {
   );
 
 
-  /* -------------------------------------------------------
-     TAMPILKAN FORM
-  ------------------------------------------------------- */
-
   tampilkanFormPemeriksaan();
 
 }
 
 
 /* =========================================================
-   INFORMASI USER
+   INFO USER
 ========================================================= */
 
 function tampilkanInfoUser(
@@ -1296,10 +1389,12 @@ function tampilkanInfoUser(
 
     "Nama: " +
     escapeHtml(nama) +
+
     "<br>" +
 
     "NIPP: " +
     escapeHtml(nipp) +
+
     "<br>" +
 
     "Jabatan: " +
@@ -1309,38 +1404,7 @@ function tampilkanInfoUser(
 
 
 /* =========================================================
-   TAMPILKAN DASHBOARD
-========================================================= */
-
-function tampilkanDashboard() {
-
-  const form =
-    document.getElementById(
-      "formPemeriksaan"
-    );
-
-
-  if (form) {
-
-    form.style.display =
-      "none";
-
-  }
-
-
-  window.scrollTo({
-
-    top: 0,
-
-    behavior: "smooth"
-
-  });
-
-}
-
-
-/* =========================================================
-   TAMPILKAN FORM PEMERIKSAAN
+   TAMPILKAN FORM
 ========================================================= */
 
 function tampilkanFormPemeriksaan() {
@@ -1362,56 +1426,62 @@ function tampilkanFormPemeriksaan() {
     "block";
 
 
-  form.scrollIntoView({
-
-    behavior: "smooth",
-
-    block: "start"
-
-  });
+  setTanggalHariIni();
 
 
-  /*
-     Sengaja TIDAK menampilkan
-     "Data pemeriksaan siap digunakan."
-  */
+  const checklistContainer =
+    document.getElementById(
+      "checklistContainer"
+    );
 
-  tampilkanStatus(
-    "Memuat data pemeriksaan..."
-  );
+
+  if (
+    checklistContainer &&
+    checklistContainer.dataset.loaded !== "1"
+  ) {
+
+    muatSemuaData();
+
+  }
+
+}
+
+
+/* =========================================================
+   MUAT SEMUA DATA
+========================================================= */
+
+function muatSemuaData() {
+
+  const container =
+    document.getElementById(
+      "checklistContainer"
+    );
+
+
+  if (container) {
+
+    container.innerHTML =
+      "<div class='loading'>" +
+      "Memuat data pemeriksaan..." +
+      "</div>";
+
+  }
 
 
   Promise.all([
-
     muatChecklist(),
-
     muatStasiun(),
-
     muatLokomotif(),
-
     muatPegawai()
-
   ])
 
   .then(function() {
 
-    /*
-       Tidak ada notif
-       "Data pemeriksaan siap digunakan."
-    */
+    if (container) {
 
-    const status =
-      document.getElementById(
-        "statusBox"
-      );
-
-    if (status) {
-
-      status.style.display =
-        "none";
-
-      status.textContent =
-        "";
+      container.dataset.loaded =
+        "1";
 
     }
 
@@ -1420,7 +1490,7 @@ function tampilkanFormPemeriksaan() {
   .catch(function(error) {
 
     console.error(
-      "Gagal memuat data form:",
+      "Gagal memuat data:",
       error
     );
 
@@ -1430,7 +1500,7 @@ function tampilkanFormPemeriksaan() {
 
 
 /* =========================================================
-   FETCH API
+   FETCH GET API
 ========================================================= */
 
 function fetchApi(action) {
@@ -1442,11 +1512,8 @@ function fetchApi(action) {
     encodeURIComponent(action),
 
     {
-
       method: "GET",
-
       cache: "no-store"
-
     }
 
   )
@@ -1462,7 +1529,6 @@ function fetchApi(action) {
 
     }
 
-
     return response.json();
 
   });
@@ -1471,65 +1537,47 @@ function fetchApi(action) {
 
 
 /* =========================================================
-   NORMALISASI DATA
+   NORMALISASI ARRAY
 ========================================================= */
 
 function ambilArrayData(result) {
 
   if (!result) {
-
     return [];
-
   }
-
 
   if (Array.isArray(result)) {
-
     return result;
-
   }
-
 
   if (
     result.data &&
     Array.isArray(result.data)
   ) {
-
     return result.data;
-
   }
-
 
   if (
     result.result &&
     Array.isArray(result.result)
   ) {
-
     return result.result;
-
   }
-
 
   if (
     result.rows &&
     Array.isArray(result.rows)
   ) {
-
     return result.rows;
-
   }
-
 
   if (
     result.data &&
     result.data.data &&
     Array.isArray(result.data.data)
   ) {
-
     return result.data.data;
-
   }
-
 
   return [];
 
@@ -1559,12 +1607,6 @@ function muatChecklist() {
   }
 
 
-  container.innerHTML =
-    "<div class='loading'>" +
-    "Memuat checklist..." +
-    "</div>";
-
-
   return fetchApi(
     "master_checklist"
   )
@@ -1572,7 +1614,7 @@ function muatChecklist() {
   .then(function(result) {
 
     console.log(
-      "HASIL MASTER CHECKLIST:",
+      "MASTER CHECKLIST:",
       result
     );
 
@@ -1581,10 +1623,12 @@ function muatChecklist() {
       ambilArrayData(result);
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+      "";
 
 
-    let nomorTampil = 0;
+    let nomorTampil =
+      0;
 
 
     data.forEach(function(item) {
@@ -1605,7 +1649,7 @@ function muatChecklist() {
           .toUpperCase();
 
 
-        const isAktif =
+        const aktifValid =
           nilaiAktif === "TRUE" ||
           nilaiAktif === "1" ||
           nilaiAktif === "YA" ||
@@ -1613,7 +1657,7 @@ function muatChecklist() {
           nilaiAktif === "AKTIF";
 
 
-        if (!isAktif) {
+        if (!aktifValid) {
 
           return;
 
@@ -1689,6 +1733,7 @@ function muatChecklist() {
 
         "</div>" +
 
+
         (
           kategori
 
@@ -1698,10 +1743,8 @@ function muatChecklist() {
 
             (
               subKategori
-
               ? " / " +
                 escapeHtml(subKategori)
-
               : ""
             ) +
 
@@ -1710,11 +1753,13 @@ function muatChecklist() {
           : ""
         ) +
 
+
         "<div class='checklist-question'>" +
 
         escapeHtml(uraian) +
 
         "</div>" +
+
 
         (
           standar
@@ -1730,39 +1775,31 @@ function muatChecklist() {
           : ""
         ) +
 
+
         "<div class='radio-group'>" +
 
           "<label class='radio-option'>" +
 
             "<input " +
-
-              "type='radio' " +
-
-              "name='hasil_" +
-
-              escapeHtml(id) +
-
-              "' " +
-
-              "value='YA'>" +
+            "type='radio' " +
+            "name='hasil_" +
+            escapeHtml(id) +
+            "' " +
+            "value='YA'>" +
 
             "<span>YA</span>" +
 
           "</label>" +
 
+
           "<label class='radio-option'>" +
 
             "<input " +
-
-              "type='radio' " +
-
-              "name='hasil_" +
-
-              escapeHtml(id) +
-
-              "' " +
-
-              "value='TIDAK'>" +
+            "type='radio' " +
+            "name='hasil_" +
+            escapeHtml(id) +
+            "' " +
+            "value='TIDAK'>" +
 
             "<span>TIDAK</span>" +
 
@@ -1770,12 +1807,10 @@ function muatChecklist() {
 
         "</div>" +
 
+
         "<input " +
-
           "type='text' " +
-
           "class='temuan-input' " +
-
           "placeholder='Keterangan / temuan...'>";
 
 
@@ -1796,26 +1831,18 @@ function muatChecklist() {
 
         "<strong>Tidak ada checklist aktif.</strong><br><br>" +
 
-        "Periksa kolom AKTIF pada sheet " +
-
-        "MASTER_CHECKLIST." +
+        "Periksa kolom AKTIF pada sheet MASTER_CHECKLIST." +
 
         "</div>";
 
     }
-
-
-    console.log(
-      "Jumlah checklist tampil:",
-      nomorTampil
-    );
 
   })
 
   .catch(function(error) {
 
     console.error(
-      "Gagal mengambil checklist:",
+      "Gagal memuat checklist:",
       error
     );
 
@@ -1831,7 +1858,6 @@ function muatChecklist() {
       ) +
 
       "</div>";
-
 
     throw error;
 
@@ -1865,12 +1891,6 @@ function muatStasiun() {
 
   .then(function(result) {
 
-    console.log(
-      "HASIL MASTER STASIUN:",
-      result
-    );
-
-
     const data =
       ambilArrayData(result);
 
@@ -1878,9 +1898,7 @@ function muatStasiun() {
     select.innerHTML =
 
       "<option value=''>" +
-
       "Pilih Stasiun / Emplasemen" +
-
       "</option>";
 
 
@@ -1895,9 +1913,7 @@ function muatStasiun() {
 
 
       if (!value) {
-
         return;
-
       }
 
 
@@ -1960,12 +1976,6 @@ function muatLokomotif() {
 
   .then(function(result) {
 
-    console.log(
-      "HASIL MASTER LOKOMOTIF:",
-      result
-    );
-
-
     const data =
       ambilArrayData(result);
 
@@ -1973,9 +1983,7 @@ function muatLokomotif() {
     select.innerHTML =
 
       "<option value=''>" +
-
       "Pilih Lokomotif" +
-
       "</option>";
 
 
@@ -1983,13 +1991,14 @@ function muatLokomotif() {
 
       const value =
         item.JENIS ||
+        item.NAMA ||
+        item.LOKOMOTIF ||
+        item.ID ||
         "";
 
 
       if (!value) {
-
         return;
-
       }
 
 
@@ -2040,7 +2049,7 @@ function muatPegawai() {
   .then(function(result) {
 
     console.log(
-      "HASIL MASTER PEGAWAI:",
+      "MASTER PEGAWAI:",
       result
     );
 
@@ -2049,160 +2058,135 @@ function muatPegawai() {
       ambilArrayData(result);
 
 
-    const daftarSelect = [
-
+    const daftar =
       [
-        "listMasinis",
+
         [
-          "MASINIS",
-          "MASINIS"
-        ]
-      ],
+          "listMasinis",
+          ["MASINIS"]
+        ],
 
-      [
-        "listAsistenMasinis",
         [
-          "ASISTEN MASINIS"
-        ]
-      ],
+          "listAsistenMasinis",
+          ["ASISTEN MASINIS"]
+        ],
 
-      [
-        "listPlr1",
         [
-          "PLR 1",
-          "PLR1"
-        ]
-      ],
+          "listPlr1",
+          ["PLR 1", "PLR1"]
+        ],
 
-      [
-        "listPlr2",
         [
-          "PLR 2",
-          "PLR2"
-        ]
-      ],
+          "listPlr2",
+          ["PLR 2", "PLR2"]
+        ],
 
-      [
-        "listPlrDipo",
         [
-          "PLR DIPO",
-          "PLR_DIPO"
-        ]
-      ],
+          "listPlrDipo",
+          ["PLR DIPO", "PLR_DIPO"]
+        ],
 
-      [
-        "listSchowing",
         [
-          "PETUGAS SCHOWING",
-          "SCHOWING",
-          "PETUGAS_SCHOWING"
+          "listSchowing",
+          [
+            "PETUGAS SCHOWING",
+            "SCHOWING",
+            "PETUGAS_SCHOWING"
+          ]
         ]
-      ]
 
-    ];
-
-
-    daftarSelect.forEach(
-      function(config) {
-
-        const datalist =
-          document.getElementById(
-            config[0]
-          );
+      ];
 
 
-        if (!datalist) {
+    daftar.forEach(function(config) {
 
-          return;
+      const datalist =
+        document.getElementById(
+          config[0]
+        );
 
-        }
+
+      if (!datalist) {
+        return;
+      }
 
 
-        datalist.innerHTML =
+      datalist.innerHTML =
+        "";
+
+
+      data.forEach(function(item) {
+
+        const nama =
+          item.NAMA ||
+          item.NAMA_PEGAWAI ||
+          item.PEGAWAI ||
           "";
 
 
-        data.forEach(
-          function(item) {
-
-            const nama =
-              item.NAMA ||
-              item.NAMA_PEGAWAI ||
-              item.PEGAWAI ||
-              "";
+        const nipp =
+          item.NIPP ||
+          item.NIP ||
+          "";
 
 
-            const nipp =
-              item.NIPP ||
-              item.NIP ||
-              "";
+        if (!nama) {
+          return;
+        }
 
 
-            if (!nama) {
-
-              return;
-
-            }
-
-
-            const jabatan =
-              String(
-                item.JABATAN ||
-                item.POSISI ||
-                item.ROLE ||
-                ""
-              )
-              .toUpperCase();
+        const jabatan =
+          String(
+            item.JABATAN ||
+            item.POSISI ||
+            item.ROLE ||
+            ""
+          )
+          .toUpperCase();
 
 
-            let bolehMasuk =
-              jabatan === "";
+        let bolehMasuk =
+          jabatan === "";
 
 
-            config[1].forEach(
-              function(keyword) {
+        config[1].forEach(function(keyword) {
 
-                if (
-                  jabatan.includes(
-                    keyword.toUpperCase()
-                  )
-                ) {
+          if (
+            jabatan.includes(
+              keyword.toUpperCase()
+            )
+          ) {
 
-                  bolehMasuk = true;
+            bolehMasuk = true;
 
-                }
+          }
 
-              }
+        });
+
+
+        if (bolehMasuk) {
+
+          const option =
+            document.createElement(
+              "option"
             );
 
 
-            if (bolehMasuk) {
-
-              const option =
-                document.createElement(
-                  "option"
-                );
+          option.value =
+            nipp
+            ? nama + " - " + nipp
+            : nama;
 
 
-              option.value =
-                nipp
-                ? nama +
-                  " - " +
-                  nipp
-                : nama;
+          datalist.appendChild(
+            option
+          );
 
+        }
 
-              datalist.appendChild(
-                option
-              );
+      });
 
-            }
-
-          }
-        );
-
-      }
-    );
+    });
 
   })
 
@@ -2233,10 +2217,6 @@ function ambilDataForm() {
     )
     .forEach(function(item) {
 
-      const id =
-        item.dataset.id;
-
-
       const pilihan =
         item.querySelector(
           "input[type='radio']:checked"
@@ -2252,7 +2232,7 @@ function ambilDataForm() {
       checklist.push({
 
         ID_CHECKLIST:
-          id,
+          item.dataset.id || "",
 
         HASIL:
           pilihan
@@ -2332,6 +2312,16 @@ function ambilDataForm() {
     NAMA:
       sessionStorage.getItem(
         "userNama"
+      ) || "",
+
+    NIPP:
+      sessionStorage.getItem(
+        "userNipp"
+      ) || "",
+
+    JABATAN:
+      sessionStorage.getItem(
+        "userJabatan"
       ) || "",
 
     CATATAN:
@@ -2422,7 +2412,7 @@ function validasiIdentitas() {
 
     if (
       !element ||
-      !element.value
+      !element.value.trim()
     ) {
 
       alert(
@@ -2432,9 +2422,7 @@ function validasiIdentitas() {
 
 
       if (element) {
-
         element.focus();
-
       }
 
 
@@ -2497,11 +2485,8 @@ function validasiChecklist() {
 
 
       items[i].scrollIntoView({
-
         behavior: "smooth",
-
         block: "center"
-
       });
 
 
@@ -2524,9 +2509,7 @@ function validasiChecklist() {
 function simpanDraft() {
 
   if (!validasiIdentitas()) {
-
     return;
-
   }
 
 
@@ -2570,16 +2553,12 @@ function simpanDraft() {
 function simpanPemeriksaan() {
 
   if (!validasiIdentitas()) {
-
     return;
-
   }
 
 
   if (!validasiChecklist()) {
-
     return;
-
   }
 
 
@@ -2635,10 +2614,8 @@ function kirimPemeriksaan(
       method: "POST",
 
       headers: {
-
         "Content-Type":
           "text/plain;charset=utf-8"
-
       },
 
       body:
@@ -2689,9 +2666,7 @@ function kirimPemeriksaan(
       tampilkanStatus(
 
         pesanBerhasil +
-
-        " ID Pemeriksaan: " +
-
+        "\nID Pemeriksaan: " +
         idPemeriksaanAktif
 
       );
@@ -2700,9 +2675,7 @@ function kirimPemeriksaan(
       alert(
 
         pesanBerhasil +
-
         "\nID Pemeriksaan: " +
-
         idPemeriksaanAktif
 
       );
@@ -2713,9 +2686,10 @@ function kirimPemeriksaan(
 
       alert(
 
-        result.message ||
-
-        "Gagal menyimpan pemeriksaan."
+        result &&
+        result.message
+        ? result.message
+        : "Gagal menyimpan pemeriksaan."
 
       );
 
@@ -2758,9 +2732,7 @@ function tampilkanStatus(pesan) {
 
 
   if (!box) {
-
     return;
-
   }
 
 
@@ -2787,9 +2759,7 @@ function uploadFoto() {
 
 
   if (!box) {
-
     return;
-
   }
 
 
@@ -2809,156 +2779,278 @@ function uploadFoto() {
 
 
 /* =========================================================
-   NOTIFIKASI UPLOAD FOTO
+   PASTIKAN ID PEMERIKSAAN
 ========================================================= */
 
-function tampilkanNotifUpload(
-  pesan
-) {
+function pastikanIdPemeriksaan() {
 
-  const old =
-    document.getElementById(
-      "notifUploadFoto"
+  if (idPemeriksaanAktif) {
+
+    return Promise.resolve(
+      idPemeriksaanAktif
     );
-
-
-  if (old) {
-
-    old.remove();
 
   }
 
 
-  const notif =
-    document.createElement(
-      "div"
+  if (!validasiIdentitas()) {
+
+    return Promise.reject(
+      new Error(
+        "Data identitas pemeriksaan belum lengkap."
+      )
+    );
+
+  }
+
+
+  idPemeriksaanAktif =
+    buatIdPemeriksaan();
+
+
+  const data =
+    ambilDataForm();
+
+
+  data.ID_PEMERIKSAAN =
+    idPemeriksaanAktif;
+
+
+  data.STATUS =
+    "DRAFT";
+
+
+  tampilkanStatus(
+    "Menyiapkan ID Pemeriksaan dan menyimpan Draft..."
+  );
+
+
+  return fetch(
+
+    API_URL +
+    "?action=simpan_pemeriksaan",
+
+    {
+
+      method: "POST",
+
+      headers: {
+
+        "Content-Type":
+          "text/plain;charset=utf-8"
+
+      },
+
+      body:
+        JSON.stringify(data)
+
+    }
+
+  )
+
+  .then(function(response) {
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
+    }
+
+
+    return response.json();
+
+  })
+
+  .then(function(result) {
+
+    console.log(
+      "HASIL PERSIAPAN ID:",
+      result
     );
 
 
-  notif.id =
-    "notifUploadFoto";
+    if (
+      result &&
+      result.success
+    ) {
+
+      idPemeriksaanAktif =
+
+        result.id_pemeriksaan ||
+
+        result.ID_PEMERIKSAAN ||
+
+        idPemeriksaanAktif;
 
 
-  notif.style.position =
-    "fixed";
+      return idPemeriksaanAktif;
 
-  notif.style.left =
-    "20px";
-
-  notif.style.right =
-    "20px";
-
-  notif.style.bottom =
-    "20px";
-
-  notif.style.background =
-    "white";
-
-  notif.style.padding =
-    "20px";
-
-  notif.style.borderRadius =
-    "10px";
-
-  notif.style.boxShadow =
-    "0 4px 20px rgba(0,0,0,0.20)";
-
-  notif.style.zIndex =
-    "99999";
-
-  notif.style.maxWidth =
-    "500px";
-
-  notif.style.margin =
-    "0 auto";
+    }
 
 
-  const text =
-    document.createElement(
-      "div"
+    throw new Error(
+
+      result &&
+      result.message
+      ? result.message
+      : "Gagal membuat ID Pemeriksaan."
+
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   NOTIFIKASI FOTO
+========================================================= */
+
+function tampilkanNotifFoto(
+  judul,
+  pesan,
+  setelahOK
+) {
+
+  const overlay =
+    document.getElementById(
+      "notifFoto"
     );
 
 
-  text.textContent =
-    pesan;
-
-
-  text.style.marginBottom =
-    "15px";
-
-
-  text.style.lineHeight =
-    "1.5";
-
-
-  const tombol =
-    document.createElement(
-      "button"
+  const title =
+    document.getElementById(
+      "notifFotoTitle"
     );
 
 
-  tombol.textContent =
-    "OKE";
+  const message =
+    document.getElementById(
+      "notifFotoMessage"
+    );
 
 
-  tombol.style.display =
-    "block";
+  if (!overlay) {
+    return;
+  }
 
-  tombol.style.marginLeft =
-    "auto";
 
-  tombol.style.background =
-    "#198754";
+  title.textContent =
+    judul || "Informasi";
 
-  tombol.style.color =
-    "white";
 
-  tombol.style.border =
+  message.textContent =
+    pesan || "";
+
+
+  overlay.dataset.afterOk =
+    setelahOK
+    ? "1"
+    : "0";
+
+
+  overlay.style.display =
+    "flex";
+
+}
+
+
+/* =========================================================
+   TUTUP NOTIFIKASI FOTO
+========================================================= */
+
+function tutupNotifFoto() {
+
+  const overlay =
+    document.getElementById(
+      "notifFoto"
+    );
+
+
+  if (!overlay) {
+    return;
+  }
+
+
+  const jalankan =
+    overlay.dataset.afterOk === "1";
+
+
+  overlay.style.display =
     "none";
 
-  tombol.style.padding =
-    "10px 22px";
 
-  tombol.style.borderRadius =
-    "7px";
-
-  tombol.style.cursor =
-    "pointer";
-
-  tombol.style.fontWeight =
-    "bold";
+  overlay.dataset.afterOk =
+    "0";
 
 
-  tombol.onclick =
-    function() {
+  if (jalankan) {
 
-      notif.remove();
+    aktifkanTTDSetelahFoto();
 
-    };
+  }
+
+}
 
 
-  notif.appendChild(
-    text
+/* =========================================================
+   AKTIFKAN TTD SETELAH FOTO
+========================================================= */
+
+function aktifkanTTDSetelahFoto() {
+
+  ttdSiap =
+    true;
+
+
+  const ttdBox =
+    document.getElementById(
+      "ttdBox"
+    );
+
+
+  if (ttdBox) {
+
+    ttdBox.style.display =
+      "block";
+
+  }
+
+
+  tampilkanStatus(
+    "Foto telah berhasil diupload.\n" +
+    "Silakan lanjutkan ke TTD."
   );
 
-  notif.appendChild(
-    tombol
-  );
+
+  if (ttdBox) {
+
+    ttdBox.scrollIntoView({
+
+      behavior: "smooth",
+
+      block: "center"
+
+    });
+
+  }
 
 
-  document.body.appendChild(
-    notif
-  );
+  initSignature();
 
 }
 
 
 /* =========================================================
    KIRIM FOTO
-   VERSI AMAN
+   TANPA AWAIT
+   AGAR TIDAK ADA ERROR TOP-LEVEL
 ========================================================= */
 
-async function kirimFoto() {
+function kirimFoto() {
 
   const input =
     document.getElementById(
@@ -2971,10 +3063,6 @@ async function kirimFoto() {
       "statusUploadFoto"
     );
 
-
-  /* -------------------------------------------------------
-     CEK INPUT
-  ------------------------------------------------------- */
 
   if (!input) {
 
@@ -3001,49 +3089,10 @@ async function kirimFoto() {
   }
 
 
-  /* -------------------------------------------------------
-     CEK ID PEMERIKSAAN
-  ------------------------------------------------------- */
-
-  if (!idPemeriksaanAktif) {
-
-    tampilkanNotifUpload(
-      "ID Pemeriksaan belum tersedia."
-    );
-
-    return;
-
-  }
-
-
-  /* -------------------------------------------------------
-     API
-  ------------------------------------------------------- */
-
-  const url =
-    API_URL;
-
-
-  if (!url) {
-
-    alert(
-      "URL API tidak ditemukan."
-    );
-
-    return;
-
-  }
-
-
   const files =
     Array.from(
       input.files
     );
-
-
-  let berhasil = 0;
-
-  let gagal = 0;
 
 
   if (status) {
@@ -3058,373 +3107,429 @@ async function kirimFoto() {
 
 
   /* -------------------------------------------------------
-     UPLOAD SATU PER SATU
+     PASTIKAN ID TERSEDIA
   ------------------------------------------------------- */
 
-  for (
-    let i = 0;
-    i < files.length;
-    i++
-  ) {
+  pastikanIdPemeriksaan()
 
-    const file =
-      files[i];
+  .then(function(id) {
 
-
-    try {
-
-      /* VALIDASI FOTO */
-
-      if (
-        !file.type ||
-        !file.type.startsWith(
-          "image/"
-        )
-      ) {
-
-        gagal++;
-
-        continue;
-
-      }
-
-
-      /* BATAS 5 MB */
-
-      const ukuranMB =
-        file.size /
-        (1024 * 1024);
-
-
-      if (
-        ukuranMB > 5
-      ) {
-
-        gagal++;
-
-        console.warn(
-          "Foto lebih dari 5 MB:",
-          file.name
-        );
-
-        continue;
-
-      }
-
-
-      if (status) {
-
-        status.textContent =
-          "Mengupload foto " +
-          (i + 1) +
-          " dari " +
-          files.length +
-          "...\n" +
-          file.name;
-
-      }
-
-
-      console.log(
-        "UPLOAD:",
-        file.name
-      );
-
-
-      /* ---------------------------------------------------
-         FILE → BASE64
-      --------------------------------------------------- */
-
-      const base64 =
-        await fileToBase64(
-          file
-        );
-
-
-      if (!base64) {
-
-        throw new Error(
-          "Base64 foto kosong."
-        );
-
-      }
-
-
-      /* ---------------------------------------------------
-         PAYLOAD
-      --------------------------------------------------- */
-
-      const payload = {
-
-        action:
-          "upload_foto",
-
-        data: {
-
-          ID_PEMERIKSAAN:
-            idPemeriksaanAktif,
-
-          ID_PEMERIKSA:
-            idPemeriksaanAktif,
-
-          NAMA_FILE:
-            file.name,
-
-          FOTO:
-            base64
-
-        }
-
-      };
-
-
-      /* ---------------------------------------------------
-         FETCH
-      --------------------------------------------------- */
-
-      const response =
-        await fetch(
-
-          url,
-
-          {
-
-            method:
-              "POST",
-
-            headers: {
-
-              "Content-Type":
-                "text/plain;charset=utf-8"
-
-            },
-
-            body:
-              JSON.stringify(
-                payload
-              )
-
-          }
-
-        );
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          "HTTP Error: " +
-          response.status
-        );
-
-      }
-
-
-      /* ---------------------------------------------------
-         RESPONSE
-      --------------------------------------------------- */
-
-      const text =
-        await response.text();
-
-
-      console.log(
-        "RESPONSE:",
-        text
-      );
-
-
-      let result;
-
-
-      try {
-
-        result =
-          JSON.parse(
-            text
-          );
-
-      }
-
-      catch (error) {
-
-        throw new Error(
-          "Response API bukan JSON yang valid."
-        );
-
-      }
-
-
-      /* ---------------------------------------------------
-         CEK HASIL
-      --------------------------------------------------- */
-
-      if (
-        result &&
-        result.success === true
-      ) {
-
-        berhasil++;
-
-
-        console.log(
-          "UPLOAD BERHASIL:",
-          file.name
-        );
-
-      }
-
-      else {
-
-        gagal++;
-
-
-        console.error(
-          "UPLOAD GAGAL:",
-          file.name,
-          result
-        );
-
-      }
-
-    }
-
-    catch (error) {
-
-      gagal++;
-
-
-      console.error(
-        "ERROR UPLOAD:",
-        file.name,
-        error
-      );
-
-    }
-
-  }
-
-
-  /* -------------------------------------------------------
-     SELESAI
-  ------------------------------------------------------- */
-
-  input.value =
-    "";
-
-
-  const preview =
-    document.getElementById(
-      "previewFoto"
+    console.log(
+      "ID PEMERIKSAAN UNTUK FOTO:",
+      id
     );
 
 
-  if (preview) {
+    return uploadSemuaFoto(
+      files,
+      status
+    );
 
-    preview.innerHTML =
+  })
+
+  .then(function(hasil) {
+
+    input.value =
       "";
 
-  }
+
+    const preview =
+      document.getElementById(
+        "previewFoto"
+      );
 
 
-  if (status) {
+    if (preview) {
 
-    status.textContent =
-      "Upload selesai. " +
-      "Berhasil: " +
-      berhasil +
-      " foto, " +
-      "Gagal: " +
-      gagal +
-      " foto.";
+      preview.innerHTML =
+        "";
 
-  }
+    }
 
 
-  /* -------------------------------------------------------
-     NOTIFIKASI BERHASIL
-  ------------------------------------------------------- */
+    if (status) {
 
-  if (
-    berhasil > 0 &&
-    gagal === 0
-  ) {
+      status.textContent =
+        "Upload selesai.\n" +
+        "Berhasil: " +
+        hasil.berhasil +
+        " foto\n" +
+        "Gagal: " +
+        hasil.gagal +
+        " foto.";
 
-    tampilkanNotifUpload(
-      "Upload foto berhasil.\n\n" +
-      "Jumlah foto: " +
-      berhasil
+    }
+
+
+    if (
+      hasil.berhasil > 0 &&
+      hasil.gagal === 0
+    ) {
+
+      tampilkanNotifFoto(
+
+        "Foto telah berhasil diupload",
+
+        "Foto dokumentasi berhasil disimpan.\n\n" +
+        "Jumlah foto: " +
+        hasil.berhasil +
+        "\n\nTekan OK untuk melanjutkan ke TTD.",
+
+        true
+
+      );
+
+    }
+
+    else if (
+      hasil.berhasil > 0 &&
+      hasil.gagal > 0
+    ) {
+
+      tampilkanNotifFoto(
+
+        "Upload foto selesai sebagian",
+
+        "Berhasil: " +
+        hasil.berhasil +
+        " foto\n" +
+        "Gagal: " +
+        hasil.gagal +
+        " foto\n\n" +
+        "Tekan OK untuk melanjutkan ke TTD.",
+
+        true
+
+      );
+
+    }
+
+    else {
+
+      tampilkanNotifFoto(
+
+        "Upload foto gagal",
+
+        "Tidak ada foto yang berhasil diupload.\n\n" +
+        "Silakan periksa koneksi dan coba lagi.",
+
+        false
+
+      );
+
+    }
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      "ERROR UPLOAD FOTO:",
+      error
     );
 
-  }
 
-  else if (
-    berhasil > 0 &&
-    gagal > 0
-  ) {
+    if (status) {
 
-    tampilkanNotifUpload(
-      "Upload foto selesai sebagian.\n\n" +
-      "Berhasil: " +
-      berhasil +
-      " foto\n" +
-      "Gagal: " +
-      gagal +
-      " foto"
+      status.textContent =
+        "Upload foto gagal.";
+
+    }
+
+
+    tampilkanNotifFoto(
+
+      "Upload foto gagal",
+
+      error.message ||
+      "Gagal mengupload foto.",
+
+      false
+
     );
 
-  }
-
-  else {
-
-    tampilkanNotifUpload(
-      "Upload foto gagal.\n\n" +
-      "Silakan periksa koneksi dan Console."
-    );
-
-  }
+  });
 
 }
 
 
 /* =========================================================
-   FILE → BASE64
+   UPLOAD SEMUA FOTO
+========================================================= */
+
+function uploadSemuaFoto(
+  files,
+  status
+) {
+
+  let berhasil =
+    0;
+
+  let gagal =
+    0;
+
+
+  let rangkaian =
+    Promise.resolve();
+
+
+  files.forEach(function(file, index) {
+
+    rangkaian =
+      rangkaian.then(function() {
+
+        if (
+          !file.type ||
+          !file.type.startsWith(
+            "image/"
+          )
+        ) {
+
+          gagal++;
+
+          return;
+
+        }
+
+
+        const ukuranMB =
+          file.size /
+          (1024 * 1024);
+
+
+        if (
+          ukuranMB > 5
+        ) {
+
+          console.warn(
+            "Foto lebih dari 5 MB:",
+            file.name
+          );
+
+
+          gagal++;
+
+          return;
+
+        }
+
+
+        if (status) {
+
+          status.textContent =
+            "Mengupload foto " +
+            (index + 1) +
+            " dari " +
+            files.length +
+            "...\n" +
+            file.name;
+
+        }
+
+
+        return fileToBase64(file)
+
+        .then(function(base64) {
+
+          if (!base64) {
+
+            throw new Error(
+              "Data foto kosong."
+            );
+
+          }
+
+
+          const payload = {
+
+            action:
+              "upload_foto",
+
+            data: {
+
+              ID_PEMERIKSAAN:
+                idPemeriksaanAktif,
+
+              ID_PEMERIKSA:
+                idPemeriksaanAktif,
+
+              NAMA_FILE:
+                file.name,
+
+              FOTO:
+                base64
+
+            }
+
+          };
+
+
+          return fetch(
+
+            API_URL,
+
+            {
+
+              method:
+                "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "text/plain;charset=utf-8"
+
+              },
+
+              body:
+                JSON.stringify(
+                  payload
+                )
+
+            }
+
+          );
+
+        })
+
+        .then(function(response) {
+
+          if (!response.ok) {
+
+            throw new Error(
+              "HTTP " +
+              response.status
+            );
+
+          }
+
+
+          return response.text();
+
+        })
+
+        .then(function(text) {
+
+          console.log(
+            "RESPONSE FOTO:",
+            text
+          );
+
+
+          let result;
+
+
+          try {
+
+            result =
+              JSON.parse(text);
+
+          }
+
+          catch (error) {
+
+            throw new Error(
+              "Response API upload foto bukan JSON."
+            );
+
+          }
+
+
+          if (
+            result &&
+            result.success === true
+          ) {
+
+            berhasil++;
+
+          }
+
+          else {
+
+            gagal++;
+
+            console.error(
+              "Upload gagal:",
+              result
+            );
+
+          }
+
+        })
+
+        .catch(function(error) {
+
+          gagal++;
+
+          console.error(
+            "Gagal upload:",
+            file.name,
+            error
+          );
+
+        });
+
+      });
+
+  });
+
+
+  return rangkaian.then(function() {
+
+    return {
+
+      berhasil:
+        berhasil,
+
+      gagal:
+        gagal
+
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   FILE KE BASE64
 ========================================================= */
 
 function fileToBase64(file) {
 
-  return new Promise(
-    function(resolve, reject) {
+  return new Promise(function(
+    resolve,
+    reject
+  ) {
 
-      const reader =
-        new FileReader();
-
-
-      reader.onload =
-        function(event) {
-
-          resolve(
-            event.target.result
-          );
-
-        };
+    const reader =
+      new FileReader();
 
 
-      reader.onerror =
-        function(error) {
+    reader.onload =
+      function(event) {
 
-          reject(
-            error
-          );
+        resolve(
+          event.target.result
+        );
 
-        };
+      };
 
 
-      reader.readAsDataURL(
-        file
-      );
+    reader.onerror =
+      function(error) {
 
-    }
-  );
+        reject(
+          error
+        );
+
+      };
+
+
+    reader.readAsDataURL(
+      file
+    );
+
+  });
 
 }
 
@@ -3454,9 +3559,7 @@ document.addEventListener(
 
 
     if (!preview) {
-
       return;
-
     }
 
 
@@ -3506,12 +3609,8 @@ document.addEventListener(
               );
 
 
-            wrapper.style.width =
-              "140px";
-
-
-            wrapper.style.textAlign =
-              "center";
+            wrapper.className =
+              "preview-item";
 
 
             const img =
@@ -3524,46 +3623,18 @@ document.addEventListener(
               event.target.result;
 
 
-            img.style.width =
-              "140px";
-
-
-            img.style.height =
-              "100px";
-
-
-            img.style.objectFit =
-              "cover";
-
-
-            img.style.border =
-              "1px solid #ccc";
-
-
-            img.style.borderRadius =
-              "8px";
-
-
             const nama =
               document.createElement(
                 "div"
               );
 
 
+            nama.className =
+              "preview-name";
+
+
             nama.textContent =
               file.name;
-
-
-            nama.style.fontSize =
-              "11px";
-
-
-            nama.style.marginTop =
-              "5px";
-
-
-            nama.style.wordBreak =
-              "break-word";
 
 
             wrapper.appendChild(
@@ -3603,7 +3674,7 @@ function tampilkanTTD() {
   if (!idPemeriksaanAktif) {
 
     alert(
-      "ID Pemeriksaan belum tersedia."
+      "Silakan simpan Draft atau upload foto terlebih dahulu."
     );
 
     return;
@@ -3618,9 +3689,7 @@ function tampilkanTTD() {
 
 
   if (!box) {
-
     return;
-
   }
 
 
@@ -3655,6 +3724,18 @@ function initSignature() {
 
 
   if (!signatureCanvas) {
+    return;
+  }
+
+
+  const rect =
+    signatureCanvas.getBoundingClientRect();
+
+
+  if (
+    rect.width <= 0 ||
+    rect.height <= 0
+  ) {
 
     return;
 
@@ -3666,10 +3747,6 @@ function initSignature() {
       window.devicePixelRatio || 1,
       1
     );
-
-
-  const rect =
-    signatureCanvas.getBoundingClientRect();
 
 
   signatureCanvas.width =
@@ -3739,9 +3816,7 @@ function initSignature() {
 function mulaiGambar(event) {
 
   if (!signatureContext) {
-
     return;
-
   }
 
 
@@ -3851,11 +3926,8 @@ function clearSignature() {
   signatureContext.clearRect(
 
     0,
-
     0,
-
     signatureCanvas.width,
-
     signatureCanvas.height
 
   );
@@ -3985,8 +4057,12 @@ function simpanTTD() {
     else {
 
       alert(
-        result.message ||
-        "Gagal menyimpan tanda tangan."
+
+        result &&
+        result.message
+        ? result.message
+        : "Gagal menyimpan tanda tangan."
+
       );
 
     }
@@ -4018,6 +4094,24 @@ function simpanTTD() {
 /* =========================================================
    MENU LAIN
 ========================================================= */
+
+function tampilkanDashboard() {
+
+  const form =
+    document.getElementById(
+      "formPemeriksaan"
+    );
+
+
+  if (form) {
+
+    form.style.display =
+      "none";
+
+  }
+
+}
+
 
 function tampilkanRiwayatPemeriksaan() {
 
@@ -4065,7 +4159,7 @@ function tampilkanDataLokomotif() {
 
 
 /* =========================================================
-   SET TANGGAL HARI INI
+   TANGGAL HARI INI
 ========================================================= */
 
 function setTanggalHariIni() {
@@ -4077,9 +4171,7 @@ function setTanggalHariIni() {
 
 
   if (!input) {
-
     return;
-
   }
 
 
@@ -4096,7 +4188,8 @@ function setTanggalHariIni() {
     const bulan =
       String(
         sekarang.getMonth() + 1
-      ).padStart(
+      )
+      .padStart(
         2,
         "0"
       );
@@ -4105,7 +4198,8 @@ function setTanggalHariIni() {
     const tanggal =
       String(
         sekarang.getDate()
-      ).padStart(
+      )
+      .padStart(
         2,
         "0"
       );
@@ -4136,58 +4230,12 @@ document.addEventListener(
     );
 
 
-    setTanggalHariIni();
-
-
     cekSessionLogin();
 
   }
 );
 
 </script>
-
-
-<!-- =====================================================
-     NOTIFIKASI FOTO
-====================================================== -->
-
-<div
-  id="notifFoto"
-  class="notif-overlay"
->
-
-  <div class="notif-box">
-
-    <div
-      id="notifFotoTitle"
-      class="notif-title"
-    >
-      Foto telah berhasil diupload
-    </div>
-
-    <div
-      id="notifFotoMessage"
-      class="notif-message"
-    >
-      Foto dokumentasi berhasil disimpan.
-    </div>
-
-    <div class="notif-footer">
-
-      <button
-        type="button"
-        class="notif-ok"
-        onclick="tutupNotifFoto()"
-      >
-        OK
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
 
 </body>
 
