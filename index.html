@@ -2521,11 +2521,13 @@ function uploadFoto() {
   });
 
 }
+
+
 /* =========================================================
-   KIRIM FOTO - SEMENTARA TANPA DATABASE
+   KIRIM FOTO
 ========================================================= */
 
-function kirimFoto() {
+async function kirimFoto() {
 
   const input =
     document.getElementById("fotoPemeriksaan");
@@ -2535,7 +2537,7 @@ function kirimFoto() {
 
 
   /* -------------------------------------------------------
-     CEK INPUT
+     VALIDASI INPUT
   ------------------------------------------------------- */
 
   if (!input) {
@@ -2559,33 +2561,36 @@ function kirimFoto() {
   }
 
 
+/* -------------------------------------------------------
+   CEK ID PEMERIKSAAN
+------------------------------------------------------- */
+
+if (!idPemeriksaanAktif) {
+
+  alert(
+    "ID Pemeriksaan belum tersedia.\n\n" +
+    "Silakan SIMPAN DRAFT atau SIMPAN & SELESAI terlebih dahulu."
+  );
+
+  return;
+
+}
+
   /* -------------------------------------------------------
-     AMBIL FILE
+     URL API
   ------------------------------------------------------- */
 
-  const files =
-    Array.from(input.files);
+  const url =
+    typeof API_URL !== "undefined"
+      ? API_URL
+      : "";
 
 
-  /* -------------------------------------------------------
-     VALIDASI FOTO
-  ------------------------------------------------------- */
-
-  const fotoValid =
-    files.filter(function(file) {
-
-      return (
-        file.type &&
-        file.type.startsWith("image/")
-      );
-
-    });
-
-
-  if (fotoValid.length === 0) {
+  if (!url) {
 
     alert(
-      "File yang dipilih bukan foto."
+      "URL API tidak ditemukan.\n\n" +
+      "Pastikan API_URL sudah tersedia."
     );
 
     return;
@@ -2594,77 +2599,390 @@ function kirimFoto() {
 
 
   /* -------------------------------------------------------
-     TAMPILKAN STATUS
+     STATUS AWAL
   ------------------------------------------------------- */
 
   if (status) {
 
-    status.style.display =
-      "block";
+    status.style.display = "block";
 
     status.textContent =
-      "Foto berhasil diproses.";
+      "Menyiapkan " +
+      files.length +
+      " foto...";
+
+  }
+
+
+  let berhasil = 0;
+  let gagal = 0;
+
+
+  /* =======================================================
+     UPLOAD SATU PER SATU
+  ======================================================= */
+
+  for (
+    let i = 0;
+    i < files.length;
+    i++
+  ) {
+
+    const file =
+      files[i];
+
+
+    try {
+
+      /* ---------------------------------------------------
+         VALIDASI FILE
+      --------------------------------------------------- */
+
+      if (
+        !file.type ||
+        !file.type.startsWith("image/")
+      ) {
+
+        console.warn(
+          "Bukan file gambar:",
+          file.name
+        );
+
+        gagal++;
+
+        continue;
+
+      }
+
+
+      /* ---------------------------------------------------
+         BATAS UKURAN
+         
+         Apps Script memiliki keterbatasan ukuran request.
+         Kita batasi 5 MB per foto agar lebih aman.
+      --------------------------------------------------- */
+
+      const ukuranMB =
+        file.size /
+        (1024 * 1024);
+
+
+      if (
+        ukuranMB > 5
+      ) {
+
+        console.error(
+          "Foto terlalu besar:",
+          file.name,
+          ukuranMB.toFixed(2) + " MB"
+        );
+
+        gagal++;
+
+        continue;
+
+      }
+
+
+      /* ---------------------------------------------------
+         UPDATE STATUS
+      --------------------------------------------------- */
+
+      if (status) {
+
+        status.textContent =
+          "Mengupload foto " +
+          (i + 1) +
+          " dari " +
+          files.length +
+          "...\n" +
+          file.name;
+
+      }
+
+
+      console.log(
+        "================================"
+      );
+
+      console.log(
+        "UPLOAD FOTO:",
+        i + 1,
+        "dari",
+        files.length
+      );
+
+      console.log(
+        "NAMA:",
+        file.name
+      );
+
+      console.log(
+        "UKURAN:",
+        ukuranMB.toFixed(2) + " MB"
+      );
+
+      console.log(
+        "ID:",
+        idPemeriksaanAktif
+      );
+
+
+      /* ---------------------------------------------------
+         FILE → BASE64
+      --------------------------------------------------- */
+
+      const base64 =
+        await fileToBase64(file);
+
+
+      if (!base64) {
+
+        throw new Error(
+          "Base64 foto kosong."
+        );
+
+      }
+
+
+      /* ---------------------------------------------------
+         PAYLOAD
+      --------------------------------------------------- */
+
+      const payload = {
+
+        action:
+          "upload_foto",
+
+        data: {
+
+          ID_PEMERIKSAAN:
+            idPemeriksaanAktif,
+
+          ID_PEMERIKSA:
+            idPemeriksaanAktif,
+
+          NAMA_FILE:
+            file.name,
+
+          FOTO:
+            base64
+
+        }
+
+      };
+
+
+      console.log(
+        "Mengirim data ke Apps Script..."
+      );
+
+
+      /* ---------------------------------------------------
+         FETCH
+      --------------------------------------------------- */
+
+      const response =
+        await fetch(
+          url,
+          {
+
+            method:
+              "POST",
+
+            headers: {
+
+              "Content-Type":
+                "text/plain;charset=utf-8"
+
+            },
+
+            body:
+              JSON.stringify(payload)
+
+          }
+        );
+
+
+      /* ---------------------------------------------------
+         CEK HTTP
+      --------------------------------------------------- */
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTP Error: " +
+          response.status
+        );
+
+      }
+
+
+      /* ---------------------------------------------------
+         BACA RESPONSE
+      --------------------------------------------------- */
+
+      const text =
+        await response.text();
+
+
+      console.log(
+        "RESPONSE:",
+        text
+      );
+
+
+      let result;
+
+
+      try {
+
+        result =
+          JSON.parse(text);
+
+      }
+
+      catch (error) {
+
+        throw new Error(
+          "Response API bukan JSON yang valid: " +
+          text.substring(0, 300)
+        );
+
+      }
+
+
+      /* ---------------------------------------------------
+         CEK HASIL API
+      --------------------------------------------------- */
+
+      if (
+        result &&
+        result.success === true
+      ) {
+
+        berhasil++;
+
+        console.log(
+          "UPLOAD BERHASIL:",
+          file.name
+        );
+
+      }
+
+      else {
+
+        gagal++;
+
+        console.error(
+          "UPLOAD GAGAL:",
+          file.name,
+          result
+        );
+
+      }
+
+
+    }
+
+    catch (error) {
+
+      gagal++;
+
+      console.error(
+        "ERROR UPLOAD:",
+        file.name,
+        error
+      );
+
+    }
+
+  }
+
+
+  /* =======================================================
+     SELESAI
+  ======================================================= */
+
+  if (status) {
+
+    status.style.display = "block";
+
+    status.textContent =
+      "Upload selesai.\n" +
+      "Berhasil: " +
+      berhasil +
+      " foto\n" +
+      "Gagal: " +
+      gagal +
+      " foto.";
+
+  }
+
+
+  console.log(
+    "================================"
+  );
+
+  console.log(
+    "UPLOAD SELESAI"
+  );
+
+  console.log(
+    "BERHASIL:",
+    berhasil
+  );
+
+  console.log(
+    "GAGAL:",
+    gagal
+  );
+
+
+  /* -------------------------------------------------------
+     RESET INPUT
+     
+     PENTING:
+     Supaya setelah upload pertama,
+     pengguna bisa memilih foto lagi.
+  ------------------------------------------------------- */
+
+  input.value = "";
+
+
+  /* -------------------------------------------------------
+     RESET PREVIEW
+  ------------------------------------------------------- */
+
+  const preview =
+    document.getElementById(
+      "previewFoto"
+    );
+
+
+  if (preview) {
+
+    preview.innerHTML = "";
 
   }
 
 
   /* -------------------------------------------------------
-     LOG CONSOLE
-     BELUM DIKIRIM KE API
-     BELUM DISIMPAN KE SHEET
+     NOTIFIKASI
   ------------------------------------------------------- */
 
-  console.log(
-    "FOTO BERHASIL DIPROSES:",
-    fotoValid
-  );
+  if (
+    berhasil > 0 &&
+    gagal === 0
+  ) {
 
-
-  fotoValid.forEach(
-    function(file) {
-
-      console.log(
-        "Nama foto:",
-        file.name
-      );
-
-      console.log(
-        "Ukuran:",
-        (
-          file.size /
-          (1024 * 1024)
-        ).toFixed(2) +
-        " MB"
-      );
-
-    }
-  );
-
-
-  /* -------------------------------------------------------
-     NOTIFIKASI BERHASIL
-  ------------------------------------------------------- */
-
-  alert(
-    "Foto telah berhasil di upload.\n\n" +
-    "Jumlah foto: " +
-    fotoValid.length
-  );
-
-
-  /* -------------------------------------------------------
-     CATATAN
-     
-     Foto BELUM:
-     - dikirim ke Apps Script
-     - disimpan ke Google Drive
-     - disimpan ke Google Sheets
-     
-     Untuk sementara hanya dianggap berhasil
-     di sisi tampilan.
-  ------------------------------------------------------- */
-
-}
+    alert(
+      "Semua foto berhasil diupload.\n\n" +
+      "ID Pemeriksaan: " +
+      idPemeriksaanAktif +
+      "\nJumlah foto: " +
+      berhasil
+    );
 
   }
 
