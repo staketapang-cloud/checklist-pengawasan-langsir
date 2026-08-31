@@ -2534,6 +2534,10 @@ function kirimFoto() {
     document.getElementById("statusUploadFoto");
 
 
+  /* -------------------------------------------------------
+     CEK INPUT
+  ------------------------------------------------------- */
+
   if (!input) {
 
     alert("Input foto tidak ditemukan.");
@@ -2555,9 +2559,17 @@ function kirimFoto() {
   }
 
 
+  /* -------------------------------------------------------
+     AMBIL FILE
+  ------------------------------------------------------- */
+
   const files =
     Array.from(input.files);
 
+
+  /* -------------------------------------------------------
+     VALIDASI FOTO
+  ------------------------------------------------------- */
 
   const fotoValid =
     files.filter(function(file) {
@@ -2572,16 +2584,23 @@ function kirimFoto() {
 
   if (fotoValid.length === 0) {
 
-    alert("File yang dipilih bukan foto.");
+    alert(
+      "File yang dipilih bukan foto."
+    );
 
     return;
 
   }
 
 
+  /* -------------------------------------------------------
+     TAMPILKAN STATUS
+  ------------------------------------------------------- */
+
   if (status) {
 
-    status.style.display = "block";
+    status.style.display =
+      "block";
 
     status.textContent =
       "Foto berhasil diproses.";
@@ -2589,11 +2608,42 @@ function kirimFoto() {
   }
 
 
+  /* -------------------------------------------------------
+     LOG CONSOLE
+     BELUM DIKIRIM KE API
+     BELUM DISIMPAN KE SHEET
+  ------------------------------------------------------- */
+
   console.log(
     "FOTO BERHASIL DIPROSES:",
     fotoValid
   );
 
+
+  fotoValid.forEach(
+    function(file) {
+
+      console.log(
+        "Nama foto:",
+        file.name
+      );
+
+      console.log(
+        "Ukuran:",
+        (
+          file.size /
+          (1024 * 1024)
+        ).toFixed(2) +
+        " MB"
+      );
+
+    }
+  );
+
+
+  /* -------------------------------------------------------
+     NOTIFIKASI BERHASIL
+  ------------------------------------------------------- */
 
   alert(
     "Foto telah berhasil di upload.\n\n" +
@@ -2601,262 +2651,20 @@ function kirimFoto() {
     fotoValid.length
   );
 
-}
-      /* ---------------------------------------------------
-         FILE → BASE64
-      --------------------------------------------------- */
-
-      const base64 =
-        await fileToBase64(file);
-
-
-      if (!base64) {
-
-        throw new Error(
-          "Base64 foto kosong."
-        );
-
-      }
-
-
-      /* ---------------------------------------------------
-         PAYLOAD
-      --------------------------------------------------- */
-
-      const payload = {
-
-        action:
-          "upload_foto",
-
-        data: {
-
-          ID_PEMERIKSAAN:
-            idPemeriksaanAktif,
-
-          ID_PEMERIKSA:
-            idPemeriksaanAktif,
-
-          NAMA_FILE:
-            file.name,
-
-          FOTO:
-            base64
-
-        }
-
-      };
-
-
-      console.log(
-        "Mengirim data ke Apps Script..."
-      );
-
-
-      /* ---------------------------------------------------
-         FETCH
-      --------------------------------------------------- */
-
-      const response =
-        await fetch(
-          url,
-          {
-
-            method:
-              "POST",
-
-            headers: {
-
-              "Content-Type":
-                "text/plain;charset=utf-8"
-
-            },
-
-            body:
-              JSON.stringify(payload)
-
-          }
-        );
-
-
-      /* ---------------------------------------------------
-         CEK HTTP
-      --------------------------------------------------- */
-
-      if (!response.ok) {
-
-        throw new Error(
-          "HTTP Error: " +
-          response.status
-        );
-
-      }
-
-
-      /* ---------------------------------------------------
-         BACA RESPONSE
-      --------------------------------------------------- */
-
-      const text =
-        await response.text();
-
-
-      console.log(
-        "RESPONSE:",
-        text
-      );
-
-
-      let result;
-
-
-      try {
-
-        result =
-          JSON.parse(text);
-
-      }
-
-      catch (error) {
-
-        throw new Error(
-          "Response API bukan JSON yang valid: " +
-          text.substring(0, 300)
-        );
-
-      }
-
-
-      /* ---------------------------------------------------
-         CEK HASIL API
-      --------------------------------------------------- */
-
-      if (
-        result &&
-        result.success === true
-      ) {
-
-        berhasil++;
-
-        console.log(
-          "UPLOAD BERHASIL:",
-          file.name
-        );
-
-      }
-
-      else {
-
-        gagal++;
-
-        console.error(
-          "UPLOAD GAGAL:",
-          file.name,
-          result
-        );
-
-      }
-
-
-    }
-
-    catch (error) {
-
-      gagal++;
-
-      console.error(
-        "ERROR UPLOAD:",
-        file.name,
-        error
-      );
-
-    }
-
-  }
-
-
-  /* =======================================================
-     SELESAI
-  ======================================================= */
-
-  if (status) {
-
-    status.style.display = "block";
-
-    status.textContent =
-      "Upload selesai.\n" +
-      "Berhasil: " +
-      berhasil +
-      " foto\n" +
-      "Gagal: " +
-      gagal +
-      " foto.";
-
-  }
-
-
-  console.log(
-    "================================"
-  );
-
-  console.log(
-    "UPLOAD SELESAI"
-  );
-
-  console.log(
-    "BERHASIL:",
-    berhasil
-  );
-
-  console.log(
-    "GAGAL:",
-    gagal
-  );
-
 
   /* -------------------------------------------------------
-     RESET INPUT
+     CATATAN
      
-     PENTING:
-     Supaya setelah upload pertama,
-     pengguna bisa memilih foto lagi.
+     Foto BELUM:
+     - dikirim ke Apps Script
+     - disimpan ke Google Drive
+     - disimpan ke Google Sheets
+     
+     Untuk sementara hanya dianggap berhasil
+     di sisi tampilan.
   ------------------------------------------------------- */
 
-  input.value = "";
-
-
-  /* -------------------------------------------------------
-     RESET PREVIEW
-  ------------------------------------------------------- */
-
-  const preview =
-    document.getElementById(
-      "previewFoto"
-    );
-
-
-  if (preview) {
-
-    preview.innerHTML = "";
-
-  }
-
-
-  /* -------------------------------------------------------
-     NOTIFIKASI
-  ------------------------------------------------------- */
-
-  if (
-    berhasil > 0 &&
-    gagal === 0
-  ) {
-
-    alert(
-      "Semua foto berhasil diupload.\n\n" +
-      "ID Pemeriksaan: " +
-      idPemeriksaanAktif +
-      "\nJumlah foto: " +
-      berhasil
-    );
+}
 
   }
 
