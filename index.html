@@ -2767,7 +2767,30 @@ function kirimPemeriksaan(
 
 }
 
+/* =========================================================
+   STATUS
+========================================================= */
 
+function tampilkanStatus(pesan) {
+
+  const box =
+    document.getElementById(
+      "statusBox"
+    );
+
+  if (!box) {
+
+    return;
+
+  }
+
+  box.textContent =
+    pesan;
+
+  box.style.display =
+    "block";
+
+}
 /* =========================================================
    TAMPILKAN UPLOAD FOTO
 ========================================================= */
