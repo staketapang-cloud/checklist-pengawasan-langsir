@@ -2,11 +2,11 @@
 <script>
 
 /* =========================================================
-   KONFIGURASI
+   KONFIGURASI API
 ========================================================= */
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+  "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
 
 
 /* =========================================================
@@ -19,239 +19,51 @@ let signatureCanvas = null;
 let signatureContext = null;
 let sedangMenggambar = false;
 
-
-/* =========================================================
-   SAAT HALAMAN SIAP
-========================================================= */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  console.log(
-    "JavaScript berhasil dimuat tanpa syntax error."
-  );
-
-  console.log(
-    "Checklist Pengawasan Kegiatan Langsir - JavaScript aktif."
-  );
-
-
-  /*
-   * Pastikan aplikasi awalnya tersembunyi
-   * sampai login Google berhasil.
-   */
-
-  const app =
-    document.getElementById("app");
-
-  if (app) {
-    app.style.display = "none";
-  }
-
-
-  /*
-   * TTD disembunyikan saat awal.
-   */
-
-  const ttdBox =
-    document.getElementById("ttdBox");
-
-  if (ttdBox) {
-    ttdBox.style.display = "none";
-  }
-
-});
+let ttdDataUrl = "";
 
 
 /* =========================================================
-   GOOGLE LOGIN
+   HALAMAN SIAP
 ========================================================= */
 
-function handleCredentialResponse(response) {
-
-  console.log(
-    "Google Login berhasil."
-  );
-
-
-  if (
-    !response ||
-    !response.credential
-  ) {
-
-    console.error(
-      "Credential Google tidak ditemukan."
-    );
-
-    return;
-
-  }
-
-
-  try {
-
-    const data =
-      parseJwt(
-        response.credential
-      );
-
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
 
     console.log(
-      "DATA GOOGLE:",
-      data
+      "JavaScript Checklist Pengawasan Kegiatan Langsir siap."
     );
 
+    const ttdBox =
+      document.getElementById("ttdBox");
 
-    const email =
-      data.email || "";
-
-
-    const nama =
-      data.name ||
-      data.given_name ||
-      "";
-
-
-    /*
-     * Simpan data login.
-     */
-
-    sessionStorage.setItem(
-      "userEmail",
-      email
-    );
-
-
-    sessionStorage.setItem(
-      "userNama",
-      nama
-    );
-
-
-    /*
-     * Sembunyikan login.
-     */
-
-    const googleLogin =
-      document.getElementById(
-        "googleLogin"
-      );
-
-
-    if (googleLogin) {
-
-      googleLogin.style.display =
-        "none";
-
+    if (ttdBox) {
+      ttdBox.style.display = "none";
     }
 
+    const statusBox =
+      document.getElementById("statusBox");
 
-    /*
-     * Tampilkan aplikasi.
-     */
-
-    const app =
-      document.getElementById(
-        "app"
-      );
-
-
-    if (app) {
-
-      app.style.display =
-        "block";
-
+    if (statusBox) {
+      statusBox.style.display = "none";
     }
 
-
     /*
-     * Tampilkan informasi user.
+     * Pastikan aplikasi tetap tersembunyi
+     * sebelum proses login Google selesai.
+     *
+     * Jika sistem login Anda sudah memiliki
+     * fungsi sendiri untuk menampilkan #app,
+     * bagian ini tidak mengganggu.
      */
-
-    const infoUser =
-      document.getElementById(
-        "infoUser"
-      );
-
-
-    if (infoUser) {
-
-      infoUser.innerHTML =
-        "<strong>Nama:</strong> " +
-        escapeHtml(nama) +
-        "<br>" +
-        "<strong>Email:</strong> " +
-        escapeHtml(email);
-
-    }
-
 
     console.log(
-      "Dashboard berhasil ditampilkan."
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      "Gagal memproses login Google:",
-      error
-    );
-
-
-    alert(
-      "Login berhasil, tetapi data pengguna gagal diproses."
+      "API Checklist:",
+      API_URL
     );
 
   }
-
-}
-
-
-/* =========================================================
-   PARSE JWT
-========================================================= */
-
-function parseJwt(token) {
-
-  const base64Url =
-    token.split(".")[1];
-
-
-  const base64 =
-    base64Url
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
-
-
-  const jsonPayload =
-    decodeURIComponent(
-
-      atob(base64)
-
-        .split("")
-
-        .map(function (c) {
-
-          return (
-            "%" +
-            ("00" +
-              c.charCodeAt(0)
-                .toString(16)
-            ).slice(-2)
-          );
-
-        })
-
-        .join("")
-
-    );
-
-
-  return JSON.parse(
-    jsonPayload
-  );
-
-}
+);
 
 
 /* =========================================================
@@ -265,22 +77,18 @@ function muatChecklist() {
       "checklistContainer"
     );
 
-
   if (!container) {
 
     console.error(
-      "checklistContainer tidak ditemukan."
+      "Element checklistContainer tidak ditemukan."
     );
 
     return;
-
   }
 
 
   container.innerHTML =
-    "<div class='loading'>" +
-    "Memuat checklist..." +
-    "</div>";
+    "<div class='loading'>Memuat checklist...</div>";
 
 
   fetch(
@@ -288,316 +96,394 @@ function muatChecklist() {
     "?action=master_checklist"
   )
 
-    .then(function (response) {
+    .then(
+      function (response) {
 
-      if (!response.ok) {
+        if (!response.ok) {
 
-        throw new Error(
-          "HTTP " +
-          response.status
-        );
-
-      }
-
-
-      return response.json();
-
-    })
-
-
-    .then(function (result) {
-
-      console.log(
-        "HASIL CHECKLIST:",
-        result
-      );
-
-
-      if (!result) {
-
-        throw new Error(
-          "Response checklist kosong."
-        );
-
-      }
-
-
-      if (!result.success) {
-
-        throw new Error(
-          result.message ||
-          "Gagal mengambil checklist."
-        );
-
-      }
-
-
-      if (
-        !Array.isArray(
-          result.data
-        )
-      ) {
-
-        throw new Error(
-          "Format data checklist tidak valid."
-        );
-
-      }
-
-
-      container.innerHTML =
-        "";
-
-
-      let nomorTampil =
-        0;
-
-
-      result.data.forEach(
-        function (item) {
-
-          const aktif =
-            item.AKTIF;
-
-
-          const nilai =
-            String(
-              aktif == null
-                ? ""
-                : aktif
-            )
-              .trim()
-              .toUpperCase();
-
-
-          const isAktif =
-            aktif === true ||
-            aktif === 1 ||
-            nilai === "TRUE" ||
-            nilai === "YA" ||
-            nilai === "Y" ||
-            nilai === "1" ||
-            nilai === "AKTIF" ||
-            nilai === "YES";
-
-
-          if (!isAktif) {
-
-            return;
-
-          }
-
-
-          nomorTampil++;
-
-
-          const id =
-            item.ID || "";
-
-
-          const kategori =
-            item.KATEGORI || "";
-
-
-          const subKategori =
-            item.SUB_KATEGORI || "";
-
-
-          const uraian =
-            item.URAIAN || "";
-
-
-          const standar =
-            item.STANDAR || "";
-
-
-          const nomor =
-            item.URUTAN ||
-            nomorTampil;
-
-
-          const div =
-            document.createElement(
-              "div"
-            );
-
-
-          div.className =
-            "checklist-item";
-
-
-          div.dataset.id =
-            id;
-
-
-          const namaRadio =
-            "hasil_" + id;
-
-
-          div.innerHTML =
-
-            "<div class='checklist-header'>" +
-
-              "<div class='checklist-number'>" +
-
-                escapeHtml(
-                  nomor
-                ) +
-
-              "</div>" +
-
-              "<div class='checklist-content'>" +
-
-                "<div class='checklist-category'>" +
-
-                  escapeHtml(
-                    kategori
-                  ) +
-
-                  (
-                    subKategori
-                      ? " - " +
-                        escapeHtml(
-                          subKategori
-                        )
-                      : ""
-                  ) +
-
-                "</div>" +
-
-                "<div class='checklist-description'>" +
-
-                  escapeHtml(
-                    uraian
-                  ) +
-
-                "</div>" +
-
-                (
-                  standar
-                    ?
-
-                    "<div class='checklist-standard'>" +
-
-                      "<strong>STANDAR:</strong> " +
-
-                      escapeHtml(
-                        standar
-                      ) +
-
-                    "</div>"
-
-                    :
-
-                    ""
-
-                ) +
-
-              "</div>" +
-
-            "</div>" +
-
-
-            "<div class='checklist-choice'>" +
-
-              "<label class='choice-label'>" +
-
-                "<input " +
-
-                  "type='radio' " +
-
-                  "name='" +
-                  escapeHtml(
-                    namaRadio
-                  ) +
-                  "' " +
-
-                  "value='YA'>" +
-
-                "<span>YA</span>" +
-
-              "</label>" +
-
-
-              "<label class='choice-label'>" +
-
-                "<input " +
-
-                  "type='radio' " +
-
-                  "name='" +
-                  escapeHtml(
-                    namaRadio
-                  ) +
-                  "' " +
-
-                  "value='TIDAK'>" +
-
-                "<span>TIDAK</span>" +
-
-              "</label>" +
-
-            "</div>" +
-
-
-            "<textarea " +
-
-              "class='temuan-input' " +
-
-              "data-id='" +
-              escapeHtml(
-                id
-              ) +
-              "' " +
-
-              "placeholder='Keterangan / temuan (opsional)'>" +
-
-            "</textarea>";
-
-
-          container.appendChild(
-            div
+          throw new Error(
+            "HTTP " +
+            response.status
           );
 
         }
-      );
+
+        return response.json();
+
+      }
+    )
+
+    .then(
+      function (result) {
+
+        console.log(
+          "HASIL MASTER CHECKLIST:",
+          result
+        );
 
 
-      if (
-        nomorTampil === 0
-      ) {
+        if (!result) {
+
+          throw new Error(
+            "Response checklist kosong."
+          );
+
+        }
+
+
+        if (!result.success) {
+
+          throw new Error(
+            result.message ||
+            "Gagal mengambil data checklist."
+          );
+
+        }
+
+
+        if (!Array.isArray(result.data)) {
+
+          throw new Error(
+            "Format data checklist tidak valid."
+          );
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        let dataUntukDitampilkan =
+          result.data;
+
+
+        /*
+         * Filter AKTIF.
+         *
+         * Mendukung:
+         * TRUE
+         * YA
+         * Y
+         * 1
+         * AKTIF
+         * YES
+         */
+
+        const checklistAktif =
+          result.data.filter(
+            function (item) {
+
+              const aktif =
+                item.AKTIF;
+
+
+              if (
+                aktif === true ||
+                aktif === 1
+              ) {
+
+                return true;
+
+              }
+
+
+              const nilai =
+                String(
+                  aktif == null
+                    ? ""
+                    : aktif
+                )
+                  .trim()
+                  .toUpperCase();
+
+
+              return (
+                nilai === "TRUE" ||
+                nilai === "YA" ||
+                nilai === "Y" ||
+                nilai === "1" ||
+                nilai === "AKTIF" ||
+                nilai === "YES"
+              );
+
+            }
+          );
+
+
+        /*
+         * Jika ada checklist aktif,
+         * tampilkan hanya checklist aktif.
+         *
+         * Jika tidak ada status AKTIF,
+         * gunakan semua data sebagai fallback.
+         */
+
+        if (
+          checklistAktif.length > 0
+        ) {
+
+          dataUntukDitampilkan =
+            checklistAktif;
+
+        }
+
+
+        if (
+          dataUntukDitampilkan.length === 0
+        ) {
+
+          container.innerHTML =
+            "<div class='loading'>" +
+            "Tidak ada checklist tersedia." +
+            "</div>";
+
+          return;
+
+        }
+
+
+        let nomorTampil = 0;
+
+
+        dataUntukDitampilkan.forEach(
+          function (item) {
+
+            nomorTampil++;
+
+
+            const id =
+              item.ID || "";
+
+
+            const urutan =
+              item.URUTAN || "";
+
+
+            const kategori =
+              item.KATEGORI || "";
+
+
+            const subKategori =
+              item.SUB_KATEGORI || "";
+
+
+            const uraian =
+              item.URAIAN || "";
+
+
+            const standar =
+              item.STANDAR || "";
+
+
+            const div =
+              document.createElement("div");
+
+
+            div.className =
+              "checklist-item";
+
+
+            div.dataset.id =
+              id;
+
+
+            const namaRadio =
+              "hasil_" + id;
+
+
+            let html = "";
+
+
+            html +=
+              "<div class='checklist-header'>";
+
+
+            html +=
+              "<div class='checklist-number'>";
+
+
+            html +=
+              escapeHtml(
+                urutan ||
+                nomorTampil
+              );
+
+
+            html +=
+              "</div>";
+
+
+            html +=
+              "<div class='checklist-content'>";
+
+
+            html +=
+              "<div class='checklist-category'>";
+
+
+            html +=
+              escapeHtml(
+                kategori
+              );
+
+
+            if (subKategori) {
+
+              html +=
+                " - " +
+                escapeHtml(
+                  subKategori
+                );
+
+            }
+
+
+            html +=
+              "</div>";
+
+
+            html +=
+              "<div class='checklist-description'>";
+
+
+            html +=
+              escapeHtml(
+                uraian
+              );
+
+
+            html +=
+              "</div>";
+
+
+            if (standar) {
+
+              html +=
+                "<div class='checklist-standard'>";
+
+              html +=
+                "<strong>STANDAR:</strong> ";
+
+              html +=
+                escapeHtml(
+                  standar
+                );
+
+              html +=
+                "</div>";
+
+            }
+
+
+            html +=
+              "</div>";
+
+
+            html +=
+              "</div>";
+
+
+            html +=
+              "<div class='checklist-choice'>";
+
+
+            html +=
+              "<label class='choice-label'>";
+
+
+            html +=
+              "<input " +
+              "type='radio' " +
+              "name='" +
+              escapeHtml(
+                namaRadio
+              ) +
+              "' " +
+              "value='YA'>";
+
+
+            html +=
+              "<span>YA</span>";
+
+
+            html +=
+              "</label>";
+
+
+            html +=
+              "<label class='choice-label'>";
+
+
+            html +=
+              "<input " +
+              "type='radio' " +
+              "name='" +
+              escapeHtml(
+                namaRadio
+              ) +
+              "' " +
+              "value='TIDAK'>";
+
+
+            html +=
+              "<span>TIDAK</span>";
+
+
+            html +=
+              "</label>";
+
+
+            html +=
+              "</div>";
+
+
+            html +=
+              "<textarea " +
+              "class='temuan-input' " +
+              "data-id='" +
+              escapeHtml(id) +
+              "' " +
+              "placeholder='Keterangan / temuan (opsional)'>" +
+              "</textarea>";
+
+
+            div.innerHTML =
+              html;
+
+
+            container.appendChild(
+              div
+            );
+
+          }
+        );
+
+
+        console.log(
+          "Jumlah checklist ditampilkan:",
+          nomorTampil
+        );
+
+      }
+    )
+
+    .catch(
+      function (error) {
+
+        console.error(
+          "Gagal mengambil checklist:",
+          error
+        );
+
 
         container.innerHTML =
           "<div class='loading'>" +
-          "Tidak ada checklist aktif." +
+          "Gagal memuat checklist. " +
+          "Periksa koneksi API." +
           "</div>";
 
       }
-
-
-      console.log(
-        "Jumlah checklist:",
-        nomorTampil
-      );
-
-    })
-
-
-    .catch(function (error) {
-
-      console.error(
-        "Gagal mengambil checklist:",
-        error
-      );
-
-
-      container.innerHTML =
-        "<div class='loading'>" +
-        "Gagal memuat checklist. " +
-        "Periksa koneksi API." +
-        "</div>";
-
-    });
+    );
 
 }
 
@@ -609,9 +495,7 @@ function muatChecklist() {
 function escapeHtml(text) {
 
   const div =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
 
   div.textContent =
@@ -638,42 +522,110 @@ function ambilDataForm() {
     .querySelectorAll(
       ".checklist-item"
     )
-    .forEach(function (item) {
+    .forEach(
+      function (item) {
 
-      const id =
-        item.dataset.id || "";
-
-
-      const pilihan =
-        item.querySelector(
-          "input[type='radio']:checked"
-        );
+        const id =
+          item.dataset.id || "";
 
 
-      const temuan =
-        item.querySelector(
-          ".temuan-input"
-        );
+        const pilihan =
+          item.querySelector(
+            "input[type='radio']:checked"
+          );
 
 
-      checklist.push({
+        const temuan =
+          item.querySelector(
+            ".temuan-input"
+          );
 
-        ID_CHECKLIST:
-          id,
 
-        HASIL:
-          pilihan
-            ? pilihan.value
-            : "",
+        checklist.push({
 
-        KETERANGAN:
-          temuan
-            ? temuan.value.trim()
-            : ""
+          ID_CHECKLIST:
+            id,
 
-      });
+          HASIL:
+            pilihan
+              ? pilihan.value
+              : "",
 
-    });
+          KETERANGAN:
+            temuan
+              ? temuan.value.trim()
+              : ""
+
+        });
+
+      }
+    );
+
+
+  const tanggalElement =
+    document.getElementById(
+      "tanggalPemeriksaan"
+    );
+
+
+  const dinasElement =
+    document.getElementById(
+      "dinasLangsirPemeriksaan"
+    );
+
+
+  const stasiunElement =
+    document.getElementById(
+      "stasiunPemeriksaan"
+    );
+
+
+  const lokomotifElement =
+    document.getElementById(
+      "lokomotifPemeriksaan"
+    );
+
+
+  const masinisElement =
+    document.getElementById(
+      "masinisPemeriksaan"
+    );
+
+
+  const asistenElement =
+    document.getElementById(
+      "asistenMasinisPemeriksaan"
+    );
+
+
+  const plr1Element =
+    document.getElementById(
+      "plr1Pemeriksaan"
+    );
+
+
+  const plr2Element =
+    document.getElementById(
+      "plr2Pemeriksaan"
+    );
+
+
+  const plrDipoElement =
+    document.getElementById(
+      "plrDipoPemeriksaan"
+    );
+
+
+  const schowingElement =
+    document.getElementById(
+      "petugasSchowingPemeriksaan"
+    );
+
+
+  const catatanElement =
+    document.getElementById(
+      "catatanPemeriksaan"
+    );
 
 
   return {
@@ -683,69 +635,69 @@ function ambilDataForm() {
 
 
     TANGGAL:
-      document.getElementById(
-        "tanggalPemeriksaan"
-      ).value,
+      tanggalElement
+        ? tanggalElement.value
+        : "",
 
 
     DINAS_LANGSIR:
-      document.getElementById(
-        "dinasLangsirPemeriksaan"
-      ).value,
+      dinasElement
+        ? dinasElement.value
+        : "",
 
 
     STASIUN:
-      document.getElementById(
-        "stasiunPemeriksaan"
-      ).value,
+      stasiunElement
+        ? stasiunElement.value
+        : "",
 
 
     LOKOMOTIF:
-      document.getElementById(
-        "lokomotifPemeriksaan"
-      ).value,
+      lokomotifElement
+        ? lokomotifElement.value
+        : "",
 
 
     MASINIS:
-      document.getElementById(
-        "masinisPemeriksaan"
-      ).value,
+      masinisElement
+        ? masinisElement.value
+        : "",
 
 
     ASISTEN_MASINIS:
-      document.getElementById(
-        "asistenMasinisPemeriksaan"
-      ).value,
+      asistenElement
+        ? asistenElement.value
+        : "",
 
 
     PLR1:
-      document.getElementById(
-        "plr1Pemeriksaan"
-      ).value,
+      plr1Element
+        ? plr1Element.value
+        : "",
 
 
     PLR2:
-      document.getElementById(
-        "plr2Pemeriksaan"
-      ).value,
+      plr2Element
+        ? plr2Element.value
+        : "",
 
 
     PLR_DIPO:
-      document.getElementById(
-        "plrDipoPemeriksaan"
-      ).value,
+      plrDipoElement
+        ? plrDipoElement.value
+        : "",
 
 
     PETUGAS_SCHOWING:
-      document.getElementById(
-        "petugasSchowingPemeriksaan"
-      ).value,
+      schowingElement
+        ? schowingElement.value
+        : "",
 
 
     CATATAN:
-      document.getElementById(
-        "catatanPemeriksaan"
-      ).value,
+      catatanElement
+        ? catatanElement.value
+        : "",
 
 
     EMAIL:
@@ -761,7 +713,11 @@ function ambilDataForm() {
 
 
     CHECKLIST:
-      checklist
+      checklist,
+
+
+    TTD:
+      ttdDataUrl || ""
 
   };
 
@@ -891,6 +847,7 @@ function validasiChecklist() {
       "Checklist belum tersedia."
     );
 
+
     return false;
 
   }
@@ -919,9 +876,11 @@ function validasiChecklist() {
 
       items[i].scrollIntoView({
 
-        behavior: "smooth",
+        behavior:
+          "smooth",
 
-        block: "center"
+        block:
+          "center"
 
       });
 
@@ -944,8 +903,7 @@ function validasiChecklist() {
 
 function buatIdPemeriksaan() {
 
-  return "TRX" +
-    Date.now();
+  return "TRX" + Date.now();
 
 }
 
@@ -1060,7 +1018,7 @@ function simpanPemeriksaan() {
 
 
 /* =========================================================
-   KIRIM PEMERIKSAAN
+   KIRIM PEMERIKSAAN KE API
 ========================================================= */
 
 function kirimPemeriksaan(
@@ -1069,13 +1027,13 @@ function kirimPemeriksaan(
 ) {
 
   fetch(
-
     API_URL +
     "?action=simpan_pemeriksaan",
-
     {
 
-      method: "POST",
+      method:
+        "POST",
+
 
       headers: {
 
@@ -1084,101 +1042,103 @@ function kirimPemeriksaan(
 
       },
 
+
       body:
-        JSON.stringify(
-          data
-        )
+        JSON.stringify(data)
 
     }
-
   )
 
-    .then(function (response) {
+    .then(
+      function (response) {
 
-      if (!response.ok) {
+        if (!response.ok) {
 
-        throw new Error(
-          "HTTP " +
-          response.status
-        );
+          throw new Error(
+            "HTTP " +
+            response.status
+          );
+
+        }
+
+
+        return response.json();
 
       }
+    )
+
+    .then(
+      function (result) {
+
+        console.log(
+          "HASIL SIMPAN PEMERIKSAAN:",
+          result
+        );
 
 
-      return response.json();
+        if (
+          result.success
+        ) {
 
-    })
-
-
-    .then(function (result) {
-
-      console.log(
-        "HASIL SIMPAN:",
-        result
-      );
+          idPemeriksaanAktif =
+            result.id_pemeriksaan ||
+            result.ID_PEMERIKSAAN ||
+            data.ID_PEMERIKSAAN;
 
 
-      if (
-        result.success
-      ) {
+          tampilkanStatus(
 
-        idPemeriksaanAktif =
-          result.id_pemeriksaan ||
-          result.ID_PEMERIKSAAN ||
-          data.ID_PEMERIKSAAN;
+            pesanBerhasil +
+            " ID Pemeriksaan: " +
+            idPemeriksaanAktif
+
+          );
+
+
+          alert(
+
+            pesanBerhasil +
+            "\nID Pemeriksaan: " +
+            idPemeriksaanAktif
+
+          );
+
+        }
+
+        else {
+
+          alert(
+
+            result.message ||
+            "Gagal menyimpan pemeriksaan."
+
+          );
+
+        }
+
+      }
+    )
+
+    .catch(
+      function (error) {
+
+        console.error(
+          "Gagal simpan pemeriksaan:",
+          error
+        );
 
 
         tampilkanStatus(
-
-          pesanBerhasil +
-          " ID Pemeriksaan: " +
-          idPemeriksaanAktif
-
-        );
-
-
-        alert(
-
-          pesanBerhasil +
-          "\nID Pemeriksaan: " +
-          idPemeriksaanAktif
-
-        );
-
-      }
-
-      else {
-
-        alert(
-
-          result.message ||
           "Gagal menyimpan pemeriksaan."
+        );
 
+
+        alert(
+          "Gagal menghubungi server saat menyimpan data."
         );
 
       }
-
-    })
-
-
-    .catch(function (error) {
-
-      console.error(
-        "Gagal simpan:",
-        error
-      );
-
-
-      tampilkanStatus(
-        "Gagal menyimpan data."
-      );
-
-
-      alert(
-        "Gagal menghubungi server saat menyimpan data."
-      );
-
-    });
+    );
 
 }
 
@@ -1213,7 +1173,51 @@ function tampilkanStatus(pesan) {
 
 
 /* =========================================================
-   DASHBOARD
+   TAMPILKAN FORM PEMERIKSAAN
+========================================================= */
+
+function tampilkanFormPemeriksaan() {
+
+  const form =
+    document.getElementById(
+      "formPemeriksaan"
+    );
+
+
+  if (!form) {
+
+    console.error(
+      "formPemeriksaan tidak ditemukan."
+    );
+
+
+    return;
+
+  }
+
+
+  form.style.display =
+    "block";
+
+
+  muatChecklist();
+
+
+  form.scrollIntoView({
+
+    behavior:
+      "smooth",
+
+    block:
+      "start"
+
+  });
+
+}
+
+
+/* =========================================================
+   TAMPILKAN DASHBOARD
 ========================================================= */
 
 function tampilkanDashboard() {
@@ -1235,48 +1239,7 @@ function tampilkanDashboard() {
 
 
 /* =========================================================
-   FORM PEMERIKSAAN
-========================================================= */
-
-function tampilkanFormPemeriksaan() {
-
-  const form =
-    document.getElementById(
-      "formPemeriksaan"
-    );
-
-
-  if (!form) {
-
-    console.error(
-      "formPemeriksaan tidak ditemukan."
-    );
-
-    return;
-
-  }
-
-
-  form.style.display =
-    "block";
-
-
-  muatChecklist();
-
-
-  form.scrollIntoView({
-
-    behavior: "smooth",
-
-    block: "start"
-
-  });
-
-}
-
-
-/* =========================================================
-   TTD
+   TAMPILKAN TTD
 ========================================================= */
 
 function tampilkanTTD() {
@@ -1288,6 +1251,7 @@ function tampilkanTTD() {
     alert(
       "Simpan Draft atau Simpan Pemeriksaan terlebih dahulu."
     );
+
 
     return;
 
@@ -1306,6 +1270,20 @@ function tampilkanTTD() {
       "ttdBox tidak ditemukan."
     );
 
+
+    return;
+
+  }
+
+
+  if (
+    box.style.display === "block"
+  ) {
+
+    box.style.display =
+      "none";
+
+
     return;
 
   }
@@ -1320,9 +1298,11 @@ function tampilkanTTD() {
 
   box.scrollIntoView({
 
-    behavior: "smooth",
+    behavior:
+      "smooth",
 
-    block: "center"
+    block:
+      "center"
 
   });
 
@@ -1330,7 +1310,7 @@ function tampilkanTTD() {
 
 
 /* =========================================================
-   INIT SIGNATURE
+   INIT SIGNATURE CANVAS
 ========================================================= */
 
 function initSignature() {
@@ -1347,22 +1327,31 @@ function initSignature() {
       "signatureCanvas tidak ditemukan."
     );
 
+
     return;
 
   }
 
 
-  const rect =
+  let rect =
     signatureCanvas.getBoundingClientRect();
 
 
-  const width =
-    rect.width ||
-    500;
+  let width =
+    rect.width;
+
+
+  if (
+    width < 300
+  ) {
+
+    width =
+      300;
+
+  }
 
 
   const height =
-    rect.height ||
     220;
 
 
@@ -1381,10 +1370,30 @@ function initSignature() {
     height * ratio;
 
 
+  signatureCanvas.style.width =
+    width + "px";
+
+
+  signatureCanvas.style.height =
+    height + "px";
+
+
   signatureContext =
     signatureCanvas.getContext(
       "2d"
     );
+
+
+  if (!signatureContext) {
+
+    console.error(
+      "Canvas context tidak tersedia."
+    );
+
+
+    return;
+
+  }
 
 
   signatureContext.setTransform(
@@ -1472,7 +1481,7 @@ function mulaiGambar(event) {
 
 
 /* =========================================================
-   GAMBAR
+   GAMBAR TTD
 ========================================================= */
 
 function gambar(event) {
@@ -1533,6 +1542,7 @@ function posisiCanvas(event) {
       event.clientX -
       rect.left,
 
+
     y:
       event.clientY -
       rect.top
@@ -1570,6 +1580,10 @@ function clearSignature() {
 
   );
 
+
+  ttdDataUrl =
+    "";
+
 }
 
 
@@ -1587,25 +1601,88 @@ function simpanTTD() {
       "ID Pemeriksaan belum tersedia."
     );
 
+
     return;
 
   }
 
 
-  if (
-    !signatureCanvas
-  ) {
+  if (!signatureCanvas) {
 
     alert(
       "Canvas tanda tangan belum tersedia."
     );
 
+
     return;
 
   }
 
 
-  const signature =
+  if (!signatureContext) {
+
+    alert(
+      "Canvas tanda tangan belum siap."
+    );
+
+
+    return;
+
+  }
+
+
+  const pixelData =
+    signatureContext.getImageData(
+
+      0,
+
+      0,
+
+      signatureCanvas.width,
+
+      signatureCanvas.height
+
+    ).data;
+
+
+  let adaCoretan =
+    false;
+
+
+  for (
+    let i = 3;
+    i < pixelData.length;
+    i += 4
+  ) {
+
+    if (
+      pixelData[i] !== 0
+    ) {
+
+      adaCoretan =
+        true;
+
+
+      break;
+
+    }
+
+  }
+
+
+  if (!adaCoretan) {
+
+    alert(
+      "Silakan buat tanda tangan terlebih dahulu."
+    );
+
+
+    return;
+
+  }
+
+
+  ttdDataUrl =
     signatureCanvas.toDataURL(
       "image/png"
     );
@@ -1621,8 +1698,10 @@ function simpanTTD() {
     ID_PEMERIKSAAN:
       idPemeriksaanAktif,
 
+
     TTD:
-      signature,
+      ttdDataUrl,
+
 
     EMAIL:
       sessionStorage.getItem(
@@ -1633,13 +1712,13 @@ function simpanTTD() {
 
 
   fetch(
-
     API_URL +
     "?action=simpan_ttd",
-
     {
 
-      method: "POST",
+      method:
+        "POST",
+
 
       headers: {
 
@@ -1648,82 +1727,89 @@ function simpanTTD() {
 
       },
 
+
       body:
-        JSON.stringify(
-          data
-        )
+        JSON.stringify(data)
 
     }
-
   )
 
-    .then(function (response) {
+    .then(
+      function (response) {
 
-      if (!response.ok) {
+        if (!response.ok) {
 
-        throw new Error(
-          "HTTP " +
-          response.status
-        );
+          throw new Error(
+            "HTTP " +
+            response.status
+          );
+
+        }
+
+
+        return response.json();
 
       }
+    )
+
+    .then(
+      function (result) {
+
+        console.log(
+          "HASIL SIMPAN TTD:",
+          result
+        );
 
 
-      return response.json();
+        if (
+          result.success
+        ) {
 
-    })
-
-
-    .then(function (result) {
-
-      console.log(
-        "HASIL SIMPAN TTD:",
-        result
-      );
+          tampilkanStatus(
+            "Tanda tangan berhasil disimpan."
+          );
 
 
-      if (
-        result.success
-      ) {
+          alert(
+            "Tanda tangan berhasil disimpan."
+          );
+
+        }
+
+        else {
+
+          alert(
+
+            result.message ||
+            "Gagal menyimpan tanda tangan."
+
+          );
+
+        }
+
+      }
+    )
+
+    .catch(
+      function (error) {
+
+        console.error(
+          "Gagal menyimpan TTD:",
+          error
+        );
+
 
         tampilkanStatus(
-          "Tanda tangan berhasil disimpan."
-        );
-
-
-        alert(
-          "Tanda tangan berhasil disimpan."
-        );
-
-      }
-
-      else {
-
-        alert(
-
-          result.message ||
           "Gagal menyimpan tanda tangan."
+        );
 
+
+        alert(
+          "Gagal menghubungi server saat menyimpan TTD."
         );
 
       }
-
-    })
-
-
-    .catch(function (error) {
-
-      console.error(
-        "Gagal menyimpan TTD:",
-        error
-      );
-
-
-      alert(
-        "Gagal menghubungi server."
-      );
-
-    });
+    );
 
 }
 
