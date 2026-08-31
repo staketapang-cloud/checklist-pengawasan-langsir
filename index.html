@@ -3954,13 +3954,18 @@ function clearSignature() {
 }
 
 
-```javascript
+
 /* =========================================================
    SIMPAN TTD
    SETELAH BERHASIL → KEMBALI KE FORM PEMERIKSAAN
 ========================================================= */
 
 function simpanTTD() {
+
+  console.log("TOMBOL SIMPAN TTD DIKLIK");
+
+
+  /* CEK ID PEMERIKSAAN */
 
   if (!idPemeriksaanAktif) {
 
@@ -3973,10 +3978,18 @@ function simpanTTD() {
   }
 
 
-  if (!signatureCanvas) {
+  /* CEK CANVAS */
+
+  const canvas =
+    document.getElementById(
+      "signatureCanvas"
+    );
+
+
+  if (!canvas) {
 
     alert(
-      "Canvas tanda tangan belum tersedia."
+      "Canvas tanda tangan tidak ditemukan."
     );
 
     return;
@@ -3984,16 +3997,36 @@ function simpanTTD() {
   }
 
 
+  /* AMBIL TANDA TANGAN */
+
   const signature =
-    signatureCanvas.toDataURL(
+    canvas.toDataURL(
       "image/png"
     );
+
+
+  /* CEK TANDA TANGAN */
+
+  if (
+    !signature ||
+    signature === "data:,"
+  ) {
+
+    alert(
+      "Tanda tangan belum dibuat. Silakan tanda tangan terlebih dahulu."
+    );
+
+    return;
+
+  }
 
 
   tampilkanStatus(
     "Menyimpan tanda tangan..."
   );
 
+
+  /* DATA YANG DIKIRIM KE APPS SCRIPT */
 
   const data = {
 
@@ -4015,6 +4048,14 @@ function simpanTTD() {
 
   };
 
+
+  console.log(
+    "DATA SIMPAN TTD:",
+    data
+  );
+
+
+  /* KIRIM KE API */
 
   fetch(
 
@@ -4059,7 +4100,7 @@ function simpanTTD() {
   .then(function(text) {
 
     console.log(
-      "HASIL SIMPAN TTD:",
+      "RESPONSE SIMPAN TTD:",
       text
     );
 
@@ -4083,19 +4124,19 @@ function simpanTTD() {
     }
 
 
-    /* -----------------------------------------------------
-       TTD BERHASIL DISIMPAN
-    ----------------------------------------------------- */
+    /* TTD BERHASIL */
 
     if (
       result &&
       result.success === true
     ) {
 
+      console.log(
+        "TTD BERHASIL DISIMPAN"
+      );
 
-      /*
-       * TUTUP KOTAK TTD
-       */
+
+      /* TUTUP KOTAK TTD */
 
       const ttdBox =
         document.getElementById(
@@ -4111,20 +4152,67 @@ function simpanTTD() {
       }
 
 
-      /*
-       * KEMBALI KE BAGIAN BAWAH
-       * FORM PEMERIKSAAN
-       */
+      /* PASTIKAN FORM TETAP TERBUKA */
 
-      const buttonGroup =
-        document.querySelector(
-          "#formPemeriksaan .button-group"
+      const app =
+        document.getElementById(
+          "app"
         );
 
 
-      if (buttonGroup) {
+      if (app) {
 
-        buttonGroup.scrollIntoView({
+        app.style.display =
+          "block";
+
+      }
+
+
+      const form =
+        document.getElementById(
+          "formPemeriksaan"
+        );
+
+
+      if (form) {
+
+        form.style.display =
+          "block";
+
+      }
+
+
+      /* PESAN */
+
+      tampilkanStatus(
+
+        "Tanda tangan berhasil disimpan. " +
+        "Silakan klik SIMPAN & SELESAI."
+
+      );
+
+
+      /* NOTIFIKASI */
+
+      alert(
+
+        "Tanda tangan berhasil disimpan.\n\n" +
+        "Silakan klik SIMPAN & SELESAI."
+
+      );
+
+
+      /* SCROLL KE TOMBOL SIMPAN & SELESAI */
+
+      const tombolSimpan =
+        document.querySelector(
+          "#formPemeriksaan button[onclick='simpanPemeriksaan()']"
+        );
+
+
+      if (tombolSimpan) {
+
+        tombolSimpan.scrollIntoView({
 
           behavior:
             "smooth",
@@ -4135,30 +4223,6 @@ function simpanTTD() {
         });
 
       }
-
-
-      /*
-       * TAMPILKAN PESAN
-       */
-
-      tampilkanStatus(
-
-        "Tanda tangan berhasil disimpan. " +
-        "Silakan klik SIMPAN & SELESAI."
-
-      );
-
-
-      /*
-       * NOTIFIKASI
-       */
-
-      alert(
-
-        "Tanda tangan berhasil disimpan.\n\n" +
-        "Silakan klik SIMPAN & SELESAI."
-
-      );
 
     }
 
@@ -4182,7 +4246,7 @@ function simpanTTD() {
   .catch(function(error) {
 
     console.error(
-      "Gagal menyimpan TTD:",
+      "GAGAL SIMPAN TTD:",
       error
     );
 
@@ -4202,7 +4266,6 @@ function simpanTTD() {
   });
 
 }
-```
 
 /* =========================================================
    MENU LAIN
