@@ -673,116 +673,112 @@
       </div>
 
 
-      <div class="form-group">
+    <div class="form-group">
 
-        <label for="masinisPemeriksaan">
-          Masinis
-        </label>
+  <label for="masinisPemeriksaan">
+    Masinis
+  </label>
 
-        <select
-          id="masinisPemeriksaan"
-        >
+  <input
+    type="text"
+    id="masinisPemeriksaan"
+    list="listMasinis"
+    placeholder="Ketik Nama atau NIPP Masinis"
+  >
 
-          <option value="">
-            Pilih Masinis
-          </option>
+  <datalist id="listMasinis"></datalist>
 
-        </select>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label for="asistenMasinisPemeriksaan">
-          Asisten Masinis
-        </label>
-
-        <select
-          id="asistenMasinisPemeriksaan"
-        >
-
-          <option value="">
-            Pilih Asisten Masinis
-          </option>
-
-        </select>
-
-      </div>
+</div>
 
 
-      <div class="form-group">
+<div class="form-group">
 
-        <label for="plr1Pemeriksaan">
-          PLR 1
-        </label>
+  <label for="asistenMasinisPemeriksaan">
+    Asisten Masinis
+  </label>
 
-        <select
-          id="plr1Pemeriksaan"
-        >
+  <input
+    type="text"
+    id="asistenMasinisPemeriksaan"
+    list="listAsistenMasinis"
+    placeholder="Ketik Nama atau NIPP Asisten Masinis"
+  >
 
-          <option value="">
-            Pilih PLR 1
-          </option>
+  <datalist id="listAsistenMasinis"></datalist>
 
-        </select>
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label for="plr2Pemeriksaan">
-          PLR 2
-        </label>
-
-        <select
-          id="plr2Pemeriksaan"
-        >
-
-          <option value="">
-            Pilih PLR 2
-          </option>
-
-        </select>
-
-      </div>
+</div>
 
 
-      <div class="form-group">
+<div class="form-group">
 
-        <label for="plrDipoPemeriksaan">
-          PLR DIPO
-        </label>
+  <label for="plr1Pemeriksaan">
+    PLR 1
+  </label>
 
-        <select
-          id="plrDipoPemeriksaan"
-        >
+  <input
+    type="text"
+    id="plr1Pemeriksaan"
+    list="listPlr1"
+    placeholder="Ketik Nama atau NIPP PLR 1"
+  >
 
-          <option value="">
-            Pilih PLR DIPO
-          </option>
+  <datalist id="listPlr1"></datalist>
 
-        </select>
-
-      </div>
+</div>
 
 
-      <div class="form-group">
+<div class="form-group">
 
-        <label for="petugasSchowingPemeriksaan">
-          Petugas Schowing
-        </label>
+  <label for="plr2Pemeriksaan">
+    PLR 2
+  </label>
 
-        <select
-          id="petugasSchowingPemeriksaan"
-        >
+  <input
+    type="text"
+    id="plr2Pemeriksaan"
+    list="listPlr2"
+    placeholder="Ketik Nama atau NIPP PLR 2"
+  >
 
-          <option value="">
-            Pilih Petugas Schowing
-          </option>
+  <datalist id="listPlr2"></datalist>
 
-        </select>
+</div>
+
+
+<div class="form-group">
+
+  <label for="plrDipoPemeriksaan">
+    PLR DIPO
+  </label>
+
+  <input
+    type="text"
+    id="plrDipoPemeriksaan"
+    list="listPlrDipo"
+    placeholder="Ketik Nama atau NIPP PLR DIPO"
+  >
+
+  <datalist id="listPlrDipo"></datalist>
+
+</div>
+
+
+<div class="form-group">
+
+  <label for="petugasSchowingPemeriksaan">
+    Petugas Schowing
+  </label>
+
+  <input
+    type="text"
+    id="petugasSchowingPemeriksaan"
+    list="listSchowing"
+    placeholder="Ketik Nama atau NIPP Petugas Schowing"
+  >
+
+  <datalist id="listSchowing"></datalist>
+
+</div>
 
       </div>
 
@@ -1923,7 +1919,7 @@ function muatPegawai() {
     const daftarSelect = [
 
       [
-        "masinisPemeriksaan",
+        "listMasinis",
         [
           "MASINIS",
           "Masinis"
@@ -1931,7 +1927,7 @@ function muatPegawai() {
       ],
 
       [
-        "asistenMasinisPemeriksaan",
+        "listAsistenMasinis",
         [
           "ASISTEN MASINIS",
           "Asisten Masinis"
@@ -1939,7 +1935,7 @@ function muatPegawai() {
       ],
 
       [
-        "plr1Pemeriksaan",
+        "listPlr1",
         [
           "PLR 1",
           "PLR1"
@@ -1947,7 +1943,7 @@ function muatPegawai() {
       ],
 
       [
-        "plr2Pemeriksaan",
+        "listPlr2",
         [
           "PLR 2",
           "PLR2"
@@ -1955,7 +1951,7 @@ function muatPegawai() {
       ],
 
       [
-        "plrDipoPemeriksaan",
+        "listPlrDipo",
         [
           "PLR DIPO",
           "PLR_DIPO"
@@ -1963,7 +1959,7 @@ function muatPegawai() {
       ],
 
       [
-        "petugasSchowingPemeriksaan",
+        "listSchowing",
         [
           "PETUGAS SCHOWING",
           "SCHOWING",
@@ -1976,29 +1972,20 @@ function muatPegawai() {
 
     daftarSelect.forEach(function(config) {
 
-      const select =
+      const datalist =
         document.getElementById(
           config[0]
         );
 
 
-      if (!select) {
+      if (!datalist) {
 
         return;
 
       }
 
 
-      const label =
-        select.options[0]
-          ? select.options[0].textContent
-          : "Pilih";
-
-
-      select.innerHTML =
-        "<option value=''>" +
-        escapeHtml(label) +
-        "</option>";
+      datalist.innerHTML = "";
 
 
       data.forEach(function(item) {
@@ -2010,15 +1997,18 @@ function muatPegawai() {
           "";
 
 
+        const nipp =
+          item.NIPP ||
+          item.NIP ||
+          "";
+
+
         if (!nama) {
 
           return;
 
         }
-const nipp =
-  item.NIPP ||
-  item.NIP ||
-  "";
+
 
         const jabatan =
           String(
@@ -2051,20 +2041,22 @@ const nipp =
 
         if (bolehMasuk) {
 
-         const option =
-  document.createElement(
-    "option"
-  );
+          const option =
+            document.createElement(
+              "option"
+            );
 
-option.value =
-  nama;
 
-option.textContent =
-  nama + " - " + nipp;
+          option.value =
+            nipp
+              ? nama + " - " + nipp
+              : nama;
 
-select.appendChild(
-  option
-);
+
+          datalist.appendChild(
+            option
+          );
+
         }
 
       });
@@ -2083,8 +2075,6 @@ select.appendChild(
   });
 
 }
-
-
 /* =========================================================
    ESCAPE HTML
 ========================================================= */
