@@ -2845,11 +2845,6 @@ function kirimFoto() {
     idPemeriksaanAktif =
       buatIdPemeriksaan();
 
-    console.log(
-      "ID PEMERIKSAAN BARU:",
-      idPemeriksaanAktif
-    );
-
   }
 
 
@@ -2912,22 +2907,17 @@ function kirimFoto() {
             img.src =
               e.target.result;
 
-
             img.style.width =
               "150px";
-
 
             img.style.height =
               "150px";
 
-
             img.style.objectFit =
               "cover";
 
-
             img.style.borderRadius =
               "8px";
-
 
             img.style.margin =
               "5px";
@@ -2951,15 +2941,14 @@ function kirimFoto() {
 
 
   alert(
-    "Foto siap dikirim.\n\nID Pemeriksaan: " +
+    "Foto siap dikirim.\n\n" +
+    "ID Pemeriksaan: " +
     idPemeriksaanAktif +
     "\nJumlah foto: " +
     files.length
   );
 
 }
-
-
 /* =========================================================
    PREVIEW FOTO
 ========================================================= */
