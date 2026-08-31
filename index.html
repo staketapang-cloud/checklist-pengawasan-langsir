@@ -3954,8 +3954,10 @@ function clearSignature() {
 }
 
 
+```javascript
 /* =========================================================
    SIMPAN TTD
+   SETELAH BERHASIL → KEMBALI KE FORM PEMERIKSAAN
 ========================================================= */
 
 function simpanTTD() {
@@ -4004,6 +4006,11 @@ function simpanTTD() {
     EMAIL:
       sessionStorage.getItem(
         "userEmail"
+      ) || "",
+
+    NAMA:
+      sessionStorage.getItem(
+        "userNama"
       ) || ""
 
   };
@@ -4045,42 +4052,126 @@ function simpanTTD() {
     }
 
 
-    return response.json();
+    return response.text();
 
   })
 
-  .then(function(result) {
+  .then(function(text) {
 
     console.log(
       "HASIL SIMPAN TTD:",
-      result
+      text
     );
 
 
+    let result;
+
+
+    try {
+
+      result =
+        JSON.parse(text);
+
+    }
+
+    catch (error) {
+
+      throw new Error(
+        "Response API bukan JSON yang valid."
+      );
+
+    }
+
+
+    /* -----------------------------------------------------
+       TTD BERHASIL DISIMPAN
+    ----------------------------------------------------- */
+
     if (
       result &&
-      result.success
+      result.success === true
     ) {
 
+
+      /*
+       * TUTUP KOTAK TTD
+       */
+
+      const ttdBox =
+        document.getElementById(
+          "ttdBox"
+        );
+
+
+      if (ttdBox) {
+
+        ttdBox.style.display =
+          "none";
+
+      }
+
+
+      /*
+       * KEMBALI KE BAGIAN BAWAH
+       * FORM PEMERIKSAAN
+       */
+
+      const buttonGroup =
+        document.querySelector(
+          "#formPemeriksaan .button-group"
+        );
+
+
+      if (buttonGroup) {
+
+        buttonGroup.scrollIntoView({
+
+          behavior:
+            "smooth",
+
+          block:
+            "center"
+
+        });
+
+      }
+
+
+      /*
+       * TAMPILKAN PESAN
+       */
+
       tampilkanStatus(
-        "Tanda tangan berhasil disimpan."
+
+        "Tanda tangan berhasil disimpan. " +
+        "Silakan klik SIMPAN & SELESAI."
+
       );
 
 
+      /*
+       * NOTIFIKASI
+       */
+
       alert(
-        "Tanda tangan berhasil disimpan."
+
+        "Tanda tangan berhasil disimpan.\n\n" +
+        "Silakan klik SIMPAN & SELESAI."
+
       );
 
     }
 
     else {
 
-      alert(
+      throw new Error(
 
         result &&
         result.message
-        ? result.message
-        : "Gagal menyimpan tanda tangan."
+
+          ? result.message
+
+          : "Gagal menyimpan tanda tangan."
 
       );
 
@@ -4102,13 +4193,16 @@ function simpanTTD() {
 
 
     alert(
-      "Gagal menghubungi server."
+
+      "Gagal menyimpan tanda tangan.\n\n" +
+      error.message
+
     );
 
   });
 
 }
-
+```
 
 /* =========================================================
    MENU LAIN
