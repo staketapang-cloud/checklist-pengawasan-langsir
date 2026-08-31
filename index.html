@@ -1,3 +1,4 @@
+```html
 <script>
 
 /* =========================================================
@@ -49,17 +50,14 @@ function muatChecklist() {
     document.getElementById("checklistContainer");
 
   if (!container) {
-
     console.error(
       "checklistContainer tidak ditemukan."
     );
-
     return;
   }
 
   container.innerHTML =
     "<div class='loading'>Memuat checklist...</div>";
-
 
   fetch(
     API_URL + "?action=master_checklist"
@@ -68,11 +66,9 @@ function muatChecklist() {
     .then(function (response) {
 
       if (!response.ok) {
-
         throw new Error(
           "HTTP " + response.status
         );
-
       }
 
       return response.json();
@@ -86,37 +82,26 @@ function muatChecklist() {
         result
       );
 
-
       if (!result) {
-
         throw new Error(
           "Response checklist kosong."
         );
-
       }
 
-
       if (!result.success) {
-
         throw new Error(
           result.message ||
           "Gagal mengambil data checklist."
         );
-
       }
 
-
       if (!Array.isArray(result.data)) {
-
         throw new Error(
           "Format data checklist tidak valid."
         );
-
       }
 
-
       container.innerHTML = "";
-
 
       let nomorTampil = 0;
 
@@ -131,16 +116,12 @@ function muatChecklist() {
           const aktif =
             item.AKTIF;
 
-
           if (
             aktif === true ||
             aktif === 1
           ) {
-
             return true;
-
           }
-
 
           const nilai =
             String(
@@ -150,7 +131,6 @@ function muatChecklist() {
             )
               .trim()
               .toUpperCase();
-
 
           return (
             nilai === "TRUE" ||
@@ -164,52 +144,22 @@ function muatChecklist() {
         });
 
 
-      /*
-       * Jangan tampilkan "Tidak ada checklist aktif"
-       * jika API sebenarnya mengembalikan data.
-       *
-       * Jika filter AKTIF tidak cocok,
-       * gunakan semua data sebagai fallback.
-       */
-
-      let dataUntukDitampilkan =
-        checklistAktif;
-
-
-      if (
-        checklistAktif.length === 0 &&
-        result.data.length > 0
-      ) {
-
-        console.warn(
-          "Tidak ada checklist yang cocok dengan filter AKTIF."
-        );
-
-        console.warn(
-          "Menggunakan seluruh data checklist sebagai fallback."
-        );
-
-        dataUntukDitampilkan =
-          result.data;
-
-      }
-
-
       /* =====================================================
-         DATA CHECKLIST BENAR-BENAR KOSONG
+         DATA YANG DITAMPILKAN
       ===================================================== */
 
-      if (
-        dataUntukDitampilkan.length === 0
-      ) {
+      if (checklistAktif.length === 0) {
+
+        console.warn(
+          "Tidak ada checklist dengan status aktif."
+        );
 
         container.innerHTML =
           "<div class='loading'>" +
-          "Data checklist belum tersedia." +
+          "Tidak ada checklist aktif." +
           "</div>";
 
         return;
-
       }
 
 
@@ -217,32 +167,26 @@ function muatChecklist() {
          TAMPILKAN CHECKLIST
       ===================================================== */
 
-      dataUntukDitampilkan.forEach(
+      checklistAktif.forEach(
         function (item) {
 
           const id =
             item.ID || "";
 
-
           const kategori =
             item.KATEGORI || "";
-
 
           const subKategori =
             item.SUB_KATEGORI || "";
 
-
           const uraian =
             item.URAIAN || "";
-
 
           const standar =
             item.STANDAR || "";
 
-
           const nomor =
             item.URUTAN || "";
-
 
           nomorTampil++;
 
@@ -250,10 +194,8 @@ function muatChecklist() {
           const div =
             document.createElement("div");
 
-
           div.className =
             "checklist-item";
-
 
           div.dataset.id =
             id;
@@ -270,8 +212,7 @@ function muatChecklist() {
               "<div class='checklist-number'>" +
 
                 escapeHtml(
-                  nomor ||
-                  nomorTampil
+                  nomor || nomorTampil
                 ) +
 
               "</div>" +
@@ -331,11 +272,11 @@ function muatChecklist() {
               "<label class='choice-label'>" +
 
                 "<input " +
-                "type='radio' " +
-                "name='" +
-                escapeHtml(namaRadio) +
-                "' " +
-                "value='YA'>" +
+                  "type='radio' " +
+                  "name='" +
+                  escapeHtml(namaRadio) +
+                  "' " +
+                  "value='YA'>" +
 
                 "<span>YA</span>" +
 
@@ -344,11 +285,11 @@ function muatChecklist() {
               "<label class='choice-label'>" +
 
                 "<input " +
-                "type='radio' " +
-                "name='" +
-                escapeHtml(namaRadio) +
-                "' " +
-                "value='TIDAK'>" +
+                  "type='radio' " +
+                  "name='" +
+                  escapeHtml(namaRadio) +
+                  "' " +
+                  "value='TIDAK'>" +
 
                 "<span>TIDAK</span>" +
 
@@ -357,11 +298,11 @@ function muatChecklist() {
             "</div>" +
 
             "<textarea " +
-            "class='temuan-input' " +
-            "data-id='" +
-            escapeHtml(id) +
-            "' " +
-            "placeholder='Keterangan / temuan (opsional)'>" +
+              "class='temuan-input' " +
+              "data-id='" +
+              escapeHtml(id) +
+              "' " +
+              "placeholder='Keterangan / temuan (opsional)'>" +
             "</textarea>";
 
 
@@ -387,7 +328,6 @@ function muatChecklist() {
         error
       );
 
-
       container.innerHTML =
         "<div class='loading'>" +
         "Gagal memuat checklist. " +
@@ -408,12 +348,10 @@ function escapeHtml(text) {
   const div =
     document.createElement("div");
 
-
   div.textContent =
     text == null
       ? ""
       : String(text);
-
 
   return div.innerHTML;
 
@@ -474,84 +412,65 @@ function ambilDataForm() {
     ID_PEMERIKSAAN:
       idPemeriksaanAktif,
 
-
     TANGGAL:
       document.getElementById(
         "tanggalPemeriksaan"
       ).value,
-
 
     DINAS_LANGSIR:
       document.getElementById(
         "dinasLangsirPemeriksaan"
       ).value,
 
-
     STASIUN:
       document.getElementById(
         "stasiunPemeriksaan"
       ).value,
-
 
     LOKOMOTIF:
       document.getElementById(
         "lokomotifPemeriksaan"
       ).value,
 
-
     MASINIS:
       document.getElementById(
         "masinisPemeriksaan"
       ).value,
-
 
     ASISTEN_MASINIS:
       document.getElementById(
         "asistenMasinisPemeriksaan"
       ).value,
 
-
     PLR1:
       document.getElementById(
         "plr1Pemeriksaan"
       ).value,
-
 
     PLR2:
       document.getElementById(
         "plr2Pemeriksaan"
       ).value,
 
-
     PLR_DIPO:
       document.getElementById(
         "plrDipoPemeriksaan"
       ).value,
-
 
     PETUGAS_SCHOWING:
       document.getElementById(
         "petugasSchowingPemeriksaan"
       ).value,
 
-
-    CATATAN:
-      document.getElementById(
-        "catatanPemeriksaan"
-      ).value,
-
-
     EMAIL:
       sessionStorage.getItem(
         "userEmail"
       ) || "",
 
-
     NAMA:
       sessionStorage.getItem(
         "userNama"
       ) || "",
-
 
     CHECKLIST:
       checklist
@@ -674,9 +593,7 @@ function validasiChecklist() {
     );
 
 
-  if (
-    items.length === 0
-  ) {
+  if (items.length === 0) {
 
     alert(
       "Checklist belum tersedia."
@@ -749,9 +666,7 @@ function simpanDraft() {
   if (
     !validasiIdentitas()
   ) {
-
     return;
-
   }
 
 
@@ -797,18 +712,14 @@ function simpanPemeriksaan() {
   if (
     !validasiIdentitas()
   ) {
-
     return;
-
   }
 
 
   if (
     !validasiChecklist()
   ) {
-
     return;
-
   }
 
 
@@ -884,7 +795,6 @@ function kirimPemeriksaan(
         );
 
       }
-
 
       return response.json();
 
@@ -995,11 +905,6 @@ function tampilkanStatus(pesan) {
 
 function tampilkanTTD() {
 
-  /*
-   * Tetap mengikuti alur lama:
-   * TTD hanya dibuka setelah ID pemeriksaan tersedia.
-   */
-
   if (!idPemeriksaanAktif) {
 
     alert(
@@ -1059,13 +964,7 @@ function initSignature() {
 
 
   if (!signatureCanvas) {
-
-    console.error(
-      "signatureCanvas tidak ditemukan."
-    );
-
     return;
-
   }
 
 
@@ -1107,13 +1006,7 @@ function initSignature() {
 
 
   if (!signatureContext) {
-
-    console.error(
-      "Context canvas tidak tersedia."
-    );
-
     return;
-
   }
 
 
@@ -1145,10 +1038,6 @@ function initSignature() {
     "round";
 
 
-  signatureCanvas.style.touchAction =
-    "none";
-
-
   signatureCanvas.onpointerdown =
     mulaiGambar;
 
@@ -1172,7 +1061,7 @@ function initSignature() {
 
 
 /* =========================================================
-   MULAI GAMBAR
+   MULAI TTD
 ========================================================= */
 
 function mulaiGambar(event) {
@@ -1180,9 +1069,6 @@ function mulaiGambar(event) {
   if (!signatureContext) {
     return;
   }
-
-
-  event.preventDefault();
 
 
   sedangMenggambar =
@@ -1205,7 +1091,7 @@ function mulaiGambar(event) {
 
 
 /* =========================================================
-   GAMBAR
+   GAMBAR TTD
 ========================================================= */
 
 function gambar(event) {
@@ -1214,9 +1100,7 @@ function gambar(event) {
     !sedangMenggambar ||
     !signatureContext
   ) {
-
     return;
-
   }
 
 
@@ -1239,7 +1123,7 @@ function gambar(event) {
 
 
 /* =========================================================
-   SELESAI GAMBAR
+   SELESAI TTD
 ========================================================= */
 
 function selesaiGambar() {
@@ -1285,9 +1169,7 @@ function clearSignature() {
     !signatureCanvas ||
     !signatureContext
   ) {
-
     return;
-
   }
 
 
@@ -1302,53 +1184,6 @@ function clearSignature() {
     signatureCanvas.height
 
   );
-
-}
-
-
-/* =========================================================
-   CEK CANVAS ADA TTD
-========================================================= */
-
-function canvasAdaCoretan() {
-
-  if (
-    !signatureCanvas ||
-    !signatureContext
-  ) {
-
-    return false;
-
-  }
-
-
-  const pixelData =
-    signatureContext.getImageData(
-      0,
-      0,
-      signatureCanvas.width,
-      signatureCanvas.height
-    ).data;
-
-
-  for (
-    let i = 3;
-    i < pixelData.length;
-    i += 4
-  ) {
-
-    if (
-      pixelData[i] !== 0
-    ) {
-
-      return true;
-
-    }
-
-  }
-
-
-  return false;
 
 }
 
@@ -1392,17 +1227,6 @@ function simpanTTD() {
   }
 
 
-  if (!canvasAdaCoretan()) {
-
-    alert(
-      "Silakan buat tanda tangan terlebih dahulu."
-    );
-
-    return;
-
-  }
-
-
   const signature =
     signatureCanvas.toDataURL(
       "image/png"
@@ -1414,49 +1238,10 @@ function simpanTTD() {
   );
 
 
-  simpanTTDKeServer(
-    idPemeriksaanAktif,
-    signature
-  );
-
-}
-
-
-/* =========================================================
-   KIRIM TTD KE SERVER
-========================================================= */
-
-function simpanTTDKeServer(
-  idPemeriksaan,
-  signature
-) {
-
-  if (!idPemeriksaan) {
-
-    console.error(
-      "ID Pemeriksaan kosong."
-    );
-
-    return;
-
-  }
-
-
-  if (!signature) {
-
-    console.error(
-      "Data TTD kosong."
-    );
-
-    return;
-
-  }
-
-
   const data = {
 
     ID_PEMERIKSAAN:
-      idPemeriksaan,
+      idPemeriksaanAktif,
 
     TTD:
       signature,
@@ -1499,7 +1284,6 @@ function simpanTTDKeServer(
         );
 
       }
-
 
       return response.json();
 
@@ -1549,13 +1333,8 @@ function simpanTTDKeServer(
       );
 
 
-      tampilkanStatus(
-        "Gagal menyimpan tanda tangan."
-      );
-
-
       alert(
-        "Gagal menghubungi server saat menyimpan tanda tangan."
+        "Gagal menghubungi server."
       );
 
     });
@@ -1680,7 +1459,8 @@ function tampilkanDataLokomotif() {
 ========================================================= */
 
 console.log(
-  "JavaScript Checklist Pengawasan Kegiatan Langsir siap."
+  "JavaScript berhasil dimuat tanpa syntax error."
 );
 
 </script>
+```
