@@ -338,7 +338,51 @@ body {
   border-radius: 7px;
 }
 
+/* =========================================================
+   PROGRESS LOADING
+========================================================= */
 
+.progress-box {
+  display: none;
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.progress-text {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #1f4e78;
+  white-space: pre-line;
+}
+
+.progress-bar-wrapper {
+  width: 100%;
+  height: 22px;
+  background: #e9ecef;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: #198754;
+  border-radius: 20px;
+  transition: width 0.3s ease;
+}
+
+.progress-percent {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #198754;
+}
 /* =========================================================
    BUTTON
 ========================================================= */
@@ -729,7 +773,39 @@ body {
       id="statusLogin"
       class="status-box"
     ></div>
+<!-- =====================================================
+     PROGRESS LOADING
+====================================================== -->
 
+<div
+  id="progressBox"
+  class="progress-box"
+>
+
+  <div
+    id="progressText"
+    class="progress-text"
+  >
+    Memproses...
+  </div>
+
+  <div class="progress-bar-wrapper">
+
+    <div
+      id="progressBar"
+      class="progress-bar"
+    ></div>
+
+  </div>
+
+  <div
+    id="progressPercent"
+    class="progress-percent"
+  >
+    0%
+  </div>
+
+</div>
   </div>
 
 </div>
@@ -3361,7 +3437,10 @@ function simpanPemeriksaan() {
     tampilkanStatus(
       "Menyimpan pemeriksaan..."
     );
-
+tampilkanProgress(
+  70,
+  "Menyimpan pemeriksaan...\nMengirim data ke server."
+);
 
     return kirimRequestPost(
       "simpan_pemeriksaan",
@@ -3376,7 +3455,10 @@ function simpanPemeriksaan() {
       "HASIL SIMPAN PEMERIKSAAN:",
       result
     );
-
+tampilkanProgress(
+  95,
+  "Menyimpan pemeriksaan...\nServer sedang memproses data."
+);
 
     if (
       !result ||
@@ -3432,7 +3514,10 @@ function simpanPemeriksaan() {
 
     );
 
-
+progressSelesai(
+  "Pemeriksaan berhasil disimpan."
+);
+      
     tampilkanNotifSelesai();
 
   })
@@ -3621,7 +3706,130 @@ function tampilkanNotifSelesai() {
 
 }
 
+/* =========================================================
+   PROGRESS LOADING
+========================================================= */
 
+function tampilkanProgress(
+  persen,
+  pesan
+) {
+
+  const box =
+    document.getElementById(
+      "progressBox"
+    );
+
+  const bar =
+    document.getElementById(
+      "progressBar"
+    );
+
+  const text =
+    document.getElementById(
+      "progressText"
+    );
+
+  const percent =
+    document.getElementById(
+      "progressPercent"
+    );
+
+
+  if (!box) {
+    return;
+  }
+
+
+  let nilai =
+    Number(persen);
+
+
+  if (isNaN(nilai)) {
+    nilai = 0;
+  }
+
+
+  nilai =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        nilai
+      )
+    );
+
+
+  nilai =
+    Math.round(nilai);
+
+
+  box.style.display =
+    "block";
+
+
+  if (bar) {
+
+    bar.style.width =
+      nilai + "%";
+
+  }
+
+
+  if (text) {
+
+    text.textContent =
+      pesan || "Memproses...";
+
+  }
+
+
+  if (percent) {
+
+    percent.textContent =
+      nilai + "%";
+
+  }
+
+}
+
+
+/* =========================================================
+   SEMBUNYIKAN PROGRESS
+========================================================= */
+
+function sembunyikanProgress() {
+
+  const box =
+    document.getElementById(
+      "progressBox"
+    );
+
+
+  if (box) {
+
+    box.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* =========================================================
+   PROGRESS SELESAI
+========================================================= */
+
+function progressSelesai(
+  pesan
+) {
+
+  tampilkanProgress(
+    100,
+    pesan || "Proses selesai."
+  );
+
+}
 /* =========================================================
    TUTUP NOTIFIKASI
 ========================================================= */
