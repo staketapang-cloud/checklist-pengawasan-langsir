@@ -3955,6 +3955,7 @@ function clearSignature() {
 
 
 
+
 /* =========================================================
    SIMPAN TTD
    SETELAH BERHASIL → KEMBALI KE FORM PEMERIKSAAN
@@ -3962,15 +3963,41 @@ function clearSignature() {
 
 function simpanTTD() {
 
+  console.log("=================================");
   console.log("TOMBOL SIMPAN TTD DIKLIK");
+  console.log("ID VARIABLE:", idPemeriksaanAktif);
+  console.log(
+    "ID SESSION:",
+    sessionStorage.getItem("idPemeriksaanAktif")
+  );
+  console.log("=================================");
 
 
-  /* CEK ID PEMERIKSAAN */
+  /* =====================================================
+     AMBIL ID PEMERIKSAAN
+  ===================================================== */
 
-  if (!idPemeriksaanAktif) {
+  let idAktif =
+    idPemeriksaanAktif ||
+    sessionStorage.getItem(
+      "idPemeriksaanAktif"
+    ) ||
+    "";
+
+
+  idAktif =
+    String(idAktif).trim();
+
+
+  /* =====================================================
+     CEK ID
+  ===================================================== */
+
+  if (!idAktif) {
 
     alert(
-      "ID Pemeriksaan belum tersedia."
+      "ID Pemeriksaan belum tersedia.\n\n" +
+      "Silakan Simpan Draft terlebih dahulu."
     );
 
     return;
@@ -3978,7 +4005,23 @@ function simpanTTD() {
   }
 
 
-  /* CEK CANVAS */
+  /* =====================================================
+     PASTIKAN VARIABLE GLOBAL TERISI
+  ===================================================== */
+
+  idPemeriksaanAktif =
+    idAktif;
+
+
+  sessionStorage.setItem(
+    "idPemeriksaanAktif",
+    idAktif
+  );
+
+
+  /* =====================================================
+     AMBIL CANVAS
+  ===================================================== */
 
   const canvas =
     document.getElementById(
@@ -3997,7 +4040,9 @@ function simpanTTD() {
   }
 
 
-  /* AMBIL TANDA TANGAN */
+  /* =====================================================
+     AMBIL TANDA TANGAN
+  ===================================================== */
 
   const signature =
     canvas.toDataURL(
@@ -4005,15 +4050,14 @@ function simpanTTD() {
     );
 
 
-  /* CEK TANDA TANGAN */
-
   if (
     !signature ||
     signature === "data:,"
   ) {
 
     alert(
-      "Tanda tangan belum dibuat. Silakan tanda tangan terlebih dahulu."
+      "Tanda tangan belum tersedia.\n\n" +
+      "Silakan tanda tangan terlebih dahulu."
     );
 
     return;
@@ -4021,17 +4065,26 @@ function simpanTTD() {
   }
 
 
+  /* =====================================================
+     STATUS
+  ===================================================== */
+
   tampilkanStatus(
     "Menyimpan tanda tangan..."
   );
 
 
-  /* DATA YANG DIKIRIM KE APPS SCRIPT */
+  /* =====================================================
+     DATA TTD
+  ===================================================== */
 
   const data = {
 
     ID_PEMERIKSAAN:
-      idPemeriksaanAktif,
+      idAktif,
+
+    ID_PEMERIKSA:
+      idAktif,
 
     TTD:
       signature,
@@ -4050,12 +4103,14 @@ function simpanTTD() {
 
 
   console.log(
-    "DATA SIMPAN TTD:",
+    "DATA YANG DIKIRIM KE API:",
     data
   );
 
 
-  /* KIRIM KE API */
+  /* =====================================================
+     KIRIM KE APPS SCRIPT
+  ===================================================== */
 
   fetch(
 
@@ -4100,7 +4155,7 @@ function simpanTTD() {
   .then(function(text) {
 
     console.log(
-      "RESPONSE SIMPAN TTD:",
+      "RESPONSE API SIMPAN TTD:",
       text
     );
 
@@ -4118,13 +4173,16 @@ function simpanTTD() {
     catch (error) {
 
       throw new Error(
-        "Response API bukan JSON yang valid."
+        "Response API bukan JSON yang valid:\n" +
+        text
       );
 
     }
 
 
-    /* TTD BERHASIL */
+    /* =================================================
+       BERHASIL
+    ================================================= */
 
     if (
       result &&
@@ -4132,11 +4190,27 @@ function simpanTTD() {
     ) {
 
       console.log(
-        "TTD BERHASIL DISIMPAN"
+        "TTD BERHASIL DISIMPAN."
       );
 
 
-      /* TUTUP KOTAK TTD */
+      /*
+       * PASTIKAN ID TETAP ADA
+       */
+
+      idPemeriksaanAktif =
+        idAktif;
+
+
+      sessionStorage.setItem(
+        "idPemeriksaanAktif",
+        idAktif
+      );
+
+
+      /*
+       * TUTUP KOTAK TTD
+       */
 
       const ttdBox =
         document.getElementById(
@@ -4152,7 +4226,9 @@ function simpanTTD() {
       }
 
 
-      /* PASTIKAN FORM TETAP TERBUKA */
+      /*
+       * FORM TETAP TERBUKA
+       */
 
       const app =
         document.getElementById(
@@ -4182,7 +4258,9 @@ function simpanTTD() {
       }
 
 
-      /* PESAN */
+      /*
+       * PESAN
+       */
 
       tampilkanStatus(
 
@@ -4192,7 +4270,9 @@ function simpanTTD() {
       );
 
 
-      /* NOTIFIKASI */
+      /*
+       * NOTIFIKASI
+       */
 
       alert(
 
@@ -4202,7 +4282,9 @@ function simpanTTD() {
       );
 
 
-      /* SCROLL KE TOMBOL SIMPAN & SELESAI */
+      /*
+       * CARI TOMBOL SIMPAN & SELESAI
+       */
 
       const tombolSimpan =
         document.querySelector(
@@ -4210,33 +4292,56 @@ function simpanTTD() {
         );
 
 
+      /*
+       * SCROLL KE TOMBOL
+       */
+
       if (tombolSimpan) {
 
-        tombolSimpan.scrollIntoView({
+        setTimeout(
+          function() {
 
-          behavior:
-            "smooth",
+            tombolSimpan.scrollIntoView({
 
-          block:
-            "center"
+              behavior:
+                "smooth",
 
-        });
+              block:
+                "center"
+
+            });
+
+          },
+          300
+        );
 
       }
 
     }
 
+    /* =================================================
+       GAGAL
+    ================================================= */
+
     else {
 
-      throw new Error(
-
+      const pesan =
         result &&
         result.message
 
           ? result.message
 
-          : "Gagal menyimpan tanda tangan."
+          : "Gagal menyimpan tanda tangan.";
 
+
+      console.error(
+        "API MENOLAK SIMPAN TTD:",
+        result
+      );
+
+
+      throw new Error(
+        pesan
       );
 
     }
