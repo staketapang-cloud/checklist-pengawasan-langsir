@@ -759,36 +759,58 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
       <div
         id="statusBox"
         class="status-box">
-      </div>
+     <div class="button-group">
 
-      <div class="button-group">
+  <button
+    type="button"
+    class="btn btn-dokumentasi"
+    onclick="dokumentasiFoto()"
+  >
+    Dokumentasi Foto
+  </button>
 
-<button
-  type="button"
-  class="btn btn-dokumentasi"
-  onclick="dokumentasiFoto()"
->
-  Dokumentasi Foto
-</button>
+  <button
+    type="button"
+    class="btn btn-ttd"
+    onclick="tampilkanTTD()"
+  >
+    TTD
+  </button>
 
-        <button
-          type="button"
-          class="btn btn-TTD"
-          onclick="tampilkanTTD()"
-        >
-          TTD
-        </button>
+  <button
+    type="button"
+    class="btn btn-simpan-selesai"
+    onclick="tampilkanSimpanSelesai()"
+  >
+    Simpan &amp; Selesai
+  </button>
 
-        <button
-          type="button"
-          class="btn btn-simpan&selesai"
-          onclick="tampilkanSimpan&Selesai()"
-        >
-          Simpan&Selesai
-        </button>
+</div>
+Hasil tampilannya
 
-      </div>
+Urutannya akan menjadi:
 
+Dokumentasi Foto → TTD → Simpan & Selesai
+
+Perhatikan perbedaannya:
+
+❌ Salah:
+
+onclick="tampilkanSimpan&Selesai()"
+
+✅ Benar:
+
+onclick="tampilkanSimpanSelesai()"
+
+Sedangkan tulisan tombol tetap boleh menggunakan &:
+
+Simpan &amp; Selesai
+
+yang akan tampil sebagai:
+
+Simpan & Selesai
+
+⚠️ Jangan membuat fungsi tampilkanSimpanSelesai() dulu. Untuk tahap ini kita hanya memperbaiki HTML tombol agar tidak menyebabkan error. Setelah halaman kembali tampil normal, kita lanjut membuat fungsi Dokumentasi Foto satu tahap saja.
       <div
         id="ttdBox"
         class="ttd-box"
