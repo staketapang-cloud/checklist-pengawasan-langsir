@@ -1160,7 +1160,8 @@ function buatIdPemeriksaan() {
 
 
 /* =========================================================
-   SESSION LOGIN
+   CEK SESSION LOGIN
+   LOGIN TETAP DITAMPILKAN JIKA BELUM LOGIN
 ========================================================= */
 
 function cekSessionLogin() {
@@ -1180,6 +1181,18 @@ function cekSessionLogin() {
   const jabatan =
     sessionStorage.getItem("userJabatan");
 
+
+  console.log("CEK SESSION LOGIN:", {
+    nama: nama,
+    nipp: nipp,
+    jabatan: jabatan
+  });
+
+
+  /*
+   * JIKA DATA LOGIN LENGKAP
+   * MAKA MASUK KE APLIKASI
+   */
 
   if (
     nama &&
@@ -1201,9 +1214,17 @@ function cekSessionLogin() {
       jabatan
     );
 
+    /*
+     * Tampilkan form setelah login
+     */
     tampilkanFormPemeriksaan();
 
   }
+
+  /*
+   * JIKA BELUM LOGIN
+   * LOGIN HARUS TETAP TERLIHAT
+   */
 
   else {
 
@@ -1218,8 +1239,6 @@ function cekSessionLogin() {
   }
 
 }
-
-
 /* =========================================================
    LOGIN PENGGUNA
 ========================================================= */
