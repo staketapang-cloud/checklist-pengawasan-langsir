@@ -897,13 +897,13 @@
           TTD
         </button>
 
-        <button
-          type="button"
-          class="btn btn-simpan"
-          onclick="tampilkansimpan()"
-        >
-          SIMPAN&SELESAI
-        </button>
+<button
+  type="button"
+  class="btn btn-simpan"
+  onclick="simpanPemeriksaan()"
+>
+  SIMPAN&SELESAI
+</button>
 
       </div>
 
@@ -2864,19 +2864,18 @@ function kirimFoto() {
 
   }
 
+if (!idPemeriksaanAktif) {
 
-  if (
-    !idPemeriksaanAktif
-  ) {
+  idPemeriksaanAktif =
+    buatIdPemeriksaan();
 
-    alert(
-      "Simpan Draft atau SIMPAN & SELESAI terlebih dahulu."
-    );
+  console.log(
+    "ID PEMERIKSAAN BARU:",
+    idPemeriksaanAktif
+  );
 
-    return;
-
-  }
-
+}
+ 
 
   if (status) {
 
