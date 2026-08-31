@@ -427,7 +427,58 @@
       }
 
     }
+/* =========================================================
+   NOTIFIKASI FOTO
+========================================================= */
 
+.notif-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-box {
+  width: 90%;
+  max-width: 420px;
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.notif-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1f4e78;
+  margin-bottom: 10px;
+}
+
+.notif-message {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.notif-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.notif-ok {
+  border: none;
+  background: #198754;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
   </style>
 
 </head>
@@ -4096,7 +4147,48 @@ document.addEventListener(
 </script>
 
 
+<!-- =====================================================
+     NOTIFIKASI FOTO
+====================================================== -->
+
+<div
+  id="notifFoto"
+  class="notif-overlay"
+>
+
+  <div class="notif-box">
+
+    <div
+      id="notifFotoTitle"
+      class="notif-title"
+    >
+      Foto telah berhasil diupload
+    </div>
+
+    <div
+      id="notifFotoMessage"
+      class="notif-message"
+    >
+      Foto dokumentasi berhasil disimpan.
+    </div>
+
+    <div class="notif-footer">
+
+      <button
+        type="button"
+        class="notif-ok"
+        onclick="tutupNotifFoto()"
+      >
+        OK
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 </body>
 
 </html>
-
