@@ -1137,7 +1137,7 @@ function tampilkanFormPemeriksaan() {
   );
 
 
-  Promise.all([
+   Promise.all([
 
     muatChecklist(),
 
@@ -1148,14 +1148,6 @@ function tampilkanFormPemeriksaan() {
     muatPegawai()
 
   ])
-
-  .then(function() {
-
-    tampilkanStatus(
-      "Data pemeriksaan siap digunakan."
-    );
-
-  })
 
   .catch(function(error) {
 
