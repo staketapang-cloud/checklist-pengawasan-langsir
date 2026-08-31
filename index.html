@@ -2536,7 +2536,10 @@ function simpanDraft() {
 
     idPemeriksaanAktif =
       buatIdPemeriksaan();
-
+sessionStorage.setItem(
+  "idPemeriksaanAktif",
+  idPemeriksaanAktif
+);
   }
 
 
@@ -2623,13 +2626,15 @@ function kirimPemeriksaan(
   pesanBerhasil
 ) {
 
+  console.log("=================================");
+  console.log("KIRIM PEMERIKSAAN");
+  console.log("DATA:", data);
+  console.log("ID PEMERIKSAAN:", data.ID_PEMERIKSAAN);
+  console.log("=================================");
+
   fetch(
-
-    API_URL +
-    "?action=simpan_pemeriksaan",
-
+    API_URL + "?action=simpan_pemeriksaan",
     {
-
       method: "POST",
 
       headers: {
@@ -2639,9 +2644,7 @@ function kirimPemeriksaan(
 
       body:
         JSON.stringify(data)
-
     }
-
   )
 
   .then(function(response) {
@@ -2655,23 +2658,50 @@ function kirimPemeriksaan(
 
     }
 
-
-    return response.json();
+    return response.text();
 
   })
 
-  .then(function(result) {
+  .then(function(text) {
 
     console.log(
-      "HASIL SIMPAN:",
-      result
+      "HASIL SIMPAN PEMERIKSAAN:",
+      text
     );
 
+    let result;
+
+    try {
+
+      result =
+        JSON.parse(text);
+
+    }
+
+    catch (error) {
+
+      throw new Error(
+        "Response API bukan JSON yang valid:\n" +
+        text
+      );
+
+    }
+
+
+    /* =====================================================
+       BERHASIL
+    ===================================================== */
 
     if (
       result &&
-      result.success
+      result.success === true
     ) {
+
+      /*
+       * Ambil ID dari server.
+       * Jika server tidak mengembalikan ID,
+       * gunakan ID yang kita kirim.
+       */
 
       idPemeriksaanAktif =
 
@@ -2680,6 +2710,32 @@ function kirimPemeriksaan(
         result.ID_PEMERIKSAAN ||
 
         data.ID_PEMERIKSAAN;
+
+
+      idPemeriksaanAktif =
+        String(
+          idPemeriksaanAktif || ""
+        ).trim();
+
+
+      /*
+       * SIMPAN ID KE SESSION
+       */
+
+      if (idPemeriksaanAktif) {
+
+        sessionStorage.setItem(
+          "idPemeriksaanAktif",
+          idPemeriksaanAktif
+        );
+
+      }
+
+
+      console.log(
+        "ID PEMERIKSAAN AKTIF:",
+        idPemeriksaanAktif
+      );
 
 
       tampilkanStatus(
@@ -2703,13 +2759,18 @@ function kirimPemeriksaan(
 
     else {
 
-      alert(
+      const pesan =
 
         result &&
         result.message
-        ? result.message
-        : "Gagal menyimpan pemeriksaan."
 
+          ? result.message
+
+          : "Gagal menyimpan pemeriksaan.";
+
+
+      throw new Error(
+        pesan
       );
 
     }
@@ -2719,7 +2780,7 @@ function kirimPemeriksaan(
   .catch(function(error) {
 
     console.error(
-      "Gagal simpan:",
+      "GAGAL SIMPAN PEMERIKSAAN:",
       error
     );
 
@@ -2730,14 +2791,15 @@ function kirimPemeriksaan(
 
 
     alert(
-      "Gagal menghubungi server saat menyimpan data."
+
+      "Gagal menyimpan pemeriksaan.\n\n" +
+      error.message
+
     );
 
   });
 
 }
-
-
 /* =========================================================
    STATUS
 ========================================================= */
@@ -3958,7 +4020,7 @@ function clearSignature() {
 
 /* =========================================================
    SIMPAN TTD
-   SETELAH BERHASIL → KEMBALI KE FORM PEMERIKSAAN
+   TTD DISIMPAN KE PEMERIKSAAN AKTIF
 ========================================================= */
 
 function simpanTTD() {
@@ -3968,7 +4030,9 @@ function simpanTTD() {
   console.log("ID VARIABLE:", idPemeriksaanAktif);
   console.log(
     "ID SESSION:",
-    sessionStorage.getItem("idPemeriksaanAktif")
+    sessionStorage.getItem(
+      "idPemeriksaanAktif"
+    )
   );
   console.log("=================================");
 
@@ -3978,15 +4042,119 @@ function simpanTTD() {
   ===================================================== */
 
   let idAktif =
+
     idPemeriksaanAktif ||
+
     sessionStorage.getItem(
       "idPemeriksaanAktif"
     ) ||
+
     "";
 
 
   idAktif =
     String(idAktif).trim();
+
+
+  /* =====================================================
+     JIKA ID BELUM ADA
+     MAKA BUAT / SIMPAN DRAFT TERLEBIH DAHULU
+  ===================================================== */
+
+  if (!idAktif) {
+
+    console.log(
+      "ID belum tersedia. Menjalankan pastikanIdPemeriksaan()."
+    );
+
+
+    pastikanIdPemeriksaan()
+
+    .then(function(id) {
+
+      console.log(
+        "ID PEMERIKSAAN BERHASIL DISIAPKAN:",
+        id
+      );
+
+
+      idPemeriksaanAktif =
+        String(id).trim();
+
+
+      sessionStorage.setItem(
+        "idPemeriksaanAktif",
+        idPemeriksaanAktif
+      );
+
+
+      /*
+       * Setelah ID tersedia,
+       * lanjut simpan TTD.
+       */
+
+      prosesSimpanTTD(
+        idPemeriksaanAktif
+      );
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "GAGAL MENYIAPKAN ID PEMERIKSAAN:",
+        error
+      );
+
+
+      alert(
+
+        "Gagal menyiapkan ID Pemeriksaan.\n\n" +
+        error.message
+
+      );
+
+    });
+
+
+    return;
+
+  }
+
+
+  /* =====================================================
+     ID SUDAH ADA
+  ===================================================== */
+
+  idPemeriksaanAktif =
+    idAktif;
+
+
+  sessionStorage.setItem(
+    "idPemeriksaanAktif",
+    idAktif
+  );
+
+
+  prosesSimpanTTD(
+    idAktif
+  );
+
+}
+
+
+/* =========================================================
+   PROSES SIMPAN TTD
+========================================================= */
+
+function prosesSimpanTTD(
+  idAktif
+) {
+
+  console.log("=================================");
+  console.log("PROSES SIMPAN TTD");
+  console.log("ID PEMERIKSAAN:", idAktif);
+  console.log("=================================");
 
 
   /* =====================================================
@@ -4003,20 +4171,6 @@ function simpanTTD() {
     return;
 
   }
-
-
-  /* =====================================================
-     PASTIKAN VARIABLE GLOBAL TERISI
-  ===================================================== */
-
-  idPemeriksaanAktif =
-    idAktif;
-
-
-  sessionStorage.setItem(
-    "idPemeriksaanAktif",
-    idAktif
-  );
 
 
   /* =====================================================
@@ -4041,7 +4195,7 @@ function simpanTTD() {
 
 
   /* =====================================================
-     AMBIL TANDA TANGAN
+     CEK TANDA TANGAN
   ===================================================== */
 
   const signature =
@@ -4052,7 +4206,8 @@ function simpanTTD() {
 
   if (
     !signature ||
-    signature === "data:,"
+    signature === "data:," ||
+    signature.length < 1000
   ) {
 
     alert(
@@ -4063,15 +4218,6 @@ function simpanTTD() {
     return;
 
   }
-
-
-  /* =====================================================
-     STATUS
-  ===================================================== */
-
-  tampilkanStatus(
-    "Menyimpan tanda tangan..."
-  );
 
 
   /* =====================================================
@@ -4097,14 +4243,29 @@ function simpanTTD() {
     NAMA:
       sessionStorage.getItem(
         "userNama"
+      ) || "",
+
+    NIPP:
+      sessionStorage.getItem(
+        "userNipp"
+      ) || "",
+
+    JABATAN:
+      sessionStorage.getItem(
+        "userJabatan"
       ) || ""
 
   };
 
 
   console.log(
-    "DATA YANG DIKIRIM KE API:",
+    "DATA TTD YANG DIKIRIM:",
     data
+  );
+
+
+  tampilkanStatus(
+    "Menyimpan tanda tangan..."
   );
 
 
@@ -4173,8 +4334,10 @@ function simpanTTD() {
     catch (error) {
 
       throw new Error(
+
         "Response API bukan JSON yang valid:\n" +
         text
+
       );
 
     }
@@ -4189,13 +4352,8 @@ function simpanTTD() {
       result.success === true
     ) {
 
-      console.log(
-        "TTD BERHASIL DISIMPAN."
-      );
-
-
       /*
-       * PASTIKAN ID TETAP ADA
+       * Pastikan ID tetap tersimpan
        */
 
       idPemeriksaanAktif =
@@ -4209,7 +4367,7 @@ function simpanTTD() {
 
 
       /*
-       * TUTUP KOTAK TTD
+       * Tutup kotak TTD
        */
 
       const ttdBox =
@@ -4227,7 +4385,7 @@ function simpanTTD() {
 
 
       /*
-       * FORM TETAP TERBUKA
+       * Pastikan form tetap tampil
        */
 
       const app =
@@ -4259,31 +4417,33 @@ function simpanTTD() {
 
 
       /*
-       * PESAN
+       * Pesan berhasil
        */
 
       tampilkanStatus(
 
-        "Tanda tangan berhasil disimpan. " +
+        "Tanda tangan berhasil disimpan.\n" +
+        "ID Pemeriksaan: " +
+        idAktif +
+        "\n\n" +
         "Silakan klik SIMPAN & SELESAI."
 
       );
 
-
-      /*
-       * NOTIFIKASI
-       */
 
       alert(
 
         "Tanda tangan berhasil disimpan.\n\n" +
+        "ID Pemeriksaan: " +
+        idAktif +
+        "\n\n" +
         "Silakan klik SIMPAN & SELESAI."
 
       );
 
 
       /*
-       * CARI TOMBOL SIMPAN & SELESAI
+       * Scroll ke tombol SIMPAN & SELESAI
        */
 
       const tombolSimpan =
@@ -4291,10 +4451,6 @@ function simpanTTD() {
           "#formPemeriksaan button[onclick='simpanPemeriksaan()']"
         );
 
-
-      /*
-       * SCROLL KE TOMBOL
-       */
 
       if (tombolSimpan) {
 
@@ -4326,6 +4482,7 @@ function simpanTTD() {
     else {
 
       const pesan =
+
         result &&
         result.message
 
@@ -4357,7 +4514,8 @@ function simpanTTD() {
 
 
     tampilkanStatus(
-      "Gagal menyimpan tanda tangan."
+      "Gagal menyimpan tanda tangan.\n" +
+      error.message
     );
 
 
@@ -4371,7 +4529,6 @@ function simpanTTD() {
   });
 
 }
-
 /* =========================================================
    MENU LAIN
 ========================================================= */
