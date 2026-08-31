@@ -1054,96 +1054,20 @@ function parseJwt(token) {
 /* =========================================================
    CEK SESSION LOGIN
 ========================================================= */
-
 function cekSessionLogin() {
 
-  const nama =
-    sessionStorage.getItem("userNama");
+  const loginBox =
+    document.getElementById("googleLogin");
 
-  const nipp =
-    sessionStorage.getItem("userNipp");
+  const app =
+    document.getElementById("app");
 
-  const jabatan =
-    sessionStorage.getItem("userJabatan");
-
-
-  if (
-    nama &&
-    nipp &&
-    jabatan
-  ) {
-
-    const loginBox =
-      document.getElementById(
-        "googleLogin"
-      );
-
-    const app =
-      document.getElementById(
-        "app"
-      );
-
-    const infoUser =
-      document.getElementById(
-        "infoUser"
-      );
-
-
-    if (loginBox) {
-      loginBox.style.display = "none";
-    }
-
-
-    if (app) {
-      app.style.display = "block";
-    }
-
-
-    if (infoUser) {
-
-      infoUser.innerHTML =
-
-        "<strong>Login berhasil</strong><br>" +
-
-        "Nama: " +
-        escapeHtml(nama) +
-
-        "<br>" +
-
-        "NIPP: " +
-        escapeHtml(nipp) +
-
-        "<br>" +
-
-        "Jabatan: " +
-        escapeHtml(jabatan);
-
-    }
-
+  if (loginBox) {
+    loginBox.style.display = "block";
   }
 
-  else {
-
-    const loginBox =
-      document.getElementById(
-        "googleLogin"
-      );
-
-    const app =
-      document.getElementById(
-        "app"
-      );
-
-
-    if (loginBox) {
-      loginBox.style.display = "block";
-    }
-
-
-    if (app) {
-      app.style.display = "none";
-    }
-
+  if (app) {
+    app.style.display = "none";
   }
 
 }
