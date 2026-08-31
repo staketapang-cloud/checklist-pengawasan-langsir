@@ -2765,21 +2765,20 @@ async function kirimFoto() {
   }
 
 
-  /* -------------------------------------------------------
-     ID PEMERIKSAAN
-  ------------------------------------------------------- */
+/* -------------------------------------------------------
+   CEK ID PEMERIKSAAN
+------------------------------------------------------- */
 
-  if (!idPemeriksaanAktif) {
+if (!idPemeriksaanAktif) {
 
-    idPemeriksaanAktif =
-      buatIdPemeriksaan();
+  alert(
+    "ID Pemeriksaan belum tersedia.\n\n" +
+    "Silakan SIMPAN DRAFT atau SIMPAN & SELESAI terlebih dahulu."
+  );
 
-  }
+  return;
 
-
-  const files =
-    Array.from(input.files);
-
+}
 
   /* -------------------------------------------------------
      URL API
@@ -3275,9 +3274,7 @@ document.addEventListener(
       event.target.id !==
       "fotoPemeriksaan"
     ) {
-
       return;
-
     }
 
 
@@ -3288,9 +3285,7 @@ document.addEventListener(
 
 
     if (!preview) {
-
       return;
-
     }
 
 
@@ -3305,9 +3300,7 @@ document.addEventListener(
       !files ||
       files.length === 0
     ) {
-
       return;
-
     }
 
 
@@ -3318,9 +3311,7 @@ document.addEventListener(
           !file.type ||
           !file.type.startsWith("image/")
         ) {
-
           return;
-
         }
 
 
@@ -3330,6 +3321,18 @@ document.addEventListener(
 
         reader.onload =
           function(event) {
+
+            const wrapper =
+              document.createElement(
+                "div"
+              );
+
+            wrapper.style.width =
+              "140px";
+
+            wrapper.style.textAlign =
+              "center";
+
 
             const img =
               document.createElement(
@@ -3344,25 +3347,47 @@ document.addEventListener(
             img.style.width =
               "140px";
 
-
             img.style.height =
               "100px";
-
 
             img.style.objectFit =
               "cover";
 
-
             img.style.border =
               "1px solid #ccc";
-
 
             img.style.borderRadius =
               "8px";
 
 
-            preview.appendChild(
+            const nama =
+              document.createElement(
+                "div"
+              );
+
+            nama.textContent =
+              file.name;
+
+            nama.style.fontSize =
+              "11px";
+
+            nama.style.marginTop =
+              "5px";
+
+            nama.style.wordBreak =
+              "break-word";
+
+
+            wrapper.appendChild(
               img
+            );
+
+            wrapper.appendChild(
+              nama
+            );
+
+            preview.appendChild(
+              wrapper
             );
 
           };
@@ -3377,8 +3402,6 @@ document.addEventListener(
 
   }
 );
-
-
 /* =========================================================
    TAMPILKAN TTD
 ========================================================= */
