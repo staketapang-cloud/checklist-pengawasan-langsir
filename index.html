@@ -4009,7 +4009,98 @@ function setTanggalHariIni() {
   }
 
 }
+function prosesLoginManual() {
 
+  const nama =
+    document.getElementById("loginNama").value.trim();
+
+  const nipp =
+    document.getElementById("loginNipp").value.trim();
+
+  const jabatan =
+    document.getElementById("loginJabatan").value.trim();
+
+
+  if (!nama) {
+    alert("Nama wajib diisi.");
+    document.getElementById("loginNama").focus();
+    return;
+  }
+
+  if (!nipp) {
+    alert("NIPP wajib diisi.");
+    document.getElementById("loginNipp").focus();
+    return;
+  }
+
+  if (!jabatan) {
+    alert("Jabatan wajib diisi.");
+    document.getElementById("loginJabatan").focus();
+    return;
+  }
+
+
+  /* SIMPAN DATA LOGIN DI SESSION */
+
+  sessionStorage.setItem(
+    "userNama",
+    nama
+  );
+
+  sessionStorage.setItem(
+    "userNipp",
+    nipp
+  );
+
+  sessionStorage.setItem(
+    "userJabatan",
+    jabatan
+  );
+
+
+  /* TAMPILKAN LOGIN BERHASIL */
+
+  const loginBox =
+    document.getElementById("googleLogin");
+
+  const app =
+    document.getElementById("app");
+
+  const infoUser =
+    document.getElementById("infoUser");
+
+
+  if (loginBox) {
+    loginBox.style.display = "none";
+  }
+
+
+  if (app) {
+    app.style.display = "block";
+  }
+
+
+  if (infoUser) {
+
+    infoUser.innerHTML =
+      "<strong>Login berhasil</strong><br>" +
+      "Nama: " +
+      escapeHtml(nama) +
+      "<br>" +
+      "NIPP: " +
+      escapeHtml(nipp) +
+      "<br>" +
+      "Jabatan: " +
+      escapeHtml(jabatan);
+
+  }
+
+
+  /* LANGSUNG KE DASHBOARD */
+
+  tampilkanDashboard();
+
+}
 
 /* =========================================================
    INITIAL
