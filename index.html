@@ -451,12 +451,6 @@
   </p>
 
 </div>
-
-
-<!-- =====================================================
-     LOGIN PENGGUNA
-====================================================== -->
-
 <div id="googleLogin">
 
   <div class="login-box">
@@ -466,7 +460,6 @@
     <p>
       Silakan masukkan data pengguna untuk masuk ke sistem.
     </p>
-
 
     <div class="form-group">
 
@@ -483,7 +476,6 @@
 
     </div>
 
-
     <div class="form-group">
 
       <label for="loginNipp">
@@ -498,7 +490,6 @@
       >
 
     </div>
-
 
     <div class="form-group">
 
@@ -515,7 +506,6 @@
 
     </div>
 
-
     <button
       type="button"
       class="btn btn-simpan"
@@ -523,7 +513,6 @@
     >
       MASUK
     </button>
-
 
     <div
       id="statusLogin"
@@ -1260,20 +1249,20 @@ function parseJwt(token) {
 
 function cekSessionLogin() {
 
-  const email =
-    sessionStorage.getItem(
-      "userEmail"
-    );
-
-
   const nama =
-    sessionStorage.getItem(
-      "userNama"
-    );
+    sessionStorage.getItem("userNama");
+
+  const nipp =
+    sessionStorage.getItem("userNipp");
+
+  const jabatan =
+    sessionStorage.getItem("userJabatan");
 
 
   if (
-    email
+    nama &&
+    nipp &&
+    jabatan
   ) {
 
     const loginBox =
@@ -1281,12 +1270,10 @@ function cekSessionLogin() {
         "googleLogin"
       );
 
-
     const app =
       document.getElementById(
         "app"
       );
-
 
     const infoUser =
       document.getElementById(
@@ -1295,18 +1282,12 @@ function cekSessionLogin() {
 
 
     if (loginBox) {
-
-      loginBox.style.display =
-        "none";
-
+      loginBox.style.display = "none";
     }
 
 
     if (app) {
-
-      app.style.display =
-        "block";
-
+      app.style.display = "block";
     }
 
 
@@ -1317,23 +1298,47 @@ function cekSessionLogin() {
         "<strong>Login berhasil</strong><br>" +
 
         "Nama: " +
-        escapeHtml(
-          nama || ""
-        ) +
+        escapeHtml(nama) +
 
         "<br>" +
 
-        "Email: " +
-        escapeHtml(
-          email
-        );
+        "NIPP: " +
+        escapeHtml(nipp) +
+
+        "<br>" +
+
+        "Jabatan: " +
+        escapeHtml(jabatan);
 
     }
 
   }
 
-}
+  else {
 
+    const loginBox =
+      document.getElementById(
+        "googleLogin"
+      );
+
+    const app =
+      document.getElementById(
+        "app"
+      );
+
+
+    if (loginBox) {
+      loginBox.style.display = "block";
+    }
+
+
+    if (app) {
+      app.style.display = "none";
+    }
+
+  }
+
+}
 
 /* =========================================================
    DASHBOARD
