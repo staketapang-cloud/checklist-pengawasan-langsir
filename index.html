@@ -756,10 +756,12 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
 
       </div>
 
-      <div
-        id="statusBox"
-        class="status-box">
-     <div class="button-group">
+    <div
+  id="statusBox"
+  class="status-box">
+</div>
+
+<div class="button-group">
 
   <button
     type="button"
@@ -786,74 +788,45 @@ content="566319928782-ichfb0gch47kfea3ge8cvqmoaei0phs4.apps.googleusercontent.co
   </button>
 
 </div>
-Hasil tampilannya
 
-Urutannya akan menjadi:
+<div
+  id="ttdBox"
+  class="ttd-box"
+>
 
-Dokumentasi Foto → TTD → Simpan & Selesai
+  <h3>
+    Tanda Tangan Digital
+  </h3>
 
-Perhatikan perbedaannya:
+  <p>
+    Silakan tanda tangan pada kotak berikut.
+  </p>
 
-❌ Salah:
+  <canvas
+    id="signatureCanvas"
+  ></canvas>
 
-onclick="tampilkanSimpan&Selesai()"
+  <div class="ttd-buttons">
 
-✅ Benar:
+    <button
+      type="button"
+      class="btn-clear"
+      onclick="clearSignature()"
+    >
+      Hapus
+    </button>
 
-onclick="tampilkanSimpanSelesai()"
-
-Sedangkan tulisan tombol tetap boleh menggunakan &:
-
-Simpan &amp; Selesai
-
-yang akan tampil sebagai:
-
-Simpan & Selesai
-
-⚠️ Jangan membuat fungsi tampilkanSimpanSelesai() dulu. Untuk tahap ini kita hanya memperbaiki HTML tombol agar tidak menyebabkan error. Setelah halaman kembali tampil normal, kita lanjut membuat fungsi Dokumentasi Foto satu tahap saja.
-      <div
-        id="ttdBox"
-        class="ttd-box"
-      >
-
-        <h3>
-          Tanda Tangan Digital
-        </h3>
-
-        <p>
-          Silakan tanda tangan pada kotak berikut.
-        </p>
-
-        <canvas id="signatureCanvas"></canvas>
-
-        <div class="ttd-buttons">
-
-          <button
-            type="button"
-            class="btn-clear"
-            onclick="clearSignature()"
-          >
-            Hapus
-          </button>
-
-          <button
-            type="button"
-            class="btn-save-ttd"
-            onclick="simpanTTD()"
-          >
-            Simpan TTD
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
+    <button
+      type="button"
+      class="btn-save-ttd"
+      onclick="simpanTTD()"
+    >
+      Simpan TTD
+    </button>
 
   </div>
 
 </div>
-```
 
   </div>
 
