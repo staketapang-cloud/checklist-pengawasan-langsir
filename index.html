@@ -893,7 +893,17 @@
       margin-top:15px;
     "
   ></div>
+<div class="button-group">
 
+  <button
+    type="button"
+    class="btn btn-simpan"
+    onclick="kirimFoto()"
+  >
+    KIRIM FOTO
+  </button>
+
+</div>
   <div
     id="statusUploadFoto"
     class="status-box"
@@ -2763,6 +2773,75 @@ function uploadFoto() {
     block: "center"
 
   });
+
+}
+  function kirimFoto() {
+
+  const input =
+    document.getElementById(
+      "fotoPemeriksaan"
+    );
+
+  const status =
+    document.getElementById(
+      "statusUploadFoto"
+    );
+
+  if (!input) {
+
+    return;
+
+  }
+
+  if (
+    !input.files ||
+    input.files.length === 0
+  ) {
+
+    alert(
+      "Silakan pilih foto terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+  if (
+    !idPemeriksaanAktif
+  ) {
+
+    alert(
+      "Simpan Draft atau SIMPAN & SELESAI terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+  if (status) {
+
+    status.textContent =
+      "Menyiapkan foto...";
+
+    status.style.display =
+      "block";
+
+  }
+
+  console.log(
+    "ID PEMERIKSAAN:",
+    idPemeriksaanAktif
+  );
+
+  console.log(
+    "JUMLAH FOTO:",
+    input.files.length
+  );
+
+  alert(
+    "Foto siap dikirim.\nID Pemeriksaan: " +
+    idPemeriksaanAktif
+  );
 
 }
   /* =========================================================
