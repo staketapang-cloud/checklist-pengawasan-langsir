@@ -8,11 +8,18 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    Checklist Pengawasan Kegiatan Langsir
-  </title>
+  <title>Checklist Pengawasan Kegiatan Langsir</title>
+
+  <meta
+    name="description"
+    content="Sistem Informasi Checklist Pengawasan Kegiatan Langsir"
+  >
 
   <style>
+
+    /* =====================================================
+       RESET
+    ===================================================== */
 
     * {
       box-sizing: border-box;
@@ -29,8 +36,8 @@
       background:
         linear-gradient(
           135deg,
-          #eef4ff,
-          #f8fbff
+          #f4f7fb 0%,
+          #e9eef7 100%
         );
 
       min-height: 100vh;
@@ -38,46 +45,69 @@
       color: #1f2937;
     }
 
+
     /* =====================================================
-       HEADER
+       APP
     ===================================================== */
 
-    .top-header {
-      width: 100%;
-
-      background:
-        linear-gradient(
-          135deg,
-          #0f3d7a,
-          #1456a0
-        );
-
-      color: white;
-
-      padding: 18px 20px;
-
-      box-shadow:
-        0 3px 12px
-        rgba(0, 0, 0, 0.15);
+    #app {
+      min-height: 100vh;
     }
 
-    .header-inner {
-      max-width: 1100px;
 
-      margin: 0 auto;
+    /* =====================================================
+       LOGIN PAGE
+    ===================================================== */
+
+    .login-page {
+      min-height: 100vh;
 
       display: flex;
 
       align-items: center;
 
-      gap: 15px;
+      justify-content: center;
+
+      padding: 20px;
     }
 
-    .logo-box {
-      width: 52px;
-      height: 52px;
+    .login-card {
+      width: 100%;
+      max-width: 460px;
 
-      border-radius: 12px;
+      background: #ffffff;
+
+      border-radius: 20px;
+
+      box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.12);
+
+      overflow: hidden;
+    }
+
+    .login-header {
+      background:
+        linear-gradient(
+          135deg,
+          #0f4c81,
+          #1565a8
+        );
+
+      color: white;
+
+      padding: 32px 25px;
+
+      text-align: center;
+    }
+
+    .login-logo {
+      width: 80px;
+      height: 80px;
+
+      margin: 0 auto 15px;
+
+      border-radius: 50%;
 
       background: white;
 
@@ -87,93 +117,32 @@
 
       justify-content: center;
 
-      color: #0f3d7a;
-
-      font-size: 25px;
-
-      font-weight: bold;
-
-      flex-shrink: 0;
-    }
-
-    .header-text h1 {
-      font-size: 20px;
-
-      line-height: 1.3;
-
-      margin-bottom: 4px;
-    }
-
-    .header-text p {
-      font-size: 13px;
-
-      opacity: 0.9;
-    }
-
-    /* =====================================================
-       CONTAINER
-    ===================================================== */
-
-    .page-container {
-      width: 100%;
-
-      max-width: 1100px;
-
-      margin: 0 auto;
-
-      padding: 30px 18px 50px;
-    }
-
-    /* =====================================================
-       LOGIN CARD
-    ===================================================== */
-
-    .login-card {
-      max-width: 520px;
-
-      margin: 30px auto;
-
-      background: white;
-
-      border-radius: 18px;
-
-      padding: 30px;
+      font-size: 38px;
 
       box-shadow:
-        0 8px 30px
-        rgba(15, 61, 122, 0.12);
-
-      border:
-        1px solid #e5e7eb;
+        0 5px 15px
+        rgba(0,0,0,0.15);
     }
 
-    .login-title {
-      text-align: center;
+    .login-header h1 {
+      font-size: 23px;
+
+      line-height: 1.35;
 
       margin-bottom: 8px;
-
-      color: #0f3d7a;
-
-      font-size: 24px;
-
-      font-weight: 700;
     }
 
-    .login-subtitle {
-      text-align: center;
-
-      color: #6b7280;
-
+    .login-header p {
       font-size: 14px;
 
-      line-height: 1.6;
+      opacity: 0.9;
 
-      margin-bottom: 28px;
+      line-height: 1.5;
     }
 
-    /* =====================================================
-       FORM
-    ===================================================== */
+    .login-body {
+      padding: 28px;
+    }
 
     .form-group {
       margin-bottom: 18px;
@@ -182,37 +151,28 @@
     .form-group label {
       display: block;
 
-      margin-bottom: 7px;
-
       font-size: 14px;
 
-      font-weight: 600;
+      font-weight: 700;
+
+      margin-bottom: 7px;
 
       color: #374151;
     }
 
-    .required {
-      color: #dc2626;
-    }
-
-    .form-control {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
       width: 100%;
 
-      height: 48px;
+      padding: 13px 14px;
 
       border:
         1px solid #d1d5db;
 
       border-radius: 10px;
 
-      padding:
-        0 14px;
-
       font-size: 15px;
-
-      color: #111827;
-
-      background: #fff;
 
       outline: none;
 
@@ -221,36 +181,30 @@
         box-shadow 0.2s;
     }
 
-    .form-control:focus {
-      border-color: #2563eb;
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #1565a8;
 
       box-shadow:
         0 0 0 3px
-        rgba(37, 99, 235, 0.12);
+        rgba(21, 101, 168, 0.12);
     }
-
-    select.form-control {
-      cursor: pointer;
-    }
-
-    /* =====================================================
-       BUTTON
-    ===================================================== */
 
     .btn-login {
       width: 100%;
 
-      height: 50px;
-
       border: none;
+
+      padding: 14px;
 
       border-radius: 10px;
 
       background:
         linear-gradient(
           135deg,
-          #0f3d7a,
-          #1764b0
+          #0f4c81,
+          #1565a8
         );
 
       color: white;
@@ -263,90 +217,41 @@
 
       transition:
         transform 0.15s,
-        box-shadow 0.15s,
         opacity 0.15s;
-
-      margin-top: 8px;
     }
 
     .btn-login:hover {
-      box-shadow:
-        0 6px 18px
-        rgba(15, 61, 122, 0.25);
-
-      transform:
-        translateY(-1px);
+      opacity: 0.92;
     }
 
     .btn-login:active {
-      transform:
-        translateY(0);
+      transform: scale(0.98);
     }
 
     .btn-login:disabled {
-      opacity: 0.65;
+      opacity: 0.6;
 
       cursor: not-allowed;
-
-      transform: none;
-
-      box-shadow: none;
     }
 
-    /* =====================================================
-       LOADING
-    ===================================================== */
-
-    .loading-box {
-      display: none;
-
-      text-align: center;
-
+    .login-info {
       margin-top: 18px;
 
-      padding: 14px;
+      padding: 12px 14px;
+
+      background: #f3f4f6;
 
       border-radius: 10px;
 
-      background: #eff6ff;
+      font-size: 12px;
 
-      color: #1d4ed8;
+      line-height: 1.5;
 
-      font-size: 14px;
+      color: #6b7280;
+
+      text-align: center;
     }
 
-    .loading-box.active {
-      display: block;
-    }
-
-    .spinner {
-      display: inline-block;
-
-      width: 16px;
-      height: 16px;
-
-      border:
-        2px solid #bfdbfe;
-
-      border-top-color:
-        #2563eb;
-
-      border-radius: 50%;
-
-      animation:
-        spin 0.8s linear infinite;
-
-      vertical-align: middle;
-
-      margin-right: 7px;
-    }
-
-    @keyframes spin {
-      to {
-        transform:
-          rotate(360deg);
-      }
-    }
 
     /* =====================================================
        ALERT
@@ -355,11 +260,11 @@
     .alert {
       display: none;
 
-      padding: 13px 15px;
+      margin-bottom: 18px;
+
+      padding: 12px 14px;
 
       border-radius: 10px;
-
-      margin-bottom: 18px;
 
       font-size: 14px;
 
@@ -370,221 +275,437 @@
       display: block;
     }
 
-    .alert-success {
-      background: #ecfdf5;
-
-      color: #047857;
-
-      border:
-        1px solid #a7f3d0;
-    }
-
     .alert-error {
-      background: #fef2f2;
+      background: #fee2e2;
 
-      color: #b91c1c;
+      color: #991b1b;
 
       border:
         1px solid #fecaca;
     }
 
-    /* =====================================================
-       LOGIN INFO
-    ===================================================== */
+    .alert-success {
+      background: #dcfce7;
 
-    .login-info {
-      margin-top: 22px;
-
-      padding: 14px 16px;
-
-      background: #f8fafc;
+      color: #166534;
 
       border:
-        1px solid #e2e8f0;
-
-      border-radius: 10px;
-
-      color: #64748b;
-
-      font-size: 12px;
-
-      line-height: 1.6;
-
-      text-align: center;
+        1px solid #bbf7d0;
     }
 
+
     /* =====================================================
-       DASHBOARD SETELAH LOGIN
+       DASHBOARD
     ===================================================== */
 
-    #halamanUtama {
+    .dashboard {
+      min-height: 100vh;
+
       display: none;
     }
 
-    .welcome-card {
-      background: white;
-
-      border-radius: 18px;
-
-      padding: 28px;
-
-      box-shadow:
-        0 8px 30px
-        rgba(15, 61, 122, 0.10);
-
-      border:
-        1px solid #e5e7eb;
+    .dashboard.show {
+      display: block;
     }
 
-    .welcome-title {
-      color: #0f3d7a;
 
-      font-size: 24px;
+    /* =====================================================
+       TOPBAR
+    ===================================================== */
 
-      margin-bottom: 8px;
-    }
-
-    .welcome-text {
-      color: #6b7280;
-
-      font-size: 14px;
-
-      margin-bottom: 24px;
-    }
-
-    .user-info {
-      display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
-      gap: 15px;
-
-      margin-bottom: 25px;
-    }
-
-    .info-box {
-      padding: 18px;
-
-      border-radius: 12px;
-
-      background: #f8fafc;
-
-      border:
-        1px solid #e2e8f0;
-    }
-
-    .info-label {
-      font-size: 12px;
-
-      color: #64748b;
-
-      margin-bottom: 6px;
-
-      font-weight: 600;
-    }
-
-    .info-value {
-      font-size: 16px;
-
-      font-weight: 700;
-
-      color: #1e293b;
-
-      word-break: break-word;
-    }
-
-    .logout-button {
-      border: none;
-
-      background: #dc2626;
+    .topbar {
+      background:
+        linear-gradient(
+          135deg,
+          #0f4c81,
+          #1565a8
+        );
 
       color: white;
 
       padding:
-        11px 20px;
+        15px 22px;
 
-      border-radius: 9px;
+      box-shadow:
+        0 3px 12px
+        rgba(0,0,0,0.12);
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+    }
+
+    .topbar-inner {
+      max-width: 1200px;
+
+      margin: auto;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 15px;
+    }
+
+    .brand h2 {
+      font-size: 18px;
+
+      margin-bottom: 3px;
+    }
+
+    .brand span {
+      font-size: 12px;
+
+      opacity: 0.85;
+    }
+
+    .user-area {
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+    }
+
+    .user-info {
+      text-align: right;
+    }
+
+    .user-info strong {
+      display: block;
+
+      font-size: 13px;
+    }
+
+    .user-info small {
+      font-size: 11px;
+
+      opacity: 0.85;
+    }
+
+    .btn-logout {
+      border:
+        1px solid
+        rgba(255,255,255,0.5);
+
+      background:
+        rgba(255,255,255,0.1);
+
+      color: white;
+
+      padding:
+        9px 13px;
+
+      border-radius: 8px;
 
       cursor: pointer;
 
-      font-size: 14px;
-
-      font-weight: 600;
-    }
-
-    .logout-button:hover {
-      background: #b91c1c;
-    }
-
-    /* =====================================================
-       FOOTER
-    ===================================================== */
-
-    .footer {
-      text-align: center;
-
-      color: #94a3b8;
-
       font-size: 12px;
 
-      margin-top: 25px;
+      font-weight: 700;
     }
 
+
     /* =====================================================
-       RESPONSIVE
+       CONTENT
     ===================================================== */
 
-    @media (max-width: 700px) {
+    .content {
+      max-width: 1200px;
 
-      .top-header {
-        padding: 15px;
+      margin: auto;
+
+      padding: 25px 20px 40px;
+    }
+
+
+    /* =====================================================
+       WELCOME
+    ===================================================== */
+
+    .welcome-card {
+      background: white;
+
+      border-radius: 16px;
+
+      padding: 22px;
+
+      box-shadow:
+        0 5px 18px
+        rgba(0,0,0,0.07);
+
+      margin-bottom: 20px;
+    }
+
+    .welcome-card h3 {
+      font-size: 20px;
+
+      margin-bottom: 6px;
+    }
+
+    .welcome-card p {
+      font-size: 14px;
+
+      color: #6b7280;
+
+      line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       MENU
+    ===================================================== */
+
+    .menu-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 15px;
+    }
+
+    .menu-card {
+      background: white;
+
+      border-radius: 15px;
+
+      padding: 20px;
+
+      box-shadow:
+        0 5px 18px
+        rgba(0,0,0,0.07);
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    }
+
+    .menu-card:hover {
+      transform:
+        translateY(-3px);
+
+      box-shadow:
+        0 9px 25px
+        rgba(0,0,0,0.1);
+    }
+
+    .menu-icon {
+      font-size: 30px;
+
+      margin-bottom: 10px;
+    }
+
+    .menu-card h4 {
+      font-size: 15px;
+
+      margin-bottom: 5px;
+    }
+
+    .menu-card p {
+      font-size: 12px;
+
+      color: #6b7280;
+
+      line-height: 1.4;
+    }
+
+
+    /* =====================================================
+       STATUS API
+    ===================================================== */
+
+    .api-status {
+      margin-top: 20px;
+
+      background: white;
+
+      padding: 15px 18px;
+
+      border-radius: 12px;
+
+      box-shadow:
+        0 4px 15px
+        rgba(0,0,0,0.06);
+
+      font-size: 13px;
+    }
+
+    .status-dot {
+      display: inline-block;
+
+      width: 9px;
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: #22c55e;
+
+      margin-right: 7px;
+    }
+
+
+    /* =====================================================
+       LOADING
+    ===================================================== */
+
+    .loading-overlay {
+      position: fixed;
+
+      inset: 0;
+
+      background:
+        rgba(255,255,255,0.88);
+
+      display: none;
+
+      align-items: center;
+
+      justify-content: center;
+
+      z-index: 9999;
+    }
+
+    .loading-overlay.show {
+      display: flex;
+    }
+
+    .loading-box {
+      text-align: center;
+
+      background: white;
+
+      padding: 25px 30px;
+
+      border-radius: 15px;
+
+      box-shadow:
+        0 10px 35px
+        rgba(0,0,0,0.15);
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+
+      margin:
+        0 auto 15px;
+
+      border:
+        4px solid #e5e7eb;
+
+      border-top-color:
+        #1565a8;
+
+      border-radius: 50%;
+
+      animation:
+        spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform:
+          rotate(360deg);
+      }
+    }
+
+    .loading-box p {
+      font-size: 14px;
+
+      color: #374151;
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 900px) {
+
+      .menu-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
-      .header-inner {
-        gap: 11px;
-      }
+    }
 
-      .logo-box {
-        width: 44px;
-        height: 44px;
+    @media (max-width: 600px) {
 
-        font-size: 20px;
-      }
-
-      .header-text h1 {
-        font-size: 16px;
-      }
-
-      .header-text p {
-        font-size: 11px;
-      }
-
-      .page-container {
-        padding:
-          18px 12px 40px;
+      .login-page {
+        padding: 12px;
       }
 
       .login-card {
-        margin:
-          15px auto;
-
-        padding: 22px 18px;
-
-        border-radius: 15px;
+        border-radius: 16px;
       }
 
-      .login-title {
-        font-size: 21px;
+      .login-header {
+        padding: 25px 18px;
+      }
+
+      .login-header h1 {
+        font-size: 20px;
+      }
+
+      .login-body {
+        padding: 22px;
+      }
+
+      .topbar {
+        padding:
+          12px 15px;
+      }
+
+      .topbar-inner {
+        align-items: flex-start;
+      }
+
+      .brand h2 {
+        font-size: 15px;
+      }
+
+      .brand span {
+        font-size: 10px;
       }
 
       .user-info {
-        grid-template-columns:
-          1fr;
+        display: none;
       }
 
-      .welcome-card {
-        padding: 20px 16px;
+      .content {
+        padding:
+          18px 12px 30px;
+      }
+
+      .menu-grid {
+        grid-template-columns:
+          1fr 1fr;
+
+        gap: 10px;
+      }
+
+      .menu-card {
+        padding: 15px;
+      }
+
+      .menu-icon {
+        font-size: 25px;
+      }
+
+    }
+
+    @media (max-width: 400px) {
+
+      .menu-grid {
+        grid-template-columns:
+          1fr;
       }
 
     }
@@ -592,340 +713,446 @@
   </style>
 </head>
 
+
 <body>
 
-  <!-- =====================================================
-       HEADER
-  ====================================================== -->
-
-  <header class="top-header">
-
-    <div class="header-inner">
-
-      <div class="logo-box">
-        🚆
-      </div>
-
-      <div class="header-text">
-
-        <h1>
-          Checklist Pengawasan Kegiatan Langsir
-        </h1>
-
-        <p>
-          Sistem Informasi Pengawasan Kegiatan Langsir
-        </p>
-
-      </div>
-
-    </div>
-
-  </header>
-
-
-  <!-- =====================================================
-       KONTEN
-  ====================================================== -->
-
-  <main class="page-container">
+  <div id="app">
 
 
     <!-- ===================================================
-         HALAMAN LOGIN
+         LOGIN
     ==================================================== -->
 
-    <section id="halamanLogin">
+    <section
+      id="loginPage"
+      class="login-page"
+    >
 
       <div class="login-card">
 
-        <h2 class="login-title">
-          Login Pengguna
-        </h2>
+        <div class="login-header">
 
-        <p class="login-subtitle">
-          Silakan masukkan data pengguna
-          untuk masuk ke sistem.
-        </p>
+          <div class="login-logo">
+            🚂
+          </div>
+
+          <h1>
+            Checklist Pengawasan
+            Kegiatan Langsir
+          </h1>
+
+          <p>
+            Sistem Informasi Pengawasan
+            Kegiatan Langsir
+          </p>
+
+        </div>
 
 
-        <!-- ALERT -->
+        <div class="login-body">
 
-        <div
-          id="alertLogin"
-          class="alert"
-        ></div>
+          <div
+            id="loginAlert"
+            class="alert"
+          ></div>
 
 
-        <!-- NAMA -->
+          <!-- NAMA -->
 
-        <div class="form-group">
+          <div class="form-group">
 
-          <label for="inputNama">
+            <label for="namaLogin">
+              Nama
+            </label>
 
-            Nama Lengkap
-            <span class="required">*</span>
+            <input
+              type="text"
+              id="namaLogin"
+              placeholder="Masukkan nama"
+              autocomplete="off"
+            >
 
-          </label>
+          </div>
 
-          <input
-            type="text"
-            id="inputNama"
-            class="form-control"
-            placeholder="Masukkan nama lengkap"
-            autocomplete="name"
+
+          <!-- NIPP -->
+
+          <div class="form-group">
+
+            <label for="nippLogin">
+              NIPP
+            </label>
+
+            <input
+              type="text"
+              id="nippLogin"
+              placeholder="Masukkan NIPP"
+              autocomplete="off"
+            >
+
+          </div>
+
+
+          <!-- JABATAN -->
+
+          <div class="form-group">
+
+            <label for="jabatanLogin">
+              Jabatan
+            </label>
+
+            <input
+              type="text"
+              id="jabatanLogin"
+              placeholder="Masukkan jabatan"
+              autocomplete="off"
+            >
+
+          </div>
+
+
+          <button
+            type="button"
+            id="btnLogin"
+            class="btn-login"
+            onclick="loginPengguna()"
           >
-
-        </div>
-
-
-        <!-- NIPP -->
-
-        <div class="form-group">
-
-          <label for="inputNipp">
-
-            NIPP
-            <span class="required">*</span>
-
-          </label>
-
-          <input
-            type="text"
-            id="inputNipp"
-            class="form-control"
-            placeholder="Masukkan NIPP"
-            autocomplete="off"
-          >
-
-        </div>
+            MASUK
+          </button>
 
 
-        <!-- JABATAN -->
+          <div class="login-info">
 
-        <div class="form-group">
+            Login menggunakan
+            <strong>NAMA + NIPP + JABATAN</strong>.
 
-          <label for="inputJabatan">
+            <br>
 
-            Jabatan
-            <span class="required">*</span>
+            Tidak menggunakan akun Google
+            maupun email.
 
-          </label>
-
-          <input
-            type="text"
-            id="inputJabatan"
-            class="form-control"
-            placeholder="Masukkan jabatan"
-            autocomplete="organization-title"
-          >
-
-        </div>
-
-
-        <!-- BUTTON -->
-
-        <button
-          type="button"
-          id="btnLogin"
-          class="btn-login"
-          onclick="loginPengguna()"
-        >
-          Masuk ke Sistem
-        </button>
-
-
-        <!-- LOADING -->
-
-        <div
-          id="loadingLogin"
-          class="loading-box"
-        >
-
-          <span class="spinner"></span>
-
-          Sedang memproses login...
-
-        </div>
-
-
-        <div class="login-info">
-
-          Login menggunakan
-          <strong>NAMA + NIPP + JABATAN</strong>.
-          <br>
-          Data login akan dicatat ke database
-          Google Sheets.
+          </div>
 
         </div>
 
       </div>
 
     </section>
+
 
 
     <!-- ===================================================
-         HALAMAN UTAMA
+         DASHBOARD
     ==================================================== -->
 
-    <section id="halamanUtama">
+    <section
+      id="dashboardPage"
+      class="dashboard"
+    >
 
-      <div class="welcome-card">
+      <header class="topbar">
 
-        <h2 class="welcome-title">
-          Login Berhasil
-        </h2>
+        <div class="topbar-inner">
 
-        <p class="welcome-text">
-          Selamat datang di Sistem Informasi
-          Checklist Pengawasan Kegiatan Langsir.
-        </p>
+          <div class="brand">
 
+            <h2>
+              Checklist Pengawasan Langsir
+            </h2>
 
-        <div class="user-info">
-
-          <div class="info-box">
-
-            <div class="info-label">
-              NAMA
-            </div>
-
-            <div
-              id="displayNama"
-              class="info-value"
-            >
-              -
-            </div>
+            <span>
+              Sistem Informasi Pengawasan
+            </span>
 
           </div>
 
 
-          <div class="info-box">
+          <div class="user-area">
 
-            <div class="info-label">
-              NIPP
+            <div class="user-info">
+
+              <strong id="displayNama">
+                -
+              </strong>
+
+              <small id="displayJabatan">
+                -
+              </small>
+
             </div>
 
-            <div
-              id="displayNipp"
-              class="info-value"
+
+            <button
+              type="button"
+              class="btn-logout"
+              onclick="logoutPengguna()"
             >
-              -
-            </div>
-
-          </div>
-
-
-          <div class="info-box">
-
-            <div class="info-label">
-              JABATAN
-            </div>
-
-            <div
-              id="displayJabatan"
-              class="info-value"
-            >
-              -
-            </div>
+              KELUAR
+            </button>
 
           </div>
 
         </div>
 
+      </header>
 
-        <button
-          type="button"
-          class="logout-button"
-          onclick="logoutPengguna()"
-        >
-          Keluar
-        </button>
 
-      </div>
+      <main class="content">
+
+
+        <div class="welcome-card">
+
+          <h3>
+            Selamat Datang 👋
+          </h3>
+
+          <p>
+            Anda telah berhasil masuk ke
+            Sistem Informasi Checklist
+            Pengawasan Kegiatan Langsir.
+          </p>
+
+        </div>
+
+
+        <div class="menu-grid">
+
+
+          <div
+            class="menu-card"
+            onclick="menuBelumTersedia('Pemeriksaan')"
+          >
+
+            <div class="menu-icon">
+              📋
+            </div>
+
+            <h4>
+              Pemeriksaan
+            </h4>
+
+            <p>
+              Membuat checklist
+              pengawasan kegiatan langsir.
+            </p>
+
+          </div>
+
+
+          <div
+            class="menu-card"
+            onclick="menuBelumTersedia('Riwayat Pemeriksaan')"
+          >
+
+            <div class="menu-icon">
+              📑
+            </div>
+
+            <h4>
+              Riwayat
+            </h4>
+
+            <p>
+              Melihat data pemeriksaan
+              yang telah tersimpan.
+            </p>
+
+          </div>
+
+
+          <div
+            class="menu-card"
+            onclick="menuBelumTersedia('Rekap Pemeriksaan')"
+          >
+
+            <div class="menu-icon">
+              📊
+            </div>
+
+            <h4>
+              Rekap
+            </h4>
+
+            <p>
+              Melihat rekapitulasi
+              hasil pemeriksaan.
+            </p>
+
+          </div>
+
+
+          <div
+            class="menu-card"
+            onclick="menuBelumTersedia('Dashboard')"
+          >
+
+            <div class="menu-icon">
+              📈
+            </div>
+
+            <h4>
+              Dashboard
+            </h4>
+
+            <p>
+              Informasi dan statistik
+              pengawasan.
+            </p>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="api-status">
+
+          <span class="status-dot"></span>
+
+          <strong>
+            Sistem terhubung
+          </strong>
+
+          <span id="apiStatusText">
+            — API Google Apps Script siap digunakan
+          </span>
+
+        </div>
+
+
+      </main>
 
     </section>
 
+  </div>
 
-    <div class="footer">
-
-      Sistem Informasi Checklist Pengawasan
-      Kegiatan Langsir
-
-    </div>
-
-  </main>
 
 
   <!-- =====================================================
-       JAVASCRIPT
+       LOADING
   ====================================================== -->
+
+  <div
+    id="loadingOverlay"
+    class="loading-overlay"
+  >
+
+    <div class="loading-box">
+
+      <div class="spinner"></div>
+
+      <p id="loadingText">
+        Memproses...
+      </p>
+
+    </div>
+
+  </div>
+
+
 
   <script>
 
     /* =====================================================
-       URL GOOGLE APPS SCRIPT
+       KONFIGURASI API
        
-       GANTI DENGAN URL WEB APP APPS SCRIPT ANDA
-       
-       Contoh:
-       https://script.google.com/macros/s/XXXXXXXX/exec
-    ====================================================== */
+       LOGIN MANUAL
+       TIDAK MENGGUNAKAN EMAIL
+       TIDAK MENGGUNAKAN GOOGLE LOGIN
+    ===================================================== */
 
     const API_URL =
-      "GANTI_DENGAN_URL_APPS_SCRIPT_ANDA";
+      "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
 
 
     /* =====================================================
-       CEK URL API
-    ====================================================== */
+       DATA SESSION
+    ===================================================== */
 
-    function cekKonfigurasiAPI() {
+    let penggunaLogin = null;
 
-      if (
-        !API_URL ||
-        API_URL ===
-        "GANTI_DENGAN_URL_APPS_SCRIPT_ANDA"
-      ) {
 
-        tampilkanAlert(
-          "URL Google Apps Script belum diisi. Silakan isi API_URL terlebih dahulu.",
-          "error"
-        );
+    /* =====================================================
+       ELEMENT HELPER
+    ===================================================== */
 
-        return false;
+    function el(id) {
 
-      }
-
-      return true;
+      return document.getElementById(id);
 
     }
 
 
     /* =====================================================
-       TAMPILKAN ALERT
-    ====================================================== */
+       LOADING
+    ===================================================== */
 
-    function tampilkanAlert(
-      pesan,
-      tipe
+    function tampilLoading(text) {
+
+      const loadingText =
+        el("loadingText");
+
+      const loadingOverlay =
+        el("loadingOverlay");
+
+      if (loadingText) {
+
+        loadingText.textContent =
+          text || "Memproses...";
+
+      }
+
+      if (loadingOverlay) {
+
+        loadingOverlay
+          .classList
+          .add("show");
+
+      }
+
+    }
+
+
+    function sembunyikanLoading() {
+
+      const loadingOverlay =
+        el("loadingOverlay");
+
+      if (loadingOverlay) {
+
+        loadingOverlay
+          .classList
+          .remove("show");
+
+      }
+
+    }
+
+
+    /* =====================================================
+       ALERT
+    ===================================================== */
+
+    function tampilAlert(
+      message,
+      type
     ) {
 
-      const alertBox =
-        document.getElementById(
-          "alertLogin"
-        );
+      const box =
+        el("loginAlert");
 
-      if (!alertBox) {
+      if (!box) {
+        alert(message);
         return;
       }
 
-      alertBox.textContent =
-        pesan;
+      box.textContent =
+        message;
 
-      alertBox.className =
+      box.className =
         "alert show " +
         (
-          tipe === "success"
+          type === "success"
             ? "alert-success"
             : "alert-error"
         );
@@ -933,83 +1160,42 @@
     }
 
 
-    /* =====================================================
-       HILANGKAN ALERT
-    ====================================================== */
-
     function hapusAlert() {
 
-      const alertBox =
-        document.getElementById(
-          "alertLogin"
-        );
+      const box =
+        el("loginAlert");
 
-      if (!alertBox) {
+      if (!box) {
         return;
       }
 
-      alertBox.textContent =
+      box.textContent =
         "";
 
-      alertBox.className =
+      box.className =
         "alert";
 
     }
 
 
     /* =====================================================
-       SET LOADING
-    ====================================================== */
+       VALIDASI API URL
+    ===================================================== */
 
-    function setLoadingLogin(
-      sedangLoading
-    ) {
-
-      const tombol =
-        document.getElementById(
-          "btnLogin"
-        );
-
-      const loading =
-        document.getElementById(
-          "loadingLogin"
-        );
+    function cekAPIUrl() {
 
       if (
-        tombol
+        !API_URL ||
+        API_URL.trim() === "" ||
+        !API_URL.startsWith(
+          "https://script.google.com/macros/s/"
+        ) ||
+        !API_URL.endsWith("/exec")
       ) {
 
-        tombol.disabled =
-          sedangLoading;
-
-        tombol.textContent =
-          sedangLoading
-            ? "Memproses..."
-            : "Masuk ke Sistem";
-
-      }
-
-      if (
-        loading
-      ) {
-
-        if (
-          sedangLoading
-        ) {
-
-          loading.classList.add(
-            "active"
-          );
-
-        }
-
-        else {
-
-          loading.classList.remove(
-            "active"
-          );
-
-        }
+        throw new Error(
+          "URL Google Apps Script tidak valid."
+        );
 
       }
 
@@ -1017,55 +1203,97 @@
 
 
     /* =====================================================
+       POST API
+    ===================================================== */
+
+    async function postAPI(
+      action,
+      data
+    ) {
+
+      cekAPIUrl();
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "text/plain;charset=utf-8"
+            },
+
+            body:
+              JSON.stringify({
+
+                action:
+                  action,
+
+                data:
+                  data
+
+              })
+
+          }
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTP Error " +
+          response.status
+        );
+
+      }
+
+
+      const result =
+        await response.json();
+
+
+      return result;
+
+    }
+
+
+    /* =====================================================
        LOGIN PENGGUNA
-    ====================================================== */
+       
+       LOGIN MANUAL SAJA:
+       NAMA + NIPP + JABATAN
+       
+       TIDAK ADA:
+       - EMAIL
+       - GMAIL
+       - GOOGLE LOGIN
+    ===================================================== */
 
     async function loginPengguna() {
 
       hapusAlert();
 
 
-      /* ---------------------------------------------------
-         CEK KONFIGURASI
-      --------------------------------------------------- */
+      const namaElement =
+        el("namaLogin");
 
-      if (
-        !cekKonfigurasiAPI()
-      ) {
+      const nippElement =
+        el("nippLogin");
 
-        return;
-
-      }
+      const jabatanElement =
+        el("jabatanLogin");
 
 
-      /* ---------------------------------------------------
-         AMBIL ELEMENT DENGAN AMAN
-      --------------------------------------------------- */
+      /* -----------------------------------------------
+         CEK ELEMENT
+      ------------------------------------------------ */
 
-      const inputNama =
-        document.getElementById(
-          "inputNama"
-        );
+      if (!namaElement) {
 
-      const inputNipp =
-        document.getElementById(
-          "inputNipp"
-        );
-
-      const inputJabatan =
-        document.getElementById(
-          "inputJabatan"
-        );
-
-
-      if (
-        !inputNama ||
-        !inputNipp ||
-        !inputJabatan
-      ) {
-
-        tampilkanAlert(
-          "Form login tidak lengkap. Silakan refresh halaman.",
+        tampilAlert(
+          "Kolom NAMA tidak ditemukan.",
           "error"
         );
 
@@ -1074,38 +1302,61 @@
       }
 
 
-      /* ---------------------------------------------------
+      if (!nippElement) {
+
+        tampilAlert(
+          "Kolom NIPP tidak ditemukan.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      if (!jabatanElement) {
+
+        tampilAlert(
+          "Kolom JABATAN tidak ditemukan.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------------
          AMBIL NILAI
-      --------------------------------------------------- */
+      ------------------------------------------------ */
 
       const nama =
-        String(
-          inputNama.value || ""
-        ).trim();
+        namaElement.value
+          .trim();
+
 
       const nipp =
-        String(
-          inputNipp.value || ""
-        ).trim();
+        nippElement.value
+          .trim();
+
 
       const jabatan =
-        String(
-          inputJabatan.value || ""
-        ).trim();
+        jabatanElement.value
+          .trim();
 
 
-      /* ---------------------------------------------------
+      /* -----------------------------------------------
          VALIDASI
-      --------------------------------------------------- */
+      ------------------------------------------------ */
 
       if (!nama) {
 
-        tampilkanAlert(
-          "NAMA wajib diisi.",
+        tampilAlert(
+          "Nama wajib diisi.",
           "error"
         );
 
-        inputNama.focus();
+        namaElement.focus();
 
         return;
 
@@ -1114,12 +1365,12 @@
 
       if (!nipp) {
 
-        tampilkanAlert(
+        tampilAlert(
           "NIPP wajib diisi.",
           "error"
         );
 
-        inputNipp.focus();
+        nippElement.focus();
 
         return;
 
@@ -1128,44 +1379,109 @@
 
       if (!jabatan) {
 
-        tampilkanAlert(
-          "JABATAN wajib diisi.",
+        tampilAlert(
+          "Jabatan wajib diisi.",
           "error"
         );
 
-        inputJabatan.focus();
+        jabatanElement.focus();
 
         return;
 
       }
 
 
-      /* ---------------------------------------------------
-         AKTIFKAN LOADING
-      --------------------------------------------------- */
+      /* -----------------------------------------------
+         VALIDASI API
+      ------------------------------------------------ */
 
-      setLoadingLogin(
-        true
+      try {
+
+        cekAPIUrl();
+
+      }
+
+      catch (error) {
+
+        tampilAlert(
+          error.message,
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------------
+         MULAI LOGIN
+      ------------------------------------------------ */
+
+      const tombol =
+        el("btnLogin");
+
+      if (tombol) {
+
+        tombol.disabled =
+          true;
+
+        tombol.textContent =
+          "MEMPROSES...";
+
+      }
+
+
+      tampilLoading(
+        "Sedang memproses login..."
       );
 
 
-      /* ---------------------------------------------------
-         DATA YANG DIKIRIM
-         
-         HARUS SESUAI BACKEND:
-         
-         login_manual
-         NAMA
-         NIPP
-         JABATAN
-      --------------------------------------------------- */
+      try {
 
-      const payload = {
+        const result =
+          await postAPI(
+            "login_manual",
+            {
 
-        action:
-          "login_manual",
+              NAMA:
+                nama,
 
-        data: {
+              NIPP:
+                nipp,
+
+              JABATAN:
+                jabatan
+
+            }
+          );
+
+
+        console.log(
+          "LOGIN RESPONSE:",
+          result
+        );
+
+
+        if (
+          !result ||
+          result.success !== true
+        ) {
+
+          throw new Error(
+            result &&
+            result.message
+              ? result.message
+              : "Login gagal."
+          );
+
+        }
+
+
+        /* ---------------------------------------------
+           SIMPAN SESSION
+        --------------------------------------------- */
+
+        penggunaLogin = {
 
           NAMA:
             nama,
@@ -1176,219 +1492,102 @@
           JABATAN:
             jabatan
 
-        }
+        };
 
-      };
-
-
-      try {
-
-        console.log(
-          "Mengirim login:",
-          payload
-        );
-
-
-        /* -------------------------------------------------
-           REQUEST KE GOOGLE APPS SCRIPT
-           
-           Content-Type text/plain digunakan agar
-           browser tidak melakukan preflight OPTIONS
-           yang sering bermasalah pada Apps Script.
-        ------------------------------------------------- */
-
-        const response =
-          await fetch(
-            API_URL,
-            {
-
-              method:
-                "POST",
-
-              headers: {
-
-                "Content-Type":
-                  "text/plain;charset=utf-8"
-
-              },
-
-              body:
-                JSON.stringify(
-                  payload
-                )
-
-            }
-          );
-
-
-        console.log(
-          "HTTP Status:",
-          response.status
-        );
-
-
-        /* -------------------------------------------------
-           BACA RESPONSE
-        ------------------------------------------------- */
-
-        const text =
-          await response.text();
-
-
-        console.log(
-          "Response Apps Script:",
-          text
-        );
-
-
-        if (!text) {
-
-          throw new Error(
-            "Response dari server kosong."
-          );
-
-        }
-
-
-        let result;
 
         try {
 
-          result =
-            JSON.parse(
-              text
-            );
-
-        }
-
-        catch (
-          parseError
-        ) {
-
-          console.error(
-            "Response bukan JSON:",
-            text
-          );
-
-          throw new Error(
-            "Response server tidak valid."
-          );
-
-        }
-
-
-        /* -------------------------------------------------
-           CEK HASIL LOGIN
-        ------------------------------------------------- */
-
-        if (
-          result &&
-          result.success === true
-        ) {
-
-          const user =
-            result.data || {};
-
-
-          /* -----------------------------------------------
-             SIMPAN SESSION
-          ------------------------------------------------ */
-
-          const sessionUser = {
-
-            NAMA:
-              user.NAMA ||
-              nama,
-
-            NIPP:
-              user.NIPP ||
-              nipp,
-
-            JABATAN:
-              user.JABATAN ||
-              jabatan
-
-          };
-
-
-          localStorage.setItem(
-            "userChecklistLangsir",
+          sessionStorage.setItem(
+            "penggunaLogin",
             JSON.stringify(
-              sessionUser
+              penggunaLogin
             )
           );
 
+        }
 
-          /* -----------------------------------------------
-             TAMPILKAN DATA USER
-          ------------------------------------------------ */
+        catch (storageError) {
 
-          document.getElementById(
-            "displayNama"
-          ).textContent =
-            sessionUser.NAMA;
+          console.warn(
+            "Session storage tidak tersedia.",
+            storageError
+          );
 
-          document.getElementById(
-            "displayNipp"
-          ).textContent =
-            sessionUser.NIPP;
-
-          document.getElementById(
-            "displayJabatan"
-          ).textContent =
-            sessionUser.JABATAN;
+        }
 
 
-          /* -----------------------------------------------
-             GANTI HALAMAN
-          ------------------------------------------------ */
+        /* ---------------------------------------------
+           TAMPIL DASHBOARD
+        --------------------------------------------- */
 
-          document.getElementById(
-            "halamanLogin"
-          ).style.display =
+        const displayNama =
+          el("displayNama");
+
+        const displayJabatan =
+          el("displayJabatan");
+
+        const loginPage =
+          el("loginPage");
+
+        const dashboardPage =
+          el("dashboardPage");
+
+        const apiStatusText =
+          el("apiStatusText");
+
+
+        if (displayNama) {
+
+          displayNama.textContent =
+            nama;
+
+        }
+
+
+        if (displayJabatan) {
+
+          displayJabatan.textContent =
+            jabatan +
+            " • NIPP " +
+            nipp;
+
+        }
+
+
+        if (loginPage) {
+
+          loginPage.style.display =
             "none";
 
-          document.getElementById(
-            "halamanUtama"
-          ).style.display =
-            "block";
+        }
 
 
-          console.log(
-            "LOGIN BERHASIL:",
-            sessionUser
-          );
+        if (dashboardPage) {
 
-
-          /* -----------------------------------------------
-             TAMPILKAN PESAN
-          ------------------------------------------------ */
-
-          console.log(
-            result.message ||
-            "Login berhasil."
-          );
+          dashboardPage
+            .classList
+            .add("show");
 
         }
 
-        else {
 
-          throw new Error(
-            (
-              result &&
-              result.message
-            )
-              ? result.message
-              : "Login gagal."
-          );
+        if (apiStatusText) {
+
+          apiStatusText.textContent =
+            " — Login berhasil";
 
         }
+
+
+        console.log(
+          "Login berhasil:",
+          penggunaLogin
+        );
 
       }
 
-      catch (
-        error
-      ) {
+
+      catch (error) {
 
         console.error(
           "LOGIN ERROR:",
@@ -1396,22 +1595,29 @@
         );
 
 
-        tampilkanAlert(
-          "Login gagal: " +
-          (
-            error.message ||
-            "Terjadi kesalahan."
-          ),
+        tampilAlert(
+          error.message ||
+          "Terjadi kesalahan saat login.",
           "error"
         );
 
       }
 
+
       finally {
 
-        setLoadingLogin(
-          false
-        );
+        sembunyikanLoading();
+
+
+        if (tombol) {
+
+          tombol.disabled =
+            false;
+
+          tombol.textContent =
+            "MASUK";
+
+        }
 
       }
 
@@ -1420,64 +1626,115 @@
 
     /* =====================================================
        LOGOUT
-    ====================================================== */
+    ===================================================== */
 
     function logoutPengguna() {
 
-      localStorage.removeItem(
-        "userChecklistLangsir"
-      );
+      penggunaLogin =
+        null;
 
 
-      document.getElementById(
-        "halamanUtama"
-      ).style.display =
-        "none";
+      try {
+
+        sessionStorage.removeItem(
+          "penggunaLogin"
+        );
+
+      }
+
+      catch (error) {
+
+        console.warn(
+          error
+        );
+
+      }
 
 
-      document.getElementById(
-        "halamanLogin"
-      ).style.display =
-        "block";
+      const dashboardPage =
+        el("dashboardPage");
+
+      const loginPage =
+        el("loginPage");
+
+      const namaLogin =
+        el("namaLogin");
+
+      const nippLogin =
+        el("nippLogin");
+
+      const jabatanLogin =
+        el("jabatanLogin");
+
+      const apiStatusText =
+        el("apiStatusText");
 
 
-      document.getElementById(
-        "inputNama"
-      ).value =
-        "";
+      if (dashboardPage) {
 
-      document.getElementById(
-        "inputNipp"
-      ).value =
-        "";
+        dashboardPage
+          .classList
+          .remove("show");
 
-      document.getElementById(
-        "inputJabatan"
-      ).value =
-        "";
+      }
+
+
+      if (loginPage) {
+
+        loginPage.style.display =
+          "flex";
+
+      }
+
+
+      if (namaLogin) {
+
+        namaLogin.value =
+          "";
+
+      }
+
+
+      if (nippLogin) {
+
+        nippLogin.value =
+          "";
+
+      }
+
+
+      if (jabatanLogin) {
+
+        jabatanLogin.value =
+          "";
+
+      }
+
+
+      if (apiStatusText) {
+
+        apiStatusText.textContent =
+          " — API Google Apps Script siap digunakan";
+
+      }
 
 
       hapusAlert();
-
-
-      document.getElementById(
-        "inputNama"
-      ).focus();
 
     }
 
 
     /* =====================================================
-       CEK SESSION SAAT HALAMAN DIBUKA
-    ====================================================== */
+       CEK SESSION
+    ===================================================== */
 
     function cekSession() {
 
       try {
 
         const saved =
-          localStorage.getItem(
-            "userChecklistLangsir"
+          sessionStorage.getItem(
+            "penggunaLogin"
           );
 
 
@@ -1488,21 +1745,19 @@
         }
 
 
-        const user =
-          JSON.parse(
-            saved
-          );
+        const data =
+          JSON.parse(saved);
 
 
         if (
-          !user ||
-          !user.NAMA ||
-          !user.NIPP ||
-          !user.JABATAN
+          !data ||
+          !data.NAMA ||
+          !data.NIPP ||
+          !data.JABATAN
         ) {
 
-          localStorage.removeItem(
-            "userChecklistLangsir"
+          sessionStorage.removeItem(
+            "penggunaLogin"
           );
 
           return;
@@ -1510,48 +1765,79 @@
         }
 
 
-        document.getElementById(
-          "displayNama"
-        ).textContent =
-          user.NAMA;
-
-        document.getElementById(
-          "displayNipp"
-        ).textContent =
-          user.NIPP;
-
-        document.getElementById(
-          "displayJabatan"
-        ).textContent =
-          user.JABATAN;
+        penggunaLogin =
+          data;
 
 
-        document.getElementById(
-          "halamanLogin"
-        ).style.display =
-          "none";
+        const displayNama =
+          el("displayNama");
+
+        const displayJabatan =
+          el("displayJabatan");
+
+        const loginPage =
+          el("loginPage");
+
+        const dashboardPage =
+          el("dashboardPage");
 
 
-        document.getElementById(
-          "halamanUtama"
-        ).style.display =
-          "block";
+        if (displayNama) {
 
+          displayNama.textContent =
+            data.NAMA;
+
+        }
+
+
+        if (displayJabatan) {
+
+          displayJabatan.textContent =
+            data.JABATAN +
+            " • NIPP " +
+            data.NIPP;
+
+        }
+
+
+        if (loginPage) {
+
+          loginPage.style.display =
+            "none";
+
+        }
+
+
+        if (dashboardPage) {
+
+          dashboardPage
+            .classList
+            .add("show");
+
+        }
 
       }
 
-      catch (
-        error
-      ) {
+      catch (error) {
 
-        console.error(
-          "SESSION ERROR:",
+        console.warn(
+          "Session tidak valid:",
           error
         );
 
-        localStorage.removeItem(
-          "userChecklistLangsir"
-        );
+        try {
+
+          sessionStorage.removeItem(
+            "penggunaLogin"
+          );
+
+        }
+
+        catch (e) {
+
+          console.warn(e);
+
+        }
 
       }
 
@@ -1559,46 +1845,58 @@
 
 
     /* =====================================================
-       ENTER KEY
-    ====================================================== */
+       MENU SEMENTARA
+    ===================================================== */
 
-    document.addEventListener(
-      "keydown",
-      function(event) {
+    function menuBelumTersedia(
+      namaMenu
+    ) {
 
-        if (
-          event.key === "Enter"
-        ) {
+      alert(
+        namaMenu +
+        " sedang dalam tahap pengembangan."
+      );
 
-          const loginPage =
-            document.getElementById(
-              "halamanLogin"
-            );
-
-
-          if (
-            loginPage &&
-            loginPage.style.display !==
-            "none"
-          ) {
-
-            loginPengguna();
-
-          }
-
-        }
-
-      }
-    );
+    }
 
 
     /* =====================================================
-       SAAT HALAMAN SELESAI DIMUAT
-    ====================================================== */
+       ENTER UNTUK LOGIN
+    ===================================================== */
 
     document.addEventListener(
       "DOMContentLoaded",
       function() {
+
+        const inputs =
+          document.querySelectorAll(
+            "#namaLogin, #nippLogin, #jabatanLogin"
+          );
+
+
+        inputs.forEach(
+          function(input) {
+
+            input.addEventListener(
+              "keydown",
+              function(event) {
+
+                if (
+                  event.key === "Enter"
+                ) {
+
+                  event.preventDefault();
+
+                  loginPengguna();
+
+                }
+
+              }
+            );
+
+          }
+        );
+
 
         cekSession();
 
