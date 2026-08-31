@@ -751,7 +751,9 @@ body {
 
     <div class="form-group">
 
-      <label for="loginNama">Nama</label>
+      <label for="loginNama">
+        Nama
+      </label>
 
       <input
         type="text"
@@ -765,7 +767,9 @@ body {
 
     <div class="form-group">
 
-      <label for="loginNipp">NIPP</label>
+      <label for="loginNipp">
+        NIPP
+      </label>
 
       <input
         type="text"
@@ -780,7 +784,9 @@ body {
 
     <div class="form-group">
 
-      <label for="loginJabatan">Jabatan</label>
+      <label for="loginJabatan">
+        Jabatan
+      </label>
 
       <input
         type="text"
@@ -797,14 +803,16 @@ body {
       id="btnLogin"
       class="btn btn-simpan"
       style="width:100%;"
-      onclick="loginPengguna()"
+      onclick="window.loginPengguna()"
     >
       MASUK
     </button>
 
 
-    <div id="statusLogin"
-         class="status-box"></div>
+    <div
+      id="statusLogin"
+      class="status-box">
+    </div>
 
   </div>
 
@@ -817,8 +825,10 @@ body {
 
 <div id="app">
 
-  <div id="infoUser"
-       class="info-user"></div>
+  <div
+    id="infoUser"
+    class="info-user">
+  </div>
 
 
   <div id="formPemeriksaan">
@@ -1035,8 +1045,9 @@ body {
     </div>
 
 
-    <div id="checklistContainer"
-         class="checklist-container">
+    <div
+      id="checklistContainer"
+      class="checklist-container">
 
       <div class="loading">
         Memuat checklist...
@@ -1063,16 +1074,19 @@ body {
     </div>
 
 
-    <div id="statusBox"
-         class="status-box"></div>
+    <div
+      id="statusBox"
+      class="status-box">
+    </div>
 
 
     <!-- =====================================================
          PROGRESS SIMPAN
     ====================================================== -->
 
-    <div id="progressSimpan"
-         class="progress-box">
+    <div
+      id="progressSimpan"
+      class="progress-box">
 
       <div class="progress-label">
 
@@ -1089,20 +1103,24 @@ body {
 
       <div class="progress-track">
 
-        <div id="progressSimpanBar"
-             class="progress-bar"></div>
+        <div
+          id="progressSimpanBar"
+          class="progress-bar">
+        </div>
 
       </div>
 
 
-      <div id="progressSimpanPercent"
-           class="progress-percent">
+      <div
+        id="progressSimpanPercent"
+        class="progress-percent">
         0%
       </div>
 
 
-      <div id="progressSimpanNote"
-           class="progress-note">
+      <div
+        id="progressSimpanNote"
+        class="progress-note">
         Menyiapkan data pemeriksaan...
       </div>
 
@@ -1118,7 +1136,7 @@ body {
       <button
         type="button"
         class="btn btn-foto"
-        onclick="uploadFoto()"
+        onclick="window.uploadFoto()"
       >
         UPLOAD FOTO
       </button>
@@ -1128,7 +1146,7 @@ body {
         type="button"
         id="btnTTD"
         class="btn btn-ttd"
-        onclick="tampilkanTTD()"
+        onclick="window.tampilkanTTD()"
       >
         TTD
       </button>
@@ -1138,7 +1156,7 @@ body {
         type="button"
         id="btnSimpanPemeriksaan"
         class="btn btn-simpan"
-        onclick="simpanPemeriksaan()"
+        onclick="window.simpanPemeriksaan()"
       >
         SIMPAN & SELESAI
       </button>
@@ -1147,7 +1165,7 @@ body {
       <button
         type="button"
         class="btn btn-logout"
-        onclick="logoutPengguna()"
+        onclick="window.logoutPengguna()"
       >
         KELUAR
       </button>
@@ -1191,7 +1209,7 @@ body {
           type="button"
           id="btnKirimFoto"
           class="btn btn-simpan"
-          onclick="kirimFoto()"
+          onclick="window.kirimFoto()"
         >
           KIRIM FOTO
         </button>
@@ -1199,12 +1217,15 @@ body {
       </div>
 
 
-      <div id="statusUploadFoto"
-           class="status-box"></div>
+      <div
+        id="statusUploadFoto"
+        class="status-box">
+      </div>
 
 
-      <div id="progressUploadFoto"
-           class="progress-box">
+      <div
+        id="progressUploadFoto"
+        class="progress-box">
 
         <div class="progress-label">
 
@@ -1221,20 +1242,24 @@ body {
 
         <div class="progress-track">
 
-          <div id="progressUploadBar"
-               class="progress-bar"></div>
+          <div
+            id="progressUploadBar"
+            class="progress-bar">
+          </div>
 
         </div>
 
 
-        <div id="progressUploadPercent"
-             class="progress-percent">
+        <div
+          id="progressUploadPercent"
+          class="progress-percent">
           0%
         </div>
 
 
-        <div id="progressUploadNote"
-             class="progress-note">
+        <div
+          id="progressUploadNote"
+          class="progress-note">
           Menyiapkan proses upload...
         </div>
 
@@ -1247,12 +1272,14 @@ body {
          TTD
     ====================================================== -->
 
-    <div id="ttdBox"
-         class="ttd-box">
+    <div
+      id="ttdBox"
+      class="ttd-box">
 
       <h3>
         Tanda Tangan Digital
       </h3>
+
 
       <div class="ttd-info">
 
@@ -1265,13 +1292,17 @@ body {
 
       <div class="signature-wrapper">
 
-        <canvas id="signatureCanvas"></canvas>
+        <canvas
+          id="signatureCanvas">
+        </canvas>
 
       </div>
 
 
-      <div id="ttdStatus"
-           class="ttd-status"></div>
+      <div
+        id="ttdStatus"
+        class="ttd-status">
+      </div>
 
 
       <div class="ttd-buttons">
@@ -1280,7 +1311,7 @@ body {
           type="button"
           id="btnClearTTD"
           class="btn-clear"
-          onclick="clearSignature()"
+          onclick="window.clearSignature()"
         >
           Hapus
         </button>
@@ -1290,7 +1321,7 @@ body {
           type="button"
           id="btnSaveTTD"
           class="btn-save-ttd"
-          onclick="simpanTTD()"
+          onclick="window.simpanTTD()"
         >
           Simpan TTD
         </button>
@@ -1308,18 +1339,22 @@ body {
      NOTIFIKASI
 ========================================================= -->
 
-<div id="notifFoto"
-     class="notif-overlay">
+<div
+  id="notifFoto"
+  class="notif-overlay">
 
   <div class="notif-box">
 
-    <div id="notifFotoTitle"
-         class="notif-title">
+    <div
+      id="notifFotoTitle"
+      class="notif-title">
       Informasi
     </div>
 
-    <div id="notifFotoMessage"
-         class="notif-message"></div>
+    <div
+      id="notifFotoMessage"
+      class="notif-message">
+    </div>
 
     <div class="notif-footer">
 
@@ -1327,7 +1362,7 @@ body {
         type="button"
         id="notifFotoButton"
         class="notif-ok"
-        onclick="tutupNotifFoto()"
+        onclick="window.tutupNotifFoto()"
       >
         OK
       </button>
@@ -1345,7 +1380,7 @@ body {
    KONFIGURASI API
 ========================================================= */
 
-const API_URL =
+var API_URL =
   "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
 
 
@@ -1353,23 +1388,23 @@ const API_URL =
    VARIABLE GLOBAL
 ========================================================= */
 
-let idPemeriksaanAktif = "";
+var idPemeriksaanAktif = "";
 
-let signatureCanvas = null;
+var signatureCanvas = null;
 
-let signatureContext = null;
+var signatureContext = null;
 
-let sedangMenggambar = false;
+var sedangMenggambar = false;
 
-let signatureInitialized = false;
+var signatureInitialized = false;
 
-let signatureHasInk = false;
+var signatureHasInk = false;
 
-let sedangSimpanTTD = false;
+var sedangSimpanTTD = false;
 
-let sedangSimpanPemeriksaan = false;
+var sedangSimpanPemeriksaan = false;
 
-let sedangUploadFoto = false;
+var sedangUploadFoto = false;
 
 
 /* =========================================================
@@ -1378,7 +1413,7 @@ let sedangUploadFoto = false;
 
 function escapeHtml(text) {
 
-  const div =
+  var div =
     document.createElement("div");
 
   div.textContent =
@@ -1406,10 +1441,12 @@ function buatIdPemeriksaan() {
 
 function tampilkanStatusLogin(pesan) {
 
-  const box =
+  var box =
     document.getElementById("statusLogin");
 
-  if (!box) return;
+  if (!box) {
+    return;
+  }
 
   box.textContent =
     pesan || "";
@@ -1426,10 +1463,12 @@ function tampilkanStatusLogin(pesan) {
 
 function tampilkanStatus(pesan) {
 
-  const box =
+  var box =
     document.getElementById("statusBox");
 
-  if (!box) return;
+  if (!box) {
+    return;
+  }
 
   box.textContent =
     pesan || "";
@@ -1444,25 +1483,23 @@ function tampilkanStatus(pesan) {
    NOTIFIKASI
 ========================================================= */
 
-function tampilkanNotifFoto(
-  judul,
-  pesan,
-  aksi
-) {
+function tampilkanNotifFoto(judul, pesan, aksi) {
 
-  const overlay =
+  var overlay =
     document.getElementById("notifFoto");
 
-  const title =
+  var title =
     document.getElementById("notifFotoTitle");
 
-  const message =
+  var message =
     document.getElementById("notifFotoMessage");
 
-  const button =
+  var button =
     document.getElementById("notifFotoButton");
 
-  if (!overlay) return;
+  if (!overlay) {
+    return;
+  }
 
   if (title) {
     title.textContent =
@@ -1499,12 +1536,14 @@ function tampilkanNotifFoto(
 
 function tutupNotifFoto() {
 
-  const overlay =
+  var overlay =
     document.getElementById("notifFoto");
 
-  if (!overlay) return;
+  if (!overlay) {
+    return;
+  }
 
-  const aksi =
+  var aksi =
     overlay.dataset.afterOk || "none";
 
   overlay.style.display =
@@ -1549,32 +1588,36 @@ function tutupNotifFoto() {
 
 function kembaliKeFormPemeriksaan() {
 
-  const login =
+  var login =
     document.getElementById("googleLogin");
 
-  const app =
+  var app =
     document.getElementById("app");
 
-  const form =
+  var form =
     document.getElementById("formPemeriksaan");
 
-  const ttd =
+  var ttd =
     document.getElementById("ttdBox");
 
   if (login) {
-    login.style.display = "none";
+    login.style.display =
+      "none";
   }
 
   if (app) {
-    app.style.display = "block";
+    app.style.display =
+      "block";
   }
 
   if (form) {
-    form.style.display = "block";
+    form.style.display =
+      "block";
   }
 
   if (ttd) {
-    ttd.style.display = "none";
+    ttd.style.display =
+      "none";
   }
 
   window.scrollTo({
@@ -1599,55 +1642,68 @@ function kembaliKeLogin() {
 
   idPemeriksaanAktif = "";
 
-  const login =
+  var login =
     document.getElementById("googleLogin");
 
-  const app =
+  var app =
     document.getElementById("app");
 
-  const form =
+  var form =
     document.getElementById("formPemeriksaan");
 
-  const ttd =
+  var ttd =
     document.getElementById("ttdBox");
 
-  const upload =
+  var upload =
     document.getElementById("uploadFotoBox");
 
   if (login) {
-    login.style.display = "block";
+    login.style.display =
+      "block";
   }
 
   if (app) {
-    app.style.display = "none";
+    app.style.display =
+      "none";
   }
 
   if (form) {
-    form.style.display = "none";
+    form.style.display =
+      "none";
   }
 
   if (ttd) {
-    ttd.style.display = "none";
+    ttd.style.display =
+      "none";
   }
 
   if (upload) {
-    upload.style.display = "none";
+    upload.style.display =
+      "none";
   }
 
   resetFormPemeriksaan();
 
-  const nama =
+  var nama =
     document.getElementById("loginNama");
 
-  const nipp =
+  var nipp =
     document.getElementById("loginNipp");
 
-  const jabatan =
+  var jabatan =
     document.getElementById("loginJabatan");
 
-  if (nama) nama.value = "";
-  if (nipp) nipp.value = "";
-  if (jabatan) jabatan.value = "";
+  if (nama) {
+    nama.value = "";
+  }
+
+  if (nipp) {
+    nipp.value = "";
+  }
+
+  if (jabatan) {
+    jabatan.value = "";
+  }
 
   tampilkanStatusLogin("");
 
@@ -1665,37 +1721,52 @@ function kembaliKeLogin() {
 
 function loginPengguna() {
 
-  const namaElement =
+  console.log("LOGIN PENGGUNA DIPANGGIL");
+
+  var namaElement =
     document.getElementById("loginNama");
 
-  const nippElement =
+  var nippElement =
     document.getElementById("loginNipp");
 
-  const jabatanElement =
+  var jabatanElement =
     document.getElementById("loginJabatan");
 
-  if (!namaElement ||
-      !nippElement ||
-      !jabatanElement) {
+  if (
+    !namaElement ||
+    !nippElement ||
+    !jabatanElement
+  ) {
 
-    alert("Form login tidak ditemukan.");
+    alert(
+      "Form login tidak ditemukan."
+    );
 
     return;
 
   }
 
-  const nama =
-    namaElement.value.trim();
+  var nama =
+    String(
+      namaElement.value || ""
+    ).trim();
 
-  const nipp =
-    nippElement.value.trim();
+  var nipp =
+    String(
+      nippElement.value || ""
+    ).trim();
 
-  const jabatan =
-    jabatanElement.value.trim();
+  var jabatan =
+    String(
+      jabatanElement.value || ""
+    ).trim();
+
 
   if (!nama) {
 
-    alert("Nama wajib diisi.");
+    alert(
+      "Nama wajib diisi."
+    );
 
     namaElement.focus();
 
@@ -1703,9 +1774,12 @@ function loginPengguna() {
 
   }
 
+
   if (!nipp) {
 
-    alert("NIPP wajib diisi.");
+    alert(
+      "NIPP wajib diisi."
+    );
 
     nippElement.focus();
 
@@ -1713,9 +1787,12 @@ function loginPengguna() {
 
   }
 
+
   if (!jabatan) {
 
-    alert("Jabatan wajib diisi.");
+    alert(
+      "Jabatan wajib diisi."
+    );
 
     jabatanElement.focus();
 
@@ -1723,27 +1800,33 @@ function loginPengguna() {
 
   }
 
-  const tombol =
+
+  var tombol =
     document.getElementById("btnLogin");
 
   if (tombol) {
 
-    tombol.disabled = true;
+    tombol.disabled =
+      true;
 
     tombol.textContent =
       "MENYIMPAN...";
 
   }
 
+
   tampilkanStatusLogin(
     "Mencatat data login ke USER..."
   );
 
-  idPemeriksaanAktif = "";
+
+  idPemeriksaanAktif =
+    "";
 
   sessionStorage.removeItem(
     "idPemeriksaanAktif"
   );
+
 
   sessionStorage.setItem(
     "userNama",
@@ -1765,6 +1848,7 @@ function loginPengguna() {
     ""
   );
 
+
   kirimRequestPost(
     "simpan_user",
     {
@@ -1776,8 +1860,16 @@ function loginPengguna() {
 
   .then(function(result) {
 
-    if (!result ||
-        result.success !== true) {
+    console.log(
+      "HASIL SIMPAN USER:",
+      result
+    );
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
 
       throw new Error(
         result && result.message
@@ -1787,9 +1879,11 @@ function loginPengguna() {
 
     }
 
+
     tampilkanStatusLogin(
       "Login berhasil. Data pengguna sudah tercatat."
     );
+
 
     bukaAplikasi();
 
@@ -1802,10 +1896,12 @@ function loginPengguna() {
       error
     );
 
+
     tampilkanStatusLogin(
       "Gagal mencatat login ke server.\n" +
       error.message
     );
+
 
     alert(
       "Login belum dapat dilanjutkan.\n\n" +
@@ -1818,7 +1914,8 @@ function loginPengguna() {
 
     if (tombol) {
 
-      tombol.disabled = false;
+      tombol.disabled =
+        false;
 
       tombol.textContent =
         "MASUK";
@@ -1831,30 +1928,42 @@ function loginPengguna() {
 
 
 /* =========================================================
+   PENTING
+   DAFTARKAN FUNCTION KE WINDOW
+========================================================= */
+
+window.loginPengguna =
+  loginPengguna;
+
+
+/* =========================================================
    BUKA APLIKASI
 ========================================================= */
 
 function bukaAplikasi() {
 
-  const login =
+  var login =
     document.getElementById("googleLogin");
 
-  const app =
+  var app =
     document.getElementById("app");
 
-  const form =
+  var form =
     document.getElementById("formPemeriksaan");
 
   if (login) {
-    login.style.display = "none";
+    login.style.display =
+      "none";
   }
 
   if (app) {
-    app.style.display = "block";
+    app.style.display =
+      "block";
   }
 
   if (form) {
-    form.style.display = "block";
+    form.style.display =
+      "block";
   }
 
   tampilkanInfoUser(
@@ -1880,25 +1989,21 @@ function tampilkanInfoUser(
   jabatan
 ) {
 
-  const info =
+  var info =
     document.getElementById("infoUser");
 
-  if (!info) return;
+  if (!info) {
+    return;
+  }
 
   info.innerHTML =
-
     "<strong>Login berhasil</strong><br>" +
-
     "Nama: " +
     escapeHtml(nama) +
-
     "<br>" +
-
     "NIPP: " +
     escapeHtml(nipp) +
-
     "<br>" +
-
     "Jabatan: " +
     escapeHtml(jabatan);
 
@@ -1911,25 +2016,27 @@ function tampilkanInfoUser(
 
 function setTanggalHariIni() {
 
-  const input =
-    document.getElementById("tanggalPemeriksaan");
+  var input =
+    document.getElementById(
+      "tanggalPemeriksaan"
+    );
 
   if (!input || input.value) {
     return;
   }
 
-  const sekarang =
+  var sekarang =
     new Date();
 
-  const tahun =
+  var tahun =
     sekarang.getFullYear();
 
-  const bulan =
+  var bulan =
     String(
       sekarang.getMonth() + 1
     ).padStart(2, "0");
 
-  const tanggal =
+  var tanggal =
     String(
       sekarang.getDate()
     ).padStart(2, "0");
@@ -1950,7 +2057,7 @@ function setTanggalHariIni() {
 
 function fetchApi(action) {
 
-  const url =
+  var url =
     API_URL +
     "?action=" +
     encodeURIComponent(action) +
@@ -1975,7 +2082,8 @@ function fetchApi(action) {
     if (!response.ok) {
 
       throw new Error(
-        "HTTP " + response.status
+        "HTTP " +
+        response.status
       );
 
     }
@@ -2048,7 +2156,9 @@ function parseApiResponse(data) {
 
 function ambilArrayData(result) {
 
-  if (!result) return [];
+  if (!result) {
+    return [];
+  }
 
   if (Array.isArray(result)) {
     return result;
@@ -2094,8 +2204,10 @@ function ambilArrayData(result) {
 
 function muatSemuaData() {
 
-  const container =
-    document.getElementById("checklistContainer");
+  var container =
+    document.getElementById(
+      "checklistContainer"
+    );
 
   if (container) {
 
@@ -2144,7 +2256,7 @@ function muatSemuaData() {
 
 function muatChecklist() {
 
-  const container =
+  var container =
     document.getElementById(
       "checklistContainer"
     );
@@ -2165,17 +2277,19 @@ function muatChecklist() {
 
   .then(function(result) {
 
-    const data =
+    var data =
       ambilArrayData(result);
 
     container.innerHTML = "";
 
-    let nomorTampil = 0;
+    var nomorTampil = 0;
+
 
     data.forEach(function(item) {
 
-      const aktif =
+      var aktif =
         item.AKTIF;
+
 
       if (
         aktif !== undefined &&
@@ -2183,12 +2297,12 @@ function muatChecklist() {
         aktif !== ""
       ) {
 
-        const nilai =
+        var nilai =
           String(aktif)
           .trim()
           .toUpperCase();
 
-        const valid =
+        var valid =
           nilai === "TRUE" ||
           nilai === "1" ||
           nilai === "YA" ||
@@ -2201,34 +2315,43 @@ function muatChecklist() {
 
       }
 
-      const id =
+
+      var id =
         item.ID ||
         item.ID_CHECKLIST ||
         "";
 
-      const urutan =
+
+      var urutan =
         item.URUTAN ||
         nomorTampil + 1;
 
-      const kategori =
+
+      var kategori =
         item.KATEGORI || "";
 
-      const subKategori =
+
+      var subKategori =
         item.SUB_KATEGORI || "";
 
-      const uraian =
+
+      var uraian =
         item.URAIAN || "";
 
-      const standar =
+
+      var standar =
         item.STANDAR || "";
+
 
       if (!id && !uraian) {
         return;
       }
 
+
       nomorTampil++;
 
-      const div =
+
+      var div =
         document.createElement("div");
 
       div.className =
@@ -2237,46 +2360,52 @@ function muatChecklist() {
       div.dataset.id =
         String(id);
 
-      div.innerHTML =
 
+      var html =
         "<div class='checklist-number'>" +
         "Checklist " +
         escapeHtml(urutan) +
-        "</div>" +
+        "</div>";
 
-        (
-          kategori
-          ?
+
+      if (kategori) {
+
+        html +=
           "<div class='checklist-category'>" +
-          escapeHtml(kategori) +
-          (
-            subKategori
-            ?
-            " / " +
-            escapeHtml(subKategori)
-            :
-            ""
-          ) +
-          "</div>"
-          :
-          ""
-        ) +
+          escapeHtml(kategori);
 
+        if (subKategori) {
+
+          html +=
+            " / " +
+            escapeHtml(subKategori);
+
+        }
+
+        html +=
+          "</div>";
+
+      }
+
+
+      html +=
         "<div class='checklist-question'>" +
         escapeHtml(uraian) +
-        "</div>" +
+        "</div>";
 
-        (
-          standar
-          ?
+
+      if (standar) {
+
+        html +=
           "<div class='checklist-standard'>" +
           "<strong>STANDAR:</strong> " +
           escapeHtml(standar) +
-          "</div>"
-          :
-          ""
-        ) +
+          "</div>";
 
+      }
+
+
+      html +=
         "<div class='radio-group'>" +
 
         "<label class='radio-option'>" +
@@ -2312,9 +2441,14 @@ function muatChecklist() {
         "class='temuan-input' " +
         "placeholder='Keterangan / temuan...'>";
 
+
+      div.innerHTML =
+        html;
+
       container.appendChild(div);
 
     });
+
 
     if (nomorTampil === 0) {
 
@@ -2349,7 +2483,7 @@ function muatChecklist() {
 
 function muatStasiun() {
 
-  const select =
+  var select =
     document.getElementById(
       "stasiunPemeriksaan"
     );
@@ -2364,7 +2498,7 @@ function muatStasiun() {
 
   .then(function(result) {
 
-    const data =
+    var data =
       ambilArrayData(result);
 
     select.innerHTML =
@@ -2372,18 +2506,21 @@ function muatStasiun() {
       "Pilih Stasiun / Emplasemen" +
       "</option>";
 
+
     data.forEach(function(item) {
 
-      const value =
+      var value =
         item.NAMA ||
         item.STASIUN ||
         item.NAMA_STASIUN ||
         item.ID ||
         "";
 
-      if (!value) return;
+      if (!value) {
+        return;
+      }
 
-      const option =
+      var option =
         document.createElement("option");
 
       option.value =
@@ -2416,7 +2553,7 @@ function muatStasiun() {
 
 function muatLokomotif() {
 
-  const select =
+  var select =
     document.getElementById(
       "lokomotifPemeriksaan"
     );
@@ -2431,7 +2568,7 @@ function muatLokomotif() {
 
   .then(function(result) {
 
-    const data =
+    var data =
       ambilArrayData(result);
 
     select.innerHTML =
@@ -2439,18 +2576,21 @@ function muatLokomotif() {
       "Pilih Lokomotif" +
       "</option>";
 
+
     data.forEach(function(item) {
 
-      const value =
+      var value =
         item.JENIS ||
         item.NAMA ||
         item.LOKOMOTIF ||
         item.ID ||
         "";
 
-      if (!value) return;
+      if (!value) {
+        return;
+      }
 
-      const option =
+      var option =
         document.createElement("option");
 
       option.value =
@@ -2489,10 +2629,11 @@ function muatPegawai() {
 
   .then(function(result) {
 
-    const data =
+    var data =
       ambilArrayData(result);
 
-    const daftar = [
+
+    var daftar = [
 
       [
         "listMasinis",
@@ -2530,33 +2671,42 @@ function muatPegawai() {
 
     ];
 
+
     daftar.forEach(function(config) {
 
-      const datalist =
+      var datalist =
         document.getElementById(
           config[0]
         );
 
-      if (!datalist) return;
+      if (!datalist) {
+        return;
+      }
 
       datalist.innerHTML = "";
 
+
       data.forEach(function(item) {
 
-        const nama =
+        var nama =
           item.NAMA ||
           item.NAMA_PEGAWAI ||
           item.PEGAWAI ||
           "";
 
-        const nipp =
+
+        var nipp =
           item.NIPP ||
           item.NIP ||
           "";
 
-        if (!nama) return;
 
-        const jabatan =
+        if (!nama) {
+          return;
+        }
+
+
+        var jabatan =
           String(
             item.JABATAN ||
             item.POSISI ||
@@ -2564,8 +2714,10 @@ function muatPegawai() {
             ""
           ).toUpperCase();
 
-        let boleh =
+
+        var boleh =
           jabatan === "";
+
 
         config[1].forEach(function(keyword) {
 
@@ -2574,15 +2726,20 @@ function muatPegawai() {
               keyword.toUpperCase()
             )
           ) {
+
             boleh = true;
+
           }
 
         });
 
+
         if (boleh) {
 
-          const option =
-            document.createElement("option");
+          var option =
+            document.createElement(
+              "option"
+            );
 
           option.value =
             nipp
@@ -2591,7 +2748,9 @@ function muatPegawai() {
             :
             nama;
 
-          datalist.appendChild(option);
+          datalist.appendChild(
+            option
+          );
 
         }
 
@@ -2619,21 +2778,24 @@ function muatPegawai() {
 
 function ambilDataForm() {
 
-  const checklist = [];
+  var checklist = [];
+
 
   document
     .querySelectorAll(".checklist-item")
     .forEach(function(item) {
 
-      const pilihan =
+      var pilihan =
         item.querySelector(
           "input[type='radio']:checked"
         );
 
-      const temuan =
+
+      var temuan =
         item.querySelector(
           ".temuan-input"
         );
+
 
       checklist.push({
 
@@ -2653,6 +2815,7 @@ function ambilDataForm() {
       });
 
     });
+
 
   return {
 
@@ -2748,7 +2911,7 @@ function ambilDataForm() {
 
 function validasiIdentitas() {
 
-  const fields = [
+  var fields = [
 
     [
       "tanggalPemeriksaan",
@@ -2802,16 +2965,18 @@ function validasiIdentitas() {
 
   ];
 
+
   for (
-    let i = 0;
+    var i = 0;
     i < fields.length;
     i++
   ) {
 
-    const element =
+    var element =
       document.getElementById(
         fields[i][0]
       );
+
 
     if (
       !element ||
@@ -2825,15 +2990,18 @@ function validasiIdentitas() {
         " wajib diisi."
       );
 
+
       if (element) {
         element.focus();
       }
+
 
       return false;
 
     }
 
   }
+
 
   return true;
 
@@ -2846,10 +3014,11 @@ function validasiIdentitas() {
 
 function validasiChecklist() {
 
-  const items =
+  var items =
     document.querySelectorAll(
       ".checklist-item"
     );
+
 
   if (items.length === 0) {
 
@@ -2861,16 +3030,18 @@ function validasiChecklist() {
 
   }
 
+
   for (
-    let i = 0;
+    var i = 0;
     i < items.length;
     i++
   ) {
 
-    const pilihan =
+    var pilihan =
       items[i].querySelector(
         "input[type='radio']:checked"
       );
+
 
     if (!pilihan) {
 
@@ -2880,16 +3051,19 @@ function validasiChecklist() {
         " belum diisi."
       );
 
+
       items[i].scrollIntoView({
         behavior: "smooth",
         block: "center"
       });
+
 
       return false;
 
     }
 
   }
+
 
   return true;
 
@@ -2917,10 +3091,12 @@ function pastikanIdPemeriksaan() {
 
   }
 
-  const idSession =
+
+  var idSession =
     sessionStorage.getItem(
       "idPemeriksaanAktif"
     );
+
 
   if (
     idSession &&
@@ -2936,6 +3112,7 @@ function pastikanIdPemeriksaan() {
 
   }
 
+
   if (!validasiIdentitas()) {
 
     return Promise.reject(
@@ -2946,26 +3123,33 @@ function pastikanIdPemeriksaan() {
 
   }
 
+
   idPemeriksaanAktif =
     buatIdPemeriksaan();
+
 
   sessionStorage.setItem(
     "idPemeriksaanAktif",
     idPemeriksaanAktif
   );
 
-  const data =
+
+  var data =
     ambilDataForm();
+
 
   data.ID_PEMERIKSAAN =
     idPemeriksaanAktif;
 
+
   data.STATUS =
     "DRAFT";
+
 
   tampilkanStatus(
     "Menyiapkan pemeriksaan..."
   );
+
 
   return kirimRequestPost(
     "simpan_pemeriksaan",
@@ -2987,7 +3171,8 @@ function pastikanIdPemeriksaan() {
 
     }
 
-    const idServer =
+
+    var idServer =
       result.id_pemeriksaan ||
       result.ID_PEMERIKSAAN ||
       (
@@ -2998,6 +3183,7 @@ function pastikanIdPemeriksaan() {
         )
       );
 
+
     if (idServer) {
 
       idPemeriksaanAktif =
@@ -3005,10 +3191,12 @@ function pastikanIdPemeriksaan() {
 
     }
 
+
     sessionStorage.setItem(
       "idPemeriksaanAktif",
       idPemeriksaanAktif
     );
+
 
     return idPemeriksaanAktif;
 
@@ -3026,16 +3214,18 @@ function kirimRequestPost(
   data
 ) {
 
-  const url =
+  var url =
     API_URL +
     "?action=" +
     encodeURIComponent(action);
+
 
   console.log(
     "POST API:",
     action,
     data
   );
+
 
   return fetch(
     url,
@@ -3093,37 +3283,38 @@ function setProgressSimpan(
   note
 ) {
 
-  const box =
+  var box =
     document.getElementById(
       "progressSimpan"
     );
 
-  const bar =
+  var bar =
     document.getElementById(
       "progressSimpanBar"
     );
 
-  const percentEl =
+  var percentEl =
     document.getElementById(
       "progressSimpanPercent"
     );
 
-  const labelEl =
+  var labelEl =
     document.getElementById(
       "progressSimpanLabel"
     );
 
-  const stepEl =
+  var stepEl =
     document.getElementById(
       "progressSimpanStep"
     );
 
-  const noteEl =
+  var noteEl =
     document.getElementById(
       "progressSimpanNote"
     );
 
-  const nilai =
+
+  var nilai =
     Math.max(
       0,
       Math.min(
@@ -3132,29 +3323,37 @@ function setProgressSimpan(
       )
     );
 
+
   if (box) {
-    box.style.display = "block";
+    box.style.display =
+      "block";
   }
+
 
   if (bar) {
     bar.style.width =
       nilai + "%";
   }
 
+
   if (percentEl) {
     percentEl.textContent =
       Math.round(nilai) + "%";
   }
 
+
   if (labelEl) {
     labelEl.textContent =
-      label || "Menyimpan pemeriksaan";
+      label ||
+      "Menyimpan pemeriksaan";
   }
+
 
   if (stepEl) {
     stepEl.textContent =
       stepText || "";
   }
+
 
   if (noteEl) {
     noteEl.textContent =
@@ -3174,29 +3373,37 @@ function simpanPemeriksaan() {
     return;
   }
 
+
   if (!validasiIdentitas()) {
     return;
   }
+
 
   if (!validasiChecklist()) {
     return;
   }
 
-  sedangSimpanPemeriksaan = true;
 
-  const tombol =
+  sedangSimpanPemeriksaan =
+    true;
+
+
+  var tombol =
     document.getElementById(
       "btnSimpanPemeriksaan"
     );
 
+
   if (tombol) {
 
-    tombol.disabled = true;
+    tombol.disabled =
+      true;
 
     tombol.textContent =
       "MENYIMPAN...";
 
   }
+
 
   setProgressSimpan(
     5,
@@ -3205,6 +3412,7 @@ function simpanPemeriksaan() {
     "Memeriksa dan menyiapkan data..."
   );
 
+
   pastikanIdPemeriksaan()
 
   .then(function(id) {
@@ -3212,14 +3420,18 @@ function simpanPemeriksaan() {
     idPemeriksaanAktif =
       String(id).trim();
 
-    const data =
+
+    var data =
       ambilDataForm();
+
 
     data.ID_PEMERIKSAAN =
       idPemeriksaanAktif;
 
+
     data.STATUS =
       "SELESAI";
+
 
     setProgressSimpan(
       35,
@@ -3228,12 +3440,14 @@ function simpanPemeriksaan() {
       "Sedang menyimpan data utama..."
     );
 
+
     return kirimRequestPost(
       "simpan_pemeriksaan",
       data
     );
 
   })
+
 
   .then(function(result) {
 
@@ -3250,12 +3464,14 @@ function simpanPemeriksaan() {
 
     }
 
+
     setProgressSimpan(
       65,
       "Data pemeriksaan berhasil disimpan",
       "3 / 4",
       "Memproses penyelesaian pemeriksaan..."
     );
+
 
     setProgressSimpan(
       100,
@@ -3264,9 +3480,11 @@ function simpanPemeriksaan() {
       "Penyimpanan selesai."
     );
 
+
     tampilkanStatus(
       "Form Checklist Pengawasan Langsir Anda Telah Terekam."
     );
+
 
     tampilkanNotifFoto(
       "Form Checklist Pengawasan Langsir Anda Telah Terekam",
@@ -3280,12 +3498,14 @@ function simpanPemeriksaan() {
 
   })
 
+
   .catch(function(error) {
 
     console.error(
       "GAGAL SIMPAN PEMERIKSAAN:",
       error
     );
+
 
     setProgressSimpan(
       0,
@@ -3294,9 +3514,11 @@ function simpanPemeriksaan() {
       error.message
     );
 
+
     tampilkanStatus(
       "Gagal menyimpan pemeriksaan."
     );
+
 
     alert(
       "Gagal menyimpan pemeriksaan.\n\n" +
@@ -3305,10 +3527,12 @@ function simpanPemeriksaan() {
 
   })
 
+
   .finally(function() {
 
     sedangSimpanPemeriksaan =
       false;
+
 
     if (tombol) {
 
@@ -3326,22 +3550,16 @@ function simpanPemeriksaan() {
 
 
 /* =========================================================
-   TTD
-   =========================================================
-   PERBAIKAN UTAMA
-========================================================= */
-
-
-/* =========================================================
    INISIALISASI CANVAS TTD
 ========================================================= */
 
 function initSignatureCanvas() {
 
-  const canvas =
+  var canvas =
     document.getElementById(
       "signatureCanvas"
     );
+
 
   if (!canvas) {
 
@@ -3353,11 +3571,14 @@ function initSignatureCanvas() {
 
   }
 
+
   signatureCanvas =
     canvas;
 
+
   signatureContext =
     canvas.getContext("2d");
+
 
   if (!signatureContext) {
 
@@ -3369,12 +3590,16 @@ function initSignatureCanvas() {
 
   }
 
+
   resizeSignatureCanvas();
+
 
   pasangEventTTD();
 
+
   signatureInitialized =
     true;
+
 
   return true;
 
@@ -3383,7 +3608,6 @@ function initSignatureCanvas() {
 
 /* =========================================================
    RESIZE CANVAS
-   DPI / HP SAFE
 ========================================================= */
 
 function resizeSignatureCanvas() {
@@ -3392,29 +3616,32 @@ function resizeSignatureCanvas() {
     return;
   }
 
-  const rect =
+
+  var rect =
     signatureCanvas.getBoundingClientRect();
 
-  const dpr =
+
+  var dpr =
     window.devicePixelRatio || 1;
 
-  const width =
+
+  var width =
     Math.max(
       1,
       Math.round(rect.width)
     );
 
-  const height =
+
+  var height =
     Math.max(
       1,
       Math.round(rect.height)
     );
 
-  /*
-   * Simpan gambar lama bila ada.
-   */
 
-  let oldImage = null;
+  var oldImage =
+    null;
+
 
   if (
     signatureCanvas.width > 0 &&
@@ -3429,14 +3656,18 @@ function resizeSignatureCanvas() {
           "canvas"
         );
 
+
       oldImage.width =
         signatureCanvas.width;
+
 
       oldImage.height =
         signatureCanvas.height;
 
-      const oldCtx =
+
+      var oldCtx =
         oldImage.getContext("2d");
+
 
       oldCtx.drawImage(
         signatureCanvas,
@@ -3448,26 +3679,37 @@ function resizeSignatureCanvas() {
 
     catch (error) {
 
-      oldImage = null;
+      oldImage =
+        null;
 
     }
 
   }
 
+
   signatureCanvas.width =
-    Math.round(width * dpr);
+    Math.round(
+      width * dpr
+    );
+
 
   signatureCanvas.height =
-    Math.round(height * dpr);
+    Math.round(
+      height * dpr
+    );
+
 
   signatureCanvas.style.width =
     width + "px";
 
+
   signatureCanvas.style.height =
     height + "px";
 
+
   signatureContext =
     signatureCanvas.getContext("2d");
+
 
   signatureContext.setTransform(
     dpr,
@@ -3478,27 +3720,26 @@ function resizeSignatureCanvas() {
     0
   );
 
+
   signatureContext.lineWidth =
     2.5;
+
 
   signatureContext.lineCap =
     "round";
 
+
   signatureContext.lineJoin =
     "round";
+
 
   signatureContext.strokeStyle =
     "#111";
 
-  signatureContext.fillStyle =
-    "#111";
-
-  /*
-   * Background putih.
-   */
 
   signatureContext.fillStyle =
     "#ffffff";
+
 
   signatureContext.fillRect(
     0,
@@ -3507,12 +3748,14 @@ function resizeSignatureCanvas() {
     height
   );
 
+
+  signatureContext.strokeStyle =
+    "#111";
+
+
   signatureContext.fillStyle =
     "#111";
 
-  /*
-   * Kembalikan gambar lama.
-   */
 
   if (oldImage) {
 
@@ -3555,32 +3798,30 @@ function pasangEventTTD() {
     return;
   }
 
-  /*
-   * Pointer Event bekerja untuk:
-   * - mouse
-   * - touchscreen
-   * - stylus
-   */
 
   signatureCanvas.addEventListener(
     "pointerdown",
     mulaiGambarTTD
   );
 
+
   signatureCanvas.addEventListener(
     "pointermove",
     gambarTTD
   );
+
 
   signatureCanvas.addEventListener(
     "pointerup",
     selesaiGambarTTD
   );
 
+
   signatureCanvas.addEventListener(
     "pointercancel",
     selesaiGambarTTD
   );
+
 
   signatureCanvas.addEventListener(
     "pointerleave",
@@ -3596,8 +3837,19 @@ function pasangEventTTD() {
 
 function ambilPosisiCanvas(event) {
 
-  const rect =
+  if (!signatureCanvas) {
+
+    return {
+      x: 0,
+      y: 0
+    };
+
+  }
+
+
+  var rect =
     signatureCanvas.getBoundingClientRect();
+
 
   return {
 
@@ -3624,10 +3876,14 @@ function mulaiGambarTTD(event) {
     !signatureCanvas ||
     !signatureContext
   ) {
+
     return;
+
   }
 
+
   event.preventDefault();
+
 
   try {
 
@@ -3639,26 +3895,33 @@ function mulaiGambarTTD(event) {
 
   catch (error) {}
 
-  const pos =
+
+  var pos =
     ambilPosisiCanvas(event);
+
 
   sedangMenggambar =
     true;
 
+
   signatureHasInk =
     true;
 
+
   signatureContext.beginPath();
+
 
   signatureContext.moveTo(
     pos.x,
     pos.y
   );
 
+
   signatureContext.lineTo(
     pos.x + 0.01,
     pos.y + 0.01
   );
+
 
   signatureContext.stroke();
 
@@ -3676,18 +3939,24 @@ function gambarTTD(event) {
     !signatureCanvas ||
     !signatureContext
   ) {
+
     return;
+
   }
+
 
   event.preventDefault();
 
-  const pos =
+
+  var pos =
     ambilPosisiCanvas(event);
+
 
   signatureContext.lineTo(
     pos.x,
     pos.y
   );
+
 
   signatureContext.stroke();
 
@@ -3704,8 +3973,10 @@ function selesaiGambarTTD(event) {
     return;
   }
 
+
   sedangMenggambar =
     false;
+
 
   try {
 
@@ -3721,7 +3992,7 @@ function selesaiGambarTTD(event) {
 
 
 /* =========================================================
-   CEK CANVAS ADA TANDA TANGAN
+   CEK CANVAS
 ========================================================= */
 
 function canvasHasInk(canvas) {
@@ -3730,29 +4001,37 @@ function canvasHasInk(canvas) {
     return false;
   }
 
+
   try {
 
-    const ctx =
+    var ctx =
       canvas.getContext("2d");
+
 
     if (!ctx) {
       return false;
     }
 
-    const width =
+
+    var width =
       canvas.width;
 
-    const height =
+
+    var height =
       canvas.height;
+
 
     if (
       !width ||
       !height
     ) {
+
       return false;
+
     }
 
-    const data =
+
+    var data =
       ctx.getImageData(
         0,
         0,
@@ -3760,29 +4039,25 @@ function canvasHasInk(canvas) {
         height
       ).data;
 
-    /*
-     * Background kita putih.
-     *
-     * Cari pixel yang bukan putih.
-     */
 
     for (
-      let i = 0;
+      var i = 0;
       i < data.length;
       i += 4
     ) {
 
-      const r =
+      var r =
         data[i];
 
-      const g =
+      var g =
         data[i + 1];
 
-      const b =
+      var b =
         data[i + 2];
 
-      const a =
+      var a =
         data[i + 3];
+
 
       if (
         a > 0 &&
@@ -3812,6 +4087,7 @@ function canvasHasInk(canvas) {
 
   }
 
+
   return false;
 
 }
@@ -3832,9 +4108,11 @@ function clearSignature() {
 
   }
 
+
   if (!signatureCanvas) {
     return;
   }
+
 
   if (!signatureContext) {
 
@@ -3845,20 +4123,25 @@ function clearSignature() {
 
   }
 
+
   if (!signatureContext) {
     return;
   }
 
-  const rect =
+
+  var rect =
     signatureCanvas.getBoundingClientRect();
 
-  const width =
+
+  var width =
     rect.width ||
     signatureCanvas.width;
 
-  const height =
+
+  var height =
     rect.height ||
     signatureCanvas.height;
+
 
   signatureContext.clearRect(
     0,
@@ -3867,8 +4150,10 @@ function clearSignature() {
     height
   );
 
+
   signatureContext.fillStyle =
     "#ffffff";
+
 
   signatureContext.fillRect(
     0,
@@ -3877,19 +4162,24 @@ function clearSignature() {
     height
   );
 
+
   signatureContext.fillStyle =
     "#111";
+
 
   signatureHasInk =
     false;
 
+
   sedangMenggambar =
     false;
 
-  const status =
+
+  var status =
     document.getElementById(
       "ttdStatus"
     );
+
 
   if (status) {
 
@@ -3910,13 +4200,7 @@ function clearSignature() {
 
 function tampilkanTTD() {
 
-  /*
-   * TTD harus memiliki ID pemeriksaan.
-   */
-
-  if (
-    !idPemeriksaanAktif
-  ) {
+  if (!idPemeriksaanAktif) {
 
     pastikanIdPemeriksaan()
 
@@ -3924,6 +4208,7 @@ function tampilkanTTD() {
 
       idPemeriksaanAktif =
         String(id).trim();
+
 
       bukaKotakTTD();
 
@@ -3940,9 +4225,11 @@ function tampilkanTTD() {
 
     });
 
+
     return;
 
   }
+
 
   bukaKotakTTD();
 
@@ -3955,15 +4242,17 @@ function tampilkanTTD() {
 
 function bukaKotakTTD() {
 
-  const form =
+  var form =
     document.getElementById(
       "formPemeriksaan"
     );
 
-  const ttdBox =
+
+  var ttdBox =
     document.getElementById(
       "ttdBox"
     );
+
 
   if (!ttdBox) {
 
@@ -3975,18 +4264,18 @@ function bukaKotakTTD() {
 
   }
 
+
   if (form) {
-    form.style.display = "block";
+
+    form.style.display =
+      "block";
+
   }
+
 
   ttdBox.style.display =
     "block";
 
-  /*
-   * Canvas harus diinisialisasi
-   * setelah display:block agar
-   * ukuran width terbaca benar.
-   */
 
   setTimeout(function() {
 
@@ -4001,6 +4290,7 @@ function bukaKotakTTD() {
       resizeSignatureCanvas();
 
     }
+
 
     ttdBox.scrollIntoView({
       behavior: "smooth",
@@ -4018,15 +4308,20 @@ function bukaKotakTTD() {
 
 function tampilkanStatusTTD(pesan) {
 
-  const box =
+  var box =
     document.getElementById(
       "ttdStatus"
     );
 
-  if (!box) return;
+
+  if (!box) {
+    return;
+  }
+
 
   box.textContent =
     pesan || "";
+
 
   box.style.display =
     pesan
@@ -4046,6 +4341,7 @@ function simpanTTD() {
     return;
   }
 
+
   console.log(
     "================================="
   );
@@ -4059,13 +4355,7 @@ function simpanTTD() {
   );
 
 
-  /*
-   * Pastikan ID pemeriksaan tersedia.
-   */
-
-  if (
-    !idPemeriksaanAktif
-  ) {
+  if (!idPemeriksaanAktif) {
 
     tampilkanNotifFoto(
       "TTD gagal disimpan",
@@ -4078,10 +4368,6 @@ function simpanTTD() {
   }
 
 
-  /*
-   * Pastikan canvas tersedia.
-   */
-
   if (!signatureCanvas) {
 
     signatureCanvas =
@@ -4090,6 +4376,7 @@ function simpanTTD() {
       );
 
   }
+
 
   if (!signatureCanvas) {
 
@@ -4103,10 +4390,6 @@ function simpanTTD() {
 
   }
 
-
-  /*
-   * Pastikan ada tanda tangan.
-   */
 
   if (
     !canvasHasInk(
@@ -4125,11 +4408,9 @@ function simpanTTD() {
   }
 
 
-  /*
-   * Ambil gambar PNG.
-   */
+  var signature =
+    "";
 
-  let signature = "";
 
   try {
 
@@ -4172,20 +4453,7 @@ function simpanTTD() {
   }
 
 
-  /*
-   * DATA TTD
-   *
-   * Nama field tetap:
-   * ID_PEMERIKSAAN
-   * ID_PEMERIKSA
-   * TTD
-   * EMAIL
-   * NAMA
-   * NIPP
-   * JABATAN
-   */
-
-  const data = {
+  var data = {
 
     ID_PEMERIKSAAN:
       String(
@@ -4251,15 +4519,17 @@ function simpanTTD() {
     true;
 
 
-  const tombol =
+  var tombol =
     document.getElementById(
       "btnSaveTTD"
     );
 
-  const tombolClear =
+
+  var tombolClear =
     document.getElementById(
       "btnClearTTD"
     );
+
 
   if (tombol) {
 
@@ -4270,6 +4540,7 @@ function simpanTTD() {
       "MENYIMPAN TTD...";
 
   }
+
 
   if (tombolClear) {
 
@@ -4283,19 +4554,11 @@ function simpanTTD() {
     "Menyimpan tanda tangan ke server..."
   );
 
+
   tampilkanStatus(
     "Menyimpan tanda tangan..."
   );
 
-
-  /*
-   * INI BAGIAN PENTING:
-   *
-   * Gunakan action:
-   * simpan_ttd
-   *
-   * melalui kirimRequestPost().
-   */
 
   kirimRequestPost(
     "simpan_ttd",
@@ -4316,29 +4579,17 @@ function simpanTTD() {
     ) {
 
       throw new Error(
-
-        result &&
-        result.message
-
-        ?
-
-        result.message
-
-        :
-
-        "API menolak penyimpanan tanda tangan."
-
+        result && result.message
+          ? result.message
+          : "API menolak penyimpanan tanda tangan."
       );
 
     }
 
 
-    /*
-     * Pastikan ID tetap tersimpan.
-     */
-
     idPemeriksaanAktif =
       data.ID_PEMERIKSAAN;
+
 
     sessionStorage.setItem(
       "idPemeriksaanAktif",
@@ -4346,14 +4597,11 @@ function simpanTTD() {
     );
 
 
-    /*
-     * Tutup kotak TTD.
-     */
-
-    const ttdBox =
+    var ttdBox =
       document.getElementById(
         "ttdBox"
       );
+
 
     if (ttdBox) {
 
@@ -4369,41 +4617,22 @@ function simpanTTD() {
 
 
     tampilkanStatus(
-
       "Tanda tangan berhasil disimpan.\n" +
-
       "ID Pemeriksaan: " +
       idPemeriksaanAktif
-
     );
 
-
-    /*
-     * NOTIFIKASI BERHASIL
-     */
 
     tampilkanNotifFoto(
-
       "Tanda tangan berhasil disimpan",
-
       "Tanda tangan digital telah berhasil direkam ke sistem.\n\n" +
-
       "ID Pemeriksaan: " +
       idPemeriksaanAktif +
-
       "\n\n" +
-
       "Tekan OK untuk kembali ke form pemeriksaan.",
-
       "form"
-
     );
 
-
-    /*
-     * Bersihkan canvas
-     * setelah data berhasil dikirim.
-     */
 
     clearSignature();
 
@@ -4447,15 +4676,10 @@ function simpanTTD() {
 
 
     tampilkanNotifFoto(
-
       "Tanda tangan gagal disimpan",
-
       "Tanda tangan belum berhasil direkam ke server.\n\n" +
-
       error.message,
-
       "none"
-
     );
 
   })
@@ -4464,6 +4688,7 @@ function simpanTTD() {
 
     sedangSimpanTTD =
       false;
+
 
     if (tombol) {
 
@@ -4474,6 +4699,7 @@ function simpanTTD() {
         "Simpan TTD";
 
     }
+
 
     if (tombolClear) {
 
@@ -4493,15 +4719,20 @@ function simpanTTD() {
 
 function uploadFoto() {
 
-  const box =
+  var box =
     document.getElementById(
       "uploadFotoBox"
     );
 
-  if (!box) return;
+
+  if (!box) {
+    return;
+  }
+
 
   box.style.display =
     "block";
+
 
   box.scrollIntoView({
     behavior: "smooth",
@@ -4522,37 +4753,43 @@ function setProgressUpload(
   note
 ) {
 
-  const box =
+  var box =
     document.getElementById(
       "progressUploadFoto"
     );
 
-  const bar =
+
+  var bar =
     document.getElementById(
       "progressUploadBar"
     );
 
-  const percentEl =
+
+  var percentEl =
     document.getElementById(
       "progressUploadPercent"
     );
 
-  const labelEl =
+
+  var labelEl =
     document.getElementById(
       "progressUploadLabel"
     );
 
-  const countEl =
+
+  var countEl =
     document.getElementById(
       "progressUploadCount"
     );
 
-  const noteEl =
+
+  var noteEl =
     document.getElementById(
       "progressUploadNote"
     );
 
-  const nilai =
+
+  var nilai =
     Math.max(
       0,
       Math.min(
@@ -4561,29 +4798,36 @@ function setProgressUpload(
       )
     );
 
+
   if (box) {
-    box.style.display = "block";
+    box.style.display =
+      "block";
   }
+
 
   if (bar) {
     bar.style.width =
       nilai + "%";
   }
 
+
   if (percentEl) {
     percentEl.textContent =
       Math.round(nilai) + "%";
   }
+
 
   if (labelEl) {
     labelEl.textContent =
       label || "Upload foto";
   }
 
+
   if (countEl) {
     countEl.textContent =
       countText || "";
   }
+
 
   if (noteEl) {
     noteEl.textContent =
@@ -4603,15 +4847,18 @@ function kirimFoto() {
     return;
   }
 
-  const input =
+
+  var input =
     document.getElementById(
       "fotoPemeriksaan"
     );
 
-  const status =
+
+  var status =
     document.getElementById(
       "statusUploadFoto"
     );
+
 
   if (!input) {
 
@@ -4622,6 +4869,7 @@ function kirimFoto() {
     return;
 
   }
+
 
   if (
     !input.files ||
@@ -4636,11 +4884,14 @@ function kirimFoto() {
 
   }
 
+
   sedangUploadFoto =
     true;
 
-  const files =
+
+  var files =
     Array.from(input.files);
+
 
   setProgressUpload(
     0,
@@ -4648,6 +4899,7 @@ function kirimFoto() {
     "0 / " + files.length,
     "Mohon tunggu..."
   );
+
 
   if (status) {
 
@@ -4659,12 +4911,14 @@ function kirimFoto() {
 
   }
 
+
   pastikanIdPemeriksaan()
 
   .then(function(id) {
 
     idPemeriksaanAktif =
       String(id).trim();
+
 
     return uploadSemuaFoto(
       files,
@@ -4673,18 +4927,22 @@ function kirimFoto() {
 
   })
 
+
   .then(function(hasil) {
 
     input.value = "";
 
-    const preview =
+
+    var preview =
       document.getElementById(
         "previewFoto"
       );
 
+
     if (preview) {
       preview.innerHTML = "";
     }
+
 
     if (status) {
 
@@ -4699,26 +4957,20 @@ function kirimFoto() {
 
     }
 
+
     if (
       hasil.berhasil > 0 &&
       hasil.gagal === 0
     ) {
 
       tampilkanNotifFoto(
-
         "Foto telah berhasil diupload",
-
         "Foto dokumentasi berhasil disimpan.\n\n" +
-
         "Jumlah foto: " +
         hasil.berhasil +
-
         "\n\n" +
-
         "Tekan OK untuk melanjutkan ke TTD.",
-
         "ttd"
-
       );
 
     }
@@ -4729,21 +4981,15 @@ function kirimFoto() {
     ) {
 
       tampilkanNotifFoto(
-
         "Upload foto selesai sebagian",
-
         "Berhasil: " +
         hasil.berhasil +
         " foto\n" +
-
         "Gagal: " +
         hasil.gagal +
         " foto\n\n" +
-
         "Tekan OK untuk melanjutkan ke TTD.",
-
         "ttd"
-
       );
 
     }
@@ -4751,18 +4997,15 @@ function kirimFoto() {
     else {
 
       tampilkanNotifFoto(
-
         "Upload foto gagal",
-
         "Tidak ada foto yang berhasil diupload.",
-
         "none"
-
       );
 
     }
 
   })
+
 
   .catch(function(error) {
 
@@ -4770,6 +5013,7 @@ function kirimFoto() {
       "ERROR UPLOAD FOTO:",
       error
     );
+
 
     if (status) {
 
@@ -4779,17 +5023,15 @@ function kirimFoto() {
 
     }
 
+
     tampilkanNotifFoto(
-
       "Upload foto gagal",
-
       error.message,
-
       "none"
-
     );
 
   })
+
 
   .finally(function() {
 
@@ -4810,15 +5052,18 @@ function uploadSemuaFoto(
   status
 ) {
 
-  let berhasil = 0;
+  var berhasil =
+    0;
 
-  let gagal = 0;
+  var gagal =
+    0;
 
-  const total =
+  var total =
     files.length;
 
-  let rangkaian =
+  var rangkaian =
     Promise.resolve();
+
 
   files.forEach(function(
     file,
@@ -4829,15 +5074,17 @@ function uploadSemuaFoto(
       rangkaian.then(
         function() {
 
-          const nomor =
+          var nomor =
             index + 1;
 
-          const persenAwal =
+
+          var persenAwal =
             Math.round(
               (index / total) * 100
             );
 
-          const persenBaca =
+
+          var persenBaca =
             Math.min(
               90,
               Math.round(
@@ -4846,7 +5093,8 @@ function uploadSemuaFoto(
               )
             );
 
-          const persenKirim =
+
+          var persenKirim =
             Math.min(
               98,
               Math.round(
@@ -4855,10 +5103,12 @@ function uploadSemuaFoto(
               )
             );
 
-          const persenSelesai =
+
+          var persenSelesai =
             Math.round(
               (nomor / total) * 100
             );
+
 
           if (
             !file.type ||
@@ -4873,12 +5123,14 @@ function uploadSemuaFoto(
 
           }
 
+
           if (
             file.size >
             5 * 1024 * 1024
           ) {
 
             gagal++;
+
 
             setProgressUpload(
               persenSelesai,
@@ -4890,9 +5142,11 @@ function uploadSemuaFoto(
               " lebih dari 5 MB."
             );
 
+
             return;
 
           }
+
 
           setProgressUpload(
             persenAwal,
@@ -4903,11 +5157,12 @@ function uploadSemuaFoto(
             file.name
           );
 
+
           return fileToBase64WithProgress(
             file,
             function(progress) {
 
-              const persen =
+              var persen =
                 persenAwal +
                 (
                   (
@@ -4917,6 +5172,7 @@ function uploadSemuaFoto(
                   progress /
                   100
                 );
+
 
               setProgressUpload(
                 persen,
@@ -4930,6 +5186,7 @@ function uploadSemuaFoto(
             }
           )
 
+
           .then(function(base64) {
 
             setProgressUpload(
@@ -4941,7 +5198,8 @@ function uploadSemuaFoto(
               file.name
             );
 
-            const payload = {
+
+            var payload = {
 
               ID_PEMERIKSAAN:
                 idPemeriksaanAktif,
@@ -4957,12 +5215,14 @@ function uploadSemuaFoto(
 
             };
 
+
             return kirimRequestPost(
               "upload_foto",
               payload
             );
 
           })
+
 
           .then(function(result) {
 
@@ -4981,6 +5241,7 @@ function uploadSemuaFoto(
 
             }
 
+
             setProgressUpload(
               persenSelesai,
               "Foto selesai",
@@ -4992,9 +5253,11 @@ function uploadSemuaFoto(
 
           })
 
+
           .catch(function(error) {
 
             gagal++;
+
 
             console.error(
               "GAGAL FOTO:",
@@ -5009,6 +5272,7 @@ function uploadSemuaFoto(
 
   });
 
+
   return rangkaian.then(
     function() {
 
@@ -5021,7 +5285,9 @@ function uploadSemuaFoto(
         "Proses upload seluruh foto telah selesai."
       );
 
+
       return {
+
         berhasil:
           berhasil,
 
@@ -5048,8 +5314,9 @@ function fileToBase64WithProgress(
   return new Promise(
     function(resolve, reject) {
 
-      const reader =
+      var reader =
         new FileReader();
+
 
       reader.onprogress =
         function(event) {
@@ -5072,6 +5339,7 @@ function fileToBase64WithProgress(
 
         };
 
+
       reader.onload =
         function(event) {
 
@@ -5084,11 +5352,13 @@ function fileToBase64WithProgress(
 
           }
 
+
           resolve(
             event.target.result
           );
 
         };
+
 
       reader.onerror =
         function(error) {
@@ -5096,6 +5366,7 @@ function fileToBase64WithProgress(
           reject(error);
 
         };
+
 
       reader.readAsDataURL(
         file
@@ -5119,27 +5390,40 @@ document.addEventListener(
       event.target.id !==
       "fotoPemeriksaan"
     ) {
+
       return;
+
     }
 
-    const preview =
+
+    var preview =
       document.getElementById(
         "previewFoto"
       );
 
-    if (!preview) return;
 
-    preview.innerHTML = "";
+    if (!preview) {
+      return;
+    }
 
-    const files =
+
+    preview.innerHTML =
+      "";
+
+
+    var files =
       event.target.files;
+
 
     if (
       !files ||
       files.length === 0
     ) {
+
       return;
+
     }
+
 
     Array.from(files).forEach(
       function(file) {
@@ -5150,49 +5434,69 @@ document.addEventListener(
             "image/"
           )
         ) {
+
           return;
+
         }
 
-        const reader =
+
+        var reader =
           new FileReader();
+
 
         reader.onload =
           function(e) {
 
-            const wrapper =
+            var wrapper =
               document.createElement(
                 "div"
               );
+
 
             wrapper.className =
               "preview-item";
 
-            const img =
+
+            var img =
               document.createElement(
                 "img"
               );
 
+
             img.src =
               e.target.result;
 
-            const nama =
+
+            var nama =
               document.createElement(
                 "div"
               );
 
+
             nama.className =
               "preview-name";
+
 
             nama.textContent =
               file.name;
 
-            wrapper.appendChild(img);
 
-            wrapper.appendChild(nama);
+            wrapper.appendChild(
+              img
+            );
 
-            preview.appendChild(wrapper);
+
+            wrapper.appendChild(
+              nama
+            );
+
+
+            preview.appendChild(
+              wrapper
+            );
 
           };
+
 
         reader.readAsDataURL(
           file
@@ -5211,7 +5515,7 @@ document.addEventListener(
 
 function resetFormPemeriksaan() {
 
-  const ids = [
+  var ids = [
 
     "tanggalPemeriksaan",
 
@@ -5237,12 +5541,17 @@ function resetFormPemeriksaan() {
 
   ];
 
+
   ids.forEach(function(id) {
 
-    const element =
+    var element =
       document.getElementById(id);
 
-    if (!element) return;
+
+    if (!element) {
+      return;
+    }
+
 
     if (
       element.tagName ===
@@ -5263,10 +5572,12 @@ function resetFormPemeriksaan() {
 
   });
 
-  const checklist =
+
+  var checklist =
     document.getElementById(
       "checklistContainer"
     );
+
 
   if (checklist) {
 
@@ -5277,43 +5588,56 @@ function resetFormPemeriksaan() {
 
   }
 
-  const foto =
+
+  var foto =
     document.getElementById(
       "fotoPemeriksaan"
     );
+
 
   if (foto) {
     foto.value = "";
   }
 
-  const preview =
+
+  var preview =
     document.getElementById(
       "previewFoto"
     );
+
 
   if (preview) {
     preview.innerHTML = "";
   }
 
-  const upload =
+
+  var upload =
     document.getElementById(
       "uploadFotoBox"
     );
 
+
   if (upload) {
+
     upload.style.display =
       "none";
+
   }
 
-  const ttd =
+
+  var ttd =
     document.getElementById(
       "ttdBox"
     );
 
+
   if (ttd) {
+
     ttd.style.display =
       "none";
+
   }
+
 
   clearSignature();
 
@@ -5326,14 +5650,16 @@ function resetFormPemeriksaan() {
 
 function logoutPengguna() {
 
-  const yakin =
+  var yakin =
     confirm(
       "Apakah Anda yakin ingin keluar dari sistem?"
     );
 
+
   if (!yakin) {
     return;
   }
+
 
   kembaliKeLogin();
 
@@ -5346,17 +5672,21 @@ function logoutPengguna() {
 
 function tampilkanDashboard() {
 
-  const form =
+  var form =
     document.getElementById(
       "formPemeriksaan"
     );
 
+
   if (form) {
+
     form.style.display =
       "none";
+
   }
 
 }
+
 
 function tampilkanRiwayatPemeriksaan() {
 
@@ -5366,6 +5696,7 @@ function tampilkanRiwayatPemeriksaan() {
 
 }
 
+
 function tampilkanRekapPemeriksaan() {
 
   alert(
@@ -5373,6 +5704,7 @@ function tampilkanRekapPemeriksaan() {
   );
 
 }
+
 
 function tampilkanDataPegawai() {
 
@@ -5382,6 +5714,7 @@ function tampilkanDataPegawai() {
 
 }
 
+
 function tampilkanDataStasiun() {
 
   alert(
@@ -5389,6 +5722,7 @@ function tampilkanDataStasiun() {
   );
 
 }
+
 
 function tampilkanDataLokomotif() {
 
@@ -5403,7 +5737,9 @@ function tampilkanDataLokomotif() {
    RESIZE WINDOW
 ========================================================= */
 
-let resizeTimer = null;
+var resizeTimer =
+  null;
+
 
 window.addEventListener(
   "resize",
@@ -5413,14 +5749,16 @@ window.addEventListener(
       resizeTimer
     );
 
+
     resizeTimer =
       setTimeout(
         function() {
 
-          const ttdBox =
+          var ttdBox =
             document.getElementById(
               "ttdBox"
             );
+
 
           if (
             ttdBox &&
@@ -5448,23 +5786,28 @@ document.addEventListener(
   "keydown",
   function(event) {
 
-    const target =
+    var target =
       event.target;
+
 
     if (
       !target ||
       !target.id
     ) {
+
       return;
+
     }
 
-    const loginIds = [
+
+    var loginIds = [
 
       "loginNama",
       "loginNipp",
       "loginJabatan"
 
     ];
+
 
     if (
       loginIds.includes(
@@ -5475,6 +5818,7 @@ document.addEventListener(
     ) {
 
       event.preventDefault();
+
 
       loginPengguna();
 
@@ -5496,29 +5840,39 @@ document.addEventListener(
       "================================="
     );
 
+
     console.log(
       "SISTEM CHECKLIST LANGSIR"
     );
+
 
     console.log(
       "LOGIN MANUAL AKTIF"
     );
 
+
     console.log(
       "VERSI TTD DIPERBAIKI"
     );
+
+
+    console.log(
+      "ANTI TEMPLATE LITERAL ERROR"
+    );
+
 
     console.log(
       "================================="
     );
 
 
-    const login =
+    var login =
       document.getElementById(
         "googleLogin"
       );
 
-    const app =
+
+    var app =
       document.getElementById(
         "app"
       );
@@ -5549,14 +5903,11 @@ document.addEventListener(
     );
 
 
-    /*
-     * Jangan otomatis login.
-     */
-
-    const loginNama =
+    var loginNama =
       document.getElementById(
         "loginNama"
       );
+
 
     if (loginNama) {
 
@@ -5572,6 +5923,63 @@ document.addEventListener(
     }
 
   }
+);
+
+
+/* =========================================================
+   DAFTARKAN FUNGSI KE WINDOW
+   AGAR onclick HTML SELALU BISA MEMANGGIL
+========================================================= */
+
+window.loginPengguna =
+  loginPengguna;
+
+window.logoutPengguna =
+  logoutPengguna;
+
+window.simpanPemeriksaan =
+  simpanPemeriksaan;
+
+window.tampilkanTTD =
+  tampilkanTTD;
+
+window.simpanTTD =
+  simpanTTD;
+
+window.clearSignature =
+  clearSignature;
+
+window.uploadFoto =
+  uploadFoto;
+
+window.kirimFoto =
+  kirimFoto;
+
+window.tutupNotifFoto =
+  tutupNotifFoto;
+
+window.tampilkanDashboard =
+  tampilkanDashboard;
+
+window.tampilkanRiwayatPemeriksaan =
+  tampilkanRiwayatPemeriksaan;
+
+window.tampilkanRekapPemeriksaan =
+  tampilkanRekapPemeriksaan;
+
+window.tampilkanDataPegawai =
+  tampilkanDataPegawai;
+
+window.tampilkanDataStasiun =
+  tampilkanDataStasiun;
+
+window.tampilkanDataLokomotif =
+  tampilkanDataLokomotif;
+
+
+console.log(
+  "FUNCTION GLOBAL READY: loginPengguna =",
+  typeof window.loginPengguna
 );
 
 </script>
