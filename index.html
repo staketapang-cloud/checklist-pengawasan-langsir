@@ -826,86 +826,38 @@
       ></div>
 
 
-      <!-- BUTTON -->
+<!-- =====================================================
+     BUTTON AKSI
+====================================================== -->
 
-      <div class="button-group">
+<div class="button-group">
 
-<button
-  type="button"
-  class="btn btn-draft"
-  onclick="uploadFoto()"
->
- UPLOAD FOTO
-</button>
-        <div
-  id="uploadFotoBox"
-  style="display:none; margin-top:15px;"
->
-
-  <input
-    type="file"
-    id="inputFoto"
-    accept="image/*"
-    multiple
+  <button
+    type="button"
+    class="btn btn-draft"
+    onclick="uploadFoto()"
   >
+    UPLOAD FOTO
+  </button>
 
-  <div
-    id="previewFoto"
-    style="margin-top:10px;"
-  ></div>
+  <button
+    type="button"
+    class="btn btn-ttd"
+    onclick="tampilkanTTD()"
+  >
+    TTD
+  </button>
 
   <button
     type="button"
     class="btn btn-simpan"
-    onclick="kirimFoto()"
-    style="margin-top:10px;"
+    onclick="simpanPemeriksaan()"
   >
-    KIRIM FOTO
-  </button>
-
-</div>
-        <div id="areaUploadFoto" style="display:none; margin-top:15px;">
-
-  <input
-    type="file"
-    id="inputFoto"
-    accept="image/*"
-    multiple
-  >
-
-  <div
-    id="previewFoto"
-    style="margin-top:10px;"
-  ></div>
-
-  <button
-    type="button"
-    class="btn btn-simpan"
-    onclick="kirimFoto()"
-    style="margin-top:10px;"
-  >
-    KIRIM FOTO
+    SIMPAN & SELESAI
   </button>
 
 </div>
 
-        <button
-          type="button"
-          class="btn btn-ttd"
-          onclick="tampilkanTTD()"
-        >
-          TTD
-        </button>
-
-<button
-  type="button"
-  class="btn btn-simpan"
-  onclick="simpanPemeriksaan()"
->
-  SIMPAN&SELESAI
-</button>
-
-      </div>
 
 <!-- =====================================================
      UPLOAD FOTO
@@ -944,24 +896,31 @@
       margin-top:15px;
     "
   ></div>
-<div class="button-group">
 
-  <button
-    type="button"
-    class="btn btn-simpan"
-    onclick="kirimFoto()"
-  >
-    KIRIM FOTO
-  </button>
+  <div class="button-group">
 
-</div>
+    <button
+      type="button"
+      class="btn btn-simpan"
+      onclick="kirimFoto()"
+    >
+      KIRIM FOTO
+    </button>
+
+  </div>
+
   <div
     id="statusUploadFoto"
     class="status-box"
   ></div>
 
 </div>
-      <!-- TTD -->
+
+
+<!-- =====================================================
+     TTD
+====================================================== -->
+
 
       <div
         id="ttdBox"
@@ -2530,118 +2489,65 @@ function buatIdPemeriksaan() {
 /* =========================================================
    SIMPAN DRAFT
 ========================================================= */
-
 function simpanDraft() {
 
-  if (
-    !validasiIdentitas()
-  ) {
-
+  if (!validasiIdentitas()) {
     return;
-
   }
 
-
-  const data =
-    ambilDataForm();
-
-
-  if (
-    !data.ID_PEMERIKSAAN
-  ) {
-
-    idPemeriksaanAktif =
-      buatIdPemeriksaan();
-
-
-    data.ID_PEMERIKSAAN =
-      idPemeriksaanAktif;
-
+  if (!idPemeriksaanAktif) {
+    idPemeriksaanAktif = buatIdPemeriksaan();
   }
 
+  const data = ambilDataForm();
 
-  data.STATUS =
-    "DRAFT";
+  data.ID_PEMERIKSAAN = idPemeriksaanAktif;
 
+  data.STATUS = "DRAFT";
 
   tampilkanStatus(
     "Menyimpan Draft..."
   );
 
-
   kirimPemeriksaan(
-
     data,
-
     "Draft berhasil disimpan."
-
   );
 
 }
-
-
 /* =========================================================
    SIMPAN PEMERIKSAAN
 ========================================================= */
-
 function simpanPemeriksaan() {
 
-  if (
-    !validasiIdentitas()
-  ) {
-
+  if (!validasiIdentitas()) {
     return;
-
   }
 
-
-  if (
-    !validasiChecklist()
-  ) {
-
+  if (!validasiChecklist()) {
     return;
-
   }
 
-
-  const data =
-    ambilDataForm();
-
-
-  if (
-    !data.ID_PEMERIKSAAN
-  ) {
-
-    idPemeriksaanAktif =
-      buatIdPemeriksaan();
-
-
-    data.ID_PEMERIKSAAN =
-      idPemeriksaanAktif;
-
+  if (!idPemeriksaanAktif) {
+    idPemeriksaanAktif = buatIdPemeriksaan();
   }
 
+  const data = ambilDataForm();
 
-  data.STATUS =
-    "SELESAI";
+  data.ID_PEMERIKSAAN = idPemeriksaanAktif;
 
+  data.STATUS = "SELESAI";
 
   tampilkanStatus(
     "Menyimpan pemeriksaan..."
   );
 
-
   kirimPemeriksaan(
-
     data,
-
     "Pemeriksaan berhasil disimpan."
-
   );
 
 }
-
-
 /* =========================================================
    KIRIM PEMERIKSAAN
 ========================================================= */
