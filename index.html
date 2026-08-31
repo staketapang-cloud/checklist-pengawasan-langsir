@@ -956,8 +956,8 @@
 <!-- =====================================================
      JAVASCRIPT
 ====================================================== -->
-
 <script>
+
 /* =========================================================
    KONFIGURASI API
 ========================================================= */
@@ -973,61 +973,42 @@ const API_URL =
 let idPemeriksaanAktif = "";
 
 let signatureCanvas = null;
+
 let signatureContext = null;
+
 let sedangMenggambar = false;
 
 
 /* =========================================================
-   PARSE JWT
+   ESCAPE HTML
 ========================================================= */
 
-function parseJwt(token) {
+function escapeHtml(text) {
 
-  const parts = token.split(".");
+  const div =
+    document.createElement("div");
 
-  if (parts.length !== 3) {
+  div.textContent =
+    text == null ? "" : String(text);
 
-    throw new Error(
-      "Token Google tidak valid."
-    );
-
-  }
-
-  const base64Url = parts[1];
-
-  const base64 =
-    base64Url
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
-
-  const padded =
-    base64 +
-    "=".repeat(
-      (4 - base64.length % 4) % 4
-    );
-
-  const jsonPayload =
-    decodeURIComponent(
-      atob(padded)
-        .split("")
-        .map(function(c) {
-
-          return "%" +
-            ("00" +
-              c.charCodeAt(0).toString(16)
-            ).slice(-2);
-
-        })
-        .join("")
-    );
-
-  return JSON.parse(jsonPayload);
+  return div.innerHTML;
 
 }
 
 
 /* =========================================================
-   CEK SESSION LOGIN
+   BUAT ID PEMERIKSAAN
+========================================================= */
+
+function buatIdPemeriksaan() {
+
+  return "TRX" + Date.now();
+
+}
+
+
+/* =========================================================
+   SESSION LOGIN
 ========================================================= */
 
 function cekSessionLogin() {
@@ -1038,15 +1019,45 @@ function cekSessionLogin() {
   const app =
     document.getElementById("app");
 
-  if (loginBox) {
+  const nama =
+    sessionStorage.getItem("userNama");
 
-    loginBox.style.display = "block";
+  const nipp =
+    sessionStorage.getItem("userNipp");
 
-  }
+  const jabatan =
+    sessionStorage.getItem("userJabatan");
 
-  if (app) {
 
-    app.style.display = "none";
+  if (
+    nama &&
+    nipp &&
+    jabatan
+  ) {
+
+    if (loginBox) {
+      loginBox.style.display = "none";
+    }
+
+    if (app) {
+      app.style.display = "block";
+    }
+
+    tampilkanInfoUser(
+      nama,
+      nipp,
+      jabatan
+    );
+
+  } else {
+
+    if (loginBox) {
+      loginBox.style.display = "block";
+    }
+
+    if (app) {
+      app.style.display = "none";
+    }
 
   }
 
@@ -1054,7 +1065,200 @@ function cekSessionLogin() {
 
 
 /* =========================================================
-   DASHBOARD
+   LOGIN PENGGUNA
+========================================================= */
+
+function loginPengguna() {
+
+  console.log("LOGIN PENGGUNA DIPANGGIL");
+
+
+  const namaElement =
+    document.getElementById("loginNama");
+
+  const nippElement =
+    document.getElementById("loginNipp");
+
+  const jabatanElement =
+    document.getElementById("loginJabatan");
+
+
+  if (!namaElement ||
+      !nippElement ||
+      !jabatanElement) {
+
+    alert(
+      "Form login tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  const nama =
+    namaElement.value.trim();
+
+  const nipp =
+    nippElement.value.trim();
+
+  const jabatan =
+    jabatanElement.value.trim();
+
+
+  /* -------------------------------------------------------
+     VALIDASI
+  ------------------------------------------------------- */
+
+  if (!nama) {
+
+    alert(
+      "Nama wajib diisi."
+    );
+
+    namaElement.focus();
+
+    return;
+
+  }
+
+
+  if (!nipp) {
+
+    alert(
+      "NIPP wajib diisi."
+    );
+
+    nippElement.focus();
+
+    return;
+
+  }
+
+
+  if (!jabatan) {
+
+    alert(
+      "Jabatan wajib diisi."
+    );
+
+    jabatanElement.focus();
+
+    return;
+
+  }
+
+
+  /* -------------------------------------------------------
+     SIMPAN SESSION
+  ------------------------------------------------------- */
+
+  sessionStorage.setItem(
+    "userNama",
+    nama
+  );
+
+  sessionStorage.setItem(
+    "userNipp",
+    nipp
+  );
+
+  sessionStorage.setItem(
+    "userJabatan",
+    jabatan
+  );
+
+
+  /* -------------------------------------------------------
+     TAMPILKAN APLIKASI
+  ------------------------------------------------------- */
+
+  const loginBox =
+    document.getElementById(
+      "googleLogin"
+    );
+
+  const app =
+    document.getElementById(
+      "app"
+    );
+
+
+  if (loginBox) {
+
+    loginBox.style.display =
+      "none";
+
+  }
+
+
+  if (app) {
+
+    app.style.display =
+      "block";
+
+  }
+
+
+  tampilkanInfoUser(
+    nama,
+    nipp,
+    jabatan
+  );
+
+
+  /* -------------------------------------------------------
+     TAMPILKAN FORM
+  ------------------------------------------------------- */
+
+  tampilkanFormPemeriksaan();
+
+}
+
+
+/* =========================================================
+   INFORMASI USER
+========================================================= */
+
+function tampilkanInfoUser(
+  nama,
+  nipp,
+  jabatan
+) {
+
+  const infoUser =
+    document.getElementById(
+      "infoUser"
+    );
+
+
+  if (!infoUser) {
+
+    return;
+
+  }
+
+
+  infoUser.innerHTML =
+
+    "<strong>Login berhasil</strong><br>" +
+
+    "Nama: " +
+    escapeHtml(nama) +
+    "<br>" +
+
+    "NIPP: " +
+    escapeHtml(nipp) +
+    "<br>" +
+
+    "Jabatan: " +
+    escapeHtml(jabatan);
+
+}
+
+
+/* =========================================================
+   TAMPILKAN DASHBOARD
 ========================================================= */
 
 function tampilkanDashboard() {
@@ -1064,11 +1268,14 @@ function tampilkanDashboard() {
       "formPemeriksaan"
     );
 
+
   if (form) {
 
-    form.style.display = "none";
+    form.style.display =
+      "none";
 
   }
+
 
   window.scrollTo({
 
@@ -1082,7 +1289,7 @@ function tampilkanDashboard() {
 
 
 /* =========================================================
-   FORM PEMERIKSAAN
+   TAMPILKAN FORM PEMERIKSAAN
 ========================================================= */
 
 function tampilkanFormPemeriksaan() {
@@ -1092,13 +1299,17 @@ function tampilkanFormPemeriksaan() {
       "formPemeriksaan"
     );
 
+
   if (!form) {
 
     return;
 
   }
 
-  form.style.display = "block";
+
+  form.style.display =
+    "block";
+
 
   form.scrollIntoView({
 
@@ -1108,9 +1319,16 @@ function tampilkanFormPemeriksaan() {
 
   });
 
+
+  /*
+     Sengaja TIDAK menampilkan
+     "Data pemeriksaan siap digunakan."
+  */
+
   tampilkanStatus(
     "Memuat data pemeriksaan..."
   );
+
 
   Promise.all([
 
@@ -1127,13 +1345,24 @@ function tampilkanFormPemeriksaan() {
   .then(function() {
 
     /*
-
-       JANGAN tampilkan
+       Tidak ada notif
        "Data pemeriksaan siap digunakan."
-
-       Status dibiarkan selesai tanpa pesan tambahan.
-
     */
+
+    const status =
+      document.getElementById(
+        "statusBox"
+      );
+
+    if (status) {
+
+      status.style.display =
+        "none";
+
+      status.textContent =
+        "";
+
+    }
 
   })
 
@@ -1150,7 +1379,7 @@ function tampilkanFormPemeriksaan() {
 
 
 /* =========================================================
-   FETCH API JSON
+   FETCH API
 ========================================================= */
 
 function fetchApi(action) {
@@ -1182,6 +1411,7 @@ function fetchApi(action) {
 
     }
 
+
     return response.json();
 
   });
@@ -1190,7 +1420,7 @@ function fetchApi(action) {
 
 
 /* =========================================================
-   NORMALISASI DATA API
+   NORMALISASI DATA
 ========================================================= */
 
 function ambilArrayData(result) {
@@ -1201,11 +1431,13 @@ function ambilArrayData(result) {
 
   }
 
+
   if (Array.isArray(result)) {
 
     return result;
 
   }
+
 
   if (
     result.data &&
@@ -1216,6 +1448,7 @@ function ambilArrayData(result) {
 
   }
 
+
   if (
     result.result &&
     Array.isArray(result.result)
@@ -1225,6 +1458,7 @@ function ambilArrayData(result) {
 
   }
 
+
   if (
     result.rows &&
     Array.isArray(result.rows)
@@ -1233,6 +1467,7 @@ function ambilArrayData(result) {
     return result.rows;
 
   }
+
 
   if (
     result.data &&
@@ -1244,13 +1479,14 @@ function ambilArrayData(result) {
 
   }
 
+
   return [];
 
 }
 
 
 /* =========================================================
-   CHECKLIST
+   MUAT CHECKLIST
 ========================================================= */
 
 function muatChecklist() {
@@ -1259,6 +1495,7 @@ function muatChecklist() {
     document.getElementById(
       "checklistContainer"
     );
+
 
   if (!container) {
 
@@ -1270,10 +1507,12 @@ function muatChecklist() {
 
   }
 
+
   container.innerHTML =
     "<div class='loading'>" +
     "Memuat checklist..." +
     "</div>";
+
 
   return fetchApi(
     "master_checklist"
@@ -1286,17 +1525,22 @@ function muatChecklist() {
       result
     );
 
+
     const data =
       ambilArrayData(result);
 
+
     container.innerHTML = "";
 
+
     let nomorTampil = 0;
+
 
     data.forEach(function(item) {
 
       const aktif =
         item.AKTIF;
+
 
       if (
         aktif !== undefined &&
@@ -1306,8 +1550,9 @@ function muatChecklist() {
 
         const nilaiAktif =
           String(aktif)
-            .trim()
-            .toUpperCase();
+          .trim()
+          .toUpperCase();
+
 
         const isAktif =
           nilaiAktif === "TRUE" ||
@@ -1315,6 +1560,7 @@ function muatChecklist() {
           nilaiAktif === "YA" ||
           nilaiAktif === "Y" ||
           nilaiAktif === "AKTIF";
+
 
         if (!isAktif) {
 
@@ -1324,47 +1570,64 @@ function muatChecklist() {
 
       }
 
+
       const id =
         item.ID ||
         item.ID_CHECKLIST ||
         "";
 
+
       const urutan =
         item.URUTAN ||
         (nomorTampil + 1);
+
 
       const kategori =
         item.KATEGORI ||
         "";
 
+
       const subKategori =
         item.SUB_KATEGORI ||
         "";
+
 
       const uraian =
         item.URAIAN ||
         "";
 
+
       const standar =
         item.STANDAR ||
         "";
 
-      if (!id && !uraian) {
+
+      if (
+        !id &&
+        !uraian
+      ) {
 
         return;
 
       }
 
+
       nomorTampil++;
 
+
       const div =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       div.className =
         "checklist-item";
 
+
       div.dataset.id =
         id;
+
 
       div.innerHTML =
 
@@ -1377,20 +1640,23 @@ function muatChecklist() {
 
         (
           kategori
-            ? "<div class='checklist-category'>" +
 
-              escapeHtml(kategori) +
+          ? "<div class='checklist-category'>" +
 
-              (
-                subKategori
-                  ? " / " +
-                    escapeHtml(subKategori)
-                  : ""
-              ) +
+            escapeHtml(kategori) +
 
-              "</div>"
+            (
+              subKategori
 
-            : ""
+              ? " / " +
+                escapeHtml(subKategori)
+
+              : ""
+            ) +
+
+            "</div>"
+
+          : ""
         ) +
 
         "<div class='checklist-question'>" +
@@ -1401,15 +1667,16 @@ function muatChecklist() {
 
         (
           standar
-            ? "<div class='checklist-standard'>" +
 
-              "<strong>STANDAR:</strong> " +
+          ? "<div class='checklist-standard'>" +
 
-              escapeHtml(standar) +
+            "<strong>STANDAR:</strong> " +
 
-              "</div>"
+            escapeHtml(standar) +
 
-            : ""
+            "</div>"
+
+          : ""
         ) +
 
         "<div class='radio-group'>" +
@@ -1417,10 +1684,15 @@ function muatChecklist() {
           "<label class='radio-option'>" +
 
             "<input " +
+
               "type='radio' " +
+
               "name='hasil_" +
+
               escapeHtml(id) +
+
               "' " +
+
               "value='YA'>" +
 
             "<span>YA</span>" +
@@ -1430,10 +1702,15 @@ function muatChecklist() {
           "<label class='radio-option'>" +
 
             "<input " +
+
               "type='radio' " +
+
               "name='hasil_" +
+
               escapeHtml(id) +
+
               "' " +
+
               "value='TIDAK'>" +
 
             "<span>TIDAK</span>" +
@@ -1443,15 +1720,24 @@ function muatChecklist() {
         "</div>" +
 
         "<input " +
+
           "type='text' " +
+
           "class='temuan-input' " +
+
           "placeholder='Keterangan / temuan...'>";
 
-      container.appendChild(div);
+
+      container.appendChild(
+        div
+      );
 
     });
 
-    if (nomorTampil === 0) {
+
+    if (
+      nomorTampil === 0
+    ) {
 
       container.innerHTML =
 
@@ -1461,11 +1747,12 @@ function muatChecklist() {
 
         "Periksa kolom AKTIF pada sheet " +
 
-        "MASTER_CHECKLIST."
+        "MASTER_CHECKLIST." +
 
-        + "</div>";
+        "</div>";
 
     }
+
 
     console.log(
       "Jumlah checklist tampil:",
@@ -1481,17 +1768,19 @@ function muatChecklist() {
       error
     );
 
+
     container.innerHTML =
 
       "<div class='error-box'>" +
 
-      "<strong>Gagal memuat checklist.</strong><br>" +
+      "<strong>Gagal memuat checklist.</strong><br><br>" +
 
       escapeHtml(
         error.message
       ) +
 
       "</div>";
+
 
     throw error;
 
@@ -1501,7 +1790,7 @@ function muatChecklist() {
 
 
 /* =========================================================
-   STASIUN
+   MUAT STASIUN
 ========================================================= */
 
 function muatStasiun() {
@@ -1511,11 +1800,13 @@ function muatStasiun() {
       "stasiunPemeriksaan"
     );
 
+
   if (!select) {
 
     return Promise.resolve();
 
   }
+
 
   return fetchApi(
     "master_stasiun"
@@ -1528,14 +1819,19 @@ function muatStasiun() {
       result
     );
 
+
     const data =
       ambilArrayData(result);
+
 
     select.innerHTML =
 
       "<option value=''>" +
+
       "Pilih Stasiun / Emplasemen" +
+
       "</option>";
+
 
     data.forEach(function(item) {
 
@@ -1546,22 +1842,27 @@ function muatStasiun() {
         item.ID ||
         "";
 
+
       if (!value) {
 
         return;
 
       }
 
+
       const option =
         document.createElement(
           "option"
         );
 
+
       option.value =
         value;
 
+
       option.textContent =
         value;
+
 
       select.appendChild(
         option
@@ -1584,7 +1885,7 @@ function muatStasiun() {
 
 
 /* =========================================================
-   LOKOMOTIF
+   MUAT LOKOMOTIF
 ========================================================= */
 
 function muatLokomotif() {
@@ -1594,11 +1895,13 @@ function muatLokomotif() {
       "lokomotifPemeriksaan"
     );
 
+
   if (!select) {
 
     return Promise.resolve();
 
   }
+
 
   return fetchApi(
     "master_lokomotif"
@@ -1611,14 +1914,19 @@ function muatLokomotif() {
       result
     );
 
+
     const data =
       ambilArrayData(result);
+
 
     select.innerHTML =
 
       "<option value=''>" +
+
       "Pilih Lokomotif" +
+
       "</option>";
+
 
     data.forEach(function(item) {
 
@@ -1626,22 +1934,27 @@ function muatLokomotif() {
         item.JENIS ||
         "";
 
+
       if (!value) {
 
         return;
 
       }
 
+
       const option =
         document.createElement(
           "option"
         );
 
+
       option.value =
         value;
 
+
       option.textContent =
         value;
+
 
       select.appendChild(
         option
@@ -1664,7 +1977,7 @@ function muatLokomotif() {
 
 
 /* =========================================================
-   PEGAWAI
+   MUAT PEGAWAI
 ========================================================= */
 
 function muatPegawai() {
@@ -1680,8 +1993,10 @@ function muatPegawai() {
       result
     );
 
+
     const data =
       ambilArrayData(result);
+
 
     const daftarSelect = [
 
@@ -1689,15 +2004,14 @@ function muatPegawai() {
         "listMasinis",
         [
           "MASINIS",
-          "Masinis"
+          "MASINIS"
         ]
       ],
 
       [
         "listAsistenMasinis",
         [
-          "ASISTEN MASINIS",
-          "Asisten Masinis"
+          "ASISTEN MASINIS"
         ]
       ],
 
@@ -1736,6 +2050,7 @@ function muatPegawai() {
 
     ];
 
+
     daftarSelect.forEach(
       function(config) {
 
@@ -1744,80 +2059,96 @@ function muatPegawai() {
             config[0]
           );
 
+
         if (!datalist) {
 
           return;
 
         }
 
-        datalist.innerHTML = "";
 
-        data.forEach(function(item) {
+        datalist.innerHTML =
+          "";
 
-          const nama =
-            item.NAMA ||
-            item.NAMA_PEGAWAI ||
-            item.PEGAWAI ||
-            "";
 
-          const nipp =
-            item.NIPP ||
-            item.NIP ||
-            "";
+        data.forEach(
+          function(item) {
 
-          if (!nama) {
+            const nama =
+              item.NAMA ||
+              item.NAMA_PEGAWAI ||
+              item.PEGAWAI ||
+              "";
 
-            return;
 
-          }
+            const nipp =
+              item.NIPP ||
+              item.NIP ||
+              "";
 
-          const jabatan =
-            String(
-              item.JABATAN ||
-              item.POSISI ||
-              item.ROLE ||
-              ""
-            )
-            .toUpperCase();
 
-          let bolehMasuk =
-            jabatan === "";
+            if (!nama) {
 
-          config[1].forEach(
-            function(keyword) {
-
-              if (
-                jabatan.includes(
-                  keyword.toUpperCase()
-                )
-              ) {
-
-                bolehMasuk = true;
-
-              }
+              return;
 
             }
-          );
 
-          if (bolehMasuk) {
 
-            const option =
-              document.createElement(
-                "option"
-              );
+            const jabatan =
+              String(
+                item.JABATAN ||
+                item.POSISI ||
+                item.ROLE ||
+                ""
+              )
+              .toUpperCase();
 
-            option.value =
-              nipp
-                ? nama + " - " + nipp
-                : nama;
 
-            datalist.appendChild(
-              option
+            let bolehMasuk =
+              jabatan === "";
+
+
+            config[1].forEach(
+              function(keyword) {
+
+                if (
+                  jabatan.includes(
+                    keyword.toUpperCase()
+                  )
+                ) {
+
+                  bolehMasuk = true;
+
+                }
+
+              }
             );
 
-          }
 
-        });
+            if (bolehMasuk) {
+
+              const option =
+                document.createElement(
+                  "option"
+                );
+
+
+              option.value =
+                nipp
+                ? nama +
+                  " - " +
+                  nipp
+                : nama;
+
+
+              datalist.appendChild(
+                option
+              );
+
+            }
+
+          }
+        );
 
       }
     );
@@ -1837,31 +2168,13 @@ function muatPegawai() {
 
 
 /* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHtml(text) {
-
-  const div =
-    document.createElement("div");
-
-  div.textContent =
-    text == null
-      ? ""
-      : String(text);
-
-  return div.innerHTML;
-
-}
-
-
-/* =========================================================
    AMBIL DATA FORM
 ========================================================= */
 
 function ambilDataForm() {
 
   const checklist = [];
+
 
   document
     .querySelectorAll(
@@ -1872,15 +2185,18 @@ function ambilDataForm() {
       const id =
         item.dataset.id;
 
+
       const pilihan =
         item.querySelector(
           "input[type='radio']:checked"
         );
 
+
       const temuan =
         item.querySelector(
           ".temuan-input"
         );
+
 
       checklist.push({
 
@@ -1889,17 +2205,18 @@ function ambilDataForm() {
 
         HASIL:
           pilihan
-            ? pilihan.value
-            : "",
+          ? pilihan.value
+          : "",
 
         KETERANGAN:
           temuan
-            ? temuan.value.trim()
-            : ""
+          ? temuan.value.trim()
+          : ""
 
       });
 
     });
+
 
   return {
 
@@ -2039,6 +2356,7 @@ function validasiIdentitas() {
 
   ];
 
+
   for (
     let i = 0;
     i < fields.length;
@@ -2050,6 +2368,7 @@ function validasiIdentitas() {
         fields[i][0]
       );
 
+
     if (
       !element ||
       !element.value
@@ -2060,17 +2379,20 @@ function validasiIdentitas() {
         " wajib diisi."
       );
 
+
       if (element) {
 
         element.focus();
 
       }
 
+
       return false;
 
     }
 
   }
+
 
   return true;
 
@@ -2088,7 +2410,10 @@ function validasiChecklist() {
       ".checklist-item"
     );
 
-  if (items.length === 0) {
+
+  if (
+    items.length === 0
+  ) {
 
     alert(
       "Checklist belum tersedia."
@@ -2097,6 +2422,7 @@ function validasiChecklist() {
     return false;
 
   }
+
 
   for (
     let i = 0;
@@ -2109,6 +2435,7 @@ function validasiChecklist() {
         "input[type='radio']:checked"
       );
 
+
     if (!pilihan) {
 
       alert(
@@ -2116,6 +2443,7 @@ function validasiChecklist() {
         (i + 1) +
         " belum diisi."
       );
+
 
       items[i].scrollIntoView({
 
@@ -2125,25 +2453,15 @@ function validasiChecklist() {
 
       });
 
+
       return false;
 
     }
 
   }
 
+
   return true;
-
-}
-
-
-/* =========================================================
-   BUAT ID PEMERIKSAAN
-========================================================= */
-
-function buatIdPemeriksaan() {
-
-  return "TRX" +
-    Date.now();
 
 }
 
@@ -2160,6 +2478,7 @@ function simpanDraft() {
 
   }
 
+
   if (!idPemeriksaanAktif) {
 
     idPemeriksaanAktif =
@@ -2167,18 +2486,23 @@ function simpanDraft() {
 
   }
 
+
   const data =
     ambilDataForm();
+
 
   data.ID_PEMERIKSAAN =
     idPemeriksaanAktif;
 
+
   data.STATUS =
     "DRAFT";
+
 
   tampilkanStatus(
     "Menyimpan Draft..."
   );
+
 
   kirimPemeriksaan(
     data,
@@ -2200,11 +2524,13 @@ function simpanPemeriksaan() {
 
   }
 
+
   if (!validasiChecklist()) {
 
     return;
 
   }
+
 
   if (!idPemeriksaanAktif) {
 
@@ -2213,18 +2539,23 @@ function simpanPemeriksaan() {
 
   }
 
+
   const data =
     ambilDataForm();
+
 
   data.ID_PEMERIKSAAN =
     idPemeriksaanAktif;
 
+
   data.STATUS =
     "SELESAI";
+
 
   tampilkanStatus(
     "Menyimpan pemeriksaan..."
   );
+
 
   kirimPemeriksaan(
     data,
@@ -2277,6 +2608,7 @@ function kirimPemeriksaan(
 
     }
 
+
     return response.json();
 
   })
@@ -2288,7 +2620,11 @@ function kirimPemeriksaan(
       result
     );
 
-    if (result.success) {
+
+    if (
+      result &&
+      result.success
+    ) {
 
       idPemeriksaanAktif =
 
@@ -2297,6 +2633,7 @@ function kirimPemeriksaan(
         result.ID_PEMERIKSAAN ||
 
         data.ID_PEMERIKSAAN;
+
 
       tampilkanStatus(
 
@@ -2307,6 +2644,7 @@ function kirimPemeriksaan(
         idPemeriksaanAktif
 
       );
+
 
       alert(
 
@@ -2341,9 +2679,11 @@ function kirimPemeriksaan(
       error
     );
 
+
     tampilkanStatus(
       "Gagal menyimpan pemeriksaan."
     );
+
 
     alert(
       "Gagal menghubungi server saat menyimpan data."
@@ -2365,14 +2705,17 @@ function tampilkanStatus(pesan) {
       "statusBox"
     );
 
+
   if (!box) {
 
     return;
 
   }
 
+
   box.textContent =
     pesan;
+
 
   box.style.display =
     "block";
@@ -2391,14 +2734,17 @@ function uploadFoto() {
       "uploadFotoBox"
     );
 
+
   if (!box) {
 
     return;
 
   }
 
+
   box.style.display =
     "block";
+
 
   box.scrollIntoView({
 
@@ -2412,130 +2758,97 @@ function uploadFoto() {
 
 
 /* =========================================================
-   NOTIFIKASI CUSTOM
+   NOTIFIKASI UPLOAD FOTO
 ========================================================= */
 
-function tampilkanNotifikasiFoto(
-  judul,
+function tampilkanNotifUpload(
   pesan
 ) {
 
-  const lama =
+  const old =
     document.getElementById(
-      "notifikasiFoto"
+      "notifUploadFoto"
     );
 
-  if (lama) {
 
-    lama.remove();
+  if (old) {
+
+    old.remove();
 
   }
 
-  const overlay =
+
+  const notif =
     document.createElement(
       "div"
     );
 
-  overlay.id =
-    "notifikasiFoto";
 
-  overlay.style.position =
+  notif.id =
+    "notifUploadFoto";
+
+
+  notif.style.position =
     "fixed";
 
-  overlay.style.top =
-    "0";
+  notif.style.left =
+    "20px";
 
-  overlay.style.left =
-    "0";
+  notif.style.right =
+    "20px";
 
-  overlay.style.right =
-    "0";
+  notif.style.bottom =
+    "20px";
 
-  overlay.style.bottom =
-    "0";
-
-  overlay.style.background =
-    "rgba(0,0,0,0.35)";
-
-  overlay.style.zIndex =
-    "99999";
-
-  const box =
-    document.createElement(
-      "div"
-    );
-
-  box.style.position =
-    "absolute";
-
-  box.style.right =
-    "25px";
-
-  box.style.bottom =
-    "25px";
-
-  box.style.width =
-    "min(420px, calc(100% - 30px))";
-
-  box.style.background =
+  notif.style.background =
     "white";
 
-  box.style.borderRadius =
-    "12px";
+  notif.style.padding =
+    "20px";
 
-  box.style.padding =
-    "22px";
-
-  box.style.boxShadow =
-    "0 5px 25px rgba(0,0,0,0.25)";
-
-  const title =
-    document.createElement(
-      "div"
-    );
-
-  title.textContent =
-    judul;
-
-  title.style.fontSize =
-    "18px";
-
-  title.style.fontWeight =
-    "bold";
-
-  title.style.color =
-    "#198754";
-
-  title.style.marginBottom =
+  notif.style.borderRadius =
     "10px";
 
-  const message =
+  notif.style.boxShadow =
+    "0 4px 20px rgba(0,0,0,0.20)";
+
+  notif.style.zIndex =
+    "99999";
+
+  notif.style.maxWidth =
+    "500px";
+
+  notif.style.margin =
+    "0 auto";
+
+
+  const text =
     document.createElement(
       "div"
     );
 
-  message.textContent =
+
+  text.textContent =
     pesan;
 
-  message.style.fontSize =
-    "14px";
 
-  message.style.lineHeight =
-    "1.6";
+  text.style.marginBottom =
+    "15px";
 
-  message.style.whiteSpace =
-    "pre-line";
+
+  text.style.lineHeight =
+    "1.5";
+
 
   const tombol =
     document.createElement(
       "button"
     );
 
-  tombol.type =
-    "button";
 
   tombol.textContent =
-    "OK";
+    "OKE";
+
 
   tombol.style.display =
     "block";
@@ -2543,47 +2856,47 @@ function tampilkanNotifikasiFoto(
   tombol.style.marginLeft =
     "auto";
 
-  tombol.style.marginTop =
-    "18px";
-
-  tombol.style.padding =
-    "10px 22px";
-
-  tombol.style.border =
-    "none";
-
-  tombol.style.borderRadius =
-    "7px";
-
   tombol.style.background =
     "#198754";
 
   tombol.style.color =
     "white";
 
-  tombol.style.fontWeight =
-    "bold";
+  tombol.style.border =
+    "none";
+
+  tombol.style.padding =
+    "10px 22px";
+
+  tombol.style.borderRadius =
+    "7px";
 
   tombol.style.cursor =
     "pointer";
 
+  tombol.style.fontWeight =
+    "bold";
+
+
   tombol.onclick =
     function() {
 
-      overlay.remove();
+      notif.remove();
 
     };
 
-  box.appendChild(title);
 
-  box.appendChild(message);
+  notif.appendChild(
+    text
+  );
 
-  box.appendChild(tombol);
+  notif.appendChild(
+    tombol
+  );
 
-  overlay.appendChild(box);
 
   document.body.appendChild(
-    overlay
+    notif
   );
 
 }
@@ -2591,7 +2904,7 @@ function tampilkanNotifikasiFoto(
 
 /* =========================================================
    KIRIM FOTO
-   VERSI BERSIH
+   VERSI AMAN
 ========================================================= */
 
 async function kirimFoto() {
@@ -2600,6 +2913,7 @@ async function kirimFoto() {
     document.getElementById(
       "fotoPemeriksaan"
     );
+
 
   const status =
     document.getElementById(
@@ -2642,12 +2956,27 @@ async function kirimFoto() {
 
   if (!idPemeriksaanAktif) {
 
-    tampilkanNotifikasiFoto(
+    tampilkanNotifUpload(
+      "ID Pemeriksaan belum tersedia."
+    );
 
-      "ID Pemeriksaan belum tersedia",
+    return;
 
-      "Silakan simpan Draft atau Simpan & Selesai terlebih dahulu."
+  }
 
+
+  /* -------------------------------------------------------
+     API
+  ------------------------------------------------------- */
+
+  const url =
+    API_URL;
+
+
+  if (!url) {
+
+    alert(
+      "URL API tidak ditemukan."
     );
 
     return;
@@ -2666,10 +2995,6 @@ async function kirimFoto() {
   let gagal = 0;
 
 
-  /* -------------------------------------------------------
-     STATUS AWAL
-  ------------------------------------------------------- */
-
   if (status) {
 
     status.style.display =
@@ -2681,9 +3006,9 @@ async function kirimFoto() {
   }
 
 
-  /* =======================================================
+  /* -------------------------------------------------------
      UPLOAD SATU PER SATU
-  ======================================================= */
+  ------------------------------------------------------- */
 
   for (
     let i = 0;
@@ -2694,11 +3019,10 @@ async function kirimFoto() {
     const file =
       files[i];
 
+
     try {
 
-      /* ---------------------------------------------------
-         CEK FILE GAMBAR
-      --------------------------------------------------- */
+      /* VALIDASI FOTO */
 
       if (
         !file.type ||
@@ -2709,19 +3033,12 @@ async function kirimFoto() {
 
         gagal++;
 
-        console.warn(
-          "Bukan file gambar:",
-          file.name
-        );
-
         continue;
 
       }
 
 
-      /* ---------------------------------------------------
-         BATAS 5 MB
-      --------------------------------------------------- */
+      /* BATAS 5 MB */
 
       const ukuranMB =
         file.size /
@@ -2735,7 +3052,7 @@ async function kirimFoto() {
         gagal++;
 
         console.warn(
-          "Foto terlalu besar:",
+          "Foto lebih dari 5 MB:",
           file.name
         );
 
@@ -2744,31 +3061,21 @@ async function kirimFoto() {
       }
 
 
-      /* ---------------------------------------------------
-         STATUS
-      --------------------------------------------------- */
-
       if (status) {
 
         status.textContent =
-
           "Mengupload foto " +
-
           (i + 1) +
-
           " dari " +
-
           files.length +
-
           "...\n" +
-
           file.name;
 
       }
 
 
       console.log(
-        "UPLOAD FOTO:",
+        "UPLOAD:",
         file.name
       );
 
@@ -2821,13 +3128,13 @@ async function kirimFoto() {
 
 
       /* ---------------------------------------------------
-         KIRIM KE APPS SCRIPT
+         FETCH
       --------------------------------------------------- */
 
       const response =
         await fetch(
 
-          API_URL,
+          url,
 
           {
 
@@ -2862,7 +3169,7 @@ async function kirimFoto() {
 
 
       /* ---------------------------------------------------
-         BACA RESPONSE
+         RESPONSE
       --------------------------------------------------- */
 
       const text =
@@ -2907,6 +3214,7 @@ async function kirimFoto() {
 
         berhasil++;
 
+
         console.log(
           "UPLOAD BERHASIL:",
           file.name
@@ -2917,6 +3225,7 @@ async function kirimFoto() {
       else {
 
         gagal++;
+
 
         console.error(
           "UPLOAD GAGAL:",
@@ -2932,6 +3241,7 @@ async function kirimFoto() {
 
       gagal++;
 
+
       console.error(
         "ERROR UPLOAD:",
         file.name,
@@ -2943,9 +3253,9 @@ async function kirimFoto() {
   }
 
 
-  /* =======================================================
+  /* -------------------------------------------------------
      SELESAI
-  ======================================================= */
+  ------------------------------------------------------- */
 
   input.value =
     "";
@@ -2967,30 +3277,20 @@ async function kirimFoto() {
 
   if (status) {
 
-    status.style.display =
-      "block";
-
     status.textContent =
-
-      "Upload selesai.\n" +
-
+      "Upload selesai. " +
       "Berhasil: " +
-
       berhasil +
-
-      " foto\n" +
-
+      " foto, " +
       "Gagal: " +
-
       gagal +
-
       " foto.";
 
   }
 
 
   /* -------------------------------------------------------
-     NOTIFIKASI HASIL
+     NOTIFIKASI BERHASIL
   ------------------------------------------------------- */
 
   if (
@@ -2998,20 +3298,10 @@ async function kirimFoto() {
     gagal === 0
   ) {
 
-    tampilkanNotifikasiFoto(
-
-      "Upload Foto Berhasil",
-
-      "Semua foto berhasil diupload.\n\n" +
-
-      "ID Pemeriksaan: " +
-
-      idPemeriksaanAktif +
-
-      "\nJumlah foto: " +
-
+    tampilkanNotifUpload(
+      "Upload foto berhasil.\n\n" +
+      "Jumlah foto: " +
       berhasil
-
     );
 
   }
@@ -3021,36 +3311,23 @@ async function kirimFoto() {
     gagal > 0
   ) {
 
-    tampilkanNotifikasiFoto(
-
-      "Upload Selesai Sebagian",
-
+    tampilkanNotifUpload(
+      "Upload foto selesai sebagian.\n\n" +
       "Berhasil: " +
-
       berhasil +
-
       " foto\n" +
-
       "Gagal: " +
-
       gagal +
-
       " foto"
-
     );
 
   }
 
   else {
 
-    tampilkanNotifikasiFoto(
-
-      "Upload Gagal",
-
-      "Tidak ada foto yang berhasil diupload.\n\n" +
-
-      "Silakan periksa Console jika diperlukan."
-
+    tampilkanNotifUpload(
+      "Upload foto gagal.\n\n" +
+      "Silakan periksa koneksi dan Console."
     );
 
   }
@@ -3070,6 +3347,7 @@ function fileToBase64(file) {
       const reader =
         new FileReader();
 
+
       reader.onload =
         function(event) {
 
@@ -3079,6 +3357,7 @@ function fileToBase64(file) {
 
         };
 
+
       reader.onerror =
         function(error) {
 
@@ -3087,6 +3366,7 @@ function fileToBase64(file) {
           );
 
         };
+
 
       reader.readAsDataURL(
         file
@@ -3115,10 +3395,12 @@ document.addEventListener(
 
     }
 
+
     const preview =
       document.getElementById(
         "previewFoto"
       );
+
 
     if (!preview) {
 
@@ -3126,11 +3408,14 @@ document.addEventListener(
 
     }
 
+
     preview.innerHTML =
       "";
 
+
     const files =
       event.target.files;
+
 
     if (
       !files ||
@@ -3140,6 +3425,7 @@ document.addEventListener(
       return;
 
     }
+
 
     Array.from(files).forEach(
       function(file) {
@@ -3155,8 +3441,10 @@ document.addEventListener(
 
         }
 
+
         const reader =
           new FileReader();
+
 
         reader.onload =
           function(event) {
@@ -3166,65 +3454,83 @@ document.addEventListener(
                 "div"
               );
 
+
             wrapper.style.width =
               "140px";
 
+
             wrapper.style.textAlign =
               "center";
+
 
             const img =
               document.createElement(
                 "img"
               );
 
+
             img.src =
               event.target.result;
+
 
             img.style.width =
               "140px";
 
+
             img.style.height =
               "100px";
+
 
             img.style.objectFit =
               "cover";
 
+
             img.style.border =
               "1px solid #ccc";
 
+
             img.style.borderRadius =
               "8px";
+
 
             const nama =
               document.createElement(
                 "div"
               );
 
+
             nama.textContent =
               file.name;
+
 
             nama.style.fontSize =
               "11px";
 
+
             nama.style.marginTop =
               "5px";
 
+
             nama.style.wordBreak =
               "break-word";
+
 
             wrapper.appendChild(
               img
             );
 
+
             wrapper.appendChild(
               nama
             );
+
 
             preview.appendChild(
               wrapper
             );
 
           };
+
 
         reader.readAsDataURL(
           file
@@ -3245,22 +3551,20 @@ function tampilkanTTD() {
 
   if (!idPemeriksaanAktif) {
 
-    tampilkanNotifikasiFoto(
-
-      "ID Pemeriksaan belum tersedia",
-
-      "Silakan simpan Draft atau Simpan & Selesai terlebih dahulu."
-
+    alert(
+      "ID Pemeriksaan belum tersedia."
     );
 
     return;
 
   }
 
+
   const box =
     document.getElementById(
       "ttdBox"
     );
+
 
   if (!box) {
 
@@ -3268,10 +3572,13 @@ function tampilkanTTD() {
 
   }
 
+
   box.style.display =
     "block";
 
+
   initSignature();
+
 
   box.scrollIntoView({
 
@@ -3295,11 +3602,13 @@ function initSignature() {
       "signatureCanvas"
     );
 
+
   if (!signatureCanvas) {
 
     return;
 
   }
+
 
   const ratio =
     Math.max(
@@ -3307,19 +3616,24 @@ function initSignature() {
       1
     );
 
+
   const rect =
     signatureCanvas.getBoundingClientRect();
+
 
   signatureCanvas.width =
     rect.width * ratio;
 
+
   signatureCanvas.height =
     rect.height * ratio;
+
 
   signatureContext =
     signatureCanvas.getContext(
       "2d"
     );
+
 
   signatureContext.setTransform(
     1,
@@ -3330,28 +3644,36 @@ function initSignature() {
     0
   );
 
+
   signatureContext.scale(
     ratio,
     ratio
   );
 
+
   signatureContext.lineWidth =
     2;
+
 
   signatureContext.lineCap =
     "round";
 
+
   signatureContext.lineJoin =
     "round";
+
 
   signatureCanvas.onpointerdown =
     mulaiGambar;
 
+
   signatureCanvas.onpointermove =
     gambar;
 
+
   signatureCanvas.onpointerup =
     selesaiGambar;
+
 
   signatureCanvas.onpointerleave =
     selesaiGambar;
@@ -3360,7 +3682,7 @@ function initSignature() {
 
 
 /* =========================================================
-   MULAI TTD
+   MULAI GAMBAR
 ========================================================= */
 
 function mulaiGambar(event) {
@@ -3371,13 +3693,17 @@ function mulaiGambar(event) {
 
   }
 
+
   sedangMenggambar =
     true;
+
 
   const posisi =
     posisiCanvas(event);
 
+
   signatureContext.beginPath();
+
 
   signatureContext.moveTo(
     posisi.x,
@@ -3388,7 +3714,7 @@ function mulaiGambar(event) {
 
 
 /* =========================================================
-   GAMBAR TTD
+   GAMBAR
 ========================================================= */
 
 function gambar(event) {
@@ -3402,13 +3728,16 @@ function gambar(event) {
 
   }
 
+
   const posisi =
     posisiCanvas(event);
+
 
   signatureContext.lineTo(
     posisi.x,
     posisi.y
   );
+
 
   signatureContext.stroke();
 
@@ -3416,7 +3745,7 @@ function gambar(event) {
 
 
 /* =========================================================
-   SELESAI TTD
+   SELESAI GAMBAR
 ========================================================= */
 
 function selesaiGambar() {
@@ -3435,6 +3764,7 @@ function posisiCanvas(event) {
 
   const rect =
     signatureCanvas.getBoundingClientRect();
+
 
   return {
 
@@ -3466,6 +3796,7 @@ function clearSignature() {
 
   }
 
+
   signatureContext.clearRect(
 
     0,
@@ -3489,17 +3820,14 @@ function simpanTTD() {
 
   if (!idPemeriksaanAktif) {
 
-    tampilkanNotifikasiFoto(
-
-      "ID Pemeriksaan belum tersedia",
-
-      "Silakan simpan Draft atau Simpan & Selesai terlebih dahulu."
-
+    alert(
+      "ID Pemeriksaan belum tersedia."
     );
 
     return;
 
   }
+
 
   if (!signatureCanvas) {
 
@@ -3511,14 +3839,17 @@ function simpanTTD() {
 
   }
 
+
   const signature =
     signatureCanvas.toDataURL(
       "image/png"
     );
 
+
   tampilkanStatus(
     "Menyimpan tanda tangan..."
   );
+
 
   const data = {
 
@@ -3534,6 +3865,7 @@ function simpanTTD() {
       ) || ""
 
   };
+
 
   fetch(
 
@@ -3570,6 +3902,7 @@ function simpanTTD() {
 
     }
 
+
     return response.json();
 
   })
@@ -3581,18 +3914,19 @@ function simpanTTD() {
       result
     );
 
-    if (result.success) {
+
+    if (
+      result &&
+      result.success
+    ) {
 
       tampilkanStatus(
         "Tanda tangan berhasil disimpan."
       );
 
-      tampilkanNotifikasiFoto(
 
-        "TTD Berhasil Disimpan",
-
-        "Tanda tangan digital berhasil disimpan."
-
+      alert(
+        "Tanda tangan berhasil disimpan."
       );
 
     }
@@ -3600,11 +3934,8 @@ function simpanTTD() {
     else {
 
       alert(
-
         result.message ||
-
         "Gagal menyimpan tanda tangan."
-
       );
 
     }
@@ -3618,9 +3949,11 @@ function simpanTTD() {
       error
     );
 
+
     tampilkanStatus(
       "Gagal menyimpan tanda tangan."
     );
+
 
     alert(
       "Gagal menghubungi server."
@@ -3691,19 +4024,23 @@ function setTanggalHariIni() {
       "tanggalPemeriksaan"
     );
 
+
   if (!input) {
 
     return;
 
   }
 
+
   if (!input.value) {
 
     const sekarang =
       new Date();
 
+
     const tahun =
       sekarang.getFullYear();
+
 
     const bulan =
       String(
@@ -3713,6 +4050,7 @@ function setTanggalHariIni() {
         "0"
       );
 
+
     const tanggal =
       String(
         sekarang.getDate()
@@ -3720,6 +4058,7 @@ function setTanggalHariIni() {
         2,
         "0"
       );
+
 
     input.value =
       tahun +
@@ -3729,189 +4068,6 @@ function setTanggalHariIni() {
       tanggal;
 
   }
-
-}
-
-
-/* =========================================================
-   LOGIN PENGGUNA MANUAL
-========================================================= */
-
-function loginPengguna() {
-
-  console.log(
-    "LOGIN PENGGUNA DIPANGGIL"
-  );
-
-  const namaElement =
-    document.getElementById(
-      "loginNama"
-    );
-
-  const nippElement =
-    document.getElementById(
-      "loginNipp"
-    );
-
-  const jabatanElement =
-    document.getElementById(
-      "loginJabatan"
-    );
-
-  if (
-    !namaElement ||
-    !nippElement ||
-    !jabatanElement
-  ) {
-
-    alert(
-      "Form login tidak ditemukan."
-    );
-
-    return;
-
-  }
-
-  const nama =
-    namaElement.value.trim();
-
-  const nipp =
-    nippElement.value.trim();
-
-  const jabatan =
-    jabatanElement.value.trim();
-
-
-  /* -------------------------------------------------------
-     VALIDASI
-  ------------------------------------------------------- */
-
-  if (!nama) {
-
-    alert(
-      "Nama wajib diisi."
-    );
-
-    namaElement.focus();
-
-    return;
-
-  }
-
-  if (!nipp) {
-
-    alert(
-      "NIPP wajib diisi."
-    );
-
-    nippElement.focus();
-
-    return;
-
-  }
-
-  if (!jabatan) {
-
-    alert(
-      "Jabatan wajib diisi."
-    );
-
-    jabatanElement.focus();
-
-    return;
-
-  }
-
-
-  /* -------------------------------------------------------
-     SIMPAN SESSION
-  ------------------------------------------------------- */
-
-  sessionStorage.setItem(
-    "userNama",
-    nama
-  );
-
-  sessionStorage.setItem(
-    "userNipp",
-    nipp
-  );
-
-  sessionStorage.setItem(
-    "userJabatan",
-    jabatan
-  );
-
-
-  /* -------------------------------------------------------
-     TAMPILKAN APLIKASI
-  ------------------------------------------------------- */
-
-  const loginBox =
-    document.getElementById(
-      "googleLogin"
-    );
-
-  const app =
-    document.getElementById(
-      "app"
-    );
-
-  const infoUser =
-    document.getElementById(
-      "infoUser"
-    );
-
-
-  if (loginBox) {
-
-    loginBox.style.display =
-      "none";
-
-  }
-
-  if (app) {
-
-    app.style.display =
-      "block";
-
-  }
-
-
-  /* -------------------------------------------------------
-     INFORMASI USER
-  ------------------------------------------------------- */
-
-  if (infoUser) {
-
-    infoUser.innerHTML =
-
-      "<strong>Login berhasil</strong><br>" +
-
-      "Nama: " +
-
-      escapeHtml(nama) +
-
-      "<br>" +
-
-      "NIPP: " +
-
-      escapeHtml(nipp) +
-
-      "<br>" +
-
-      "Jabatan: " +
-
-      escapeHtml(jabatan);
-
-  }
-
-
-  /* -------------------------------------------------------
-     MASUK FORM
-  ------------------------------------------------------- */
-
-  tampilkanFormPemeriksaan();
 
 }
 
@@ -3928,13 +4084,17 @@ document.addEventListener(
       "Checklist Pengawasan Kegiatan Langsir siap."
     );
 
+
     setTanggalHariIni();
+
 
     cekSessionLogin();
 
   }
 );
+
 </script>
+
 
 </body>
 
