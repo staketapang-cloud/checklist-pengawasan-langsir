@@ -1,1909 +1,6720 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Checklist Pengawasan Kegiatan Langsir</title>
+
+<link rel="icon" href="data:,">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f9;
+  color: #222;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page-header {
+  background: #1f4e78;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.page-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+}
+
+.page-header p {
+  margin: 0;
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+#googleLogin {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.login-box {
+  width: 100%;
+  background: white;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.10);
+}
+
+.login-box h2 {
+  margin: 0 0 8px 0;
+  color: #1f4e78;
+  text-align: center;
+}
+
+.login-box > p {
+  margin: 0 0 25px 0;
+  color: #666;
+  text-align: center;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+#app {
+  display: none;
+  width: 100%;
+  max-width: 1100px;
+  margin: 25px auto;
+  padding: 0 15px 40px 15px;
+}
+
 
-  <title>Checklist Pengawasan Kegiatan Langsir</title>
+/* =========================================================
+   INFO USER
+========================================================= */
+
+.info-user {
+  background: #eef5fb;
+  border-left: 5px solid #1f4e78;
+  padding: 14px;
+  margin: 15px 0;
+  border-radius: 7px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+#formPemeriksaan {
+  display: none;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+#formPemeriksaan h2 {
+  margin-top: 0;
+  color: #1f4e78;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section-title {
+  margin-top: 25px;
+  margin-bottom: 15px;
+  padding: 12px 15px;
+  background: #1f4e78;
+  color: white;
+  border-radius: 7px;
+  font-weight: bold;
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.catatan-umum textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.catatan-umum textarea:focus {
+  outline: none;
+  border-color: #1f4e78;
+}
+
+
+/* =========================================================
+   CHECKLIST
+========================================================= */
+
+.checklist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.checklist-item {
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  padding: 16px;
+  background: #fafafa;
+}
+
+.checklist-number {
+  font-weight: bold;
+  color: #1f4e78;
+  margin-bottom: 7px;
+}
+
+.checklist-category {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 7px;
+}
+
+.checklist-question {
+  font-weight: bold;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.checklist-standard {
+  font-size: 13px;
+  background: #f0f0f0;
+  padding: 9px;
+  border-radius: 5px;
+  margin-bottom: 12px;
+}
+
+
+/* =========================================================
+   RADIO
+========================================================= */
+
+.radio-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.radio-option {
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  display: none;
+}
+
+.radio-option span {
+  display: inline-block;
+  min-width: 75px;
+  padding: 9px 14px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 7px;
+  background: #fff;
+  color: #333;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.radio-option span:hover {
+  border-color: #1f4e78;
+}
+
+.radio-option input[type="radio"]:checked + span {
+  background: #1f4e78;
+  border-color: #1f4e78;
+  color: white;
+}
+
+
+/* =========================================================
+   TEMUAN
+========================================================= */
+
+.temuan-input {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   CATATAN
+========================================================= */
+
+.catatan-umum {
+  margin-top: 20px;
+}
+
+.catatan-umum label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.catatan-umum textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-box {
+  display: none;
+  margin-top: 20px;
+  padding: 12px;
+  background: #eef5fb;
+  border-left: 5px solid #1f4e78;
+  border-radius: 6px;
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+.error-box {
+  padding: 15px;
+  background: #fff0f0;
+  border-left: 5px solid #dc3545;
+  border-radius: 6px;
+  color: #a00;
+  line-height: 1.5;
+}
+
+.loading {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  background: #f8f8f8;
+  border-radius: 7px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-draft {
+  background: #777;
+}
+
+.btn-simpan {
+  background: #198754;
+}
+
+.btn-ttd {
+  background: #6f42c1;
+}
+
+.btn-foto {
+  background: #0d6efd;
+}
+
+.btn-logout {
+  background: #dc3545;
+}
+
+.btn-secondary {
+  background: #6c757d;
+}
+
+
+/* =========================================================
+   UPLOAD FOTO
+========================================================= */
+
+#uploadFotoBox {
+  display: none;
+  margin-top: 20px;
+  padding: 20px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+}
+
+#previewFoto {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.preview-item {
+  width: 140px;
+  text-align: center;
+}
+
+.preview-item img {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.preview-name {
+  font-size: 11px;
+  margin-top: 5px;
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   TTD
+========================================================= */
+
+.ttd-box {
+  display: none;
+  margin-top: 25px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+  background: #fafafa;
+}
+
+.ttd-box h3 {
+  margin-top: 0;
+  color: #1f4e78;
+}
+
+#signatureCanvas {
+  display: block;
+  width: 100%;
+  height: 220px;
+  background: white;
+  border: 2px solid #aaa;
+  border-radius: 7px;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.ttd-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btn-clear {
+  border: none;
+  background: #dc3545;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save-ttd {
+  border: none;
+  background: #198754;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   NOTIFIKASI
+========================================================= */
+
+.notif-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-box {
+  width: 90%;
+  max-width: 420px;
+  background: white;
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.notif-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1f4e78;
+  margin-bottom: 10px;
+}
+
+.notif-message {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.notif-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.notif-ok {
+  border: none;
+  background: #198754;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+
+/* =========================================================
+   PROGRESS PROCESS
+========================================================= */
+
+.progress-box {
+  display: none;
+  margin-top: 15px;
+  padding: 15px;
+  background: #ffffff;
+  border: 1px solid #d9e1e8;
+  border-radius: 9px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #444;
+}
+
+.progress-track {
+  width: 100%;
+  height: 18px;
+  background: #e9ecef;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 100%;
+  background: #198754;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.progress-percent {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #1f4e78;
+}
+
+.progress-note {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .page-header {
+    padding: 22px 15px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+  }
+
+  #googleLogin {
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  .login-box {
+    padding: 20px;
+  }
+
+  #app {
+    padding: 0 10px 30px 10px;
+  }
+
+  #formPemeriksaan {
+    padding: 17px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .ttd-buttons {
+    flex-direction: column;
+  }
+
+  .ttd-buttons button {
+    width: 100%;
+  }
+
+  #signatureCanvas {
+    height: 200px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL SCREEN
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .login-box {
+    padding: 16px;
+  }
+
+  .radio-option {
+    flex: 1;
+  }
+
+  .radio-option span {
+    width: 100%;
+  }
+
+}
+
+</style>
 
-  <meta
-    name="description"
-    content="Sistem Informasi Checklist Pengawasan Kegiatan Langsir"
-  >
-
-  <style>
-
-    /* =====================================================
-       RESET
-    ===================================================== */
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-      background:
-        linear-gradient(
-          135deg,
-          #f4f7fb 0%,
-          #e9eef7 100%
-        );
-
-      min-height: 100vh;
-
-      color: #1f2937;
-    }
-
-
-    /* =====================================================
-       APP
-    ===================================================== */
-
-    #app {
-      min-height: 100vh;
-    }
-
-
-    /* =====================================================
-       LOGIN PAGE
-    ===================================================== */
-
-    .login-page {
-      min-height: 100vh;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 20px;
-    }
-
-    .login-card {
-      width: 100%;
-      max-width: 460px;
-
-      background: #ffffff;
-
-      border-radius: 20px;
-
-      box-shadow:
-        0 15px 40px
-        rgba(0, 0, 0, 0.12);
-
-      overflow: hidden;
-    }
-
-    .login-header {
-      background:
-        linear-gradient(
-          135deg,
-          #0f4c81,
-          #1565a8
-        );
-
-      color: white;
-
-      padding: 32px 25px;
-
-      text-align: center;
-    }
-
-    .login-logo {
-      width: 80px;
-      height: 80px;
-
-      margin: 0 auto 15px;
-
-      border-radius: 50%;
-
-      background: white;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      font-size: 38px;
-
-      box-shadow:
-        0 5px 15px
-        rgba(0,0,0,0.15);
-    }
-
-    .login-header h1 {
-      font-size: 23px;
-
-      line-height: 1.35;
-
-      margin-bottom: 8px;
-    }
-
-    .login-header p {
-      font-size: 14px;
-
-      opacity: 0.9;
-
-      line-height: 1.5;
-    }
-
-    .login-body {
-      padding: 28px;
-    }
-
-    .form-group {
-      margin-bottom: 18px;
-    }
-
-    .form-group label {
-      display: block;
-
-      font-size: 14px;
-
-      font-weight: 700;
-
-      margin-bottom: 7px;
-
-      color: #374151;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-
-      padding: 13px 14px;
-
-      border:
-        1px solid #d1d5db;
-
-      border-radius: 10px;
-
-      font-size: 15px;
-
-      outline: none;
-
-      transition:
-        border-color 0.2s,
-        box-shadow 0.2s;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: #1565a8;
-
-      box-shadow:
-        0 0 0 3px
-        rgba(21, 101, 168, 0.12);
-    }
-
-    .btn-login {
-      width: 100%;
-
-      border: none;
-
-      padding: 14px;
-
-      border-radius: 10px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #0f4c81,
-          #1565a8
-        );
-
-      color: white;
-
-      font-size: 16px;
-
-      font-weight: 700;
-
-      cursor: pointer;
-
-      transition:
-        transform 0.15s,
-        opacity 0.15s;
-    }
-
-    .btn-login:hover {
-      opacity: 0.92;
-    }
-
-    .btn-login:active {
-      transform: scale(0.98);
-    }
-
-    .btn-login:disabled {
-      opacity: 0.6;
-
-      cursor: not-allowed;
-    }
-
-    .login-info {
-      margin-top: 18px;
-
-      padding: 12px 14px;
-
-      background: #f3f4f6;
-
-      border-radius: 10px;
-
-      font-size: 12px;
-
-      line-height: 1.5;
-
-      color: #6b7280;
-
-      text-align: center;
-    }
-
-
-    /* =====================================================
-       ALERT
-    ===================================================== */
-
-    .alert {
-      display: none;
-
-      margin-bottom: 18px;
-
-      padding: 12px 14px;
-
-      border-radius: 10px;
-
-      font-size: 14px;
-
-      line-height: 1.5;
-    }
-
-    .alert.show {
-      display: block;
-    }
-
-    .alert-error {
-      background: #fee2e2;
-
-      color: #991b1b;
-
-      border:
-        1px solid #fecaca;
-    }
-
-    .alert-success {
-      background: #dcfce7;
-
-      color: #166534;
-
-      border:
-        1px solid #bbf7d0;
-    }
-
-
-    /* =====================================================
-       DASHBOARD
-    ===================================================== */
-
-    .dashboard {
-      min-height: 100vh;
-
-      display: none;
-    }
-
-    .dashboard.show {
-      display: block;
-    }
-
-
-    /* =====================================================
-       TOPBAR
-    ===================================================== */
-
-    .topbar {
-      background:
-        linear-gradient(
-          135deg,
-          #0f4c81,
-          #1565a8
-        );
-
-      color: white;
-
-      padding:
-        15px 22px;
-
-      box-shadow:
-        0 3px 12px
-        rgba(0,0,0,0.12);
-
-      position: sticky;
-
-      top: 0;
-
-      z-index: 100;
-    }
-
-    .topbar-inner {
-      max-width: 1200px;
-
-      margin: auto;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 15px;
-    }
-
-    .brand h2 {
-      font-size: 18px;
-
-      margin-bottom: 3px;
-    }
-
-    .brand span {
-      font-size: 12px;
-
-      opacity: 0.85;
-    }
-
-    .user-area {
-      display: flex;
-
-      align-items: center;
-
-      gap: 10px;
-    }
-
-    .user-info {
-      text-align: right;
-    }
-
-    .user-info strong {
-      display: block;
-
-      font-size: 13px;
-    }
-
-    .user-info small {
-      font-size: 11px;
-
-      opacity: 0.85;
-    }
-
-    .btn-logout {
-      border:
-        1px solid
-        rgba(255,255,255,0.5);
-
-      background:
-        rgba(255,255,255,0.1);
-
-      color: white;
-
-      padding:
-        9px 13px;
-
-      border-radius: 8px;
-
-      cursor: pointer;
-
-      font-size: 12px;
-
-      font-weight: 700;
-    }
-
-
-    /* =====================================================
-       CONTENT
-    ===================================================== */
-
-    .content {
-      max-width: 1200px;
-
-      margin: auto;
-
-      padding: 25px 20px 40px;
-    }
-
-
-    /* =====================================================
-       WELCOME
-    ===================================================== */
-
-    .welcome-card {
-      background: white;
-
-      border-radius: 16px;
-
-      padding: 22px;
-
-      box-shadow:
-        0 5px 18px
-        rgba(0,0,0,0.07);
-
-      margin-bottom: 20px;
-    }
-
-    .welcome-card h3 {
-      font-size: 20px;
-
-      margin-bottom: 6px;
-    }
-
-    .welcome-card p {
-      font-size: 14px;
-
-      color: #6b7280;
-
-      line-height: 1.5;
-    }
-
-
-    /* =====================================================
-       MENU
-    ===================================================== */
-
-    .menu-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      gap: 15px;
-    }
-
-    .menu-card {
-      background: white;
-
-      border-radius: 15px;
-
-      padding: 20px;
-
-      box-shadow:
-        0 5px 18px
-        rgba(0,0,0,0.07);
-
-      cursor: pointer;
-
-      transition:
-        transform 0.2s,
-        box-shadow 0.2s;
-    }
-
-    .menu-card:hover {
-      transform:
-        translateY(-3px);
-
-      box-shadow:
-        0 9px 25px
-        rgba(0,0,0,0.1);
-    }
-
-    .menu-icon {
-      font-size: 30px;
-
-      margin-bottom: 10px;
-    }
-
-    .menu-card h4 {
-      font-size: 15px;
-
-      margin-bottom: 5px;
-    }
-
-    .menu-card p {
-      font-size: 12px;
-
-      color: #6b7280;
-
-      line-height: 1.4;
-    }
-
-
-    /* =====================================================
-       STATUS API
-    ===================================================== */
-
-    .api-status {
-      margin-top: 20px;
-
-      background: white;
-
-      padding: 15px 18px;
-
-      border-radius: 12px;
-
-      box-shadow:
-        0 4px 15px
-        rgba(0,0,0,0.06);
-
-      font-size: 13px;
-    }
-
-    .status-dot {
-      display: inline-block;
-
-      width: 9px;
-      height: 9px;
-
-      border-radius: 50%;
-
-      background: #22c55e;
-
-      margin-right: 7px;
-    }
-
-
-    /* =====================================================
-       LOADING
-    ===================================================== */
-
-    .loading-overlay {
-      position: fixed;
-
-      inset: 0;
-
-      background:
-        rgba(255,255,255,0.88);
-
-      display: none;
-
-      align-items: center;
-
-      justify-content: center;
-
-      z-index: 9999;
-    }
-
-    .loading-overlay.show {
-      display: flex;
-    }
-
-    .loading-box {
-      text-align: center;
-
-      background: white;
-
-      padding: 25px 30px;
-
-      border-radius: 15px;
-
-      box-shadow:
-        0 10px 35px
-        rgba(0,0,0,0.15);
-    }
-
-    .spinner {
-      width: 40px;
-      height: 40px;
-
-      margin:
-        0 auto 15px;
-
-      border:
-        4px solid #e5e7eb;
-
-      border-top-color:
-        #1565a8;
-
-      border-radius: 50%;
-
-      animation:
-        spin 0.8s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform:
-          rotate(360deg);
-      }
-    }
-
-    .loading-box p {
-      font-size: 14px;
-
-      color: #374151;
-    }
-
-
-    /* =====================================================
-       MOBILE
-    ===================================================== */
-
-    @media (max-width: 900px) {
-
-      .menu-grid {
-        grid-template-columns:
-          repeat(2, 1fr);
-      }
-
-    }
-
-    @media (max-width: 600px) {
-
-      .login-page {
-        padding: 12px;
-      }
-
-      .login-card {
-        border-radius: 16px;
-      }
-
-      .login-header {
-        padding: 25px 18px;
-      }
-
-      .login-header h1 {
-        font-size: 20px;
-      }
-
-      .login-body {
-        padding: 22px;
-      }
-
-      .topbar {
-        padding:
-          12px 15px;
-      }
-
-      .topbar-inner {
-        align-items: flex-start;
-      }
-
-      .brand h2 {
-        font-size: 15px;
-      }
-
-      .brand span {
-        font-size: 10px;
-      }
-
-      .user-info {
-        display: none;
-      }
-
-      .content {
-        padding:
-          18px 12px 30px;
-      }
-
-      .menu-grid {
-        grid-template-columns:
-          1fr 1fr;
-
-        gap: 10px;
-      }
-
-      .menu-card {
-        padding: 15px;
-      }
-
-      .menu-icon {
-        font-size: 25px;
-      }
-
-    }
-
-    @media (max-width: 400px) {
-
-      .menu-grid {
-        grid-template-columns:
-          1fr;
-      }
-
-    }
-
-  </style>
 </head>
 
 
 <body>
 
-  <div id="app">
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<div class="page-header">
+
+  <h1>
+    Checklist Pengawasan Kegiatan Langsir
+  </h1>
+
+  <p>
+    Form Ini Sesuai Dengan Peraturan Tambahan Dinas Operasi (PTDO)
+  </p>
+
+</div>
 
 
-    <!-- ===================================================
-         LOGIN
-    ==================================================== -->
+<!-- =========================================================
+     LOGIN MANUAL
+========================================================= -->
 
-    <section
-      id="loginPage"
-      class="login-page"
+<div id="googleLogin">
+
+  <div class="login-box">
+
+    <h2>
+      Login Pengguna
+    </h2>
+
+    <p>
+      Silakan masukkan data pengguna untuk masuk ke sistem.
+    </p>
+
+
+    <div class="form-group">
+
+      <label for="loginNama">
+        Nama
+      </label>
+
+      <input
+        type="text"
+        id="loginNama"
+        placeholder="Masukkan Nama"
+        autocomplete="name"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="loginNipp">
+        NIPP
+      </label>
+
+      <input
+        type="text"
+        id="loginNipp"
+        inputmode="numeric"
+        autocomplete="off"
+        placeholder="Masukkan NIPP"
+      >
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label for="loginJabatan">
+        Jabatan
+      </label>
+
+      <input
+        type="text"
+        id="loginJabatan"
+        placeholder="Masukkan Jabatan"
+        autocomplete="organization-title"
+      >
+
+    </div>
+
+
+    <button
+      type="button"
+      class="btn btn-simpan"
+      style="width:100%;"
+      onclick="loginPengguna()"
+    >
+      MASUK
+    </button>
+
+
+    <div
+      id="statusLogin"
+      class="status-box"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
+
+<div id="app">
+
+
+  <!-- INFO USER -->
+
+  <div id="infoUser"
+       class="info-user">
+  </div>
+
+
+  <!-- FORM -->
+
+  <div id="formPemeriksaan">
+
+
+    <h2>
+      Lampiran Checklist Pengawasan Kegiatan Langsir
+    </h2>
+
+
+    <!-- =====================================================
+         IDENTITAS PEMERIKSAAN
+    ====================================================== -->
+
+    <div id="identitasPemeriksaan">
+
+
+      <div class="form-group">
+
+        <label for="tanggalPemeriksaan">
+          Hari / Tanggal
+        </label>
+
+        <input
+          type="date"
+          id="tanggalPemeriksaan"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="dinasLangsirPemeriksaan">
+          Dinas Langsir
+        </label>
+
+        <select id="dinasLangsirPemeriksaan">
+
+          <option value="">
+            Pilih Dinas Langsir
+          </option>
+
+          <option value="DINAS PAGI">
+            DINAS PAGI
+          </option>
+
+          <option value="DINAS SIANG">
+            DINAS SIANG
+          </option>
+
+          <option value="DINAS MALAM">
+            DINAS MALAM
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="stasiunPemeriksaan">
+          Stasiun / Emplasemen
+        </label>
+
+        <select id="stasiunPemeriksaan">
+
+          <option value="">
+            Pilih Stasiun / Emplasemen
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="lokomotifPemeriksaan">
+          Lokomotif
+        </label>
+
+        <select id="lokomotifPemeriksaan">
+
+          <option value="">
+            Pilih Lokomotif
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- ===================================================
+           PETUGAS
+      ==================================================== -->
+
+      <div class="section-title">
+        Data Petugas
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="masinisPemeriksaan">
+          Masinis
+        </label>
+
+        <input
+          type="text"
+          id="masinisPemeriksaan"
+          list="listMasinis"
+          placeholder="Ketik Nama atau NIPP Masinis"
+        >
+
+        <datalist id="listMasinis"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="asistenMasinisPemeriksaan">
+          Asisten Masinis
+        </label>
+
+        <input
+          type="text"
+          id="asistenMasinisPemeriksaan"
+          list="listAsistenMasinis"
+          placeholder="Ketik Nama atau NIPP Asisten Masinis"
+        >
+
+        <datalist id="listAsistenMasinis"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="plr1Pemeriksaan">
+          PLR 1
+        </label>
+
+        <input
+          type="text"
+          id="plr1Pemeriksaan"
+          list="listPlr1"
+          placeholder="Ketik Nama atau NIPP PLR 1"
+        >
+
+        <datalist id="listPlr1"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="plr2Pemeriksaan">
+          PLR 2
+        </label>
+
+        <input
+          type="text"
+          id="plr2Pemeriksaan"
+          list="listPlr2"
+          placeholder="Ketik Nama atau NIPP PLR 2"
+        >
+
+        <datalist id="listPlr2"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="plrDipoPemeriksaan">
+          PLR DIPO
+        </label>
+
+        <input
+          type="text"
+          id="plrDipoPemeriksaan"
+          list="listPlrDipo"
+          placeholder="Ketik Nama atau NIPP PLR DIPO"
+        >
+
+        <datalist id="listPlrDipo"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="petugasSchowingPemeriksaan">
+          Petugas Schowing
+        </label>
+
+        <input
+          type="text"
+          id="petugasSchowingPemeriksaan"
+          list="listSchowing"
+          placeholder="Ketik Nama atau NIPP Petugas Schowing"
+        >
+
+        <datalist id="listSchowing"></datalist>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CHECKLIST
+    ====================================================== -->
+
+    <div class="section-title">
+      Checklist Pengawasan
+    </div>
+
+
+    <div
+      id="checklistContainer"
+      class="checklist-container"
     >
 
-      <div class="login-card">
+      <div class="loading">
+        Memuat checklist...
+      </div>
 
-        <div class="login-header">
+    </div>
 
-          <div class="login-logo">
-            🚂
-          </div>
 
-          <h1>
-            Checklist Pengawasan
-            Kegiatan Langsir
-          </h1>
+    <!-- =====================================================
+         CATATAN
+    ====================================================== -->
 
-          <p>
-            Sistem Informasi Pengawasan
-            Kegiatan Langsir
-          </p>
+    <div class="catatan-umum">
 
+      <label for="catatanPemeriksaan">
+        CATATAN:
+      </label>
+
+      <textarea
+        id="catatanPemeriksaan"
+        placeholder="Tulis catatan / temuan pemeriksaan..."
+      ></textarea>
+
+    </div>
+
+
+    <!-- =====================================================
+         STATUS
+    ====================================================== -->
+
+    <div
+      id="statusBox"
+      class="status-box"
+    ></div>
+
+
+    <div id="progressSimpan" class="progress-box">
+
+      <div class="progress-label">
+        <span id="progressSimpanLabel">Menyimpan pemeriksaan</span>
+        <span id="progressSimpanStep">0 / 4</span>
+      </div>
+
+      <div class="progress-track">
+        <div id="progressSimpanBar" class="progress-bar"></div>
+      </div>
+
+      <div id="progressSimpanPercent" class="progress-percent">0%</div>
+
+      <div id="progressSimpanNote" class="progress-note">
+        Menyiapkan data pemeriksaan...
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         BUTTON
+    ====================================================== -->
+
+    <div class="button-group">
+
+
+
+
+      <button
+        type="button"
+        class="btn btn-foto"
+        onclick="uploadFoto()"
+      >
+        UPLOAD FOTO
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-ttd"
+        onclick="tampilkanTTD()"
+      >
+        TTD
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-simpan"
+        onclick="simpanPemeriksaan()"
+      >
+        SIMPAN & SELESAI
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-logout"
+        onclick="logoutPengguna()"
+      >
+        KELUAR
+      </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         UPLOAD FOTO
+    ====================================================== -->
+
+    <div id="uploadFotoBox">
+
+      <div class="section-title">
+        Upload Foto Dokumentasi
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="fotoPemeriksaan">
+          Pilih Foto
+        </label>
+
+        <input
+          type="file"
+          id="fotoPemeriksaan"
+          accept="image/*"
+          multiple
+        >
+
+      </div>
+
+
+      <div id="previewFoto"></div>
+
+
+      <div class="button-group">
+
+        <button
+          type="button"
+          class="btn btn-simpan"
+          onclick="kirimFoto()"
+        >
+          KIRIM FOTO
+        </button>
+
+      </div>
+
+
+      <div
+        id="statusUploadFoto"
+        class="status-box"
+      ></div>
+
+
+      <div id="progressUploadFoto" class="progress-box">
+
+        <div class="progress-label">
+          <span id="progressUploadLabel">Upload foto</span>
+          <span id="progressUploadCount">0 / 0</span>
         </div>
 
+        <div class="progress-track">
+          <div id="progressUploadBar" class="progress-bar"></div>
+        </div>
 
-        <div class="login-body">
+        <div id="progressUploadPercent" class="progress-percent">0%</div>
 
-          <div
-            id="loginAlert"
-            class="alert"
-          ></div>
-
-
-          <!-- NAMA -->
-
-          <div class="form-group">
-
-            <label for="namaLogin">
-              Nama
-            </label>
-
-            <input
-              type="text"
-              id="namaLogin"
-              placeholder="Masukkan nama"
-              autocomplete="off"
-            >
-
-          </div>
-
-
-          <!-- NIPP -->
-
-          <div class="form-group">
-
-            <label for="nippLogin">
-              NIPP
-            </label>
-
-            <input
-              type="text"
-              id="nippLogin"
-              placeholder="Masukkan NIPP"
-              autocomplete="off"
-            >
-
-          </div>
-
-
-          <!-- JABATAN -->
-
-          <div class="form-group">
-
-            <label for="jabatanLogin">
-              Jabatan
-            </label>
-
-            <input
-              type="text"
-              id="jabatanLogin"
-              placeholder="Masukkan jabatan"
-              autocomplete="off"
-            >
-
-          </div>
-
-
-          <button
-            type="button"
-            id="btnLogin"
-            class="btn-login"
-            onclick="loginPengguna()"
-          >
-            MASUK
-          </button>
-
-
-          <div class="login-info">
-
-            Login menggunakan
-            <strong>NAMA + NIPP + JABATAN</strong>.
-
-            <br>
-
-            Tidak menggunakan akun Google
-            maupun email.
-
-          </div>
-
+        <div id="progressUploadNote" class="progress-note">
+          Menyiapkan proses upload...
         </div>
 
       </div>
 
-    </section>
+    </div>
 
 
+    <!-- =====================================================
+         TTD
+    ====================================================== -->
 
-    <!-- ===================================================
-         DASHBOARD
-    ==================================================== -->
-
-    <section
-      id="dashboardPage"
-      class="dashboard"
+    <div
+      id="ttdBox"
+      class="ttd-box"
     >
 
-      <header class="topbar">
-
-        <div class="topbar-inner">
-
-          <div class="brand">
-
-            <h2>
-              Checklist Pengawasan Langsir
-            </h2>
-
-            <span>
-              Sistem Informasi Pengawasan
-            </span>
-
-          </div>
-
-
-          <div class="user-area">
-
-            <div class="user-info">
-
-              <strong id="displayNama">
-                -
-              </strong>
-
-              <small id="displayJabatan">
-                -
-              </small>
-
-            </div>
-
-
-            <button
-              type="button"
-              class="btn-logout"
-              onclick="logoutPengguna()"
-            >
-              KELUAR
-            </button>
-
-          </div>
-
-        </div>
-
-      </header>
-
-
-      <main class="content">
-
-
-        <div class="welcome-card">
-
-          <h3>
-            Selamat Datang 👋
-          </h3>
-
-          <p>
-            Anda telah berhasil masuk ke
-            Sistem Informasi Checklist
-            Pengawasan Kegiatan Langsir.
-          </p>
-
-        </div>
-
-
-        <div class="menu-grid">
-
-
-          <div
-            class="menu-card"
-            onclick="menuBelumTersedia('Pemeriksaan')"
-          >
-
-            <div class="menu-icon">
-              📋
-            </div>
-
-            <h4>
-              Pemeriksaan
-            </h4>
-
-            <p>
-              Membuat checklist
-              pengawasan kegiatan langsir.
-            </p>
-
-          </div>
-
-
-          <div
-            class="menu-card"
-            onclick="menuBelumTersedia('Riwayat Pemeriksaan')"
-          >
-
-            <div class="menu-icon">
-              📑
-            </div>
-
-            <h4>
-              Riwayat
-            </h4>
-
-            <p>
-              Melihat data pemeriksaan
-              yang telah tersimpan.
-            </p>
-
-          </div>
-
-
-          <div
-            class="menu-card"
-            onclick="menuBelumTersedia('Rekap Pemeriksaan')"
-          >
-
-            <div class="menu-icon">
-              📊
-            </div>
-
-            <h4>
-              Rekap
-            </h4>
-
-            <p>
-              Melihat rekapitulasi
-              hasil pemeriksaan.
-            </p>
-
-          </div>
-
-
-          <div
-            class="menu-card"
-            onclick="menuBelumTersedia('Dashboard')"
-          >
-
-            <div class="menu-icon">
-              📈
-            </div>
-
-            <h4>
-              Dashboard
-            </h4>
-
-            <p>
-              Informasi dan statistik
-              pengawasan.
-            </p>
-
-          </div>
-
-
-        </div>
-
-
-        <div class="api-status">
-
-          <span class="status-dot"></span>
-
-          <strong>
-            Sistem terhubung
-          </strong>
-
-          <span id="apiStatusText">
-            — API Google Apps Script siap digunakan
-          </span>
-
-        </div>
-
-
-      </main>
-
-    </section>
-
-  </div>
-
-
-
-  <!-- =====================================================
-       LOADING
-  ====================================================== -->
-
-  <div
-    id="loadingOverlay"
-    class="loading-overlay"
-  >
-
-    <div class="loading-box">
-
-      <div class="spinner"></div>
-
-      <p id="loadingText">
-        Memproses...
+      <h3>
+        Tanda Tangan Digital
+      </h3>
+
+      <p>
+        Silakan tanda tangan pada kotak berikut.
       </p>
+
+
+      <canvas
+        id="signatureCanvas"
+      ></canvas>
+
+
+      <div class="ttd-buttons">
+
+        <button
+          type="button"
+          class="btn-clear"
+          onclick="clearSignature()"
+        >
+          Hapus
+        </button>
+
+
+        <button
+          type="button"
+          class="btn-save-ttd"
+          onclick="simpanTTD()"
+        >
+          Simpan TTD
+        </button>
+
+      </div>
 
     </div>
 
+
   </div>
 
+</div>
 
 
-  <script>
+<!-- =========================================================
+     NOTIFIKASI UMUM
+========================================================= -->
 
-    /* =====================================================
-       KONFIGURASI API
-       
-       LOGIN MANUAL
-       TIDAK MENGGUNAKAN EMAIL
-       TIDAK MENGGUNAKAN GOOGLE LOGIN
-    ===================================================== */
+<div
+  id="notifFoto"
+  class="notif-overlay"
+>
 
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+  <div class="notif-box">
+
+<div
+  id="notifFotoTitle"
+  class="notif-title"
+>
+  Informasi
+</div>
+
+<div
+  id="notifFotoMessage"
+  class="notif-message"
+></div>
+
+<div class="notif-footer">
+
+  <button
+    type="button"
+    id="notifFotoButton"
+    class="notif-ok"
+    onclick="tutupNotifFoto()"
+  >
+    OK
+  </button>
+
+</div>
+
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   NOTIFIKASI UMUM
+========================================================= */
+
+function tampilkanNotifFoto(
+  judul,
+  pesan,
+  setelahOK
+) {
+
+  const overlay =
+    document.getElementById("notifFoto");
+
+  const title =
+    document.getElementById("notifFotoTitle");
+
+  const message =
+    document.getElementById("notifFotoMessage");
+
+  const button =
+    document.getElementById("notifFotoButton");
 
 
-    /* =====================================================
-       DATA SESSION
-    ===================================================== */
-
-    let penggunaLogin = null;
+  if (!overlay) {
+    return;
+  }
 
 
-    /* =====================================================
-       ELEMENT HELPER
-    ===================================================== */
+  if (title) {
+    title.textContent =
+      judul || "Informasi";
+  }
 
-    function el(id) {
 
-      return document.getElementById(id);
+  if (message) {
+    message.textContent =
+      pesan || "";
+  }
+
+
+  /*
+   * Simpan aksi setelah tombol diklik
+   */
+  overlay.dataset.afterOk =
+    setelahOK || "none";
+
+
+  /*
+   * Tombol default
+   */
+  if (button) {
+
+    button.textContent =
+      "OK";
+
+    button.onclick =
+      tutupNotifFoto;
+
+  }
+
+
+  overlay.style.display =
+    "flex";
+
+}
+
+
+/* =========================================================
+   TUTUP NOTIFIKASI
+========================================================= */
+
+function tutupNotifFoto() {
+
+  const overlay =
+    document.getElementById("notifFoto");
+
+  if (!overlay) {
+    return;
+  }
+
+
+  const aksi =
+    overlay.dataset.afterOk || "none";
+
+
+  overlay.style.display =
+    "none";
+
+
+  overlay.dataset.afterOk =
+    "none";
+
+
+  /*
+   * KEMBALI KE FORM
+   */
+  if (aksi === "form") {
+
+    kembaliKeFormPemeriksaan();
+
+    return;
+
+  }
+
+
+  /*
+   * MENU LOGIN
+   */
+  if (aksi === "login") {
+
+    kembaliKeLogin();
+
+    return;
+
+  }
+
+
+  /*
+   * TTD
+   */
+  if (aksi === "ttd") {
+
+    aktifkanTTDSetelahFoto();
+
+    return;
+
+  }
+
+}
+
+
+/* =========================================================
+   KEMBALI KE FORM PEMERIKSAAN
+========================================================= */
+
+function kembaliKeFormPemeriksaan() {
+
+  const login =
+    document.getElementById("googleLogin");
+
+  const app =
+    document.getElementById("app");
+
+  const form =
+    document.getElementById("formPemeriksaan");
+
+  const ttd =
+    document.getElementById("ttdBox");
+
+
+  if (login) {
+    login.style.display =
+      "none";
+  }
+
+
+  if (app) {
+    app.style.display =
+      "block";
+  }
+
+
+  if (form) {
+    form.style.display =
+      "block";
+  }
+
+
+  if (ttd) {
+    ttd.style.display =
+      "none";
+  }
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =========================================================
+   NOTIFIKASI TTD BERHASIL
+========================================================= */
+
+function tampilkanNotifTTDBerhasil(
+  idPemeriksaan
+) {
+
+  tampilkanNotifFoto(
+
+    "Tanda tangan berhasil disimpan",
+
+    "Tanda tangan digital berhasil disimpan.\n\n" +
+    "ID Pemeriksaan: " +
+    idPemeriksaan,
+
+    "form"
+
+  );
+
+}
+
+
+/* =========================================================
+   NOTIFIKASI FORM BERHASIL DIREKAM
+========================================================= */
+
+function tampilkanNotifFormBerhasil() {
+
+  const overlay =
+    document.getElementById("notifFoto");
+
+  const title =
+    document.getElementById("notifFotoTitle");
+
+  const message =
+    document.getElementById("notifFotoMessage");
+
+  const button =
+    document.getElementById("notifFotoButton");
+
+
+  if (!overlay) {
+    return;
+  }
+
+
+  if (title) {
+
+    title.textContent =
+      "Form Checklist Pengawasan Langsir Anda Telah Terekam";
+
+  }
+
+
+  if (message) {
+
+    message.textContent =
+      "Form Checklist Pengawasan Langsir Anda Telah Terekam.\n\n" +
+      "Apakah Anda yakin ingin keluar?";
+
+  }
+
+
+  if (button) {
+
+    button.textContent =
+      "KELUAR";
+
+    button.onclick =
+      keluarKeLogin;
+
+  }
+
+
+  overlay.dataset.afterOk =
+    "login";
+
+
+  overlay.style.display =
+    "flex";
+
+}
+
+
+/* =========================================================
+   KELUAR KE LOGIN
+========================================================= */
+
+function keluarKeLogin() {
+
+  const overlay =
+    document.getElementById("notifFoto");
+
+  if (overlay) {
+
+    overlay.style.display =
+      "none";
+
+  }
+
+
+  /*
+   * HAPUS SESSION USER
+   */
+  sessionStorage.removeItem(
+    "userNama"
+  );
+
+  sessionStorage.removeItem(
+    "userNipp"
+  );
+
+  sessionStorage.removeItem(
+    "userJabatan"
+  );
+
+  sessionStorage.removeItem(
+    "userEmail"
+  );
+
+  sessionStorage.removeItem(
+    "idPemeriksaanAktif"
+  );
+
+
+  /*
+   * RESET VARIABLE
+   */
+  idPemeriksaanAktif =
+    "";
+
+  ttdSiap =
+    false;
+
+
+  /*
+   * TAMPILKAN LOGIN
+   */
+  const login =
+    document.getElementById("googleLogin");
+
+  const app =
+    document.getElementById("app");
+
+  const form =
+    document.getElementById("formPemeriksaan");
+
+  const ttd =
+    document.getElementById("ttdBox");
+
+  const upload =
+    document.getElementById("uploadFotoBox");
+
+
+  if (login) {
+
+    login.style.display =
+      "block";
+
+  }
+
+
+  if (app) {
+
+    app.style.display =
+      "none";
+
+  }
+
+
+  if (form) {
+
+    form.style.display =
+      "none";
+
+  }
+
+
+  if (ttd) {
+
+    ttd.style.display =
+      "none";
+
+  }
+
+
+  if (upload) {
+
+    upload.style.display =
+      "none";
+
+  }
+
+
+  /*
+   * Bersihkan form login
+   */
+  const nama =
+    document.getElementById("loginNama");
+
+  const nipp =
+    document.getElementById("loginNipp");
+
+  const jabatan =
+    document.getElementById("loginJabatan");
+
+
+  if (nama) {
+    nama.value = "";
+  }
+
+
+  if (nipp) {
+    nipp.value = "";
+  }
+
+
+  if (jabatan) {
+    jabatan.value = "";
+  }
+
+
+  /*
+   * Kembali ke bagian paling atas
+   */
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =========================================================
+   ALIAS
+   Supaya fungsi lama tetap aman
+========================================================= */
+
+function kembaliKeLogin() {
+
+  keluarKeLogin();
+
+}
+
+
+/* =========================================================
+   KONFIGURASI API
+========================================================= */
+
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+
+
+/* =========================================================
+   VARIABEL GLOBAL
+========================================================= */
+
+let idPemeriksaanAktif = "";
+
+let signatureCanvas = null;
+
+let signatureContext = null;
+
+let sedangMenggambar = false;
+
+let signatureInitialized = false;
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text == null
+      ? ""
+      : String(text);
+
+  return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   BUAT ID
+========================================================= */
+
+function buatIdPemeriksaan() {
+
+  return "TRX" + Date.now();
+
+}
+
+
+/* =========================================================
+   SET STATUS LOGIN
+========================================================= */
+
+function tampilkanStatusLogin(pesan) {
+
+  const box =
+    document.getElementById("statusLogin");
+
+  if (!box) {
+    return;
+  }
+
+  box.textContent =
+    pesan || "";
+
+  box.style.display =
+    pesan
+      ? "block"
+      : "none";
+
+}
+
+
+/* =========================================================
+   LOGIN MANUAL
+========================================================= */
+
+function loginPengguna() {
+
+  const namaElement = document.getElementById("loginNama");
+  const nippElement = document.getElementById("loginNipp");
+  const jabatanElement = document.getElementById("loginJabatan");
+
+  if (!namaElement || !nippElement || !jabatanElement) {
+    alert("Form login tidak ditemukan.");
+    return;
+  }
+
+  const nama = namaElement.value.trim();
+  const nipp = nippElement.value.trim();
+  const jabatan = jabatanElement.value.trim();
+
+  if (!nama) {
+    alert("Nama wajib diisi.");
+    namaElement.focus();
+    return;
+  }
+
+  if (!nipp) {
+    alert("NIPP wajib diisi.");
+    nippElement.focus();
+    return;
+  }
+
+  if (!jabatan) {
+    alert("Jabatan wajib diisi.");
+    jabatanElement.focus();
+    return;
+  }
+
+  const tombol = document.querySelector('#googleLogin button[onclick="loginPengguna()"]');
+  if (tombol) {
+    tombol.disabled = true;
+    tombol.textContent = "MENYIMPAN...";
+  }
+
+  tampilkanStatusLogin("Mencatat data login ke USER...");
+
+  // Bersihkan pemeriksaan lama agar login baru tidak tertukar.
+  idPemeriksaanAktif = "";
+  sessionStorage.removeItem("idPemeriksaanAktif");
+
+  // Simpan sesi lokal. Tidak menggunakan EMAIL.
+  sessionStorage.setItem("userNama", nama);
+  sessionStorage.setItem("userNipp", nipp);
+  sessionStorage.setItem("userJabatan", jabatan);
+  sessionStorage.setItem("userEmail", "");
+
+  // Catat login ke Sheet USER melalui Apps Script.
+  kirimRequestPost("simpan_user", {
+    NAMA: nama,
+    NIPP: nipp,
+    JABATAN: jabatan
+  })
+  .then(function(result) {
+
+    if (!result || result.success !== true) {
+      throw new Error(
+        result && result.message
+          ? result.message
+          : "Data login gagal dicatat ke Sheet USER."
+      );
+    }
+
+    tampilkanStatusLogin("Login berhasil. Data pengguna sudah tercatat.");
+    bukaAplikasi();
+
+  })
+  .catch(function(error) {
+
+    console.error("GAGAL SIMPAN USER:", error);
+    tampilkanStatusLogin(
+      "Gagal mencatat login ke server.\n" +
+      error.message
+    );
+
+    alert(
+      "Login belum dapat dilanjutkan karena data pengguna belum berhasil dicatat ke Sheet USER.\n\n" +
+      error.message
+    );
+
+  })
+  .finally(function() {
+
+    if (tombol) {
+      tombol.disabled = false;
+      tombol.textContent = "MASUK";
+    }
+
+  });
+
+}
+
+
+/* =========================================================
+   BUKA APLIKASI
+========================================================= */
+
+function bukaAplikasi() {
+
+  const loginBox =
+    document.getElementById("googleLogin");
+
+  const app =
+    document.getElementById("app");
+
+  const form =
+    document.getElementById("formPemeriksaan");
+
+
+  if (loginBox) {
+
+    loginBox.style.display =
+      "none";
+
+  }
+
+
+  if (app) {
+
+    app.style.display =
+      "block";
+
+  }
+
+
+  if (form) {
+
+    form.style.display =
+      "block";
+
+  }
+
+
+  const nama =
+    sessionStorage.getItem(
+      "userNama"
+    ) || "";
+
+  const nipp =
+    sessionStorage.getItem(
+      "userNipp"
+    ) || "";
+
+  const jabatan =
+    sessionStorage.getItem(
+      "userJabatan"
+    ) || "";
+
+
+  tampilkanInfoUser(
+    nama,
+    nipp,
+    jabatan
+  );
+
+
+  setTanggalHariIni();
+
+
+  muatSemuaData();
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logoutPengguna() {
+
+  const yakin =
+    confirm(
+      "Apakah Anda yakin ingin keluar dari sistem?"
+    );
+
+
+  if (!yakin) {
+    return;
+  }
+
+
+  sessionStorage.removeItem(
+    "userNama"
+  );
+
+  sessionStorage.removeItem(
+    "userNipp"
+  );
+
+  sessionStorage.removeItem(
+    "userJabatan"
+  );
+
+  sessionStorage.removeItem(
+    "userEmail"
+  );
+
+  sessionStorage.removeItem(
+    "idPemeriksaanAktif"
+  );
+
+
+  idPemeriksaanAktif =
+    "";
+
+
+  /*
+   * RESET FORM
+   */
+
+  resetFormPemeriksaan();
+
+
+  /*
+   * KEMBALI KE LOGIN
+   */
+
+  const loginBox =
+    document.getElementById(
+      "googleLogin"
+    );
+
+  const app =
+    document.getElementById(
+      "app"
+    );
+
+
+  if (loginBox) {
+
+    loginBox.style.display =
+      "block";
+
+  }
+
+
+  if (app) {
+
+    app.style.display =
+      "none";
+
+  }
+
+
+  /*
+   * Kosongkan login
+   */
+
+  const nama =
+    document.getElementById(
+      "loginNama"
+    );
+
+  const nipp =
+    document.getElementById(
+      "loginNipp"
+    );
+
+  const jabatan =
+    document.getElementById(
+      "loginJabatan"
+    );
+
+
+  if (nama) {
+    nama.value = "";
+  }
+
+  if (nipp) {
+    nipp.value = "";
+  }
+
+  if (jabatan) {
+    jabatan.value = "";
+  }
+
+
+  tampilkanStatusLogin("");
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* =========================================================
+   RESET FORM
+========================================================= */
+
+function resetFormPemeriksaan() {
+
+  const form =
+    document.getElementById(
+      "formPemeriksaan"
+    );
+
+
+  if (!form) {
+    return;
+  }
+
+
+  const tanggal =
+    document.getElementById(
+      "tanggalPemeriksaan"
+    );
+
+  const dinas =
+    document.getElementById(
+      "dinasLangsirPemeriksaan"
+    );
+
+  const stasiun =
+    document.getElementById(
+      "stasiunPemeriksaan"
+    );
+
+  const lokomotif =
+    document.getElementById(
+      "lokomotifPemeriksaan"
+    );
+
+
+  if (tanggal) {
+    tanggal.value = "";
+  }
+
+  if (dinas) {
+    dinas.value = "";
+  }
+
+  if (stasiun) {
+    stasiun.selectedIndex = 0;
+  }
+
+  if (lokomotif) {
+    lokomotif.selectedIndex = 0;
+  }
+
+
+  const ids = [
+
+    "masinisPemeriksaan",
+    "asistenMasinisPemeriksaan",
+    "plr1Pemeriksaan",
+    "plr2Pemeriksaan",
+    "plrDipoPemeriksaan",
+    "petugasSchowingPemeriksaan",
+    "catatanPemeriksaan"
+
+  ];
+
+
+  ids.forEach(function(id) {
+
+    const element =
+      document.getElementById(id);
+
+    if (element) {
+      element.value = "";
+    }
+
+  });
+
+
+  const checklist =
+    document.getElementById(
+      "checklistContainer"
+    );
+
+
+  if (checklist) {
+
+    checklist.innerHTML =
+      "<div class='loading'>" +
+      "Memuat checklist..." +
+      "</div>";
+
+    checklist.dataset.loaded =
+      "0";
+
+  }
+
+
+  const foto =
+    document.getElementById(
+      "fotoPemeriksaan"
+    );
+
+  if (foto) {
+    foto.value = "";
+  }
+
+
+  const preview =
+    document.getElementById(
+      "previewFoto"
+    );
+
+  if (preview) {
+    preview.innerHTML = "";
+  }
+
+
+  const uploadBox =
+    document.getElementById(
+      "uploadFotoBox"
+    );
+
+  if (uploadBox) {
+    uploadBox.style.display = "none";
+  }
+
+
+  const ttdBox =
+    document.getElementById(
+      "ttdBox"
+    );
+
+  if (ttdBox) {
+    ttdBox.style.display = "none";
+  }
+
+
+  clearSignature();
+
+}
+
+
+/* =========================================================
+   INFO USER
+========================================================= */
+
+function tampilkanInfoUser(
+  nama,
+  nipp,
+  jabatan
+) {
+
+  const infoUser =
+    document.getElementById(
+      "infoUser"
+    );
+
+
+  if (!infoUser) {
+    return;
+  }
+
+
+  infoUser.innerHTML =
+
+    "<strong>Login berhasil</strong><br>" +
+
+    "Nama: " +
+    escapeHtml(nama) +
+
+    "<br>" +
+
+    "NIPP: " +
+    escapeHtml(nipp) +
+
+    "<br>" +
+
+    "Jabatan: " +
+    escapeHtml(jabatan);
+
+}
+
+
+/* =========================================================
+   TANGGAL HARI INI
+========================================================= */
+
+function setTanggalHariIni() {
+
+  const input =
+    document.getElementById(
+      "tanggalPemeriksaan"
+    );
+
+
+  if (!input) {
+    return;
+  }
+
+
+  if (!input.value) {
+
+    const sekarang =
+      new Date();
+
+    const tahun =
+      sekarang.getFullYear();
+
+    const bulan =
+      String(
+        sekarang.getMonth() + 1
+      ).padStart(2, "0");
+
+    const tanggal =
+      String(
+        sekarang.getDate()
+      ).padStart(2, "0");
+
+
+    input.value =
+      tahun +
+      "-" +
+      bulan +
+      "-" +
+      tanggal;
+
+  }
+
+}
+
+
+/* =========================================================
+   MUAT SEMUA DATA
+========================================================= */
+
+function muatSemuaData() {
+
+  const container =
+    document.getElementById(
+      "checklistContainer"
+    );
+
+
+  if (container) {
+
+    container.innerHTML =
+      "<div class='loading'>" +
+      "Memuat data pemeriksaan..." +
+      "</div>";
+
+  }
+
+
+  Promise.all([
+
+    muatChecklist(),
+
+    muatStasiun(),
+
+    muatLokomotif(),
+
+    muatPegawai()
+
+  ])
+
+  .then(function() {
+
+    console.log(
+      "SEMUA MASTER BERHASIL DIMUAT"
+    );
+
+
+    if (container) {
+
+      container.dataset.loaded =
+        "1";
+
+    }
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      "GAGAL MEMUAT MASTER:",
+      error
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   FETCH API GET
+========================================================= */
+
+function fetchApi(action) {
+
+  const url =
+    API_URL +
+    "?action=" +
+    encodeURIComponent(action) +
+    "&_=" +
+    Date.now();
+
+
+  console.log(
+    "GET API:",
+    url
+  );
+
+
+  return fetch(
+    url,
+    {
+      method: "GET",
+      cache: "no-store"
+    }
+  )
+
+  .then(function(response) {
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
 
     }
 
 
-    /* =====================================================
-       LOADING
-    ===================================================== */
+    return response.text();
 
-    function tampilLoading(text) {
+  })
 
-      const loadingText =
-        el("loadingText");
+  .then(function(text) {
 
-      const loadingOverlay =
-        el("loadingOverlay");
+    console.log(
+      "RESPONSE GET:",
+      action,
+      text
+    );
 
-      if (loadingText) {
 
-        loadingText.textContent =
-          text || "Memproses...";
+    try {
 
-      }
-
-      if (loadingOverlay) {
-
-        loadingOverlay
-          .classList
-          .add("show");
-
-      }
+      return JSON.parse(text);
 
     }
 
+    catch (error) {
 
-    function sembunyikanLoading() {
-
-      const loadingOverlay =
-        el("loadingOverlay");
-
-      if (loadingOverlay) {
-
-        loadingOverlay
-          .classList
-          .remove("show");
-
-      }
+      throw new Error(
+        "Response API bukan JSON.\n\n" +
+        text.substring(0, 500)
+      );
 
     }
 
+  });
 
-    /* =====================================================
-       ALERT
-    ===================================================== */
-
-    function tampilAlert(
-      message,
-      type
-    ) {
-
-      const box =
-        el("loginAlert");
-
-      if (!box) {
-        alert(message);
-        return;
-      }
-
-      box.textContent =
-        message;
-
-      box.className =
-        "alert show " +
-        (
-          type === "success"
-            ? "alert-success"
-            : "alert-error"
-        );
-
-    }
+}
 
 
-    function hapusAlert() {
+/* =========================================================
+   PARSE RESPONSE
+========================================================= */
 
-      const box =
-        el("loginAlert");
+function parseApiResponse(text) {
 
-      if (!box) {
-        return;
-      }
+  if (
+    typeof text === "object" &&
+    text !== null
+  ) {
 
-      box.textContent =
-        "";
+    return text;
 
-      box.className =
-        "alert";
-
-    }
+  }
 
 
-    /* =====================================================
-       VALIDASI API URL
-    ===================================================== */
+  if (
+    typeof text !== "string"
+  ) {
 
-    function cekAPIUrl() {
+    throw new Error(
+      "Response API tidak valid."
+    );
+
+  }
+
+
+  try {
+
+    return JSON.parse(text);
+
+  }
+
+  catch (error) {
+
+    throw new Error(
+      "Response API bukan JSON yang valid.\n\n" +
+      text.substring(0, 500)
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   AMBIL ARRAY DATA
+========================================================= */
+
+function ambilArrayData(result) {
+
+  if (!result) {
+    return [];
+  }
+
+
+  if (Array.isArray(result)) {
+    return result;
+  }
+
+
+  if (
+    result.data &&
+    Array.isArray(result.data)
+  ) {
+
+    return result.data;
+
+  }
+
+
+  if (
+    result.result &&
+    Array.isArray(result.result)
+  ) {
+
+    return result.result;
+
+  }
+
+
+  if (
+    result.rows &&
+    Array.isArray(result.rows)
+  ) {
+
+    return result.rows;
+
+  }
+
+
+  if (
+    result.data &&
+    result.data.data &&
+    Array.isArray(result.data.data)
+  ) {
+
+    return result.data.data;
+
+  }
+
+
+  return [];
+
+}
+
+
+/* =========================================================
+   MUAT CHECKLIST
+========================================================= */
+
+function muatChecklist() {
+
+  const container =
+    document.getElementById(
+      "checklistContainer"
+    );
+
+
+  if (!container) {
+
+    return Promise.reject(
+      new Error(
+        "checklistContainer tidak ditemukan."
+      )
+    );
+
+  }
+
+
+  return fetchApi(
+    "master_checklist"
+  )
+
+  .then(function(result) {
+
+    console.log(
+      "MASTER CHECKLIST:",
+      result
+    );
+
+
+    const data =
+      ambilArrayData(result);
+
+
+    container.innerHTML =
+      "";
+
+
+    let nomorTampil =
+      0;
+
+
+    data.forEach(function(item) {
+
+      const aktif =
+        item.AKTIF;
+
 
       if (
-        !API_URL ||
-        API_URL.trim() === "" ||
-        !API_URL.startsWith(
-          "https://script.google.com/macros/s/"
-        ) ||
-        !API_URL.endsWith("/exec")
+        aktif !== undefined &&
+        aktif !== null &&
+        aktif !== ""
       ) {
 
-        throw new Error(
-          "URL Google Apps Script tidak valid."
-        );
+        const nilaiAktif =
+          String(aktif)
+          .trim()
+          .toUpperCase();
+
+
+        const aktifValid =
+
+          nilaiAktif === "TRUE" ||
+
+          nilaiAktif === "1" ||
+
+          nilaiAktif === "YA" ||
+
+          nilaiAktif === "Y" ||
+
+          nilaiAktif === "AKTIF";
+
+
+        if (!aktifValid) {
+          return;
+        }
 
       }
 
-    }
+
+      const id =
+        item.ID ||
+        item.ID_CHECKLIST ||
+        "";
 
 
-    /* =====================================================
-       POST API
-    ===================================================== */
+      const urutan =
+        item.URUTAN ||
+        (nomorTampil + 1);
 
-    async function postAPI(
-      action,
-      data
+
+      const kategori =
+        item.KATEGORI ||
+        "";
+
+
+      const subKategori =
+        item.SUB_KATEGORI ||
+        "";
+
+
+      const uraian =
+        item.URAIAN ||
+        "";
+
+
+      const standar =
+        item.STANDAR ||
+        "";
+
+
+      if (
+        !id &&
+        !uraian
+      ) {
+
+        return;
+
+      }
+
+
+      nomorTampil++;
+
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className =
+        "checklist-item";
+
+
+      div.dataset.id =
+        String(id);
+
+
+      div.innerHTML =
+
+        "<div class='checklist-number'>" +
+
+        "Checklist " +
+        escapeHtml(urutan) +
+
+        "</div>" +
+
+
+        (
+
+          kategori
+
+          ?
+
+          "<div class='checklist-category'>" +
+
+          escapeHtml(kategori) +
+
+          (
+
+            subKategori
+
+            ?
+
+            " / " +
+            escapeHtml(subKategori)
+
+            :
+
+            ""
+
+          ) +
+
+          "</div>"
+
+          :
+
+          ""
+
+        ) +
+
+
+        "<div class='checklist-question'>" +
+
+        escapeHtml(uraian) +
+
+        "</div>" +
+
+
+        (
+
+          standar
+
+          ?
+
+          "<div class='checklist-standard'>" +
+
+          "<strong>STANDAR:</strong> " +
+
+          escapeHtml(standar) +
+
+          "</div>"
+
+          :
+
+          ""
+
+        ) +
+
+
+        "<div class='radio-group'>" +
+
+
+        "<label class='radio-option'>" +
+
+        "<input " +
+
+        "type='radio' " +
+
+        "name='hasil_" +
+        escapeHtml(id) +
+        "' " +
+
+        "value='YA'>" +
+
+        "<span>YA</span>" +
+
+        "</label>" +
+
+
+        "<label class='radio-option'>" +
+
+        "<input " +
+
+        "type='radio' " +
+
+        "name='hasil_" +
+        escapeHtml(id) +
+        "' " +
+
+        "value='TIDAK'>" +
+
+        "<span>TIDAK</span>" +
+
+        "</label>" +
+
+
+        "</div>" +
+
+
+        "<input " +
+
+        "type='text' " +
+
+        "class='temuan-input' " +
+
+        "placeholder='Keterangan / temuan...'>";
+
+
+      container.appendChild(
+        div
+      );
+
+    });
+
+
+    if (
+      nomorTampil === 0
     ) {
 
-      cekAPIUrl();
+      container.innerHTML =
 
-      const response =
-        await fetch(
-          API_URL,
-          {
+        "<div class='error-box'>" +
 
-            method: "POST",
+        "<strong>Tidak ada checklist aktif.</strong><br><br>" +
 
-            headers: {
-              "Content-Type":
-                "text/plain;charset=utf-8"
-            },
+        "Periksa kolom AKTIF pada sheet MASTER_CHECKLIST." +
 
-            body:
-              JSON.stringify({
+        "</div>";
 
-                action:
-                  action,
+    }
 
-                data:
-                  data
+  })
 
-              })
+  .catch(function(error) {
+
+    console.error(
+      "GAGAL MUAT CHECKLIST:",
+      error
+    );
+
+
+    container.innerHTML =
+
+      "<div class='error-box'>" +
+
+      "<strong>Gagal memuat checklist.</strong><br><br>" +
+
+      escapeHtml(
+        error.message
+      ) +
+
+      "</div>";
+
+    throw error;
+
+  });
+
+}
+
+
+/* =========================================================
+   MUAT STASIUN
+========================================================= */
+
+function muatStasiun() {
+
+  const select =
+    document.getElementById(
+      "stasiunPemeriksaan"
+    );
+
+
+  if (!select) {
+    return Promise.resolve();
+  }
+
+
+  return fetchApi(
+    "master_stasiun"
+  )
+
+  .then(function(result) {
+
+    const data =
+      ambilArrayData(result);
+
+
+    select.innerHTML =
+
+      "<option value=''>" +
+      "Pilih Stasiun / Emplasemen" +
+      "</option>";
+
+
+    data.forEach(function(item) {
+
+      const value =
+
+        item.NAMA ||
+
+        item.STASIUN ||
+
+        item.NAMA_STASIUN ||
+
+        item.ID ||
+
+        "";
+
+
+      if (!value) {
+        return;
+      }
+
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        value;
+
+      option.textContent =
+        value;
+
+
+      select.appendChild(
+        option
+      );
+
+    });
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      "GAGAL MUAT STASIUN:",
+      error
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   MUAT LOKOMOTIF
+========================================================= */
+
+function muatLokomotif() {
+
+  const select =
+    document.getElementById(
+      "lokomotifPemeriksaan"
+    );
+
+
+  if (!select) {
+    return Promise.resolve();
+  }
+
+
+  return fetchApi(
+    "master_lokomotif"
+  )
+
+  .then(function(result) {
+
+    const data =
+      ambilArrayData(result);
+
+
+    select.innerHTML =
+
+      "<option value=''>" +
+      "Pilih Lokomotif" +
+      "</option>";
+
+
+    data.forEach(function(item) {
+
+      const value =
+
+        item.JENIS ||
+
+        item.NAMA ||
+
+        item.LOKOMOTIF ||
+
+        item.ID ||
+
+        "";
+
+
+      if (!value) {
+        return;
+      }
+
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+
+      option.value =
+        value;
+
+      option.textContent =
+        value;
+
+
+      select.appendChild(
+        option
+      );
+
+    });
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      "GAGAL MUAT LOKOMOTIF:",
+      error
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   MUAT PEGAWAI
+========================================================= */
+
+function muatPegawai() {
+
+  return fetchApi(
+    "master_pegawai"
+  )
+
+  .then(function(result) {
+
+    console.log(
+      "MASTER PEGAWAI:",
+      result
+    );
+
+
+    const data =
+      ambilArrayData(result);
+
+
+    const daftar = [
+
+      [
+        "listMasinis",
+        ["MASINIS"]
+      ],
+
+      [
+        "listAsistenMasinis",
+        ["ASISTEN MASINIS"]
+      ],
+
+      [
+        "listPlr1",
+        ["PLR 1", "PLR1"]
+      ],
+
+      [
+        "listPlr2",
+        ["PLR 2", "PLR2"]
+      ],
+
+      [
+        "listPlrDipo",
+        ["PLR DIPO", "PLR_DIPO"]
+      ],
+
+      [
+        "listSchowing",
+        [
+          "PETUGAS SCHOWING",
+          "SCHOWING",
+          "PETUGAS_SCHOWING"
+        ]
+      ]
+
+    ];
+
+
+    daftar.forEach(function(config) {
+
+      const datalist =
+        document.getElementById(
+          config[0]
+        );
+
+
+      if (!datalist) {
+        return;
+      }
+
+
+      datalist.innerHTML =
+        "";
+
+
+      data.forEach(function(item) {
+
+        const nama =
+
+          item.NAMA ||
+
+          item.NAMA_PEGAWAI ||
+
+          item.PEGAWAI ||
+
+          "";
+
+
+        const nipp =
+
+          item.NIPP ||
+
+          item.NIP ||
+
+          "";
+
+
+        if (!nama) {
+          return;
+        }
+
+
+        const jabatan =
+
+          String(
+
+            item.JABATAN ||
+
+            item.POSISI ||
+
+            item.ROLE ||
+
+            ""
+
+          )
+          .toUpperCase();
+
+
+        let bolehMasuk =
+          jabatan === "";
+
+
+        config[1].forEach(
+          function(keyword) {
+
+            if (
+              jabatan.includes(
+                keyword.toUpperCase()
+              )
+            ) {
+
+              bolehMasuk =
+                true;
+
+            }
 
           }
         );
 
 
-      if (!response.ok) {
+        if (bolehMasuk) {
 
-        throw new Error(
-          "HTTP Error " +
-          response.status
-        );
+          const option =
+            document.createElement(
+              "option"
+            );
 
-      }
 
+          option.value =
 
-      const result =
-        await response.json();
+            nipp
 
+            ?
 
-      return result;
+            nama +
+            " - " +
+            nipp
 
-    }
+            :
 
+            nama;
 
-    /* =====================================================
-       LOGIN PENGGUNA
-       
-       LOGIN MANUAL SAJA:
-       NAMA + NIPP + JABATAN
-       
-       TIDAK ADA:
-       - EMAIL
-       - GMAIL
-       - GOOGLE LOGIN
-    ===================================================== */
 
-    async function loginPengguna() {
-
-      hapusAlert();
-
-
-      const namaElement =
-        el("namaLogin");
-
-      const nippElement =
-        el("nippLogin");
-
-      const jabatanElement =
-        el("jabatanLogin");
-
-
-      /* -----------------------------------------------
-         CEK ELEMENT
-      ------------------------------------------------ */
-
-      if (!namaElement) {
-
-        tampilAlert(
-          "Kolom NAMA tidak ditemukan.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if (!nippElement) {
-
-        tampilAlert(
-          "Kolom NIPP tidak ditemukan.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if (!jabatanElement) {
-
-        tampilAlert(
-          "Kolom JABATAN tidak ditemukan.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      /* -----------------------------------------------
-         AMBIL NILAI
-      ------------------------------------------------ */
-
-      const nama =
-        namaElement.value
-          .trim();
-
-
-      const nipp =
-        nippElement.value
-          .trim();
-
-
-      const jabatan =
-        jabatanElement.value
-          .trim();
-
-
-      /* -----------------------------------------------
-         VALIDASI
-      ------------------------------------------------ */
-
-      if (!nama) {
-
-        tampilAlert(
-          "Nama wajib diisi.",
-          "error"
-        );
-
-        namaElement.focus();
-
-        return;
-
-      }
-
-
-      if (!nipp) {
-
-        tampilAlert(
-          "NIPP wajib diisi.",
-          "error"
-        );
-
-        nippElement.focus();
-
-        return;
-
-      }
-
-
-      if (!jabatan) {
-
-        tampilAlert(
-          "Jabatan wajib diisi.",
-          "error"
-        );
-
-        jabatanElement.focus();
-
-        return;
-
-      }
-
-
-      /* -----------------------------------------------
-         VALIDASI API
-      ------------------------------------------------ */
-
-      try {
-
-        cekAPIUrl();
-
-      }
-
-      catch (error) {
-
-        tampilAlert(
-          error.message,
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      /* -----------------------------------------------
-         MULAI LOGIN
-      ------------------------------------------------ */
-
-      const tombol =
-        el("btnLogin");
-
-      if (tombol) {
-
-        tombol.disabled =
-          true;
-
-        tombol.textContent =
-          "MEMPROSES...";
-
-      }
-
-
-      tampilLoading(
-        "Sedang memproses login..."
-      );
-
-
-      try {
-
-        const result =
-          await postAPI(
-            "login_manual",
-            {
-
-              NAMA:
-                nama,
-
-              NIPP:
-                nipp,
-
-              JABATAN:
-                jabatan
-
-            }
-          );
-
-
-        console.log(
-          "LOGIN RESPONSE:",
-          result
-        );
-
-
-        if (
-          !result ||
-          result.success !== true
-        ) {
-
-          throw new Error(
-            result &&
-            result.message
-              ? result.message
-              : "Login gagal."
+          datalist.appendChild(
+            option
           );
 
         }
 
+      });
 
-        /* ---------------------------------------------
-           SIMPAN SESSION
-        --------------------------------------------- */
+    });
 
-        penggunaLogin = {
+  })
 
-          NAMA:
-            nama,
+  .catch(function(error) {
 
-          NIPP:
-            nipp,
+    console.error(
+      "GAGAL MUAT PEGAWAI:",
+      error
+    );
 
-          JABATAN:
-            jabatan
+  });
+
+}
+
+
+/* =========================================================
+   AMBIL DATA FORM
+========================================================= */
+
+function ambilDataForm() {
+
+  const checklist = [];
+
+
+  document
+    .querySelectorAll(
+      ".checklist-item"
+    )
+    .forEach(function(item) {
+
+      const pilihan =
+        item.querySelector(
+          "input[type='radio']:checked"
+        );
+
+
+      const temuan =
+        item.querySelector(
+          ".temuan-input"
+        );
+
+
+      checklist.push({
+
+        ID_CHECKLIST:
+          item.dataset.id || "",
+
+        HASIL:
+          pilihan
+            ? pilihan.value
+            : "",
+
+        KETERANGAN:
+          temuan
+            ? temuan.value.trim()
+            : ""
+
+      });
+
+    });
+
+
+  return {
+
+    ID_PEMERIKSAAN:
+      idPemeriksaanAktif,
+
+
+    TANGGAL:
+      document.getElementById(
+        "tanggalPemeriksaan"
+      ).value,
+
+
+    DINAS_LANGSIR:
+      document.getElementById(
+        "dinasLangsirPemeriksaan"
+      ).value,
+
+
+    STASIUN:
+      document.getElementById(
+        "stasiunPemeriksaan"
+      ).value,
+
+
+    LOKOMOTIF:
+      document.getElementById(
+        "lokomotifPemeriksaan"
+      ).value,
+
+
+    MASINIS:
+      document.getElementById(
+        "masinisPemeriksaan"
+      ).value,
+
+
+    ASISTEN_MASINIS:
+      document.getElementById(
+        "asistenMasinisPemeriksaan"
+      ).value,
+
+
+    PLR1:
+      document.getElementById(
+        "plr1Pemeriksaan"
+      ).value,
+
+
+    PLR2:
+      document.getElementById(
+        "plr2Pemeriksaan"
+      ).value,
+
+
+    PLR_DIPO:
+      document.getElementById(
+        "plrDipoPemeriksaan"
+      ).value,
+
+
+    PETUGAS_SCHOWING:
+      document.getElementById(
+        "petugasSchowingPemeriksaan"
+      ).value,
+
+
+    EMAIL:
+      sessionStorage.getItem(
+        "userEmail"
+      ) || "",
+
+
+    NAMA:
+      sessionStorage.getItem(
+        "userNama"
+      ) || "",
+
+
+    NIPP:
+      sessionStorage.getItem(
+        "userNipp"
+      ) || "",
+
+
+    JABATAN:
+      sessionStorage.getItem(
+        "userJabatan"
+      ) || "",
+
+
+    CATATAN:
+      document.getElementById(
+        "catatanPemeriksaan"
+      ).value.trim(),
+
+
+    CHECKLIST:
+      checklist
+
+  };
+
+}
+
+
+/* =========================================================
+   VALIDASI IDENTITAS
+========================================================= */
+
+function validasiIdentitas() {
+
+  const fields = [
+
+    [
+      "tanggalPemeriksaan",
+      "Tanggal Pemeriksaan"
+    ],
+
+    [
+      "dinasLangsirPemeriksaan",
+      "Dinas Langsir"
+    ],
+
+    [
+      "stasiunPemeriksaan",
+      "Stasiun"
+    ],
+
+    [
+      "lokomotifPemeriksaan",
+      "Lokomotif"
+    ],
+
+    [
+      "masinisPemeriksaan",
+      "Masinis"
+    ],
+
+    [
+      "asistenMasinisPemeriksaan",
+      "Asisten Masinis"
+    ],
+
+    [
+      "plr1Pemeriksaan",
+      "PLR 1"
+    ],
+
+    [
+      "plr2Pemeriksaan",
+      "PLR 2"
+    ],
+
+    [
+      "plrDipoPemeriksaan",
+      "PLR DIPO"
+    ],
+
+    [
+      "petugasSchowingPemeriksaan",
+      "Petugas Schowing"
+    ]
+
+  ];
+
+
+  for (
+    let i = 0;
+    i < fields.length;
+    i++
+  ) {
+
+    const element =
+      document.getElementById(
+        fields[i][0]
+      );
+
+
+    if (
+      !element ||
+      !String(
+        element.value || ""
+      ).trim()
+    ) {
+
+      alert(
+        fields[i][1] +
+        " wajib diisi."
+      );
+
+
+      if (element) {
+        element.focus();
+      }
+
+
+      return false;
+
+    }
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   VALIDASI CHECKLIST
+========================================================= */
+
+function validasiChecklist() {
+
+  const items =
+    document.querySelectorAll(
+      ".checklist-item"
+    );
+
+
+  if (
+    items.length === 0
+  ) {
+
+    alert(
+      "Checklist belum tersedia."
+    );
+
+    return false;
+
+  }
+
+
+  for (
+    let i = 0;
+    i < items.length;
+    i++
+  ) {
+
+    const pilihan =
+      items[i].querySelector(
+        "input[type='radio']:checked"
+      );
+
+
+    if (!pilihan) {
+
+      alert(
+        "Checklist nomor " +
+        (i + 1) +
+        " belum diisi."
+      );
+
+
+      items[i].scrollIntoView({
+
+        behavior:
+          "smooth",
+
+        block:
+          "center"
+
+      });
+
+
+      return false;
+
+    }
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   PASTIKAN ID PEMERIKSAAN
+========================================================= */
+
+function pastikanIdPemeriksaan() {
+
+  /*
+   * Cek variable global
+   */
+
+  if (
+    idPemeriksaanAktif &&
+    String(
+      idPemeriksaanAktif
+    ).trim()
+  ) {
+
+    return Promise.resolve(
+      String(
+        idPemeriksaanAktif
+      ).trim()
+    );
+
+  }
+
+
+  /*
+   * Cek session
+   */
+
+  const idSession =
+    sessionStorage.getItem(
+      "idPemeriksaanAktif"
+    );
+
+
+  if (
+    idSession &&
+    String(
+      idSession
+    ).trim()
+  ) {
+
+    idPemeriksaanAktif =
+      String(
+        idSession
+      ).trim();
+
+
+    return Promise.resolve(
+      idPemeriksaanAktif
+    );
+
+  }
+
+
+  /*
+   * Validasi identitas
+   */
+
+  if (!validasiIdentitas()) {
+
+    return Promise.reject(
+      new Error(
+        "Data identitas pemeriksaan belum lengkap."
+      )
+    );
+
+  }
+
+
+  /*
+   * BUAT ID BARU
+   */
+
+  idPemeriksaanAktif =
+    buatIdPemeriksaan();
+
+
+  sessionStorage.setItem(
+    "idPemeriksaanAktif",
+    idPemeriksaanAktif
+  );
+
+
+  /*
+   * Buat data draft
+   */
+
+  const data =
+    ambilDataForm();
+
+
+  data.ID_PEMERIKSAAN =
+    idPemeriksaanAktif;
+
+
+  data.STATUS =
+    "DRAFT";
+
+
+  tampilkanStatus(
+    "Menyiapkan pemeriksaan..."
+  );
+
+
+  return kirimRequestPost(
+    "simpan_pemeriksaan",
+    data
+  )
+
+  .then(function(result) {
+
+    console.log(
+      "HASIL BUAT ID:",
+      result
+    );
+
+
+    if (
+      result &&
+      result.success === true
+    ) {
+
+      const idServer =
+
+        result.id_pemeriksaan ||
+
+        result.ID_PEMERIKSAAN ||
+
+        result.data &&
+        (
+          result.data.id_pemeriksaan ||
+          result.data.ID_PEMERIKSAAN
+        );
+
+
+      if (idServer) {
+
+        idPemeriksaanAktif =
+          String(
+            idServer
+          ).trim();
+
+      }
+
+
+      sessionStorage.setItem(
+        "idPemeriksaanAktif",
+        idPemeriksaanAktif
+      );
+
+
+      return idPemeriksaanAktif;
+
+    }
+
+
+    throw new Error(
+
+      result &&
+      result.message
+
+      ?
+
+      result.message
+
+      :
+
+      "Gagal membuat pemeriksaan."
+
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   POST REQUEST
+========================================================= */
+
+function kirimRequestPost(
+  action,
+  data
+) {
+
+  const url =
+    API_URL +
+    "?action=" +
+    encodeURIComponent(action);
+
+
+  console.log(
+    "POST API:",
+    action,
+    data
+  );
+
+
+  return fetch(
+
+    url,
+
+    {
+
+      method:
+        "POST",
+
+      headers:
+        {
+          "Content-Type":
+            "text/plain;charset=utf-8"
+        },
+
+      body:
+        JSON.stringify(data)
+
+    }
+
+  )
+
+  .then(function(response) {
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
+    }
+
+
+    return response.text();
+
+  })
+
+  .then(function(text) {
+
+    console.log(
+      "RESPONSE POST:",
+      action,
+      text
+    );
+
+
+    return parseApiResponse(
+      text
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   SIMPAN DRAFT
+========================================================= */
+
+function simpanDraft() {
+
+  if (!validasiIdentitas()) {
+    return;
+  }
+
+
+  if (!idPemeriksaanAktif) {
+
+    idPemeriksaanAktif =
+      buatIdPemeriksaan();
+
+    sessionStorage.setItem(
+      "idPemeriksaanAktif",
+      idPemeriksaanAktif
+    );
+
+  }
+
+
+  const data =
+    ambilDataForm();
+
+
+  data.ID_PEMERIKSAAN =
+    idPemeriksaanAktif;
+
+
+  data.STATUS =
+    "DRAFT";
+
+
+  tampilkanStatus(
+    "Menyimpan Draft..."
+  );
+
+
+  kirimPemeriksaan(
+    data,
+    "Draft berhasil disimpan."
+  );
+
+}
+
+
+/* =========================================================
+   PROGRESS HELPER
+========================================================= */
+
+function setProgressUpload(percent, label, countText, note) {
+
+  const box = document.getElementById("progressUploadFoto");
+  const bar = document.getElementById("progressUploadBar");
+  const percentEl = document.getElementById("progressUploadPercent");
+  const labelEl = document.getElementById("progressUploadLabel");
+  const countEl = document.getElementById("progressUploadCount");
+  const noteEl = document.getElementById("progressUploadNote");
+
+  const nilai = Math.max(0, Math.min(100, Number(percent) || 0));
+
+  if (box) box.style.display = "block";
+  if (bar) bar.style.width = nilai + "%";
+  if (percentEl) percentEl.textContent = Math.round(nilai) + "%";
+  if (labelEl) labelEl.textContent = label || "Upload foto";
+  if (countEl) countEl.textContent = countText || "";
+  if (noteEl) noteEl.textContent = note || "";
+}
+
+function setProgressSimpan(percent, label, stepText, note) {
+
+  const box = document.getElementById("progressSimpan");
+  const bar = document.getElementById("progressSimpanBar");
+  const percentEl = document.getElementById("progressSimpanPercent");
+  const labelEl = document.getElementById("progressSimpanLabel");
+  const stepEl = document.getElementById("progressSimpanStep");
+  const noteEl = document.getElementById("progressSimpanNote");
+
+  const nilai = Math.max(0, Math.min(100, Number(percent) || 0));
+
+  if (box) box.style.display = "block";
+  if (bar) bar.style.width = nilai + "%";
+  if (percentEl) percentEl.textContent = Math.round(nilai) + "%";
+  if (labelEl) labelEl.textContent = label || "Menyimpan pemeriksaan";
+  if (stepEl) stepEl.textContent = stepText || "";
+  if (noteEl) noteEl.textContent = note || "";
+}
+
+function sembunyikanProgressSimpan() {
+  const box = document.getElementById("progressSimpan");
+  if (box) box.style.display = "none";
+}
+
+/* =========================================================
+   SIMPAN & SELESAI
+========================================================= */
+
+let sedangSimpanPemeriksaan = false;
+
+function simpanPemeriksaan() {
+
+  if (sedangSimpanPemeriksaan) {
+    return;
+  }
+
+  console.log("=================================");
+  console.log("SIMPAN & SELESAI");
+  console.log("=================================");
+
+  if (!validasiIdentitas()) {
+    return;
+  }
+
+  if (!validasiChecklist()) {
+    return;
+  }
+
+  sedangSimpanPemeriksaan = true;
+
+  const tombolSimpan =
+    document.querySelector(
+      "#formPemeriksaan button[onclick='simpanPemeriksaan()']"
+    );
+
+  if (tombolSimpan) {
+    tombolSimpan.disabled = true;
+    tombolSimpan.textContent = "MENYIMPAN...";
+  }
+
+  setProgressSimpan(
+    5,
+    "Menyiapkan pemeriksaan",
+    "1 / 4",
+    "Memeriksa dan menyiapkan data..."
+  );
+
+  tampilkanStatus("Menyiapkan pemeriksaan...");
+
+  pastikanIdPemeriksaan()
+
+  .then(function(id) {
+
+    idPemeriksaanAktif =
+      String(id || "").trim();
+
+    if (!idPemeriksaanAktif) {
+      throw new Error("ID Pemeriksaan tidak ditemukan.");
+    }
+
+    sessionStorage.setItem(
+      "idPemeriksaanAktif",
+      idPemeriksaanAktif
+    );
+
+    setProgressSimpan(
+      20,
+      "Data pemeriksaan siap",
+      "1 / 4",
+      "ID Pemeriksaan: " + idPemeriksaanAktif
+    );
+
+    const data = ambilDataForm();
+
+    data.ID_PEMERIKSAAN = idPemeriksaanAktif;
+    data.STATUS = "SELESAI";
+
+    console.log("DATA FINAL PEMERIKSAAN:", data);
+
+    setProgressSimpan(
+      35,
+      "Mengirim data pemeriksaan",
+      "2 / 4",
+      "Sedang menyimpan data utama ke server..."
+    );
+
+    tampilkanStatus("Menyimpan data pemeriksaan...");
+
+    return fetch(
+      API_URL + "?action=simpan_pemeriksaan",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(data)
+      }
+    );
+
+  })
+
+  .then(function(response) {
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    setProgressSimpan(
+      65,
+      "Data sedang diproses server",
+      "3 / 4",
+      "Menunggu konfirmasi penyimpanan..."
+    );
+
+    return response.text();
+
+  })
+
+  .then(function(text) {
+
+    console.log("RESPONSE SIMPAN & SELESAI:", text);
+
+    let result;
+
+    try {
+      result = JSON.parse(text);
+    } catch (error) {
+      throw new Error(
+        "Response API bukan JSON yang valid:\n" + text
+      );
+    }
+
+    if (result && result.success === true) {
+
+      if (result.id_pemeriksaan || result.ID_PEMERIKSAAN) {
+        idPemeriksaanAktif =
+          result.id_pemeriksaan || result.ID_PEMERIKSAAN;
+      }
+
+      idPemeriksaanAktif =
+        String(idPemeriksaanAktif || "").trim();
+
+      if (idPemeriksaanAktif) {
+        sessionStorage.setItem(
+          "idPemeriksaanAktif",
+          idPemeriksaanAktif
+        );
+      }
+
+      setProgressSimpan(
+        100,
+        "Pemeriksaan berhasil disimpan",
+        "4 / 4",
+        "Penyimpanan selesai. Data pemeriksaan telah terekam."
+      );
+
+      tampilkanStatus(
+        "Form Checklist Pengawasan Langsir Anda Telah Terekam."
+      );
+
+      setTimeout(function() {
+        tampilkanNotifSelesai();
+      }, 350);
+
+      return;
+    }
+
+    const pesan =
+      result && result.message
+        ? result.message
+        : "Gagal menyimpan pemeriksaan.";
+
+    throw new Error(pesan);
+
+  })
+
+  .catch(function(error) {
+
+    console.error("GAGAL SIMPAN & SELESAI:", error);
+
+    setProgressSimpan(
+      0,
+      "Penyimpanan gagal",
+      "-",
+      error.message || "Terjadi kesalahan saat menyimpan data."
+    );
+
+    tampilkanStatus("Gagal menyimpan pemeriksaan.");
+
+    alert(
+      "Gagal menyimpan pemeriksaan.\n\n" +
+      error.message
+    );
+
+  })
+
+  .finally(function() {
+
+    sedangSimpanPemeriksaan = false;
+
+    if (tombolSimpan) {
+      tombolSimpan.disabled = false;
+      tombolSimpan.textContent = "SIMPAN & SELESAI";
+    }
+
+  });
+
+}
+
+/* =========================================================
+   STATUS UMUM
+========================================================= */
+
+function tampilkanStatus(pesan) {
+
+  const box =
+    document.getElementById(
+      "statusBox"
+    );
+
+
+  if (!box) {
+    return;
+  }
+
+
+  box.textContent =
+    pesan || "";
+
+
+  box.style.display =
+    pesan
+      ? "block"
+      : "none";
+
+}
+
+
+/* =========================================================
+   UPLOAD FOTO
+========================================================= */
+
+function uploadFoto() {
+
+  const box =
+    document.getElementById(
+      "uploadFotoBox"
+    );
+
+
+  if (!box) {
+    return;
+  }
+
+
+  box.style.display =
+    "block";
+
+
+  box.scrollIntoView({
+
+    behavior:
+      "smooth",
+
+    block:
+      "center"
+
+  });
+
+}
+
+
+/* =========================================================
+   KIRIM FOTO
+========================================================= */
+
+let sedangUploadFoto = false;
+
+function kirimFoto() {
+
+  if (sedangUploadFoto) {
+    return;
+  }
+
+  sedangUploadFoto = true;
+
+  const input =
+    document.getElementById(
+      "fotoPemeriksaan"
+    );
+
+
+  const status =
+    document.getElementById(
+      "statusUploadFoto"
+    );
+
+
+  if (!input) {
+
+    alert(
+      "Input foto tidak ditemukan."
+    );
+
+    sedangUploadFoto = false;
+    return;
+
+  }
+
+
+  if (
+    !input.files ||
+    input.files.length === 0
+  ) {
+
+    alert(
+      "Silakan pilih foto terlebih dahulu."
+    );
+
+    sedangUploadFoto = false;
+    return;
+
+  }
+
+
+  const files =
+    Array.from(
+      input.files
+    );
+
+
+  if (status) {
+
+    status.style.display =
+      "block";
+
+    status.textContent =
+      "Menyiapkan upload foto...";
+
+    setProgressUpload(
+      0,
+      "Menyiapkan upload foto",
+      "0 / " + files.length,
+      "Mohon tunggu, proses upload sedang dimulai..."
+    );
+
+  }
+
+
+  pastikanIdPemeriksaan()
+
+  .then(function(id) {
+
+    idPemeriksaanAktif =
+      String(id).trim();
+
+
+    sessionStorage.setItem(
+      "idPemeriksaanAktif",
+      idPemeriksaanAktif
+    );
+
+
+    console.log(
+      "ID UNTUK FOTO:",
+      idPemeriksaanAktif
+    );
+
+
+    return uploadSemuaFoto(
+      files,
+      status
+    );
+
+  })
+
+  .then(function(hasil) {
+
+    input.value =
+      "";
+
+
+    const preview =
+      document.getElementById(
+        "previewFoto"
+      );
+
+
+    if (preview) {
+      preview.innerHTML = "";
+    }
+
+
+    if (status) {
+
+      status.textContent =
+
+        "Upload selesai.\n" +
+
+        "Berhasil: " +
+        hasil.berhasil +
+        " foto\n" +
+
+        "Gagal: " +
+        hasil.gagal +
+        " foto.";
+
+    }
+
+
+    if (
+      hasil.berhasil > 0 &&
+      hasil.gagal === 0
+    ) {
+
+      tampilkanNotifFoto(
+
+        "Foto telah berhasil diupload",
+
+        "Foto dokumentasi berhasil disimpan.\n\n" +
+
+        "Jumlah foto: " +
+        hasil.berhasil +
+
+        "\n\n" +
+
+        "Tekan OK untuk melanjutkan ke TTD.",
+
+        true
+
+      );
+
+    }
+
+    else if (
+      hasil.berhasil > 0 &&
+      hasil.gagal > 0
+    ) {
+
+      tampilkanNotifFoto(
+
+        "Upload foto selesai sebagian",
+
+        "Berhasil: " +
+        hasil.berhasil +
+        " foto\n" +
+
+        "Gagal: " +
+        hasil.gagal +
+        " foto\n\n" +
+
+        "Tekan OK untuk melanjutkan ke TTD.",
+
+        true
+
+      );
+
+    }
+
+    else {
+
+      tampilkanNotifFoto(
+
+        "Upload foto gagal",
+
+        "Tidak ada foto yang berhasil diupload.",
+
+        false
+
+      );
+
+    }
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      "ERROR UPLOAD FOTO:",
+      error
+    );
+
+
+    if (status) {
+
+      status.textContent =
+        "Upload foto gagal.\n" +
+        error.message;
+
+    }
+
+
+    tampilkanNotifFoto(
+
+      "Upload foto gagal",
+
+      error.message ||
+
+      "Gagal mengupload foto.",
+
+      false
+
+    );
+
+  })
+
+  .finally(function() {
+    sedangUploadFoto = false;
+  });
+
+}
+
+
+/* =========================================================
+   UPLOAD SEMUA FOTO
+========================================================= */
+
+function uploadSemuaFoto(
+  files,
+  status
+) {
+
+  let berhasil = 0;
+  let gagal = 0;
+
+  const total = files.length;
+
+  let rangkaian = Promise.resolve();
+
+  files.forEach(function(file, index) {
+
+    rangkaian = rangkaian.then(function() {
+
+      const nomor = index + 1;
+      const persenAwal = Math.round((index / total) * 100);
+      const persenBaca = Math.min(
+        90,
+        Math.round(((index + 0.45) / total) * 100)
+      );
+      const persenKirim = Math.min(
+        98,
+        Math.round(((index + 0.85) / total) * 100)
+      );
+      const persenSelesai = Math.round((nomor / total) * 100);
+
+      if (!file.type || !file.type.startsWith("image/")) {
+        gagal++;
+        setProgressUpload(
+          persenSelesai,
+          "File dilewati",
+          nomor + " / " + total,
+          file.name + " bukan file gambar yang valid."
+        );
+        return;
+      }
+
+      const ukuranMB = file.size / (1024 * 1024);
+
+      if (ukuranMB > 5) {
+        console.warn("File lebih dari 5 MB:", file.name);
+        gagal++;
+
+        setProgressUpload(
+          persenSelesai,
+          "File dilewati",
+          nomor + " / " + total,
+          file.name + " lebih dari 5 MB."
+        );
+        return;
+      }
+
+      setProgressUpload(
+        persenAwal,
+        "Menyiapkan foto " + nomor + " dari " + total,
+        nomor + " / " + total,
+        file.name
+      );
+
+      if (status) {
+        status.style.display = "block";
+        status.textContent =
+          "Menyiapkan foto " + nomor + " dari " + total + "...\n" +
+          file.name;
+      }
+
+      return fileToBase64WithProgress(file, function(progress) {
+
+        const persen =
+          persenAwal +
+          ((persenBaca - persenAwal) * progress / 100);
+
+        setProgressUpload(
+          persen,
+          "Membaca foto " + nomor + " dari " + total,
+          nomor + " / " + total,
+          file.name + " - memproses data foto..."
+        );
+
+      })
+
+      .then(function(base64) {
+
+        setProgressUpload(
+          persenKirim,
+          "Mengupload foto " + nomor + " dari " + total,
+          nomor + " / " + total,
+          file.name + " - mengirim ke server..."
+        );
+
+        if (status) {
+          status.textContent =
+            "Mengupload foto " + nomor + " dari " + total + "...\n" +
+            file.name;
+        }
+
+        const payload = {
+          action: "upload_foto",
+          data: {
+            ID_PEMERIKSAAN: idPemeriksaanAktif,
+            ID_PEMERIKSA: idPemeriksaanAktif,
+            NAMA_FILE: file.name,
+            FOTO: base64
+          }
+        };
+
+        return fetch(
+          API_URL,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(payload)
+          }
+        );
+
+      })
+
+      .then(function(response) {
+
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+
+        return response.text();
+
+      })
+
+      .then(function(text) {
+
+        console.log("RESPONSE FOTO:", text);
+
+        const result = parseApiResponse(text);
+
+        if (result && result.success === true) {
+          berhasil++;
+        } else {
+          gagal++;
+          console.error("UPLOAD FOTO DITOLAK:", result);
+        }
+
+        setProgressUpload(
+          persenSelesai,
+          "Foto " + nomor + " dari " + total + " selesai",
+          nomor + " / " + total,
+          file.name
+        );
+
+      })
+
+      .catch(function(error) {
+
+        gagal++;
+
+        console.error("GAGAL FOTO:", file.name, error);
+
+        setProgressUpload(
+          persenSelesai,
+          "Foto " + nomor + " dari " + total + " gagal",
+          nomor + " / " + total,
+          file.name + " - " + error.message
+        );
+
+      });
+
+    });
+
+  });
+
+  return rangkaian.then(function() {
+
+    setProgressUpload(
+      100,
+      "Upload foto selesai",
+      total + " / " + total,
+      "Proses upload seluruh foto telah selesai."
+    );
+
+    return {
+      berhasil: berhasil,
+      gagal: gagal
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   FILE TO BASE64 DENGAN PROGRESS
+========================================================= */
+
+function fileToBase64WithProgress(file, onProgress) {
+
+  return new Promise(function(resolve, reject) {
+
+    const reader = new FileReader();
+
+    reader.onprogress = function(event) {
+
+      if (event.lengthComputable && typeof onProgress === "function") {
+        const progress = (event.loaded / event.total) * 100;
+        onProgress(progress);
+      }
+
+    };
+
+    reader.onload = function(event) {
+
+      if (typeof onProgress === "function") {
+        onProgress(100);
+      }
+
+      resolve(event.target.result);
+
+    };
+
+    reader.onerror = function(error) {
+      reject(error);
+    };
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+
+/* =========================================================
+   FILE TO BASE64
+========================================================= */
+
+function fileToBase64(file) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(event) {
+
+          resolve(
+            event.target.result
+          );
 
         };
 
 
-        try {
+      reader.onerror =
+        function(error) {
 
-          sessionStorage.setItem(
-            "penggunaLogin",
-            JSON.stringify(
-              penggunaLogin
-            )
-          );
+          reject(error);
 
-        }
-
-        catch (storageError) {
-
-          console.warn(
-            "Session storage tidak tersedia.",
-            storageError
-          );
-
-        }
+        };
 
 
-        /* ---------------------------------------------
-           TAMPIL DASHBOARD
-        --------------------------------------------- */
-
-        const displayNama =
-          el("displayNama");
-
-        const displayJabatan =
-          el("displayJabatan");
-
-        const loginPage =
-          el("loginPage");
-
-        const dashboardPage =
-          el("dashboardPage");
-
-        const apiStatusText =
-          el("apiStatusText");
-
-
-        if (displayNama) {
-
-          displayNama.textContent =
-            nama;
-
-        }
-
-
-        if (displayJabatan) {
-
-          displayJabatan.textContent =
-            jabatan +
-            " • NIPP " +
-            nipp;
-
-        }
-
-
-        if (loginPage) {
-
-          loginPage.style.display =
-            "none";
-
-        }
-
-
-        if (dashboardPage) {
-
-          dashboardPage
-            .classList
-            .add("show");
-
-        }
-
-
-        if (apiStatusText) {
-
-          apiStatusText.textContent =
-            " — Login berhasil";
-
-        }
-
-
-        console.log(
-          "Login berhasil:",
-          penggunaLogin
-        );
-
-      }
-
-
-      catch (error) {
-
-        console.error(
-          "LOGIN ERROR:",
-          error
-        );
-
-
-        tampilAlert(
-          error.message ||
-          "Terjadi kesalahan saat login.",
-          "error"
-        );
-
-      }
-
-
-      finally {
-
-        sembunyikanLoading();
-
-
-        if (tombol) {
-
-          tombol.disabled =
-            false;
-
-          tombol.textContent =
-            "MASUK";
-
-        }
-
-      }
+      reader.readAsDataURL(
+        file
+      );
 
     }
+  );
 
+}
 
-    /* =====================================================
-       LOGOUT
-    ===================================================== */
 
-    function logoutPengguna() {
+/* =========================================================
+   PREVIEW FOTO
+========================================================= */
 
-      penggunaLogin =
-        null;
+document.addEventListener(
+  "change",
+  function(event) {
 
-
-      try {
-
-        sessionStorage.removeItem(
-          "penggunaLogin"
-        );
-
-      }
-
-      catch (error) {
-
-        console.warn(
-          error
-        );
-
-      }
-
-
-      const dashboardPage =
-        el("dashboardPage");
-
-      const loginPage =
-        el("loginPage");
-
-      const namaLogin =
-        el("namaLogin");
-
-      const nippLogin =
-        el("nippLogin");
-
-      const jabatanLogin =
-        el("jabatanLogin");
-
-      const apiStatusText =
-        el("apiStatusText");
-
-
-      if (dashboardPage) {
-
-        dashboardPage
-          .classList
-          .remove("show");
-
-      }
-
-
-      if (loginPage) {
-
-        loginPage.style.display =
-          "flex";
-
-      }
-
-
-      if (namaLogin) {
-
-        namaLogin.value =
-          "";
-
-      }
-
-
-      if (nippLogin) {
-
-        nippLogin.value =
-          "";
-
-      }
-
-
-      if (jabatanLogin) {
-
-        jabatanLogin.value =
-          "";
-
-      }
-
-
-      if (apiStatusText) {
-
-        apiStatusText.textContent =
-          " — API Google Apps Script siap digunakan";
-
-      }
-
-
-      hapusAlert();
-
-    }
-
-
-    /* =====================================================
-       CEK SESSION
-    ===================================================== */
-
-    function cekSession() {
-
-      try {
-
-        const saved =
-          sessionStorage.getItem(
-            "penggunaLogin"
-          );
-
-
-        if (!saved) {
-
-          return;
-
-        }
-
-
-        const data =
-          JSON.parse(saved);
-
-
-        if (
-          !data ||
-          !data.NAMA ||
-          !data.NIPP ||
-          !data.JABATAN
-        ) {
-
-          sessionStorage.removeItem(
-            "penggunaLogin"
-          );
-
-          return;
-
-        }
-
-
-        penggunaLogin =
-          data;
-
-
-        const displayNama =
-          el("displayNama");
-
-        const displayJabatan =
-          el("displayJabatan");
-
-        const loginPage =
-          el("loginPage");
-
-        const dashboardPage =
-          el("dashboardPage");
-
-
-        if (displayNama) {
-
-          displayNama.textContent =
-            data.NAMA;
-
-        }
-
-
-        if (displayJabatan) {
-
-          displayJabatan.textContent =
-            data.JABATAN +
-            " • NIPP " +
-            data.NIPP;
-
-        }
-
-
-        if (loginPage) {
-
-          loginPage.style.display =
-            "none";
-
-        }
-
-
-        if (dashboardPage) {
-
-          dashboardPage
-            .classList
-            .add("show");
-
-        }
-
-      }
-
-      catch (error) {
-
-        console.warn(
-          "Session tidak valid:",
-          error
-        );
-
-        try {
-
-          sessionStorage.removeItem(
-            "penggunaLogin"
-          );
-
-        }
-
-        catch (e) {
-
-          console.warn(e);
-
-        }
-
-      }
-
-    }
-
-
-    /* =====================================================
-       MENU SEMENTARA
-    ===================================================== */
-
-    function menuBelumTersedia(
-      namaMenu
+    if (
+      event.target.id !==
+      "fotoPemeriksaan"
     ) {
 
-      alert(
-        namaMenu +
-        " sedang dalam tahap pengembangan."
+      return;
+
+    }
+
+
+    const preview =
+      document.getElementById(
+        "previewFoto"
+      );
+
+
+    if (!preview) {
+      return;
+    }
+
+
+    preview.innerHTML =
+      "";
+
+
+    const files =
+      event.target.files;
+
+
+    if (
+      !files ||
+      files.length === 0
+    ) {
+
+      return;
+
+    }
+
+
+    Array.from(files).forEach(
+      function(file) {
+
+        if (
+          !file.type ||
+          !file.type.startsWith(
+            "image/"
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload =
+          function(event) {
+
+            const wrapper =
+              document.createElement(
+                "div"
+              );
+
+
+            wrapper.className =
+              "preview-item";
+
+
+            const img =
+              document.createElement(
+                "img"
+              );
+
+
+            img.src =
+              event.target.result;
+
+
+            const nama =
+              document.createElement(
+                "div"
+              );
+
+
+            nama.className =
+              "preview-name";
+
+
+            nama.textContent =
+              file.name;
+
+
+            wrapper.appendChild(
+              img
+            );
+
+
+            wrapper.appendChild(
+              nama
+            );
+
+
+            preview.appendChild(
+              wrapper
+            );
+
+          };
+
+
+        reader.readAsDataURL(
+          file
+        );
+
+      }
+    );
+
+  }
+);
+
+
+/* =========================================================
+   NOTIFIKASI FOTO
+========================================================= */
+
+function tampilkanNotifFoto(
+  judul,
+  pesan,
+  setelahOK
+) {
+
+  const overlay =
+    document.getElementById(
+      "notifFoto"
+    );
+
+
+  const title =
+    document.getElementById(
+      "notifFotoTitle"
+    );
+
+
+  const message =
+    document.getElementById(
+      "notifFotoMessage"
+    );
+
+
+  if (!overlay) {
+    return;
+  }
+
+
+  if (title) {
+
+    title.textContent =
+      judul || "Informasi";
+
+  }
+
+
+  if (message) {
+
+    message.textContent =
+      pesan || "";
+
+  }
+
+
+  overlay.dataset.afterOk =
+    setelahOK
+      ? "1"
+      : "0";
+
+
+  overlay.style.display =
+    "flex";
+
+}
+
+
+/* =========================================================
+   TUTUP NOTIFIKASI
+========================================================= */
+
+function tutupNotifFoto() {
+
+  const overlay =
+    document.getElementById(
+      "notifFoto"
+    );
+
+
+  if (!overlay) {
+    return;
+  }
+
+
+  const jalankan =
+    overlay.dataset.afterOk ===
+    "1";
+
+
+  overlay.style.display =
+    "none";
+
+
+  overlay.dataset.afterOk =
+    "0";
+
+
+  if (jalankan) {
+
+    tampilkanTTD();
+
+  }
+
+}
+
+
+/* =========================================================
+   TAMPILKAN TTD
+   TTD OTOMATIS MENYIAPKAN ID PEMERIKSAAN
+========================================================= */
+
+function tampilkanTTD() {
+
+  console.log("=================================");
+  console.log("TOMBOL TTD DIKLIK");
+  console.log("ID SAAT INI:", idPemeriksaanAktif);
+  console.log("=================================");
+
+
+  /*
+   * Validasi identitas pemeriksaan terlebih dahulu
+   */
+  if (!validasiIdentitas()) {
+    return;
+  }
+
+
+  /*
+   * Jika ID sudah tersedia,
+   * langsung tampilkan TTD
+   */
+  if (
+    idPemeriksaanAktif &&
+    String(idPemeriksaanAktif).trim() !== ""
+  ) {
+
+    bukaKotakTTD();
+
+    return;
+
+  }
+
+
+  /*
+   * Jika ID belum tersedia,
+   * otomatis buat dan simpan pemeriksaan
+   */
+  tampilkanStatus(
+    "Menyiapkan ID Pemeriksaan..."
+  );
+
+
+  pastikanIdPemeriksaan()
+
+  .then(function(id) {
+
+    idPemeriksaanAktif =
+      String(id || "").trim();
+
+
+    if (!idPemeriksaanAktif) {
+
+      throw new Error(
+        "ID Pemeriksaan tidak berhasil dibuat."
       );
 
     }
 
 
-    /* =====================================================
-       ENTER UNTUK LOGIN
-    ===================================================== */
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      function() {
-
-        const inputs =
-          document.querySelectorAll(
-            "#namaLogin, #nippLogin, #jabatanLogin"
-          );
+    /*
+     * SIMPAN ID KE SESSION
+     */
+    sessionStorage.setItem(
+      "idPemeriksaanAktif",
+      idPemeriksaanAktif
+    );
 
 
-        inputs.forEach(
-          function(input) {
+    console.log(
+      "ID PEMERIKSAAN BERHASIL DISIAPKAN:",
+      idPemeriksaanAktif
+    );
 
-            input.addEventListener(
-              "keydown",
-              function(event) {
 
-                if (
-                  event.key === "Enter"
-                ) {
+    tampilkanStatus(
+      "ID Pemeriksaan berhasil disiapkan.\n" +
+      "Silakan tanda tangan."
+    );
 
-                  event.preventDefault();
 
-                  loginPengguna();
+    /*
+     * Tampilkan kotak TTD
+     */
+    bukaKotakTTD();
 
-                }
+  })
 
-              }
-            );
+  .catch(function(error) {
 
-          }
+    console.error(
+      "GAGAL MENYIAPKAN ID PEMERIKSAAN:",
+      error
+    );
+
+
+    tampilkanStatus(
+      "Gagal menyiapkan ID Pemeriksaan."
+    );
+
+
+    alert(
+      "Gagal menyiapkan ID Pemeriksaan.\n\n" +
+      error.message
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   BUKA KOTAK TTD
+========================================================= */
+
+function bukaKotakTTD() {
+
+  const box =
+    document.getElementById(
+      "ttdBox"
+    );
+
+
+  if (!box) {
+
+    alert(
+      "Kotak tanda tangan tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  box.style.display =
+    "block";
+
+
+  /*
+   * Tunggu browser merender canvas
+   * agar ukuran canvas tidak 0
+   */
+  setTimeout(function() {
+
+    initSignature();
+
+  }, 100);
+
+
+  box.scrollIntoView({
+
+    behavior:
+      "smooth",
+
+    block:
+      "center"
+
+  });
+
+}
+
+
+/* =========================================================
+   INIT SIGNATURE
+========================================================= */
+
+function initSignature() {
+
+  signatureCanvas =
+    document.getElementById(
+      "signatureCanvas"
+    );
+
+
+  if (!signatureCanvas) {
+
+    console.error(
+      "signatureCanvas tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  const rect =
+    signatureCanvas.getBoundingClientRect();
+
+
+  if (
+    rect.width <= 0 ||
+    rect.height <= 0
+  ) {
+
+    console.error(
+      "Ukuran canvas tidak valid:",
+      rect
+    );
+
+    return;
+
+  }
+
+
+  const ratio =
+    Math.max(
+      window.devicePixelRatio || 1,
+      1
+    );
+
+
+  /*
+   * Hindari canvas terus-menerus
+   * di-reset jika sudah benar
+   */
+  const targetWidth =
+    Math.round(
+      rect.width * ratio
+    );
+
+
+  const targetHeight =
+    Math.round(
+      rect.height * ratio
+    );
+
+
+  if (
+    signatureCanvas.width !==
+    targetWidth ||
+
+    signatureCanvas.height !==
+    targetHeight
+  ) {
+
+    signatureCanvas.width =
+      targetWidth;
+
+    signatureCanvas.height =
+      targetHeight;
+
+  }
+
+
+  signatureContext =
+    signatureCanvas.getContext(
+      "2d"
+    );
+
+
+  if (!signatureContext) {
+
+    console.error(
+      "Context canvas tidak tersedia."
+    );
+
+    return;
+
+  }
+
+
+  signatureContext.setTransform(
+    ratio,
+    0,
+    0,
+    ratio,
+    0,
+    0
+  );
+
+
+  signatureContext.lineWidth =
+    2;
+
+
+  signatureContext.lineCap =
+    "round";
+
+
+  signatureContext.lineJoin =
+    "round";
+
+
+  signatureContext.strokeStyle =
+    "#000";
+
+
+  signatureCanvas.onpointerdown =
+    mulaiGambar;
+
+
+  signatureCanvas.onpointermove =
+    gambar;
+
+
+  signatureCanvas.onpointerup =
+    selesaiGambar;
+
+
+  signatureCanvas.onpointercancel =
+    selesaiGambar;
+
+
+  signatureCanvas.onpointerleave =
+    selesaiGambar;
+
+}
+
+
+/* =========================================================
+   MULAI GAMBAR
+========================================================= */
+
+function mulaiGambar(event) {
+
+  if (!signatureContext) {
+
+    return;
+
+  }
+
+
+  sedangMenggambar =
+    true;
+
+
+  try {
+
+    signatureCanvas.setPointerCapture(
+      event.pointerId
+    );
+
+  }
+
+  catch (error) {
+
+    console.warn(
+      "Pointer capture tidak tersedia.",
+      error
+    );
+
+  }
+
+
+  const posisi =
+    posisiCanvas(event);
+
+
+  signatureContext.beginPath();
+
+
+  signatureContext.moveTo(
+    posisi.x,
+    posisi.y
+  );
+
+}
+
+
+/* =========================================================
+   GAMBAR
+========================================================= */
+
+function gambar(event) {
+
+  if (
+    !sedangMenggambar ||
+    !signatureContext
+  ) {
+
+    return;
+
+  }
+
+
+  const posisi =
+    posisiCanvas(event);
+
+
+  signatureContext.lineTo(
+    posisi.x,
+    posisi.y
+  );
+
+
+  signatureContext.stroke();
+
+}
+
+
+/* =========================================================
+   SELESAI GAMBAR
+========================================================= */
+
+function selesaiGambar(event) {
+
+  sedangMenggambar =
+    false;
+
+
+  if (
+    event &&
+    signatureCanvas
+  ) {
+
+    try {
+
+      signatureCanvas.releasePointerCapture(
+        event.pointerId
+      );
+
+    }
+
+    catch (error) {
+
+      /*
+       * Tidak perlu menghentikan aplikasi
+       */
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   POSISI CANVAS
+========================================================= */
+
+function posisiCanvas(event) {
+
+  if (!signatureCanvas) {
+
+    return {
+      x: 0,
+      y: 0
+    };
+
+  }
+
+
+  const rect =
+    signatureCanvas.getBoundingClientRect();
+
+
+  return {
+
+    x:
+      event.clientX -
+      rect.left,
+
+    y:
+      event.clientY -
+      rect.top
+
+  };
+
+}
+
+
+/* =========================================================
+   HAPUS TTD
+========================================================= */
+
+function clearSignature() {
+
+  if (
+    !signatureCanvas ||
+    !signatureContext
+  ) {
+
+    return;
+
+  }
+
+
+  const rect =
+    signatureCanvas.getBoundingClientRect();
+
+
+  const ratio =
+    Math.max(
+      window.devicePixelRatio || 1,
+      1
+    );
+
+
+  signatureContext.clearRect(
+
+    0,
+    0,
+    rect.width,
+    rect.height
+
+  );
+
+}
+
+
+/* =========================================================
+   SIMPAN TTD
+========================================================= */
+
+function simpanTTD() {
+
+  console.log("=================================");
+  console.log("SIMPAN TTD");
+  console.log("=================================");
+
+
+  /*
+   * Ambil ID dari variable
+   */
+  let idAktif =
+    idPemeriksaanAktif;
+
+
+  /*
+   * Jika kosong, ambil dari session
+   */
+  if (
+    !idAktif ||
+    String(idAktif).trim() === ""
+  ) {
+
+    idAktif =
+      sessionStorage.getItem(
+        "idPemeriksaanAktif"
+      ) || "";
+
+  }
+
+
+  idAktif =
+    String(
+      idAktif || ""
+    ).trim();
+
+
+  console.log(
+    "ID PEMERIKSAAN:",
+    idAktif
+  );
+
+
+  /*
+   * Jika masih kosong,
+   * buat pemeriksaan terlebih dahulu
+   */
+  if (!idAktif) {
+
+    tampilkanStatus(
+      "Menyiapkan ID Pemeriksaan..."
+    );
+
+
+    pastikanIdPemeriksaan()
+
+    .then(function(id) {
+
+      idAktif =
+        String(
+          id || ""
+        ).trim();
+
+
+      if (!idAktif) {
+
+        throw new Error(
+          "ID Pemeriksaan tidak ditemukan setelah penyimpanan."
+        );
+
+      }
+
+
+      idPemeriksaanAktif =
+        idAktif;
+
+
+      sessionStorage.setItem(
+        "idPemeriksaanAktif",
+        idAktif
+      );
+
+
+      /*
+       * Setelah ID tersedia,
+       * lanjut simpan TTD
+       */
+      prosesSimpanTTD(
+        idAktif
+      );
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "GAGAL MENYIAPKAN ID:",
+        error
+      );
+
+
+      alert(
+        "Gagal menyiapkan ID Pemeriksaan.\n\n" +
+        error.message
+      );
+
+    });
+
+
+    return;
+
+  }
+
+
+  /*
+   * ID sudah ada
+   */
+  idPemeriksaanAktif =
+    idAktif;
+
+
+  sessionStorage.setItem(
+    "idPemeriksaanAktif",
+    idAktif
+  );
+
+
+  prosesSimpanTTD(
+    idAktif
+  );
+
+}
+
+
+/* =========================================================
+   PROSES SIMPAN TTD
+========================================================= */
+
+function prosesSimpanTTD(
+  idAktif
+) {
+
+  console.log("=================================");
+  console.log("PROSES SIMPAN TTD");
+  console.log(
+    "ID PEMERIKSAAN:",
+    idAktif
+  );
+  console.log("=================================");
+
+
+  /*
+   * Validasi ID
+   */
+  if (
+    !idAktif ||
+    String(idAktif).trim() === ""
+  ) {
+
+    alert(
+      "ID Pemeriksaan belum tersedia."
+    );
+
+    return;
+
+  }
+
+
+  idAktif =
+    String(
+      idAktif
+    ).trim();
+
+
+  /*
+   * Ambil canvas
+   */
+  const canvas =
+    document.getElementById(
+      "signatureCanvas"
+    );
+
+
+  if (!canvas) {
+
+    alert(
+      "Canvas tanda tangan tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Ambil gambar TTD
+   */
+  const signature =
+    canvas.toDataURL(
+      "image/png"
+    );
+
+
+  /*
+   * Validasi TTD
+   */
+  if (
+    !signature ||
+    signature === "data:," ||
+    signature.length < 1000
+  ) {
+
+    alert(
+      "Tanda tangan belum tersedia.\n\n" +
+      "Silakan tanda tangan terlebih dahulu."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * DATA TTD
+   */
+  const data = {
+
+    ID_PEMERIKSAAN:
+      idAktif,
+
+    ID_PEMERIKSA:
+      idAktif,
+
+    TTD:
+      signature,
+
+    EMAIL:
+      sessionStorage.getItem(
+        "userEmail"
+      ) || "",
+
+    NAMA:
+      sessionStorage.getItem(
+        "userNama"
+      ) || "",
+
+    NIPP:
+      sessionStorage.getItem(
+        "userNipp"
+      ) || "",
+
+    JABATAN:
+      sessionStorage.getItem(
+        "userJabatan"
+      ) || ""
+
+  };
+
+
+  console.log(
+    "DATA TTD:",
+    data
+  );
+
+
+  tampilkanStatus(
+    "Menyimpan tanda tangan..."
+  );
+
+
+  /*
+   * KIRIM KE API
+   */
+  fetch(
+
+    API_URL +
+    "?action=simpan_ttd",
+
+    {
+
+      method:
+        "POST",
+
+      headers: {
+
+        "Content-Type":
+          "text/plain;charset=utf-8"
+
+      },
+
+      body:
+        JSON.stringify(
+          data
+        )
+
+    }
+
+  )
+
+  .then(function(response) {
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
+    }
+
+
+    return response.text();
+
+  })
+
+  .then(function(text) {
+
+    console.log(
+      "RESPONSE SIMPAN TTD:",
+      text
+    );
+
+
+    let result;
+
+
+    try {
+
+      result =
+        JSON.parse(text);
+
+    }
+
+    catch (error) {
+
+      throw new Error(
+        "Response API bukan JSON yang valid:\n" +
+        text
+      );
+
+    }
+
+
+    /*
+     * CEK HASIL API
+     */
+    if (
+      result &&
+      result.success === true
+    ) {
+
+      /*
+       * Pastikan ID tersimpan
+       */
+      idPemeriksaanAktif =
+        idAktif;
+
+
+      sessionStorage.setItem(
+        "idPemeriksaanAktif",
+        idAktif
+      );
+
+
+      /*
+       * Tutup kotak TTD
+       */
+      const ttdBox =
+        document.getElementById(
+          "ttdBox"
         );
 
 
-        cekSession();
+      if (ttdBox) {
+
+        ttdBox.style.display =
+          "none";
 
       }
+
+
+      /*
+       * Pastikan APP tampil
+       */
+      const app =
+        document.getElementById(
+          "app"
+        );
+
+
+      if (app) {
+
+        app.style.display =
+          "block";
+
+      }
+
+
+      /*
+       * Pastikan FORM tampil
+       */
+      const form =
+        document.getElementById(
+          "formPemeriksaan"
+        );
+
+
+      if (form) {
+
+        form.style.display =
+          "block";
+
+      }
+
+
+      /*
+       * STATUS
+       */
+      tampilkanStatus(
+        "Tanda tangan berhasil disimpan.\n" +
+        "ID Pemeriksaan: " +
+        idAktif
+      );
+
+
+      /*
+       * NOTIFIKASI
+       *
+       * Tombol OK berada di kanan bawah
+       */
+      tampilkanNotifFoto(
+
+        "Tanda tangan berhasil disimpan",
+
+        "Tanda tangan berhasil disimpan.\n\n" +
+        "ID Pemeriksaan: " +
+        idAktif,
+
+        false
+
+      );
+
+
+      /*
+       * Tandai bahwa setelah OK
+       * harus kembali ke form pemeriksaan
+       */
+      const overlay =
+        document.getElementById(
+          "notifFoto"
+        );
+
+
+      if (overlay) {
+
+        overlay.dataset.afterOk =
+          "2";
+
+      }
+
+
+      /*
+       * Bersihkan canvas
+       * setelah berhasil
+       */
+      if (
+        signatureContext &&
+        signatureCanvas
+      ) {
+
+        const rect =
+          signatureCanvas.getBoundingClientRect();
+
+
+        signatureContext.clearRect(
+
+          0,
+          0,
+          rect.width,
+          rect.height
+
+        );
+
+      }
+
+
+      console.log(
+        "TTD BERHASIL DISIMPAN."
+      );
+
+
+    }
+
+    else {
+
+      const pesan =
+
+        result &&
+        result.message
+
+          ? result.message
+
+          : "Gagal menyimpan tanda tangan.";
+
+
+      throw new Error(
+        pesan
+      );
+
+    }
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      "GAGAL SIMPAN TTD:",
+      error
     );
 
-  </script>
 
+    tampilkanStatus(
+      "Gagal menyimpan tanda tangan.\n" +
+      error.message
+    );
+
+
+    tampilkanNotifFoto(
+
+      "Gagal menyimpan tanda tangan",
+
+      error.message ||
+      "Gagal menyimpan tanda tangan.",
+
+      false
+
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   TUTUP NOTIFIKASI FOTO / TTD
+========================================================= */
+
+function tutupNotifFoto() {
+
+  const overlay =
+    document.getElementById(
+      "notifFoto"
+    );
+
+
+  if (!overlay) {
+
+    return;
+
+  }
+
+
+  const aksi =
+    overlay.dataset.afterOk;
+
+
+  /*
+   * Tutup notif
+   */
+  overlay.style.display =
+    "none";
+
+
+  overlay.dataset.afterOk =
+    "0";
+
+
+  /*
+   * ================================================
+   * JIKA NOTIF TTD
+   * KEMBALI KE FORM PEMERIKSAAN
+   * ================================================
+   */
+  if (aksi === "2") {
+
+    const app =
+      document.getElementById(
+        "app"
+      );
+
+
+    const form =
+      document.getElementById(
+        "formPemeriksaan"
+      );
+
+
+    const ttdBox =
+      document.getElementById(
+        "ttdBox"
+      );
+
+
+    /*
+     * APP tetap tampil
+     */
+    if (app) {
+
+      app.style.display =
+        "block";
+
+    }
+
+
+    /*
+     * FORM PEMERIKSAAN tampil
+     */
+    if (form) {
+
+      form.style.display =
+        "block";
+
+    }
+
+
+    /*
+     * TTD ditutup
+     */
+    if (ttdBox) {
+
+      ttdBox.style.display =
+        "none";
+
+    }
+
+
+    /*
+     * Scroll kembali ke form
+     */
+    if (form) {
+
+      setTimeout(
+        function() {
+
+          form.scrollIntoView({
+
+            behavior:
+              "smooth",
+
+            block:
+              "start"
+
+          });
+
+        },
+        150
+      );
+
+    }
+
+
+    return;
+
+  }
+
+
+  /*
+   * ================================================
+   * JIKA NOTIF FOTO
+   * ================================================
+   */
+  if (aksi === "1") {
+
+    aktifkanTTDSetelahFoto();
+
+  }
+
+}
+/* =========================================================
+   PROSES SIMPAN TTD
+========================================================= */
+
+function prosesSimpanTTD(
+  idAktif
+) {
+
+  console.log(
+    "================================="
+  );
+
+  console.log(
+    "PROSES SIMPAN TTD"
+  );
+
+  console.log(
+    "ID:",
+    idAktif
+  );
+
+  console.log(
+    "================================="
+  );
+
+
+  if (!idAktif) {
+
+    alert(
+      "ID Pemeriksaan belum tersedia."
+    );
+
+    return;
+
+  }
+
+
+  const canvas =
+    document.getElementById(
+      "signatureCanvas"
+    );
+
+
+  if (!canvas) {
+
+    alert(
+      "Canvas tanda tangan tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * CEK TANDA TANGAN SEBENARNYA
+   */
+
+  if (
+    !canvasHasInk(canvas)
+  ) {
+
+    alert(
+
+      "Tanda tangan belum tersedia.\n\n" +
+      "Silakan tanda tangan terlebih dahulu."
+
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Ambil Base64.
+   */
+
+  const signature =
+    canvas.toDataURL(
+      "image/png"
+    );
+
+
+  if (
+    !signature ||
+    signature.indexOf(
+      "data:image/png;base64,"
+    ) !== 0
+  ) {
+
+    alert(
+      "Data tanda tangan tidak valid."
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * Data TTD.
+   */
+
+  const data = {
+
+    ID_PEMERIKSAAN:
+      idAktif,
+
+    ID_PEMERIKSA:
+      idAktif,
+
+    TTD:
+      signature,
+
+    EMAIL:
+      sessionStorage.getItem(
+        "userEmail"
+      ) || "",
+
+    NAMA:
+      sessionStorage.getItem(
+        "userNama"
+      ) || "",
+
+    NIPP:
+      sessionStorage.getItem(
+        "userNipp"
+      ) || "",
+
+    JABATAN:
+      sessionStorage.getItem(
+        "userJabatan"
+      ) || ""
+
+  };
+
+
+  console.log(
+    "DATA TTD:",
+    {
+      ID_PEMERIKSAAN:
+        data.ID_PEMERIKSAAN,
+
+      NAMA:
+        data.NAMA,
+
+      NIPP:
+        data.NIPP,
+
+      JABATAN:
+        data.JABATAN,
+
+      TTD:
+        "[BASE64 TTD]"
+    }
+  );
+
+
+  tampilkanStatus(
+    "Menyimpan tanda tangan..."
+  );
+
+
+  /*
+   * Kirim ke endpoint
+   */
+
+  kirimRequestPost(
+    "simpan_ttd",
+    data
+  )
+
+  .then(function(result) {
+
+    console.log(
+      "HASIL SIMPAN TTD:",
+      result
+    );
+
+
+    if (
+      result &&
+      result.success === true
+    ) {
+
+      /*
+       * Pastikan ID tetap sama.
+       */
+
+      idPemeriksaanAktif =
+        idAktif;
+
+
+      sessionStorage.setItem(
+        "idPemeriksaanAktif",
+        idAktif
+      );
+
+
+      /*
+       * Tutup TTD.
+       */
+
+      const ttdBox =
+        document.getElementById(
+          "ttdBox"
+        );
+
+
+      if (ttdBox) {
+
+        ttdBox.style.display =
+          "none";
+
+      }
+
+
+      /*
+       * Pesan.
+       */
+
+      tampilkanStatus(
+
+        "Tanda tangan berhasil disimpan.\n" +
+
+        "ID Pemeriksaan: " +
+        idAktif +
+
+        "\n\n" +
+
+        "Silakan klik SIMPAN & SELESAI."
+
+      );
+
+
+      alert(
+
+        "Tanda tangan berhasil disimpan.\n\n" +
+
+        "ID Pemeriksaan: " +
+        idAktif +
+
+        "\n\n" +
+
+        "Silakan klik SIMPAN & SELESAI."
+
+      );
+
+
+      /*
+       * Scroll tombol selesai.
+       */
+
+      const tombolSimpan =
+        document.querySelector(
+          "#formPemeriksaan button[onclick='simpanPemeriksaan()']"
+        );
+
+
+      if (tombolSimpan) {
+
+        setTimeout(
+          function() {
+
+            tombolSimpan.scrollIntoView({
+
+              behavior:
+                "smooth",
+
+              block:
+                "center"
+
+            });
+
+          },
+          300
+        );
+
+      }
+
+    }
+
+    else {
+
+      throw new Error(
+
+        result &&
+        result.message
+
+        ?
+
+        result.message
+
+        :
+
+        "API menolak penyimpanan TTD."
+
+      );
+
+    }
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      "GAGAL SIMPAN TTD:",
+      error
+    );
+
+
+    tampilkanStatus(
+
+      "Gagal menyimpan tanda tangan.\n" +
+      error.message
+
+    );
+
+
+    alert(
+
+      "Gagal menyimpan tanda tangan.\n\n" +
+      error.message
+
+    );
+
+  });
+
+}
+
+
+/* =========================================================
+   MENU LAIN
+========================================================= */
+
+function tampilkanDashboard() {
+
+  const form =
+    document.getElementById(
+      "formPemeriksaan"
+    );
+
+
+  if (form) {
+
+    form.style.display =
+      "none";
+
+  }
+
+}
+
+
+function tampilkanRiwayatPemeriksaan() {
+
+  alert(
+    "Riwayat Pemeriksaan akan dibuat pada tahap berikutnya."
+  );
+
+}
+
+
+function tampilkanRekapPemeriksaan() {
+
+  alert(
+    "Rekap Pemeriksaan akan dibuat pada tahap berikutnya."
+  );
+
+}
+
+
+function tampilkanDataPegawai() {
+
+  alert(
+    "Data Pegawai akan dibuat pada tahap berikutnya."
+  );
+
+}
+
+
+function tampilkanDataStasiun() {
+
+  alert(
+    "Data Stasiun akan dibuat pada tahap berikutnya."
+  );
+
+}
+
+
+function tampilkanDataLokomotif() {
+
+  alert(
+    "Data Lokomotif akan dibuat pada tahap berikutnya."
+  );
+
+}
+
+
+/* =========================================================
+   RESIZE CANVAS
+========================================================= */
+
+window.addEventListener(
+  "resize",
+  function() {
+
+    /*
+     * Jangan otomatis resize canvas
+     * ketika sedang menggambar.
+     *
+     * Resize canvas dapat menghapus
+     * isi tanda tangan.
+     */
+
+    if (
+      signatureCanvas &&
+      document.getElementById(
+        "ttdBox"
+      ) &&
+      document.getElementById(
+        "ttdBox"
+      ).style.display === "block"
+    ) {
+
+      console.log(
+        "Canvas TTD sedang aktif."
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   ENTER PADA LOGIN
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    const target =
+      event.target;
+
+
+    if (
+      !target ||
+      !target.id
+    ) {
+
+      return;
+
+    }
+
+
+    const loginIds = [
+
+      "loginNama",
+      "loginNipp",
+      "loginJabatan"
+
+    ];
+
+
+    if (
+      loginIds.includes(
+        target.id
+      ) &&
+      event.key === "Enter"
+    ) {
+
+      event.preventDefault();
+
+      loginPengguna();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    console.log(
+      "================================="
+    );
+
+    console.log(
+      "SISTEM CHECKLIST LANGSIR"
+    );
+
+    console.log(
+      "LOGIN MANUAL AKTIF"
+    );
+
+    console.log(
+      "================================="
+    );
+
+
+    /*
+     * PENTING:
+     *
+     * Saat halaman dibuka,
+     * SELALU tampilkan halaman login.
+     *
+     * Tidak menggunakan session lama
+     * untuk melewati halaman login.
+     */
+
+    const loginBox =
+      document.getElementById(
+        "googleLogin"
+      );
+
+    const app =
+      document.getElementById(
+        "app"
+      );
+
+
+    if (loginBox) {
+
+      loginBox.style.display =
+        "block";
+
+    }
+
+
+    if (app) {
+
+      app.style.display =
+        "none";
+
+    }
+
+
+    /*
+     * Jangan otomatis login.
+     */
+
+    idPemeriksaanAktif =
+      "";
+
+
+    /*
+     * ID pemeriksaan lama dihapus
+     * supaya pemeriksaan baru tidak
+     * tertukar dengan pemeriksaan lama.
+     */
+
+    sessionStorage.removeItem(
+      "idPemeriksaanAktif"
+    );
+
+
+    /*
+     * Fokus otomatis ke Nama.
+     */
+
+    const loginNama =
+      document.getElementById(
+        "loginNama"
+      );
+
+
+    if (loginNama) {
+
+      setTimeout(
+        function() {
+
+          loginNama.focus();
+
+        },
+        200
+      );
+
+    }
+
+  }
+);
+
+</script>
 </body>
+
 </html>
