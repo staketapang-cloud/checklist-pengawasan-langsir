@@ -2641,7 +2641,6 @@ function tutupNotifUploadFoto() {
 
 /* =========================================================
    KIRIM FOTO
-   VERSI BERSIH - TINGGAL COPAS
 ========================================================= */
 
 async function kirimFoto() {
@@ -2659,9 +2658,7 @@ async function kirimFoto() {
 
   if (!input) {
 
-    alert(
-      "Input foto tidak ditemukan."
-    );
+    alert("Input foto tidak ditemukan.");
 
     return;
 
@@ -2673,9 +2670,7 @@ async function kirimFoto() {
     input.files.length === 0
   ) {
 
-    alert(
-      "Silakan pilih foto terlebih dahulu."
-    );
+    alert("Silakan pilih foto terlebih dahulu.");
 
     return;
 
@@ -2690,7 +2685,7 @@ async function kirimFoto() {
 
     alert(
       "ID Pemeriksaan belum tersedia.\n\n" +
-      "Silakan SIMPAN DRAFT atau SIMPAN & SELESAI terlebih dahulu."
+      "Silakan simpan Draft atau Simpan & Selesai terlebih dahulu."
     );
 
     return;
@@ -2699,13 +2694,13 @@ async function kirimFoto() {
 
 
   /* -------------------------------------------------------
-     URL API
+     CEK API
   ------------------------------------------------------- */
 
-  const url = API_URL;
-
-
-  if (!url) {
+  if (
+    typeof API_URL === "undefined" ||
+    !API_URL
+  ) {
 
     alert(
       "URL API tidak ditemukan."
@@ -2716,16 +2711,11 @@ async function kirimFoto() {
   }
 
 
-  /* -------------------------------------------------------
-     AMBIL FILE
-  ------------------------------------------------------- */
-
   const files =
     Array.from(input.files);
 
 
   let berhasil = 0;
-
   let gagal = 0;
 
 
@@ -2768,12 +2758,12 @@ async function kirimFoto() {
         !file.type.startsWith("image/")
       ) {
 
-        gagal++;
-
         console.warn(
           "File bukan gambar:",
           file.name
         );
+
+        gagal++;
 
         continue;
 
@@ -2793,13 +2783,12 @@ async function kirimFoto() {
         ukuranMB > 5
       ) {
 
-        gagal++;
-
         console.warn(
           "Foto terlalu besar:",
-          file.name,
-          ukuranMB.toFixed(2) + " MB"
+          file.name
         );
+
+        gagal++;
 
         continue;
 
@@ -2807,7 +2796,7 @@ async function kirimFoto() {
 
 
       /* ---------------------------------------------------
-         UPDATE STATUS
+         STATUS UPLOAD
       --------------------------------------------------- */
 
       if (status) {
@@ -2824,11 +2813,258 @@ async function kirimFoto() {
 
 
       console.log(
-        "Upload foto:",
+        "UPLOAD FOTO:",
         file.name
       );
 
 
+      /* ---------------------------------------------------
+         FOTO → BASE64
+      --------------------------------------------------- */
+
+      const base64 =
+        await fileToBase64(file);
+
+
+      if (!base64) {
+
+        throw new Error(
+          "Base64 foto kosong."
+        );
+
+      }
+
+
+      /* ---------------------------------------------------
+         DATA YANG DIKIRIM
+      --------------------------------------------------- */
+
+      const payload = {
+
+        action:
+          "upload_foto",
+
+        data: {
+
+          ID_PEMERIKSAAN:
+            idPemeriksaanAktif,
+
+          ID_PEMERIKSA:
+            idPemeriksaanAktif,
+
+          NAMA_FILE:
+            file.name,
+
+          FOTO:
+            base64
+
+        }
+
+      };
+
+
+      /* ---------------------------------------------------
+         KIRIM KE APPS SCRIPT
+      --------------------------------------------------- */
+
+      const response =
+        await fetch(
+          API_URL,
+          {
+
+            method:
+              "POST",
+
+            headers: {
+
+              "Content-Type":
+                "text/plain;charset=utf-8"
+
+            },
+
+            body:
+              JSON.stringify(payload)
+
+          }
+        );
+
+
+      /* ---------------------------------------------------
+         CEK RESPONSE HTTP
+      --------------------------------------------------- */
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTP Error: " +
+          response.status
+        );
+
+      }
+
+
+      /* ---------------------------------------------------
+         BACA RESPONSE
+      --------------------------------------------------- */
+
+      const text =
+        await response.text();
+
+
+      console.log(
+        "RESPONSE UPLOAD FOTO:",
+        text
+      );
+
+
+      let result;
+
+
+      try {
+
+        result =
+          JSON.parse(text);
+
+      }
+
+      catch (error) {
+
+        throw new Error(
+          "Response API bukan JSON yang valid."
+        );
+
+      }
+
+
+      /* ---------------------------------------------------
+         CEK HASIL
+      --------------------------------------------------- */
+
+      if (
+        result &&
+        result.success === true
+      ) {
+
+        berhasil++;
+
+        console.log(
+          "UPLOAD BERHASIL:",
+          file.name
+        );
+
+      }
+
+      else {
+
+        gagal++;
+
+        console.error(
+          "UPLOAD GAGAL:",
+          file.name,
+          result
+        );
+
+      }
+
+    }
+
+    catch (error) {
+
+      gagal++;
+
+      console.error(
+        "ERROR UPLOAD FOTO:",
+        file.name,
+        error
+      );
+
+    }
+
+  }
+
+
+  /* =======================================================
+     SELESAI UPLOAD
+  ======================================================= */
+
+  input.value = "";
+
+
+  const preview =
+    document.getElementById(
+      "previewFoto"
+    );
+
+
+  if (preview) {
+
+    preview.innerHTML = "";
+
+  }
+
+
+  if (status) {
+
+    status.style.display = "block";
+
+    status.textContent =
+      "Upload selesai.\n" +
+      "Berhasil: " +
+      berhasil +
+      " foto\n" +
+      "Gagal: " +
+      gagal +
+      " foto.";
+
+  }
+
+
+  /* -------------------------------------------------------
+     NOTIFIKASI
+  ------------------------------------------------------- */
+
+  if (
+    berhasil > 0 &&
+    gagal === 0
+  ) {
+
+    alert(
+      "Upload foto berhasil.\n\n" +
+      "Jumlah foto: " +
+      berhasil +
+      "\nID Pemeriksaan: " +
+      idPemeriksaanAktif
+    );
+
+  }
+
+  else if (
+    berhasil > 0 &&
+    gagal > 0
+  ) {
+
+    alert(
+      "Upload foto selesai sebagian.\n\n" +
+      "Berhasil: " +
+      berhasil +
+      " foto\n" +
+      "Gagal: " +
+      gagal +
+      " foto."
+    );
+
+  }
+
+  else {
+
+    alert(
+      "Upload foto gagal.\n\n" +
+      "Silakan periksa Console (F12)."
+    );
+
+  }
+
+}
       /* ---------------------------------------------------
          FILE → BASE64
       --------------------------------------------------- */
