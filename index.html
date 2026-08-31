@@ -6,7 +6,7 @@
 ========================================================= */
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+"https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
 
 
 /* =========================================================
@@ -27,8 +27,30 @@ let sedangMenggambar = false;
 document.addEventListener("DOMContentLoaded", function () {
 
   console.log(
+    "JavaScript berhasil dimuat tanpa syntax error."
+  );
+
+  console.log(
     "Checklist Pengawasan Kegiatan Langsir - JavaScript aktif."
   );
+
+
+  /*
+   * Pastikan aplikasi awalnya tersembunyi
+   * sampai login Google berhasil.
+   */
+
+  const app =
+    document.getElementById("app");
+
+  if (app) {
+    app.style.display = "none";
+  }
+
+
+  /*
+   * TTD disembunyikan saat awal.
+   */
 
   const ttdBox =
     document.getElementById("ttdBox");
@@ -46,14 +68,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function handleCredentialResponse(response) {
 
-  try {
+  console.log(
+    "Google Login berhasil."
+  );
 
-    console.log(
-      "Google Login berhasil."
+
+  if (
+    !response ||
+    !response.credential
+  ) {
+
+    console.error(
+      "Credential Google tidak ditemukan."
     );
 
+    return;
+
+  }
+
+
+  try {
+
     const data =
-      parseJwt(response.credential);
+      parseJwt(
+        response.credential
+      );
+
 
     console.log(
       "DATA GOOGLE:",
@@ -64,14 +104,22 @@ function handleCredentialResponse(response) {
     const email =
       data.email || "";
 
-    const nama =
-      data.name || "";
 
+    const nama =
+      data.name ||
+      data.given_name ||
+      "";
+
+
+    /*
+     * Simpan data login.
+     */
 
     sessionStorage.setItem(
       "userEmail",
       email
     );
+
 
     sessionStorage.setItem(
       "userNama",
@@ -79,14 +127,13 @@ function handleCredentialResponse(response) {
     );
 
 
+    /*
+     * Sembunyikan login.
+     */
+
     const googleLogin =
       document.getElementById(
         "googleLogin"
-      );
-
-    const app =
-      document.getElementById(
-        "app"
       );
 
 
@@ -98,6 +145,16 @@ function handleCredentialResponse(response) {
     }
 
 
+    /*
+     * Tampilkan aplikasi.
+     */
+
+    const app =
+      document.getElementById(
+        "app"
+      );
+
+
     if (app) {
 
       app.style.display =
@@ -105,6 +162,10 @@ function handleCredentialResponse(response) {
 
     }
 
+
+    /*
+     * Tampilkan informasi user.
+     */
 
     const infoUser =
       document.getElementById(
@@ -125,19 +186,20 @@ function handleCredentialResponse(response) {
 
 
     console.log(
-      "Aplikasi ditampilkan."
+      "Dashboard berhasil ditampilkan."
     );
 
 
   } catch (error) {
 
     console.error(
-      "Gagal memproses Google Login:",
+      "Gagal memproses login Google:",
       error
     );
 
+
     alert(
-      "Login Google berhasil, tetapi data pengguna gagal diproses."
+      "Login berhasil, tetapi data pengguna gagal diproses."
     );
 
   }
@@ -146,7 +208,7 @@ function handleCredentialResponse(response) {
 
 
 /* =========================================================
-   PARSE JWT GOOGLE
+   PARSE JWT
 ========================================================= */
 
 function parseJwt(token) {
@@ -154,27 +216,36 @@ function parseJwt(token) {
   const base64Url =
     token.split(".")[1];
 
+
   const base64 =
     base64Url
       .replace(/-/g, "+")
       .replace(/_/g, "/");
 
+
   const jsonPayload =
     decodeURIComponent(
+
       atob(base64)
+
         .split("")
+
         .map(function (c) {
 
           return (
             "%" +
             ("00" +
-              c.charCodeAt(0).toString(16)
+              c.charCodeAt(0)
+                .toString(16)
             ).slice(-2)
           );
 
         })
+
         .join("")
+
     );
+
 
   return JSON.parse(
     jsonPayload
@@ -228,9 +299,11 @@ function muatChecklist() {
 
       }
 
+
       return response.json();
 
     })
+
 
     .then(function (result) {
 
@@ -259,7 +332,11 @@ function muatChecklist() {
       }
 
 
-      if (!Array.isArray(result.data)) {
+      if (
+        !Array.isArray(
+          result.data
+        )
+      ) {
 
         throw new Error(
           "Format data checklist tidak valid."
@@ -268,10 +345,12 @@ function muatChecklist() {
       }
 
 
-      container.innerHTML = "";
+      container.innerHTML =
+        "";
 
 
-      let nomorTampil = 0;
+      let nomorTampil =
+        0;
 
 
       result.data.forEach(
@@ -333,7 +412,8 @@ function muatChecklist() {
 
 
           const nomor =
-            item.URUTAN || nomorTampil;
+            item.URUTAN ||
+            nomorTampil;
 
 
           const div =
@@ -417,6 +497,7 @@ function muatChecklist() {
 
             "</div>" +
 
+
             "<div class='checklist-choice'>" +
 
               "<label class='choice-label'>" +
@@ -436,6 +517,7 @@ function muatChecklist() {
                 "<span>YA</span>" +
 
               "</label>" +
+
 
               "<label class='choice-label'>" +
 
@@ -457,12 +539,15 @@ function muatChecklist() {
 
             "</div>" +
 
+
             "<textarea " +
 
               "class='temuan-input' " +
 
               "data-id='" +
-              escapeHtml(id) +
+              escapeHtml(
+                id
+              ) +
               "' " +
 
               "placeholder='Keterangan / temuan (opsional)'>" +
@@ -478,7 +563,9 @@ function muatChecklist() {
       );
 
 
-      if (nomorTampil === 0) {
+      if (
+        nomorTampil === 0
+      ) {
 
         container.innerHTML =
           "<div class='loading'>" +
@@ -494,6 +581,7 @@ function muatChecklist() {
       );
 
     })
+
 
     .catch(function (error) {
 
@@ -795,7 +883,9 @@ function validasiChecklist() {
     );
 
 
-  if (items.length === 0) {
+  if (
+    items.length === 0
+  ) {
 
     alert(
       "Checklist belum tersedia."
@@ -866,7 +956,9 @@ function buatIdPemeriksaan() {
 
 function simpanDraft() {
 
-  if (!validasiIdentitas()) {
+  if (
+    !validasiIdentitas()
+  ) {
 
     return;
 
@@ -877,7 +969,9 @@ function simpanDraft() {
     ambilDataForm();
 
 
-  if (!data.ID_PEMERIKSAAN) {
+  if (
+    !data.ID_PEMERIKSAAN
+  ) {
 
     idPemeriksaanAktif =
       buatIdPemeriksaan();
@@ -912,14 +1006,18 @@ function simpanDraft() {
 
 function simpanPemeriksaan() {
 
-  if (!validasiIdentitas()) {
+  if (
+    !validasiIdentitas()
+  ) {
 
     return;
 
   }
 
 
-  if (!validasiChecklist()) {
+  if (
+    !validasiChecklist()
+  ) {
 
     return;
 
@@ -930,7 +1028,9 @@ function simpanPemeriksaan() {
     ambilDataForm();
 
 
-  if (!data.ID_PEMERIKSAAN) {
+  if (
+    !data.ID_PEMERIKSAAN
+  ) {
 
     idPemeriksaanAktif =
       buatIdPemeriksaan();
@@ -960,7 +1060,7 @@ function simpanPemeriksaan() {
 
 
 /* =========================================================
-   KIRIM PEMERIKSAAN KE API
+   KIRIM PEMERIKSAAN
 ========================================================= */
 
 function kirimPemeriksaan(
@@ -969,8 +1069,10 @@ function kirimPemeriksaan(
 ) {
 
   fetch(
+
     API_URL +
     "?action=simpan_pemeriksaan",
+
     {
 
       method: "POST",
@@ -983,7 +1085,9 @@ function kirimPemeriksaan(
       },
 
       body:
-        JSON.stringify(data)
+        JSON.stringify(
+          data
+        )
 
     }
 
@@ -1005,6 +1109,7 @@ function kirimPemeriksaan(
 
     })
 
+
     .then(function (result) {
 
       console.log(
@@ -1013,7 +1118,9 @@ function kirimPemeriksaan(
       );
 
 
-      if (result.success) {
+      if (
+        result.success
+      ) {
 
         idPemeriksaanAktif =
           result.id_pemeriksaan ||
@@ -1052,6 +1159,7 @@ function kirimPemeriksaan(
       }
 
     })
+
 
     .catch(function (error) {
 
@@ -1105,7 +1213,29 @@ function tampilkanStatus(pesan) {
 
 
 /* =========================================================
-   TAMPILKAN FORM PEMERIKSAAN
+   DASHBOARD
+========================================================= */
+
+function tampilkanDashboard() {
+
+  const form =
+    document.getElementById(
+      "formPemeriksaan"
+    );
+
+
+  if (form) {
+
+    form.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* =========================================================
+   FORM PEMERIKSAAN
 ========================================================= */
 
 function tampilkanFormPemeriksaan() {
@@ -1146,34 +1276,14 @@ function tampilkanFormPemeriksaan() {
 
 
 /* =========================================================
-   DASHBOARD
-========================================================= */
-
-function tampilkanDashboard() {
-
-  const form =
-    document.getElementById(
-      "formPemeriksaan"
-    );
-
-
-  if (form) {
-
-    form.style.display =
-      "none";
-
-  }
-
-}
-
-
-/* =========================================================
-   TAMPILKAN TTD
+   TTD
 ========================================================= */
 
 function tampilkanTTD() {
 
-  if (!idPemeriksaanAktif) {
+  if (
+    !idPemeriksaanAktif
+  ) {
 
     alert(
       "Simpan Draft atau Simpan Pemeriksaan terlebih dahulu."
@@ -1247,11 +1357,13 @@ function initSignature() {
 
 
   const width =
-    rect.width || 500;
+    rect.width ||
+    500;
 
 
   const height =
-    rect.height || 220;
+    rect.height ||
+    220;
 
 
   const ratio =
@@ -1326,12 +1438,14 @@ function initSignature() {
 
 
 /* =========================================================
-   MULAI TTD
+   MULAI GAMBAR
 ========================================================= */
 
 function mulaiGambar(event) {
 
-  if (!signatureContext) {
+  if (
+    !signatureContext
+  ) {
 
     return;
 
@@ -1358,7 +1472,7 @@ function mulaiGambar(event) {
 
 
 /* =========================================================
-   GAMBAR TTD
+   GAMBAR
 ========================================================= */
 
 function gambar(event) {
@@ -1392,7 +1506,7 @@ function gambar(event) {
 
 
 /* =========================================================
-   SELESAI TTD
+   SELESAI GAMBAR
 ========================================================= */
 
 function selesaiGambar() {
@@ -1465,7 +1579,9 @@ function clearSignature() {
 
 function simpanTTD() {
 
-  if (!idPemeriksaanAktif) {
+  if (
+    !idPemeriksaanAktif
+  ) {
 
     alert(
       "ID Pemeriksaan belum tersedia."
@@ -1476,7 +1592,9 @@ function simpanTTD() {
   }
 
 
-  if (!signatureCanvas) {
+  if (
+    !signatureCanvas
+  ) {
 
     alert(
       "Canvas tanda tangan belum tersedia."
@@ -1515,8 +1633,10 @@ function simpanTTD() {
 
 
   fetch(
+
     API_URL +
     "?action=simpan_ttd",
+
     {
 
       method: "POST",
@@ -1529,7 +1649,9 @@ function simpanTTD() {
       },
 
       body:
-        JSON.stringify(data)
+        JSON.stringify(
+          data
+        )
 
     }
 
@@ -1551,6 +1673,7 @@ function simpanTTD() {
 
     })
 
+
     .then(function (result) {
 
       console.log(
@@ -1559,7 +1682,9 @@ function simpanTTD() {
       );
 
 
-      if (result.success) {
+      if (
+        result.success
+      ) {
 
         tampilkanStatus(
           "Tanda tangan berhasil disimpan."
@@ -1584,6 +1709,7 @@ function simpanTTD() {
       }
 
     })
+
 
     .catch(function (error) {
 
@@ -1648,7 +1774,6 @@ function tampilkanDataLokomotif() {
     "Data Lokomotif akan dibuat pada tahap berikutnya."
   );
 
-
 }
 
 
@@ -1657,7 +1782,7 @@ function tampilkanDataLokomotif() {
 ========================================================= */
 
 console.log(
-  "JavaScript Checklist Pengawasan Kegiatan Langsir siap."
+  "Checklist Pengawasan Kegiatan Langsir - JavaScript aktif."
 );
 
 </script>
