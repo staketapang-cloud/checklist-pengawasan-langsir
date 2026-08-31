@@ -2015,7 +2015,10 @@ function muatPegawai() {
           return;
 
         }
-
+const nipp =
+  item.NIPP ||
+  item.NIP ||
+  "";
 
         const jabatan =
           String(
@@ -2048,24 +2051,20 @@ function muatPegawai() {
 
         if (bolehMasuk) {
 
-          const option =
-            document.createElement(
-              "option"
-            );
+         const option =
+  document.createElement(
+    "option"
+  );
 
+option.value =
+  nama;
 
-          option.value =
-            nama;
+option.textContent =
+  nama + " - " + nipp;
 
-
-          option.textContent =
-            nama;
-
-
-          select.appendChild(
-            option
-          );
-
+select.appendChild(
+  option
+);
         }
 
       });
