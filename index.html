@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 
@@ -612,7 +613,7 @@ body {
   height: 100%;
   background: #198754;
   border-radius: 999px;
-  transition: width 0.25s ease;
+  transition: width 0.35s ease;
 }
 
 .progress-percent {
@@ -814,6 +815,53 @@ body {
       class="status-box">
     </div>
 
+
+    <!-- =====================================================
+         PROGRESS LOGIN
+    ====================================================== -->
+
+    <div
+      id="progressLogin"
+      class="progress-box">
+
+      <div class="progress-label">
+
+        <span id="progressLoginLabel">
+          Login pengguna
+        </span>
+
+        <span id="progressLoginStep">
+          0 / 5
+        </span>
+
+      </div>
+
+
+      <div class="progress-track">
+
+        <div
+          id="progressLoginBar"
+          class="progress-bar">
+        </div>
+
+      </div>
+
+
+      <div
+        id="progressLoginPercent"
+        class="progress-percent">
+        0%
+      </div>
+
+
+      <div
+        id="progressLoginNote"
+        class="progress-note">
+        Menunggu proses login...
+      </div>
+
+    </div>
+
   </div>
 
 </div>
@@ -838,9 +886,7 @@ body {
     </h2>
 
 
-    <!-- =====================================================
-         IDENTITAS
-    ====================================================== -->
+    <!-- IDENTITAS -->
 
     <div id="identitasPemeriksaan">
 
@@ -1036,9 +1082,7 @@ body {
     </div>
 
 
-    <!-- =====================================================
-         CHECKLIST
-    ====================================================== -->
+    <!-- CHECKLIST -->
 
     <div class="section-title">
       Checklist Pengawasan
@@ -1056,9 +1100,7 @@ body {
     </div>
 
 
-    <!-- =====================================================
-         CATATAN
-    ====================================================== -->
+    <!-- CATATAN -->
 
     <div class="catatan-umum">
 
@@ -1080,9 +1122,7 @@ body {
     </div>
 
 
-    <!-- =====================================================
-         PROGRESS SIMPAN
-    ====================================================== -->
+    <!-- PROGRESS SIMPAN -->
 
     <div
       id="progressSimpan"
@@ -1095,7 +1135,7 @@ body {
         </span>
 
         <span id="progressSimpanStep">
-          0 / 4
+          0 / 5
         </span>
 
       </div>
@@ -1121,15 +1161,13 @@ body {
       <div
         id="progressSimpanNote"
         class="progress-note">
-        Menyiapkan data pemeriksaan...
+        Menunggu proses penyimpanan...
       </div>
 
     </div>
 
 
-    <!-- =====================================================
-         BUTTON
-    ====================================================== -->
+    <!-- BUTTON -->
 
     <div class="button-group">
 
@@ -1173,9 +1211,7 @@ body {
     </div>
 
 
-    <!-- =====================================================
-         FOTO
-    ====================================================== -->
+    <!-- FOTO -->
 
     <div id="uploadFotoBox">
 
@@ -1260,7 +1296,7 @@ body {
         <div
           id="progressUploadNote"
           class="progress-note">
-          Menyiapkan proses upload...
+          Menunggu proses upload...
         </div>
 
       </div>
@@ -1268,9 +1304,7 @@ body {
     </div>
 
 
-    <!-- =====================================================
-         TTD
-    ====================================================== -->
+    <!-- TTD -->
 
     <div
       id="ttdBox"
@@ -1302,6 +1336,51 @@ body {
       <div
         id="ttdStatus"
         class="ttd-status">
+      </div>
+
+
+      <!-- PROGRESS TTD -->
+
+      <div
+        id="progressTTD"
+        class="progress-box">
+
+        <div class="progress-label">
+
+          <span id="progressTTDLabel">
+            Menyimpan TTD
+          </span>
+
+          <span id="progressTTDStep">
+            0 / 5
+          </span>
+
+        </div>
+
+
+        <div class="progress-track">
+
+          <div
+            id="progressTTDBar"
+            class="progress-bar">
+          </div>
+
+        </div>
+
+
+        <div
+          id="progressTTDPercent"
+          class="progress-percent">
+          0%
+        </div>
+
+
+        <div
+          id="progressTTDNote"
+          class="progress-note">
+          Menunggu proses TTD...
+        </div>
+
       </div>
 
 
@@ -1391,20 +1470,15 @@ var API_URL =
 var idPemeriksaanAktif = "";
 
 var signatureCanvas = null;
-
 var signatureContext = null;
-
 var sedangMenggambar = false;
-
 var signatureInitialized = false;
-
 var signatureHasInk = false;
 
 var sedangSimpanTTD = false;
-
 var sedangSimpanPemeriksaan = false;
-
 var sedangUploadFoto = false;
+var sedangLogin = false;
 
 
 /* =========================================================
@@ -1480,39 +1554,291 @@ function tampilkanStatus(pesan) {
 
 
 /* =========================================================
+   PROGRESS GENERIC
+========================================================= */
+
+function setProgressGeneric(
+  prefix,
+  percent,
+  label,
+  stepText,
+  note
+) {
+
+  var box =
+    document.getElementById(
+      prefix + "Box"
+    );
+
+  var bar =
+    document.getElementById(
+      prefix + "Bar"
+    );
+
+  var percentEl =
+    document.getElementById(
+      prefix + "Percent"
+    );
+
+  var labelEl =
+    document.getElementById(
+      prefix + "Label"
+    );
+
+  var stepEl =
+    document.getElementById(
+      prefix + "Step"
+    );
+
+  var noteEl =
+    document.getElementById(
+      prefix + "Note"
+    );
+
+
+  var nilai =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        Number(percent) || 0
+      )
+    );
+
+
+  if (box) {
+    box.style.display = "block";
+  }
+
+  if (bar) {
+    bar.style.width =
+      nilai + "%";
+  }
+
+  if (percentEl) {
+    percentEl.textContent =
+      Math.round(nilai) + "%";
+  }
+
+  if (labelEl) {
+    labelEl.textContent =
+      label || "";
+  }
+
+  if (stepEl) {
+    stepEl.textContent =
+      stepText || "";
+  }
+
+  if (noteEl) {
+    noteEl.textContent =
+      note || "";
+  }
+
+}
+
+
+/* =========================================================
+   PROGRESS LOGIN
+========================================================= */
+
+function setProgressLogin(
+  percent,
+  label,
+  step,
+  note
+) {
+
+  setProgressGeneric(
+    "progressLogin",
+    percent,
+    label,
+    step,
+    note
+  );
+
+}
+
+
+/* =========================================================
+   PROGRESS SIMPAN
+========================================================= */
+
+function setProgressSimpan(
+  percent,
+  label,
+  stepText,
+  note
+) {
+
+  setProgressGeneric(
+    "progressSimpan",
+    percent,
+    label,
+    stepText,
+    note
+  );
+
+}
+
+
+/* =========================================================
+   PROGRESS TTD
+========================================================= */
+
+function setProgressTTD(
+  percent,
+  label,
+  step,
+  note
+) {
+
+  setProgressGeneric(
+    "progressTTD",
+    percent,
+    label,
+    step,
+    note
+  );
+
+}
+
+
+/* =========================================================
+   PROGRESS FOTO
+========================================================= */
+
+function setProgressUpload(
+  percent,
+  label,
+  countText,
+  note
+) {
+
+  var box =
+    document.getElementById(
+      "progressUploadFoto"
+    );
+
+  var bar =
+    document.getElementById(
+      "progressUploadBar"
+    );
+
+  var percentEl =
+    document.getElementById(
+      "progressUploadPercent"
+    );
+
+  var labelEl =
+    document.getElementById(
+      "progressUploadLabel"
+    );
+
+  var countEl =
+    document.getElementById(
+      "progressUploadCount"
+    );
+
+  var noteEl =
+    document.getElementById(
+      "progressUploadNote"
+    );
+
+
+  var nilai =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        Number(percent) || 0
+      )
+    );
+
+
+  if (box) {
+    box.style.display = "block";
+  }
+
+  if (bar) {
+    bar.style.width =
+      nilai + "%";
+  }
+
+  if (percentEl) {
+    percentEl.textContent =
+      Math.round(nilai) + "%";
+  }
+
+  if (labelEl) {
+    labelEl.textContent =
+      label || "Upload foto";
+  }
+
+  if (countEl) {
+    countEl.textContent =
+      countText || "";
+  }
+
+  if (noteEl) {
+    noteEl.textContent =
+      note || "";
+  }
+
+}
+
+
+/* =========================================================
    NOTIFIKASI
 ========================================================= */
 
-function tampilkanNotifFoto(judul, pesan, aksi) {
+function tampilkanNotifFoto(
+  judul,
+  pesan,
+  aksi
+) {
 
   var overlay =
-    document.getElementById("notifFoto");
+    document.getElementById(
+      "notifFoto"
+    );
 
   var title =
-    document.getElementById("notifFotoTitle");
+    document.getElementById(
+      "notifFotoTitle"
+    );
 
   var message =
-    document.getElementById("notifFotoMessage");
+    document.getElementById(
+      "notifFotoMessage"
+    );
 
   var button =
-    document.getElementById("notifFotoButton");
+    document.getElementById(
+      "notifFotoButton"
+    );
+
 
   if (!overlay) {
     return;
   }
+
 
   if (title) {
     title.textContent =
       judul || "Informasi";
   }
 
+
   if (message) {
     message.textContent =
       pesan || "";
   }
 
+
   overlay.dataset.afterOk =
     aksi || "none";
+
 
   if (button) {
 
@@ -1523,6 +1849,7 @@ function tampilkanNotifFoto(judul, pesan, aksi) {
       tutupNotifFoto;
 
   }
+
 
   overlay.style.display =
     "flex";
@@ -1537,17 +1864,22 @@ function tampilkanNotifFoto(judul, pesan, aksi) {
 function tutupNotifFoto() {
 
   var overlay =
-    document.getElementById("notifFoto");
+    document.getElementById(
+      "notifFoto"
+    );
 
   if (!overlay) {
     return;
   }
 
+
   var aksi =
     overlay.dataset.afterOk || "none";
 
+
   overlay.style.display =
     "none";
+
 
   overlay.dataset.afterOk =
     "none";
@@ -1600,25 +1932,23 @@ function kembaliKeFormPemeriksaan() {
   var ttd =
     document.getElementById("ttdBox");
 
+
   if (login) {
-    login.style.display =
-      "none";
+    login.style.display = "none";
   }
 
   if (app) {
-    app.style.display =
-      "block";
+    app.style.display = "block";
   }
 
   if (form) {
-    form.style.display =
-      "block";
+    form.style.display = "block";
   }
 
   if (ttd) {
-    ttd.style.display =
-      "none";
+    ttd.style.display = "none";
   }
+
 
   window.scrollTo({
     top: 0,
@@ -1640,7 +1970,9 @@ function kembaliKeLogin() {
   sessionStorage.removeItem("userEmail");
   sessionStorage.removeItem("idPemeriksaanAktif");
 
+
   idPemeriksaanAktif = "";
+
 
   var login =
     document.getElementById("googleLogin");
@@ -1657,32 +1989,30 @@ function kembaliKeLogin() {
   var upload =
     document.getElementById("uploadFotoBox");
 
+
   if (login) {
-    login.style.display =
-      "block";
+    login.style.display = "block";
   }
 
   if (app) {
-    app.style.display =
-      "none";
+    app.style.display = "none";
   }
 
   if (form) {
-    form.style.display =
-      "none";
+    form.style.display = "none";
   }
 
   if (ttd) {
-    ttd.style.display =
-      "none";
+    ttd.style.display = "none";
   }
 
   if (upload) {
-    upload.style.display =
-      "none";
+    upload.style.display = "none";
   }
 
+
   resetFormPemeriksaan();
+
 
   var nama =
     document.getElementById("loginNama");
@@ -1692,6 +2022,7 @@ function kembaliKeLogin() {
 
   var jabatan =
     document.getElementById("loginJabatan");
+
 
   if (nama) {
     nama.value = "";
@@ -1705,7 +2036,20 @@ function kembaliKeLogin() {
     jabatan.value = "";
   }
 
+
   tampilkanStatusLogin("");
+
+
+  var progressLogin =
+    document.getElementById(
+      "progressLogin"
+    );
+
+  if (progressLogin) {
+    progressLogin.style.display =
+      "none";
+  }
+
 
   window.scrollTo({
     top: 0,
@@ -1721,16 +2065,31 @@ function kembaliKeLogin() {
 
 function loginPengguna() {
 
-  console.log("LOGIN PENGGUNA DIPANGGIL");
+  if (sedangLogin) {
+    return;
+  }
+
+
+  console.log(
+    "LOGIN PENGGUNA DIPANGGIL"
+  );
+
 
   var namaElement =
-    document.getElementById("loginNama");
+    document.getElementById(
+      "loginNama"
+    );
 
   var nippElement =
-    document.getElementById("loginNipp");
+    document.getElementById(
+      "loginNipp"
+    );
 
   var jabatanElement =
-    document.getElementById("loginJabatan");
+    document.getElementById(
+      "loginJabatan"
+    );
+
 
   if (
     !namaElement ||
@@ -1745,6 +2104,7 @@ function loginPengguna() {
     return;
 
   }
+
 
   var nama =
     String(
@@ -1801,8 +2161,14 @@ function loginPengguna() {
   }
 
 
+  sedangLogin = true;
+
+
   var tombol =
-    document.getElementById("btnLogin");
+    document.getElementById(
+      "btnLogin"
+    );
+
 
   if (tombol) {
 
@@ -1815,13 +2181,26 @@ function loginPengguna() {
   }
 
 
+  /* =========================
+     10%
+  ========================= */
+
+  setProgressLogin(
+    10,
+    "Menyiapkan login pengguna",
+    "1 / 5",
+    "Menyiapkan data Nama, NIPP dan Jabatan..."
+  );
+
+
   tampilkanStatusLogin(
-    "Mencatat data login ke USER..."
+    "Menyiapkan data login user..."
   );
 
 
   idPemeriksaanAktif =
     "";
+
 
   sessionStorage.removeItem(
     "idPemeriksaanAktif"
@@ -1849,14 +2228,64 @@ function loginPengguna() {
   );
 
 
-  kirimRequestPost(
-    "simpan_user",
-    {
-      NAMA: nama,
-      NIPP: nipp,
-      JABATAN: jabatan
-    }
-  )
+  /* =========================
+     35%
+  ========================= */
+
+  setProgressLogin(
+    35,
+    "Menyiapkan data login user",
+    "2 / 5",
+    "Data pengguna telah disiapkan. Menghubungkan ke server..."
+  );
+
+
+  tampilkanStatusLogin(
+    "Menyiapkan data login user..."
+  );
+
+
+  return new Promise(function(resolve) {
+
+    setTimeout(function() {
+
+      resolve();
+
+    }, 150);
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       65%
+    ========================= */
+
+    setProgressLogin(
+      65,
+      "Mencatat data login user",
+      "3 / 5",
+      "Mengirim data pengguna ke server..."
+    );
+
+
+    tampilkanStatusLogin(
+      "Mencatat data login user ke USER..."
+    );
+
+
+    return kirimRequestPost(
+      "simpan_user",
+      {
+        NAMA: nama,
+        NIPP: nipp,
+        JABATAN: jabatan
+      }
+    );
+
+  })
+
 
   .then(function(result) {
 
@@ -1880,6 +2309,50 @@ function loginPengguna() {
     }
 
 
+    /* =========================
+       85%
+    ========================= */
+
+    setProgressLogin(
+      85,
+      "Data login berhasil dicatat",
+      "4 / 5",
+      "Server berhasil menerima data pengguna. Menyiapkan aplikasi..."
+    );
+
+
+    tampilkanStatusLogin(
+      "Data login user berhasil dicatat."
+    );
+
+
+    return new Promise(function(resolve) {
+
+      setTimeout(function() {
+
+        resolve();
+
+      }, 200);
+
+    });
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       100%
+    ========================= */
+
+    setProgressLogin(
+      100,
+      "Login berhasil",
+      "5 / 5",
+      "Data login user berhasil dicatat. Membuka aplikasi..."
+    );
+
+
     tampilkanStatusLogin(
       "Login berhasil. Data pengguna sudah tercatat."
     );
@@ -1889,11 +2362,20 @@ function loginPengguna() {
 
   })
 
+
   .catch(function(error) {
 
     console.error(
       "GAGAL SIMPAN USER:",
       error
+    );
+
+
+    setProgressLogin(
+      0,
+      "Login gagal",
+      "-",
+      error.message
     );
 
 
@@ -1910,7 +2392,12 @@ function loginPengguna() {
 
   })
 
+
   .finally(function() {
+
+    sedangLogin =
+      false;
+
 
     if (tombol) {
 
@@ -1927,11 +2414,6 @@ function loginPengguna() {
 }
 
 
-/* =========================================================
-   PENTING
-   DAFTARKAN FUNCTION KE WINDOW
-========================================================= */
-
 window.loginPengguna =
   loginPengguna;
 
@@ -1943,28 +2425,33 @@ window.loginPengguna =
 function bukaAplikasi() {
 
   var login =
-    document.getElementById("googleLogin");
+    document.getElementById(
+      "googleLogin"
+    );
 
   var app =
-    document.getElementById("app");
+    document.getElementById(
+      "app"
+    );
 
   var form =
-    document.getElementById("formPemeriksaan");
+    document.getElementById(
+      "formPemeriksaan"
+    );
+
 
   if (login) {
-    login.style.display =
-      "none";
+    login.style.display = "none";
   }
 
   if (app) {
-    app.style.display =
-      "block";
+    app.style.display = "block";
   }
 
   if (form) {
-    form.style.display =
-      "block";
+    form.style.display = "block";
   }
+
 
   tampilkanInfoUser(
     sessionStorage.getItem("userNama") || "",
@@ -1972,7 +2459,9 @@ function bukaAplikasi() {
     sessionStorage.getItem("userJabatan") || ""
   );
 
+
   setTanggalHariIni();
+
 
   muatSemuaData();
 
@@ -1990,11 +2479,15 @@ function tampilkanInfoUser(
 ) {
 
   var info =
-    document.getElementById("infoUser");
+    document.getElementById(
+      "infoUser"
+    );
+
 
   if (!info) {
     return;
   }
+
 
   info.innerHTML =
     "<strong>Login berhasil</strong><br>" +
@@ -2021,25 +2514,31 @@ function setTanggalHariIni() {
       "tanggalPemeriksaan"
     );
 
+
   if (!input || input.value) {
     return;
   }
 
+
   var sekarang =
     new Date();
 
+
   var tahun =
     sekarang.getFullYear();
+
 
   var bulan =
     String(
       sekarang.getMonth() + 1
     ).padStart(2, "0");
 
+
   var tanggal =
     String(
       sekarang.getDate()
     ).padStart(2, "0");
+
 
   input.value =
     tahun +
@@ -2064,10 +2563,12 @@ function fetchApi(action) {
     "&_=" +
     Date.now();
 
+
   console.log(
     "GET API:",
     action
   );
+
 
   return fetch(
     url,
@@ -2076,6 +2577,7 @@ function fetchApi(action) {
       cache: "no-store"
     }
   )
+
 
   .then(function(response) {
 
@@ -2088,9 +2590,11 @@ function fetchApi(action) {
 
     }
 
+
     return response.text();
 
   })
+
 
   .then(function(text) {
 
@@ -2099,6 +2603,7 @@ function fetchApi(action) {
       action,
       text
     );
+
 
     return parseApiResponse(text);
 
@@ -2122,6 +2627,7 @@ function parseApiResponse(data) {
 
   }
 
+
   if (
     typeof data !== "string"
   ) {
@@ -2131,6 +2637,7 @@ function parseApiResponse(data) {
     );
 
   }
+
 
   try {
 
@@ -2209,6 +2716,7 @@ function muatSemuaData() {
       "checklistContainer"
     );
 
+
   if (container) {
 
     container.innerHTML =
@@ -2218,17 +2726,16 @@ function muatSemuaData() {
 
   }
 
+
   Promise.all([
 
     muatChecklist(),
-
     muatStasiun(),
-
     muatLokomotif(),
-
     muatPegawai()
 
   ])
+
 
   .then(function() {
 
@@ -2237,6 +2744,7 @@ function muatSemuaData() {
     );
 
   })
+
 
   .catch(function(error) {
 
@@ -2261,6 +2769,7 @@ function muatChecklist() {
       "checklistContainer"
     );
 
+
   if (!container) {
 
     return Promise.reject(
@@ -2271,18 +2780,24 @@ function muatChecklist() {
 
   }
 
+
   return fetchApi(
     "master_checklist"
   )
+
 
   .then(function(result) {
 
     var data =
       ambilArrayData(result);
 
-    container.innerHTML = "";
 
-    var nomorTampil = 0;
+    container.innerHTML =
+      "";
+
+
+    var nomorTampil =
+      0;
 
 
     data.forEach(function(item) {
@@ -2302,12 +2817,14 @@ function muatChecklist() {
           .trim()
           .toUpperCase();
 
+
         var valid =
           nilai === "TRUE" ||
           nilai === "1" ||
           nilai === "YA" ||
           nilai === "Y" ||
           nilai === "AKTIF";
+
 
         if (!valid) {
           return;
@@ -2354,8 +2871,10 @@ function muatChecklist() {
       var div =
         document.createElement("div");
 
+
       div.className =
         "checklist-item";
+
 
       div.dataset.id =
         String(id);
@@ -2374,6 +2893,7 @@ function muatChecklist() {
           "<div class='checklist-category'>" +
           escapeHtml(kategori);
 
+
         if (subKategori) {
 
           html +=
@@ -2381,6 +2901,7 @@ function muatChecklist() {
             escapeHtml(subKategori);
 
         }
+
 
         html +=
           "</div>";
@@ -2445,7 +2966,10 @@ function muatChecklist() {
       div.innerHTML =
         html;
 
-      container.appendChild(div);
+
+      container.appendChild(
+        div
+      );
 
     });
 
@@ -2462,6 +2986,7 @@ function muatChecklist() {
 
   })
 
+
   .catch(function(error) {
 
     container.innerHTML =
@@ -2469,6 +2994,7 @@ function muatChecklist() {
       "<strong>Gagal memuat checklist.</strong><br><br>" +
       escapeHtml(error.message) +
       "</div>";
+
 
     throw error;
 
@@ -2488,18 +3014,22 @@ function muatStasiun() {
       "stasiunPemeriksaan"
     );
 
+
   if (!select) {
     return Promise.resolve();
   }
+
 
   return fetchApi(
     "master_stasiun"
   )
 
+
   .then(function(result) {
 
     var data =
       ambilArrayData(result);
+
 
     select.innerHTML =
       "<option value=''>" +
@@ -2516,24 +3046,32 @@ function muatStasiun() {
         item.ID ||
         "";
 
+
       if (!value) {
         return;
       }
 
+
       var option =
         document.createElement("option");
+
 
       option.value =
         value;
 
+
       option.textContent =
         value;
 
-      select.appendChild(option);
+
+      select.appendChild(
+        option
+      );
 
     });
 
   })
+
 
   .catch(function(error) {
 
@@ -2558,18 +3096,22 @@ function muatLokomotif() {
       "lokomotifPemeriksaan"
     );
 
+
   if (!select) {
     return Promise.resolve();
   }
+
 
   return fetchApi(
     "master_lokomotif"
   )
 
+
   .then(function(result) {
 
     var data =
       ambilArrayData(result);
+
 
     select.innerHTML =
       "<option value=''>" +
@@ -2586,24 +3128,32 @@ function muatLokomotif() {
         item.ID ||
         "";
 
+
       if (!value) {
         return;
       }
 
+
       var option =
         document.createElement("option");
+
 
       option.value =
         value;
 
+
       option.textContent =
         value;
 
-      select.appendChild(option);
+
+      select.appendChild(
+        option
+      );
 
     });
 
   })
+
 
   .catch(function(error) {
 
@@ -2626,6 +3176,7 @@ function muatPegawai() {
   return fetchApi(
     "master_pegawai"
   )
+
 
   .then(function(result) {
 
@@ -2679,11 +3230,14 @@ function muatPegawai() {
           config[0]
         );
 
+
       if (!datalist) {
         return;
       }
 
-      datalist.innerHTML = "";
+
+      datalist.innerHTML =
+        "";
 
 
       data.forEach(function(item) {
@@ -2741,12 +3295,14 @@ function muatPegawai() {
               "option"
             );
 
+
           option.value =
             nipp
             ?
             nama + " - " + nipp
             :
             nama;
+
 
           datalist.appendChild(
             option
@@ -2759,6 +3315,7 @@ function muatPegawai() {
     });
 
   })
+
 
   .catch(function(error) {
 
@@ -3106,6 +3663,7 @@ function pastikanIdPemeriksaan() {
     idPemeriksaanAktif =
       String(idSession).trim();
 
+
     return Promise.resolve(
       idPemeriksaanAktif
     );
@@ -3155,6 +3713,7 @@ function pastikanIdPemeriksaan() {
     "simpan_pemeriksaan",
     data
   )
+
 
   .then(function(result) {
 
@@ -3242,6 +3801,7 @@ function kirimRequestPost(
     }
   )
 
+
   .then(function(response) {
 
     if (!response.ok) {
@@ -3253,9 +3813,11 @@ function kirimRequestPost(
 
     }
 
+
     return response.text();
 
   })
+
 
   .then(function(text) {
 
@@ -3265,6 +3827,7 @@ function kirimRequestPost(
       text
     );
 
+
     return parseApiResponse(text);
 
   });
@@ -3273,98 +3836,8 @@ function kirimRequestPost(
 
 
 /* =========================================================
-   PROGRESS SIMPAN
-========================================================= */
-
-function setProgressSimpan(
-  percent,
-  label,
-  stepText,
-  note
-) {
-
-  var box =
-    document.getElementById(
-      "progressSimpan"
-    );
-
-  var bar =
-    document.getElementById(
-      "progressSimpanBar"
-    );
-
-  var percentEl =
-    document.getElementById(
-      "progressSimpanPercent"
-    );
-
-  var labelEl =
-    document.getElementById(
-      "progressSimpanLabel"
-    );
-
-  var stepEl =
-    document.getElementById(
-      "progressSimpanStep"
-    );
-
-  var noteEl =
-    document.getElementById(
-      "progressSimpanNote"
-    );
-
-
-  var nilai =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        Number(percent) || 0
-      )
-    );
-
-
-  if (box) {
-    box.style.display =
-      "block";
-  }
-
-
-  if (bar) {
-    bar.style.width =
-      nilai + "%";
-  }
-
-
-  if (percentEl) {
-    percentEl.textContent =
-      Math.round(nilai) + "%";
-  }
-
-
-  if (labelEl) {
-    labelEl.textContent =
-      label ||
-      "Menyimpan pemeriksaan";
-  }
-
-
-  if (stepEl) {
-    stepEl.textContent =
-      stepText || "";
-  }
-
-
-  if (noteEl) {
-    noteEl.textContent =
-      note || "";
-  }
-
-}
-
-
-/* =========================================================
    SIMPAN PEMERIKSAAN
+   10 → 35 → 65 → 85 → 100
 ========================================================= */
 
 function simpanPemeriksaan() {
@@ -3405,15 +3878,20 @@ function simpanPemeriksaan() {
   }
 
 
+  /* =========================
+     10%
+  ========================= */
+
   setProgressSimpan(
-    5,
+    10,
     "Menyiapkan pemeriksaan",
-    "1 / 4",
-    "Memeriksa dan menyiapkan data..."
+    "1 / 5",
+    "Memeriksa dan menyiapkan seluruh data pemeriksaan..."
   );
 
 
   pastikanIdPemeriksaan()
+
 
   .then(function(id) {
 
@@ -3433,11 +3911,15 @@ function simpanPemeriksaan() {
       "SELESAI";
 
 
+    /* =========================
+       35%
+    ========================= */
+
     setProgressSimpan(
       35,
       "Mengirim data pemeriksaan",
-      "2 / 4",
-      "Sedang menyimpan data utama..."
+      "2 / 5",
+      "Data pemeriksaan sedang dikirim ke server..."
     );
 
 
@@ -3465,19 +3947,69 @@ function simpanPemeriksaan() {
     }
 
 
+    /* =========================
+       65%
+    ========================= */
+
     setProgressSimpan(
       65,
       "Data pemeriksaan berhasil disimpan",
-      "3 / 4",
-      "Memproses penyelesaian pemeriksaan..."
+      "3 / 5",
+      "Server telah menerima data pemeriksaan. Memproses hasil..."
     );
 
+
+    return new Promise(function(resolve) {
+
+      setTimeout(function() {
+
+        resolve();
+
+      }, 250);
+
+    });
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       85%
+    ========================= */
+
+    setProgressSimpan(
+      85,
+      "Finalisasi pemeriksaan",
+      "4 / 5",
+      "Menyiapkan penyelesaian dan memastikan data tersimpan..."
+    );
+
+
+    return new Promise(function(resolve) {
+
+      setTimeout(function() {
+
+        resolve();
+
+      }, 300);
+
+    });
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       100%
+    ========================= */
 
     setProgressSimpan(
       100,
       "Pemeriksaan berhasil disimpan",
-      "4 / 4",
-      "Penyimpanan selesai."
+      "5 / 5",
+      "Penyimpanan pemeriksaan selesai."
     );
 
 
@@ -4191,6 +4723,20 @@ function clearSignature() {
 
   }
 
+
+  var progress =
+    document.getElementById(
+      "progressTTD"
+    );
+
+
+  if (progress) {
+
+    progress.style.display =
+      "none";
+
+  }
+
 }
 
 
@@ -4213,6 +4759,7 @@ function tampilkanTTD() {
       bukaKotakTTD();
 
     })
+
 
     .catch(function(error) {
 
@@ -4333,6 +4880,7 @@ function tampilkanStatusTTD(pesan) {
 
 /* =========================================================
    SIMPAN TTD
+   10 → 35 → 65 → 85 → 100
 ========================================================= */
 
 function simpanTTD() {
@@ -4491,30 +5039,6 @@ function simpanTTD() {
   };
 
 
-  console.log(
-    "DATA TTD:",
-    {
-      ID_PEMERIKSAAN:
-        data.ID_PEMERIKSAAN,
-
-      ID_PEMERIKSA:
-        data.ID_PEMERIKSA,
-
-      NAMA:
-        data.NAMA,
-
-      NIPP:
-        data.NIPP,
-
-      JABATAN:
-        data.JABATAN,
-
-      TTD:
-        "[BASE64 TTD]"
-    }
-  );
-
-
   sedangSimpanTTD =
     true;
 
@@ -4550,20 +5074,102 @@ function simpanTTD() {
   }
 
 
+  /* =========================
+     10%
+  ========================= */
+
+  setProgressTTD(
+    10,
+    "Menyiapkan tanda tangan",
+    "1 / 5",
+    "Menyiapkan data tanda tangan untuk dikirim ke server..."
+  );
+
+
   tampilkanStatusTTD(
-    "Menyimpan tanda tangan ke server..."
+    "Menyiapkan tanda tangan ke server..."
   );
 
 
   tampilkanStatus(
-    "Menyimpan tanda tangan..."
+    "Menyiapkan tanda tangan..."
   );
 
 
-  kirimRequestPost(
-    "simpan_ttd",
-    data
-  )
+  return new Promise(function(resolve) {
+
+    setTimeout(function() {
+
+      resolve();
+
+    }, 150);
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       35%
+    ========================= */
+
+    setProgressTTD(
+      35,
+      "Menyiapkan tanda tangan ke server",
+      "2 / 5",
+      "Data TTD telah disiapkan. Menghubungkan ke server..."
+    );
+
+
+    tampilkanStatusTTD(
+      "Menyiapkan tanda tangan ke server..."
+    );
+
+
+    return new Promise(function(resolve) {
+
+      setTimeout(function() {
+
+        resolve();
+
+      }, 150);
+
+    });
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       65%
+    ========================= */
+
+    setProgressTTD(
+      65,
+      "Mengirim tanda tangan ke server",
+      "3 / 5",
+      "Sedang mengirim data tanda tangan..."
+    );
+
+
+    tampilkanStatusTTD(
+      "Mengirim tanda tangan ke server..."
+    );
+
+
+    tampilkanStatus(
+      "Menyimpan tanda tangan ke server..."
+    );
+
+
+    return kirimRequestPost(
+      "simpan_ttd",
+      data
+    );
+
+  })
+
 
   .then(function(result) {
 
@@ -4594,6 +5200,50 @@ function simpanTTD() {
     sessionStorage.setItem(
       "idPemeriksaanAktif",
       idPemeriksaanAktif
+    );
+
+
+    /* =========================
+       85%
+    ========================= */
+
+    setProgressTTD(
+      85,
+      "Finalisasi tanda tangan",
+      "4 / 5",
+      "Tanda tangan telah diterima server. Memastikan proses selesai..."
+    );
+
+
+    tampilkanStatusTTD(
+      "Tanda tangan berhasil diterima server. Finalisasi..."
+    );
+
+
+    return new Promise(function(resolve) {
+
+      setTimeout(function() {
+
+        resolve();
+
+      }, 300);
+
+    });
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       100%
+    ========================= */
+
+    setProgressTTD(
+      100,
+      "Tanda tangan berhasil disimpan",
+      "5 / 5",
+      "Tanda tangan digital berhasil direkam ke sistem."
     );
 
 
@@ -4629,7 +5279,7 @@ function simpanTTD() {
       "ID Pemeriksaan: " +
       idPemeriksaanAktif +
       "\n\n" +
-      "Tekan OK untuk kembali mengecek kembali form ceklist pengawasan langsir dan klik simpan&selesai.",
+      "Tekan OK untuk kembali mengecek kembali form ceklist pengawasan langsir dan klik simpan & selesai.",
       "form"
     );
 
@@ -4656,11 +5306,20 @@ function simpanTTD() {
 
   })
 
+
   .catch(function(error) {
 
     console.error(
       "GAGAL SIMPAN TTD:",
       error
+    );
+
+
+    setProgressTTD(
+      0,
+      "TTD gagal disimpan",
+      "-",
+      error.message
     );
 
 
@@ -4683,6 +5342,7 @@ function simpanTTD() {
     );
 
   })
+
 
   .finally(function() {
 
@@ -4743,102 +5403,9 @@ function uploadFoto() {
 
 
 /* =========================================================
-   PROGRESS FOTO
-========================================================= */
-
-function setProgressUpload(
-  percent,
-  label,
-  countText,
-  note
-) {
-
-  var box =
-    document.getElementById(
-      "progressUploadFoto"
-    );
-
-
-  var bar =
-    document.getElementById(
-      "progressUploadBar"
-    );
-
-
-  var percentEl =
-    document.getElementById(
-      "progressUploadPercent"
-    );
-
-
-  var labelEl =
-    document.getElementById(
-      "progressUploadLabel"
-    );
-
-
-  var countEl =
-    document.getElementById(
-      "progressUploadCount"
-    );
-
-
-  var noteEl =
-    document.getElementById(
-      "progressUploadNote"
-    );
-
-
-  var nilai =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        Number(percent) || 0
-      )
-    );
-
-
-  if (box) {
-    box.style.display =
-      "block";
-  }
-
-
-  if (bar) {
-    bar.style.width =
-      nilai + "%";
-  }
-
-
-  if (percentEl) {
-    percentEl.textContent =
-      Math.round(nilai) + "%";
-  }
-
-
-  if (labelEl) {
-    labelEl.textContent =
-      label || "Upload foto";
-  }
-
-
-  if (countEl) {
-    countEl.textContent =
-      countText || "";
-  }
-
-
-  if (noteEl) {
-    noteEl.textContent =
-      note || "";
-  }
-
-}
-
-
-/* =========================================================
    KIRIM FOTO
+   PROGRESS KESELURUHAN:
+   10 → 35 → 65 → 85 → 100
 ========================================================= */
 
 function kirimFoto() {
@@ -4893,11 +5460,15 @@ function kirimFoto() {
     Array.from(input.files);
 
 
+  /* =========================
+     10%
+  ========================= */
+
   setProgressUpload(
-    0,
-    "Menyiapkan upload foto",
+    10,
+    "Menunggu menyiapkan upload foto",
     "0 / " + files.length,
-    "Mohon tunggu..."
+    "Menyiapkan foto dan pemeriksaan..."
   );
 
 
@@ -4907,17 +5478,38 @@ function kirimFoto() {
       "block";
 
     status.textContent =
-      "Menyiapkan upload foto...";
+      "Menunggu menyiapkan upload foto...";
 
   }
 
 
   pastikanIdPemeriksaan()
 
+
   .then(function(id) {
 
     idPemeriksaanAktif =
       String(id).trim();
+
+
+    /* =========================
+       35%
+    ========================= */
+
+    setProgressUpload(
+      35,
+      "Menyiapkan upload foto",
+      "0 / " + files.length,
+      "ID Pemeriksaan siap. Menyiapkan file foto..."
+    );
+
+
+    if (status) {
+
+      status.textContent =
+        "Menyiapkan upload foto...";
+
+    }
 
 
     return uploadSemuaFoto(
@@ -4930,7 +5522,22 @@ function kirimFoto() {
 
   .then(function(hasil) {
 
-    input.value = "";
+    /* =========================
+       85%
+    ========================= */
+
+    setProgressUpload(
+      85,
+      "Finalisasi upload foto",
+      hasil.berhasil +
+      " / " +
+      files.length,
+      "Memastikan seluruh hasil upload telah diproses..."
+    );
+
+
+    input.value =
+      "";
 
 
     var preview =
@@ -4942,6 +5549,35 @@ function kirimFoto() {
     if (preview) {
       preview.innerHTML = "";
     }
+
+
+    return new Promise(function(resolve) {
+
+      setTimeout(function() {
+
+        resolve(hasil);
+
+      }, 250);
+
+    });
+
+  })
+
+
+  .then(function(hasil) {
+
+    /* =========================
+       100%
+    ========================= */
+
+    setProgressUpload(
+      100,
+      "Upload foto selesai",
+      hasil.berhasil +
+      " / " +
+      files.length,
+      "Proses upload seluruh foto telah selesai."
+    );
 
 
     if (status) {
@@ -5015,6 +5651,14 @@ function kirimFoto() {
     );
 
 
+    setProgressUpload(
+      0,
+      "Upload foto gagal",
+      "-",
+      error.message
+    );
+
+
     if (status) {
 
       status.textContent =
@@ -5078,38 +5722,6 @@ function uploadSemuaFoto(
             index + 1;
 
 
-          var persenAwal =
-            Math.round(
-              (index / total) * 100
-            );
-
-
-          var persenBaca =
-            Math.min(
-              90,
-              Math.round(
-                ((index + 0.45) / total) *
-                100
-              )
-            );
-
-
-          var persenKirim =
-            Math.min(
-              98,
-              Math.round(
-                ((index + 0.85) / total) *
-                100
-              )
-            );
-
-
-          var persenSelesai =
-            Math.round(
-              (nomor / total) * 100
-            );
-
-
           if (
             !file.type ||
             !file.type.startsWith(
@@ -5133,7 +5745,9 @@ function uploadSemuaFoto(
 
 
             setProgressUpload(
-              persenSelesai,
+              Math.round(
+                (nomor / total) * 85
+              ),
               "File terlalu besar",
               nomor +
               " / " +
@@ -5148,12 +5762,17 @@ function uploadSemuaFoto(
           }
 
 
+          /* =====================
+             Per foto mulai 35%
+          ===================== */
+
           setProgressUpload(
-            persenAwal,
-            "Menyiapkan foto",
+            35,
+            "Menyiapkan upload foto",
             nomor +
             " / " +
             total,
+            "Menyiapkan " +
             file.name
           );
 
@@ -5163,12 +5782,9 @@ function uploadSemuaFoto(
             function(progress) {
 
               var persen =
-                persenAwal +
+                35 +
                 (
-                  (
-                    persenBaca -
-                    persenAwal
-                  ) *
+                  20 *
                   progress /
                   100
                 );
@@ -5189,12 +5805,17 @@ function uploadSemuaFoto(
 
           .then(function(base64) {
 
+            /* =====================
+               65%
+            ===================== */
+
             setProgressUpload(
-              persenKirim,
-              "Mengupload foto",
+              65,
+              "Mengirim foto ke server",
               nomor +
               " / " +
               total,
+              "Mengupload " +
               file.name
             );
 
@@ -5242,13 +5863,18 @@ function uploadSemuaFoto(
             }
 
 
+            /* =====================
+               85%
+            ===================== */
+
             setProgressUpload(
-              persenSelesai,
-              "Foto selesai",
+              85,
+              "Finalisasi foto",
               nomor +
               " / " +
               total,
-              file.name
+              file.name +
+              " telah diproses."
             );
 
           })
@@ -5275,16 +5901,6 @@ function uploadSemuaFoto(
 
   return rangkaian.then(
     function() {
-
-      setProgressUpload(
-        100,
-        "Upload foto selesai",
-        total +
-        " / " +
-        total,
-        "Proses upload seluruh foto telah selesai."
-      );
-
 
       return {
 
@@ -5518,25 +6134,15 @@ function resetFormPemeriksaan() {
   var ids = [
 
     "tanggalPemeriksaan",
-
     "dinasLangsirPemeriksaan",
-
     "stasiunPemeriksaan",
-
     "lokomotifPemeriksaan",
-
     "masinisPemeriksaan",
-
     "asistenMasinisPemeriksaan",
-
     "plr1Pemeriksaan",
-
     "plr2Pemeriksaan",
-
     "plrDipoPemeriksaan",
-
     "petugasSchowingPemeriksaan",
-
     "catatanPemeriksaan"
 
   ];
@@ -5640,6 +6246,39 @@ function resetFormPemeriksaan() {
 
 
   clearSignature();
+
+
+  var progressSimpan =
+    document.getElementById(
+      "progressSimpan"
+    );
+
+  if (progressSimpan) {
+    progressSimpan.style.display =
+      "none";
+  }
+
+
+  var progressUpload =
+    document.getElementById(
+      "progressUploadFoto"
+    );
+
+  if (progressUpload) {
+    progressUpload.style.display =
+      "none";
+  }
+
+
+  var progressTTD =
+    document.getElementById(
+      "progressTTD"
+    );
+
+  if (progressTTD) {
+    progressTTD.style.display =
+      "none";
+  }
 
 }
 
@@ -5852,12 +6491,7 @@ document.addEventListener(
 
 
     console.log(
-      "VERSI TTD DIPERBAIKI"
-    );
-
-
-    console.log(
-      "ANTI TEMPLATE LITERAL ERROR"
+      "PROGRESS 10-35-65-85-100 AKTIF"
     );
 
 
@@ -5927,8 +6561,7 @@ document.addEventListener(
 
 
 /* =========================================================
-   DAFTARKAN FUNGSI KE WINDOW
-   AGAR onclick HTML SELALU BISA MEMANGGIL
+   DAFTARKAN FUNCTION KE WINDOW
 ========================================================= */
 
 window.loginPengguna =
@@ -5987,3 +6620,4 @@ console.log(
 </body>
 
 </html>
+```
