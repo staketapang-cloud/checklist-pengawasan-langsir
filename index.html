@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -816,10 +816,6 @@ body {
     </div>
 
 
-    <!-- =====================================================
-         PROGRESS LOGIN
-    ====================================================== -->
-
     <div
       id="progressLogin"
       class="progress-box">
@@ -836,7 +832,6 @@ body {
 
       </div>
 
-
       <div class="progress-track">
 
         <div
@@ -846,13 +841,11 @@ body {
 
       </div>
 
-
       <div
         id="progressLoginPercent"
         class="progress-percent">
         0%
       </div>
-
 
       <div
         id="progressLoginNote"
@@ -1140,7 +1133,6 @@ body {
 
       </div>
 
-
       <div class="progress-track">
 
         <div
@@ -1150,13 +1142,11 @@ body {
 
       </div>
 
-
       <div
         id="progressSimpanPercent"
         class="progress-percent">
         0%
       </div>
-
 
       <div
         id="progressSimpanNote"
@@ -1275,7 +1265,6 @@ body {
 
         </div>
 
-
         <div class="progress-track">
 
           <div
@@ -1285,13 +1274,11 @@ body {
 
         </div>
 
-
         <div
           id="progressUploadPercent"
           class="progress-percent">
           0%
         </div>
-
 
         <div
           id="progressUploadNote"
@@ -1318,7 +1305,7 @@ body {
       <div class="ttd-info">
 
         Silakan tanda tangan pada kotak di bawah ini.
-        Pastikan tanda tangan sudah terlihat dengan jelas
+        Pastikan tanda tangan sudah terlihat jelas
         sebelum menekan tombol <strong>Simpan TTD</strong>.
 
       </div>
@@ -1339,8 +1326,6 @@ body {
       </div>
 
 
-      <!-- PROGRESS TTD -->
-
       <div
         id="progressTTD"
         class="progress-box">
@@ -1357,7 +1342,6 @@ body {
 
         </div>
 
-
         <div class="progress-track">
 
           <div
@@ -1367,13 +1351,11 @@ body {
 
         </div>
 
-
         <div
           id="progressTTDPercent"
           class="progress-percent">
           0%
         </div>
-
 
         <div
           id="progressTTDNote"
@@ -1475,6 +1457,14 @@ var sedangMenggambar = false;
 var signatureInitialized = false;
 var signatureHasInk = false;
 
+/*
+ * Menyimpan data TTD yang sudah berhasil dikirim.
+ * Ini penting supaya SIMPAN & SELESAI tidak
+ * mengirim TTD berkali-kali.
+ */
+var signatureServerSaved = false;
+var signatureServerData = "";
+
 var sedangSimpanTTD = false;
 var sedangSimpanPemeriksaan = false;
 var sedangUploadFoto = false;
@@ -1510,13 +1500,29 @@ function buatIdPemeriksaan() {
 
 
 /* =========================================================
+   WAKTU SERVER / CLIENT
+========================================================= */
+
+function buatTimestamp() {
+
+  var sekarang =
+    new Date();
+
+  return sekarang.toISOString();
+
+}
+
+
+/* =========================================================
    STATUS LOGIN
 ========================================================= */
 
 function tampilkanStatusLogin(pesan) {
 
   var box =
-    document.getElementById("statusLogin");
+    document.getElementById(
+      "statusLogin"
+    );
 
   if (!box) {
     return;
@@ -1538,7 +1544,9 @@ function tampilkanStatusLogin(pesan) {
 function tampilkanStatus(pesan) {
 
   var box =
-    document.getElementById("statusBox");
+    document.getElementById(
+      "statusBox"
+    );
 
   if (!box) {
     return;
@@ -1554,47 +1562,65 @@ function tampilkanStatus(pesan) {
 
 
 /* =========================================================
-   PROGRESS GENERIC
+   PROGRESS GENERIC - DIPERBAIKI
 ========================================================= */
 
 function setProgressGeneric(
-  prefix,
+  boxId,
   percent,
   label,
   stepText,
   note
 ) {
 
+  /*
+   * PERBAIKAN UTAMA:
+   *
+   * Sebelumnya fungsi mencari:
+   * progressSimpanBox
+   *
+   * Padahal ID sebenarnya:
+   * progressSimpan
+   *
+   * Sekarang boxId langsung digunakan.
+   */
+
   var box =
     document.getElementById(
-      prefix + "Box"
+      boxId
     );
 
   var bar =
     document.getElementById(
-      prefix + "Bar"
+      boxId + "Bar"
     );
 
   var percentEl =
     document.getElementById(
-      prefix + "Percent"
+      boxId + "Percent"
     );
 
   var labelEl =
     document.getElementById(
-      prefix + "Label"
+      boxId + "Label"
     );
 
   var stepEl =
     document.getElementById(
-      prefix + "Step"
+      boxId + "Step"
     );
 
   var noteEl =
     document.getElementById(
-      prefix + "Note"
+      boxId + "Note"
     );
 
+
+  /*
+   * Untuk upload foto ID-nya berbeda:
+   * progressUploadFoto
+   * sehingga ditangani oleh fungsi sendiri.
+   */
 
   var nilai =
     Math.max(
@@ -1607,33 +1633,61 @@ function setProgressGeneric(
 
 
   if (box) {
-    box.style.display = "block";
+
+    box.style.display =
+      "block";
+
   }
+
 
   if (bar) {
+
     bar.style.width =
       nilai + "%";
+
   }
+
 
   if (percentEl) {
+
     percentEl.textContent =
       Math.round(nilai) + "%";
+
   }
+
 
   if (labelEl) {
+
     labelEl.textContent =
       label || "";
+
   }
+
 
   if (stepEl) {
+
     stepEl.textContent =
       stepText || "";
+
   }
 
+
   if (noteEl) {
+
     noteEl.textContent =
       note || "";
+
   }
+
+
+  console.log(
+    "PROGRESS:",
+    boxId,
+    nilai + "%",
+    label,
+    stepText,
+    note
+  );
 
 }
 
@@ -1667,7 +1721,7 @@ function setProgressLogin(
 function setProgressSimpan(
   percent,
   label,
-  stepText,
+  step,
   note
 ) {
 
@@ -1675,7 +1729,7 @@ function setProgressSimpan(
     "progressSimpan",
     percent,
     label,
-    stepText,
+    step,
     note
   );
 
@@ -1761,8 +1815,7 @@ function setProgressUpload(
   }
 
   if (bar) {
-    bar.style.width =
-      nilai + "%";
+    bar.style.width = nilai + "%";
   }
 
   if (percentEl) {
@@ -1874,7 +1927,8 @@ function tutupNotifFoto() {
 
 
   var aksi =
-    overlay.dataset.afterOk || "none";
+    overlay.dataset.afterOk ||
+    "none";
 
 
   overlay.style.display =
@@ -1921,16 +1975,24 @@ function tutupNotifFoto() {
 function kembaliKeFormPemeriksaan() {
 
   var login =
-    document.getElementById("googleLogin");
+    document.getElementById(
+      "googleLogin"
+    );
 
   var app =
-    document.getElementById("app");
+    document.getElementById(
+      "app"
+    );
 
   var form =
-    document.getElementById("formPemeriksaan");
+    document.getElementById(
+      "formPemeriksaan"
+    );
 
   var ttd =
-    document.getElementById("ttdBox");
+    document.getElementById(
+      "ttdBox"
+    );
 
 
   if (login) {
@@ -1973,21 +2035,34 @@ function kembaliKeLogin() {
 
   idPemeriksaanAktif = "";
 
+  signatureServerSaved = false;
+  signatureServerData = "";
+
 
   var login =
-    document.getElementById("googleLogin");
+    document.getElementById(
+      "googleLogin"
+    );
 
   var app =
-    document.getElementById("app");
+    document.getElementById(
+      "app"
+    );
 
   var form =
-    document.getElementById("formPemeriksaan");
+    document.getElementById(
+      "formPemeriksaan"
+    );
 
   var ttd =
-    document.getElementById("ttdBox");
+    document.getElementById(
+      "ttdBox"
+    );
 
   var upload =
-    document.getElementById("uploadFotoBox");
+    document.getElementById(
+      "uploadFotoBox"
+    );
 
 
   if (login) {
@@ -2015,13 +2090,19 @@ function kembaliKeLogin() {
 
 
   var nama =
-    document.getElementById("loginNama");
+    document.getElementById(
+      "loginNama"
+    );
 
   var nipp =
-    document.getElementById("loginNipp");
+    document.getElementById(
+      "loginNipp"
+    );
 
   var jabatan =
-    document.getElementById("loginJabatan");
+    document.getElementById(
+      "loginJabatan"
+    );
 
 
   if (nama) {
@@ -2068,11 +2149,6 @@ function loginPengguna() {
   if (sedangLogin) {
     return;
   }
-
-
-  console.log(
-    "LOGIN PENGGUNA DIPANGGIL"
-  );
 
 
   var namaElement =
@@ -2181,10 +2257,6 @@ function loginPengguna() {
   }
 
 
-  /* =========================
-     10%
-  ========================= */
-
   setProgressLogin(
     10,
     "Menyiapkan login pengguna",
@@ -2198,8 +2270,10 @@ function loginPengguna() {
   );
 
 
-  idPemeriksaanAktif =
-    "";
+  idPemeriksaanAktif = "";
+
+  signatureServerSaved = false;
+  signatureServerData = "";
 
 
   sessionStorage.removeItem(
@@ -2228,10 +2302,6 @@ function loginPengguna() {
   );
 
 
-  /* =========================
-     35%
-  ========================= */
-
   setProgressLogin(
     35,
     "Menyiapkan data login user",
@@ -2258,10 +2328,6 @@ function loginPengguna() {
 
   .then(function() {
 
-    /* =========================
-       65%
-    ========================= */
-
     setProgressLogin(
       65,
       "Mencatat data login user",
@@ -2280,7 +2346,8 @@ function loginPengguna() {
       {
         NAMA: nama,
         NIPP: nipp,
-        JABATAN: jabatan
+        JABATAN: jabatan,
+        WAKTU_LOGIN: buatTimestamp()
       }
     );
 
@@ -2309,10 +2376,6 @@ function loginPengguna() {
     }
 
 
-    /* =========================
-       85%
-    ========================= */
-
     setProgressLogin(
       85,
       "Data login berhasil dicatat",
@@ -2340,10 +2403,6 @@ function loginPengguna() {
 
 
   .then(function() {
-
-    /* =========================
-       100%
-    ========================= */
 
     setProgressLogin(
       100,
@@ -2395,8 +2454,7 @@ function loginPengguna() {
 
   .finally(function() {
 
-    sedangLogin =
-      false;
+    sedangLogin = false;
 
 
     if (tombol) {
@@ -2527,12 +2585,10 @@ function setTanggalHariIni() {
   var tahun =
     sekarang.getFullYear();
 
-
   var bulan =
     String(
       sekarang.getMonth() + 1
     ).padStart(2, "0");
-
 
   var tanggal =
     String(
@@ -2554,19 +2610,32 @@ function setTanggalHariIni() {
    FETCH GET
 ========================================================= */
 
-function fetchApi(action) {
+function fetchApi(action, id) {
 
   var url =
     API_URL +
     "?action=" +
-    encodeURIComponent(action) +
+    encodeURIComponent(action);
+
+
+  if (id) {
+
+    url +=
+      "&id_pemeriksaan=" +
+      encodeURIComponent(id);
+
+  }
+
+
+  url +=
     "&_=" +
     Date.now();
 
 
   console.log(
     "GET API:",
-    action
+    action,
+    id || ""
   );
 
 
@@ -3059,7 +3128,6 @@ function muatStasiun() {
       option.value =
         value;
 
-
       option.textContent =
         value;
 
@@ -3140,7 +3208,6 @@ function muatLokomotif() {
 
       option.value =
         value;
-
 
       option.textContent =
         value;
@@ -3699,7 +3766,6 @@ function pastikanIdPemeriksaan() {
   data.ID_PEMERIKSAAN =
     idPemeriksaanAktif;
 
-
   data.STATUS =
     "DRAFT";
 
@@ -3836,8 +3902,668 @@ function kirimRequestPost(
 
 
 /* =========================================================
-   SIMPAN PEMERIKSAAN
+   BUAT DATA TTD
+========================================================= */
+
+function buatDataTTD(signature) {
+
+  var waktu =
+    buatTimestamp();
+
+
+  return {
+
+    ID_PEMERIKSAAN:
+      String(
+        idPemeriksaanAktif
+      ).trim(),
+
+    ID_PEMERIKSA:
+      String(
+        idPemeriksaanAktif
+      ).trim(),
+
+    TTD:
+      signature,
+
+    NAMA:
+      sessionStorage.getItem(
+        "userNama"
+      ) || "",
+
+    NIPP:
+      sessionStorage.getItem(
+        "userNipp"
+      ) || "",
+
+    JABATAN:
+      sessionStorage.getItem(
+        "userJabatan"
+      ) || "",
+
+    EMAIL:
+      sessionStorage.getItem(
+        "userEmail"
+      ) || "",
+
+    WAKTU_TTD:
+      waktu,
+
+    TANGGAL_TTD:
+      waktu,
+
+    TANGGAL_SIMPAN:
+      waktu
+
+  };
+
+}
+
+
+/* =========================================================
+   AMBIL SIGNATURE DARI CANVAS
+========================================================= */
+
+function ambilSignatureCanvas() {
+
+  if (!signatureCanvas) {
+
+    signatureCanvas =
+      document.getElementById(
+        "signatureCanvas"
+      );
+
+  }
+
+
+  if (!signatureCanvas) {
+
+    throw new Error(
+      "Canvas tanda tangan tidak ditemukan."
+    );
+
+  }
+
+
+  if (
+    !canvasHasInk(
+      signatureCanvas
+    )
+  ) {
+
+    throw new Error(
+      "Tanda tangan belum dibuat."
+    );
+
+  }
+
+
+  var signature =
+    signatureCanvas.toDataURL(
+      "image/png"
+    );
+
+
+  if (
+    !signature ||
+    !signature.startsWith(
+      "data:image/png;base64,"
+    )
+  ) {
+
+    throw new Error(
+      "Data tanda tangan tidak valid."
+    );
+
+  }
+
+
+  return signature;
+
+}
+
+
+/* =========================================================
+   SIMPAN TTD KE SERVER
+   FUNGSI INTI
+========================================================= */
+
+function kirimTTDKeServer(
+  signature,
+  mode
+) {
+
+  var data =
+    buatDataTTD(
+      signature
+    );
+
+
+  /*
+   * Kalau TTD yang sama sudah berhasil disimpan,
+   * jangan kirim ulang.
+   */
+
+  if (
+    signatureServerSaved &&
+    signatureServerData ===
+      signature
+  ) {
+
+    console.log(
+      "TTD SUDAH TERSIMPAN DI SERVER - SKIP"
+    );
+
+
+    return Promise.resolve({
+
+      success: true,
+
+      skipped:
+        true,
+
+      message:
+        "TTD sudah tersimpan di server."
+
+    });
+
+  }
+
+
+  return kirimRequestPost(
+    "simpan_ttd",
+    data
+  )
+
+
+  .then(function(result) {
+
+    console.log(
+      "HASIL SIMPAN TTD:",
+      result
+    );
+
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        result && result.message
+          ? result.message
+          : "API tidak mengonfirmasi penyimpanan TTD."
+      );
+
+    }
+
+
+    /*
+     * Tandai TTD sudah tersimpan.
+     */
+
+    signatureServerSaved =
+      true;
+
+    signatureServerData =
+      signature;
+
+
+    /*
+     * Pastikan ID tetap sama.
+     */
+
+    idPemeriksaanAktif =
+      data.ID_PEMERIKSAAN;
+
+
+    sessionStorage.setItem(
+      "idPemeriksaanAktif",
+      idPemeriksaanAktif
+    );
+
+
+    return {
+
+      success:
+        true,
+
+      data:
+        result,
+
+      payload:
+        data,
+
+      mode:
+        mode || "manual"
+
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   VERIFIKASI TTD / TRANSAKSI
+========================================================= */
+
+function verifikasiTTDServer() {
+
+  if (!idPemeriksaanAktif) {
+
+    return Promise.resolve({
+      success: false
+    });
+
+  }
+
+
+  /*
+   * Backend lama Anda sudah mempunyai action:
+   * transaksi
+   *
+   * Kita gunakan untuk membaca ulang data.
+   */
+
+  return fetchApi(
+    "transaksi",
+    idPemeriksaanAktif
+  )
+
+  .then(function(result) {
+
+    console.log(
+      "VERIFIKASI DATA TRANSAKSI:",
+      result
+    );
+
+
+    if (!result) {
+
+      return {
+        success: false
+      };
+
+    }
+
+
+    /*
+     * Jangan menggagalkan proses hanya karena
+     * backend belum mengembalikan TTD.
+     *
+     * Yang penting API simpan_ttd sudah sukses.
+     */
+
+    return {
+
+      success:
+        true,
+
+      data:
+        result
+
+    };
+
+  })
+
+
+  .catch(function(error) {
+
+    console.warn(
+      "VERIFIKASI TTD TIDAK TERSEDIA:",
+      error
+    );
+
+
+    return {
+
+      success:
+        false,
+
+      error:
+        error.message
+
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   SIMPAN TTD
    10 → 35 → 65 → 85 → 100
+========================================================= */
+
+function simpanTTD() {
+
+  if (sedangSimpanTTD) {
+    return;
+  }
+
+
+  if (!idPemeriksaanAktif) {
+
+    tampilkanNotifFoto(
+      "TTD gagal disimpan",
+      "ID Pemeriksaan belum tersedia.",
+      "form"
+    );
+
+    return;
+
+  }
+
+
+  var signature = "";
+
+
+  try {
+
+    signature =
+      ambilSignatureCanvas();
+
+  }
+
+  catch (error) {
+
+    tampilkanNotifFoto(
+      "TTD belum tersedia",
+      error.message,
+      "none"
+    );
+
+    return;
+
+  }
+
+
+  sedangSimpanTTD =
+    true;
+
+
+  var tombol =
+    document.getElementById(
+      "btnSaveTTD"
+    );
+
+  var tombolClear =
+    document.getElementById(
+      "btnClearTTD"
+    );
+
+
+  if (tombol) {
+
+    tombol.disabled =
+      true;
+
+    tombol.textContent =
+      "MENYIMPAN TTD...";
+
+  }
+
+
+  if (tombolClear) {
+
+    tombolClear.disabled =
+      true;
+
+  }
+
+
+  /* =========================
+     10%
+  ========================= */
+
+  setProgressTTD(
+    10,
+    "Menyiapkan tanda tangan",
+    "1 / 5",
+    "Menyiapkan data tanda tangan..."
+  );
+
+
+  tampilkanStatusTTD(
+    "Menyiapkan tanda tangan ke server..."
+  );
+
+
+  tampilkanStatus(
+    "Menyiapkan tanda tangan..."
+  );
+
+
+  new Promise(function(resolve) {
+
+    setTimeout(
+      resolve,
+      150
+    );
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       35%
+    ========================= */
+
+    setProgressTTD(
+      35,
+      "Menyiapkan tanda tangan ke server",
+      "2 / 5",
+      "Data TTD sudah dibuat dan siap dikirim..."
+    );
+
+
+    tampilkanStatusTTD(
+      "Menyiapkan tanda tangan ke server..."
+    );
+
+
+    return new Promise(function(resolve) {
+
+      setTimeout(
+        resolve,
+        150
+      );
+
+    });
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       65%
+    ========================= */
+
+    setProgressTTD(
+      65,
+      "Mengirim tanda tangan ke server",
+      "3 / 5",
+      "Sedang mengirim gambar tanda tangan..."
+    );
+
+
+    tampilkanStatusTTD(
+      "Menyimpan tanda tangan ke server..."
+    );
+
+
+    tampilkanStatus(
+      "Menyimpan tanda tangan ke server..."
+    );
+
+
+    return kirimTTDKeServer(
+      signature,
+      "manual"
+    );
+
+  })
+
+
+  .then(function(result) {
+
+    if (
+      !result ||
+      result.success !== true
+    ) {
+
+      throw new Error(
+        "Server belum mengonfirmasi penyimpanan TTD."
+      );
+
+    }
+
+
+    /* =========================
+       85%
+    ========================= */
+
+    setProgressTTD(
+      85,
+      "Memastikan tanda tangan tersimpan",
+      "4 / 5",
+      "Memeriksa kembali data pemeriksaan..."
+    );
+
+
+    tampilkanStatusTTD(
+      "Tanda tangan diterima server. Memastikan data..."
+    );
+
+
+    return verifikasiTTDServer();
+
+  })
+
+
+  .then(function() {
+
+    /* =========================
+       100%
+    ========================= */
+
+    setProgressTTD(
+      100,
+      "Tanda tangan berhasil disimpan",
+      "5 / 5",
+      "Tanda tangan digital berhasil direkam ke sistem."
+    );
+
+
+    tampilkanStatusTTD(
+      "Tanda tangan berhasil disimpan ke server.\n" +
+      "ID Pemeriksaan: " +
+      idPemeriksaanAktif
+    );
+
+
+    tampilkanStatus(
+      "Tanda tangan berhasil disimpan.\n" +
+      "ID Pemeriksaan: " +
+      idPemeriksaanAktif
+    );
+
+
+    tampilkanNotifFoto(
+      "Tanda tangan berhasil disimpan",
+      "Tanda tangan digital telah berhasil direkam ke server.\n\n" +
+      "ID Pemeriksaan: " +
+      idPemeriksaanAktif +
+      "\n\n" +
+      "Silakan tekan OK untuk kembali ke form.",
+      "form"
+    );
+
+
+    /*
+     * JANGAN clear signature di sini.
+     *
+     * TTD sengaja tetap dianggap tersimpan.
+     * Ini penting supaya ketika user klik
+     * SIMPAN & SELESAI, sistem tahu TTD sudah
+     * tersimpan dan tidak perlu menghapusnya.
+     */
+
+  })
+
+
+  .catch(function(error) {
+
+    console.error(
+      "GAGAL SIMPAN TTD:",
+      error
+    );
+
+
+    setProgressTTD(
+      0,
+      "TTD gagal disimpan",
+      "-",
+      error.message
+    );
+
+
+    tampilkanStatusTTD(
+      "Gagal menyimpan TTD.\n" +
+      error.message
+    );
+
+
+    tampilkanStatus(
+      "Gagal menyimpan tanda tangan."
+    );
+
+
+    tampilkanNotifFoto(
+      "Tanda tangan gagal disimpan",
+      "Tanda tangan belum berhasil direkam ke server.\n\n" +
+      error.message,
+      "none"
+    );
+
+  })
+
+
+  .finally(function() {
+
+    sedangSimpanTTD =
+      false;
+
+
+    if (tombol) {
+
+      tombol.disabled =
+        false;
+
+      tombol.textContent =
+        "Simpan TTD";
+
+    }
+
+
+    if (tombolClear) {
+
+      tombolClear.disabled =
+        false;
+
+    }
+
+  });
+
+}
+
+
+/* =========================================================
+   SIMPAN & SELESAI
+   SEKARANG TERMASUK TTD
 ========================================================= */
 
 function simpanPemeriksaan() {
@@ -3867,6 +4593,12 @@ function simpanPemeriksaan() {
     );
 
 
+  var btnTTD =
+    document.getElementById(
+      "btnTTD"
+    );
+
+
   if (tombol) {
 
     tombol.disabled =
@@ -3878,9 +4610,19 @@ function simpanPemeriksaan() {
   }
 
 
-  /* =========================
-     10%
-  ========================= */
+  if (btnTTD) {
+
+    btnTTD.disabled =
+      true;
+
+  }
+
+
+  /*
+   * =====================================================
+   * 10%
+   * =====================================================
+   */
 
   setProgressSimpan(
     10,
@@ -3889,6 +4631,17 @@ function simpanPemeriksaan() {
     "Memeriksa dan menyiapkan seluruh data pemeriksaan..."
   );
 
+
+  tampilkanStatus(
+    "Menyiapkan pemeriksaan..."
+  );
+
+
+  /*
+   * =====================================================
+   * PASTIKAN ID
+   * =====================================================
+   */
 
   pastikanIdPemeriksaan()
 
@@ -3899,6 +4652,25 @@ function simpanPemeriksaan() {
       String(id).trim();
 
 
+    /*
+     * =================================================
+     * 35%
+     * =================================================
+     */
+
+    setProgressSimpan(
+      35,
+      "Mengirim data pemeriksaan",
+      "2 / 5",
+      "Data checklist sedang dikirim ke server..."
+    );
+
+
+    tampilkanStatus(
+      "Menyimpan data pemeriksaan ke server..."
+    );
+
+
     var data =
       ambilDataForm();
 
@@ -3906,21 +4678,11 @@ function simpanPemeriksaan() {
     data.ID_PEMERIKSAAN =
       idPemeriksaanAktif;
 
-
     data.STATUS =
       "SELESAI";
 
-
-    /* =========================
-       35%
-    ========================= */
-
-    setProgressSimpan(
-      35,
-      "Mengirim data pemeriksaan",
-      "2 / 5",
-      "Data pemeriksaan sedang dikirim ke server..."
-    );
+    data.WAKTU_SELESAI =
+      buatTimestamp();
 
 
     return kirimRequestPost(
@@ -3932,6 +4694,12 @@ function simpanPemeriksaan() {
 
 
   .then(function(result) {
+
+    console.log(
+      "HASIL SIMPAN PEMERIKSAAN:",
+      result
+    );
+
 
     if (
       !result ||
@@ -3947,83 +4715,203 @@ function simpanPemeriksaan() {
     }
 
 
-    /* =========================
-       65%
-    ========================= */
+    /*
+     * =================================================
+     * 65%
+     * =================================================
+     *
+     * Jika TTD sudah tersimpan sebelumnya:
+     * tidak dikirim ulang.
+     *
+     * Jika user menggambar TTD tetapi belum
+     * menyimpannya:
+     * TTD otomatis dikirim sekarang.
+     */
 
     setProgressSimpan(
       65,
-      "Data pemeriksaan berhasil disimpan",
+      "Memproses tanda tangan",
       "3 / 5",
-      "Server telah menerima data pemeriksaan. Memproses hasil..."
+      "Memeriksa status tanda tangan..."
     );
 
 
-    return new Promise(function(resolve) {
+    tampilkanStatus(
+      "Memeriksa tanda tangan..."
+    );
 
-      setTimeout(function() {
 
-        resolve();
+    /*
+     * Jika TTD sudah pernah berhasil disimpan,
+     * langsung lanjut.
+     */
 
-      }, 250);
+    if (
+      signatureServerSaved
+    ) {
 
-    });
+      console.log(
+        "TTD SUDAH TERSIMPAN - TIDAK DIKIRIM ULANG"
+      );
+
+
+      return {
+
+        success:
+          true,
+
+        ttdSudahTersimpan:
+          true
+
+      };
+
+    }
+
+
+    /*
+     * Jika canvas belum ada / belum ada tinta,
+     * lanjut tanpa TTD.
+     */
+
+    if (!signatureCanvas) {
+
+      signatureCanvas =
+        document.getElementById(
+          "signatureCanvas"
+        );
+
+    }
+
+
+    if (
+      !signatureCanvas ||
+      !canvasHasInk(
+        signatureCanvas
+      )
+    ) {
+
+      console.log(
+        "Tidak ada TTD yang perlu disimpan."
+      );
+
+
+      return {
+
+        success:
+          true,
+
+        ttdSudahTersimpan:
+          false
+
+      };
+
+    }
+
+
+    /*
+     * Ada TTD yang belum disimpan.
+     * Ambil dan kirim ke server.
+     */
+
+    var signature =
+      ambilSignatureCanvas();
+
+
+    setProgressSimpan(
+      65,
+      "Menyimpan tanda tangan ke server",
+      "3 / 5",
+      "Tanda tangan ditemukan. Sedang dikirim ke server..."
+    );
+
+
+    tampilkanStatus(
+      "Menyimpan tanda tangan ke server..."
+    );
+
+
+    return kirimTTDKeServer(
+      signature,
+      "simpan_dan_selesai"
+    );
 
   })
 
 
-  .then(function() {
+  .then(function(ttdResult) {
 
-    /* =========================
-       85%
-    ========================= */
+    console.log(
+      "HASIL PROSES TTD:",
+      ttdResult
+    );
+
+
+    /*
+     * =================================================
+     * 85%
+     * =================================================
+     */
 
     setProgressSimpan(
       85,
       "Finalisasi pemeriksaan",
       "4 / 5",
-      "Menyiapkan penyelesaian dan memastikan data tersimpan..."
+      "Memastikan data pemeriksaan dan tanda tangan telah diterima server..."
     );
 
 
-    return new Promise(function(resolve) {
+    tampilkanStatus(
+      "Finalisasi pemeriksaan dan tanda tangan..."
+    );
 
-      setTimeout(function() {
 
-        resolve();
+    /*
+     * Verifikasi transaksi dilakukan.
+     * Tidak menggagalkan proses bila endpoint
+     * verifikasi lama tidak mengembalikan TTD.
+     */
 
-      }, 300);
-
-    });
+    return verifikasiTTDServer();
 
   })
 
 
-  .then(function() {
+  .then(function(verifikasi) {
 
-    /* =========================
-       100%
-    ========================= */
+    console.log(
+      "HASIL VERIFIKASI AKHIR:",
+      verifikasi
+    );
+
+
+    /*
+     * =================================================
+     * 100%
+     * =================================================
+     */
 
     setProgressSimpan(
       100,
       "Pemeriksaan berhasil disimpan",
       "5 / 5",
-      "Penyimpanan pemeriksaan selesai."
+      "Pemeriksaan dan tanda tangan selesai diproses."
     );
 
 
     tampilkanStatus(
-      "Form Checklist Pengawasan Langsir Anda Telah Terekam."
+      "Form Checklist Pengawasan Langsir Anda Telah Terekam.\n\n" +
+      "ID Pemeriksaan: " +
+      idPemeriksaanAktif
     );
 
 
     tampilkanNotifFoto(
       "Form Checklist Pengawasan Langsir Anda Telah Terekam",
-      "Form Checklist Pengawasan Langsir Anda telah berhasil disimpan.\n\n" +
+      "Form Checklist Pengawasan Langsir telah berhasil disimpan.\n\n" +
       "ID Pemeriksaan: " +
       idPemeriksaanAktif +
       "\n\n" +
+      "Tanda tangan juga telah diproses ke server.\n\n" +
       "Silakan tekan OK untuk keluar.",
       "login"
     );
@@ -4048,7 +4936,8 @@ function simpanPemeriksaan() {
 
 
     tampilkanStatus(
-      "Gagal menyimpan pemeriksaan."
+      "Gagal menyimpan pemeriksaan.\n" +
+      error.message
     );
 
 
@@ -4073,6 +4962,14 @@ function simpanPemeriksaan() {
 
       tombol.textContent =
         "SIMPAN & SELESAI";
+
+    }
+
+
+    if (btnTTD) {
+
+      btnTTD.disabled =
+        false;
 
     }
 
@@ -4256,18 +5153,14 @@ function resizeSignatureCanvas() {
   signatureContext.lineWidth =
     2.5;
 
-
   signatureContext.lineCap =
     "round";
-
 
   signatureContext.lineJoin =
     "round";
 
-
   signatureContext.strokeStyle =
     "#111";
-
 
   signatureContext.fillStyle =
     "#ffffff";
@@ -4283,7 +5176,6 @@ function resizeSignatureCanvas() {
 
   signatureContext.strokeStyle =
     "#111";
-
 
   signatureContext.fillStyle =
     "#111";
@@ -4440,6 +5332,18 @@ function mulaiGambarTTD(event) {
     true;
 
 
+  /*
+   * TTD baru berarti kemungkinan berbeda
+   * dengan TTD sebelumnya.
+   */
+
+  signatureServerSaved =
+    false;
+
+  signatureServerData =
+    "";
+
+
   signatureContext.beginPath();
 
 
@@ -4547,7 +5451,6 @@ function canvasHasInk(canvas) {
 
     var width =
       canvas.width;
-
 
     var height =
       canvas.height;
@@ -4702,9 +5605,21 @@ function clearSignature() {
   signatureHasInk =
     false;
 
-
   sedangMenggambar =
     false;
+
+
+  /*
+   * Karena user menekan Hapus,
+   * status TTD server harus dianggap
+   * tidak berlaku untuk gambar berikutnya.
+   */
+
+  signatureServerSaved =
+    false;
+
+  signatureServerData =
+    "";
 
 
   var status =
@@ -4879,501 +5794,6 @@ function tampilkanStatusTTD(pesan) {
 
 
 /* =========================================================
-   SIMPAN TTD
-   10 → 35 → 65 → 85 → 100
-========================================================= */
-
-function simpanTTD() {
-
-  if (sedangSimpanTTD) {
-    return;
-  }
-
-
-  console.log(
-    "================================="
-  );
-
-  console.log(
-    "MULAI SIMPAN TTD"
-  );
-
-  console.log(
-    "================================="
-  );
-
-
-  if (!idPemeriksaanAktif) {
-
-    tampilkanNotifFoto(
-      "TTD gagal disimpan",
-      "ID Pemeriksaan belum tersedia.",
-      "form"
-    );
-
-    return;
-
-  }
-
-
-  if (!signatureCanvas) {
-
-    signatureCanvas =
-      document.getElementById(
-        "signatureCanvas"
-      );
-
-  }
-
-
-  if (!signatureCanvas) {
-
-    tampilkanNotifFoto(
-      "TTD gagal disimpan",
-      "Canvas tanda tangan tidak ditemukan.",
-      "form"
-    );
-
-    return;
-
-  }
-
-
-  if (
-    !canvasHasInk(
-      signatureCanvas
-    )
-  ) {
-
-    tampilkanNotifFoto(
-      "TTD belum tersedia",
-      "Silakan tanda tangan terlebih dahulu pada kotak TTD.",
-      "none"
-    );
-
-    return;
-
-  }
-
-
-  var signature =
-    "";
-
-
-  try {
-
-    signature =
-      signatureCanvas.toDataURL(
-        "image/png"
-      );
-
-  }
-
-  catch (error) {
-
-    tampilkanNotifFoto(
-      "TTD gagal disimpan",
-      "Gagal mengambil data tanda tangan dari canvas.\n\n" +
-      error.message,
-      "none"
-    );
-
-    return;
-
-  }
-
-
-  if (
-    !signature ||
-    !signature.startsWith(
-      "data:image/png;base64,"
-    )
-  ) {
-
-    tampilkanNotifFoto(
-      "TTD gagal disimpan",
-      "Data tanda tangan tidak valid.",
-      "none"
-    );
-
-    return;
-
-  }
-
-
-  var data = {
-
-    ID_PEMERIKSAAN:
-      String(
-        idPemeriksaanAktif
-      ).trim(),
-
-    ID_PEMERIKSA:
-      String(
-        idPemeriksaanAktif
-      ).trim(),
-
-    TTD:
-      signature,
-
-    EMAIL:
-      sessionStorage.getItem(
-        "userEmail"
-      ) || "",
-
-    NAMA:
-      sessionStorage.getItem(
-        "userNama"
-      ) || "",
-
-    NIPP:
-      sessionStorage.getItem(
-        "userNipp"
-      ) || "",
-
-    JABATAN:
-      sessionStorage.getItem(
-        "userJabatan"
-      ) || ""
-
-  };
-
-
-  sedangSimpanTTD =
-    true;
-
-
-  var tombol =
-    document.getElementById(
-      "btnSaveTTD"
-    );
-
-
-  var tombolClear =
-    document.getElementById(
-      "btnClearTTD"
-    );
-
-
-  if (tombol) {
-
-    tombol.disabled =
-      true;
-
-    tombol.textContent =
-      "MENYIMPAN TTD...";
-
-  }
-
-
-  if (tombolClear) {
-
-    tombolClear.disabled =
-      true;
-
-  }
-
-
-  /* =========================
-     10%
-  ========================= */
-
-  setProgressTTD(
-    10,
-    "Menyiapkan tanda tangan",
-    "1 / 5",
-    "Menyiapkan data tanda tangan untuk dikirim ke server..."
-  );
-
-
-  tampilkanStatusTTD(
-    "Menyiapkan tanda tangan ke server..."
-  );
-
-
-  tampilkanStatus(
-    "Menyiapkan tanda tangan..."
-  );
-
-
-  return new Promise(function(resolve) {
-
-    setTimeout(function() {
-
-      resolve();
-
-    }, 150);
-
-  })
-
-
-  .then(function() {
-
-    /* =========================
-       35%
-    ========================= */
-
-    setProgressTTD(
-      35,
-      "Menyiapkan tanda tangan ke server",
-      "2 / 5",
-      "Data TTD telah disiapkan. Menghubungkan ke server..."
-    );
-
-
-    tampilkanStatusTTD(
-      "Menyiapkan tanda tangan ke server..."
-    );
-
-
-    return new Promise(function(resolve) {
-
-      setTimeout(function() {
-
-        resolve();
-
-      }, 150);
-
-    });
-
-  })
-
-
-  .then(function() {
-
-    /* =========================
-       65%
-    ========================= */
-
-    setProgressTTD(
-      65,
-      "Mengirim tanda tangan ke server",
-      "3 / 5",
-      "Sedang mengirim data tanda tangan..."
-    );
-
-
-    tampilkanStatusTTD(
-      "Mengirim tanda tangan ke server..."
-    );
-
-
-    tampilkanStatus(
-      "Menyimpan tanda tangan ke server..."
-    );
-
-
-    return kirimRequestPost(
-      "simpan_ttd",
-      data
-    );
-
-  })
-
-
-  .then(function(result) {
-
-    console.log(
-      "HASIL SIMPAN TTD:",
-      result
-    );
-
-
-    if (
-      !result ||
-      result.success !== true
-    ) {
-
-      throw new Error(
-        result && result.message
-          ? result.message
-          : "API menolak penyimpanan tanda tangan."
-      );
-
-    }
-
-
-    idPemeriksaanAktif =
-      data.ID_PEMERIKSAAN;
-
-
-    sessionStorage.setItem(
-      "idPemeriksaanAktif",
-      idPemeriksaanAktif
-    );
-
-
-    /* =========================
-       85%
-    ========================= */
-
-    setProgressTTD(
-      85,
-      "Finalisasi tanda tangan",
-      "4 / 5",
-      "Tanda tangan telah diterima server. Memastikan proses selesai..."
-    );
-
-
-    tampilkanStatusTTD(
-      "Tanda tangan berhasil diterima server. Finalisasi..."
-    );
-
-
-    return new Promise(function(resolve) {
-
-      setTimeout(function() {
-
-        resolve();
-
-      }, 300);
-
-    });
-
-  })
-
-
-  .then(function() {
-
-    /* =========================
-       100%
-    ========================= */
-
-    setProgressTTD(
-      100,
-      "Tanda tangan berhasil disimpan",
-      "5 / 5",
-      "Tanda tangan digital berhasil direkam ke sistem."
-    );
-
-
-    var ttdBox =
-      document.getElementById(
-        "ttdBox"
-      );
-
-
-    if (ttdBox) {
-
-      ttdBox.style.display =
-        "none";
-
-    }
-
-
-    tampilkanStatusTTD(
-      "Tanda tangan berhasil disimpan."
-    );
-
-
-    tampilkanStatus(
-      "Tanda tangan berhasil disimpan.\n" +
-      "ID Pemeriksaan: " +
-      idPemeriksaanAktif
-    );
-
-
-    tampilkanNotifFoto(
-      "Tanda tangan berhasil disimpan",
-      "Tanda tangan digital telah berhasil direkam ke sistem.\n\n" +
-      "ID Pemeriksaan: " +
-      idPemeriksaanAktif +
-      "\n\n" +
-      "Tekan OK untuk kembali mengecek kembali form ceklist pengawasan langsir dan klik simpan & selesai.",
-      "form"
-    );
-
-
-    clearSignature();
-
-
-    console.log(
-      "================================="
-    );
-
-    console.log(
-      "TTD BERHASIL TEREKAM"
-    );
-
-    console.log(
-      "ID:",
-      idPemeriksaanAktif
-    );
-
-    console.log(
-      "================================="
-    );
-
-  })
-
-
-  .catch(function(error) {
-
-    console.error(
-      "GAGAL SIMPAN TTD:",
-      error
-    );
-
-
-    setProgressTTD(
-      0,
-      "TTD gagal disimpan",
-      "-",
-      error.message
-    );
-
-
-    tampilkanStatusTTD(
-      "Gagal menyimpan TTD.\n" +
-      error.message
-    );
-
-
-    tampilkanStatus(
-      "Gagal menyimpan tanda tangan."
-    );
-
-
-    tampilkanNotifFoto(
-      "Tanda tangan gagal disimpan",
-      "Tanda tangan belum berhasil direkam ke server.\n\n" +
-      error.message,
-      "none"
-    );
-
-  })
-
-
-  .finally(function() {
-
-    sedangSimpanTTD =
-      false;
-
-
-    if (tombol) {
-
-      tombol.disabled =
-        false;
-
-      tombol.textContent =
-        "Simpan TTD";
-
-    }
-
-
-    if (tombolClear) {
-
-      tombolClear.disabled =
-        false;
-
-    }
-
-  });
-
-}
-
-
-/* =========================================================
    FOTO
 ========================================================= */
 
@@ -5404,8 +5824,6 @@ function uploadFoto() {
 
 /* =========================================================
    KIRIM FOTO
-   PROGRESS KESELURUHAN:
-   10 → 35 → 65 → 85 → 100
 ========================================================= */
 
 function kirimFoto() {
@@ -5419,7 +5837,6 @@ function kirimFoto() {
     document.getElementById(
       "fotoPemeriksaan"
     );
-
 
   var status =
     document.getElementById(
@@ -5457,12 +5874,10 @@ function kirimFoto() {
 
 
   var files =
-    Array.from(input.files);
+    Array.from(
+      input.files
+    );
 
-
-  /* =========================
-     10%
-  ========================= */
 
   setProgressUpload(
     10,
@@ -5492,10 +5907,6 @@ function kirimFoto() {
       String(id).trim();
 
 
-    /* =========================
-       35%
-    ========================= */
-
     setProgressUpload(
       35,
       "Menyiapkan upload foto",
@@ -5521,10 +5932,6 @@ function kirimFoto() {
 
 
   .then(function(hasil) {
-
-    /* =========================
-       85%
-    ========================= */
 
     setProgressUpload(
       85,
@@ -5553,11 +5960,14 @@ function kirimFoto() {
 
     return new Promise(function(resolve) {
 
-      setTimeout(function() {
+      setTimeout(
+        function() {
 
-        resolve(hasil);
+          resolve(hasil);
 
-      }, 250);
+        },
+        250
+      );
 
     });
 
@@ -5565,10 +5975,6 @@ function kirimFoto() {
 
 
   .then(function(hasil) {
-
-    /* =========================
-       100%
-    ========================= */
 
     setProgressUpload(
       100,
@@ -5762,10 +6168,6 @@ function uploadSemuaFoto(
           }
 
 
-          /* =====================
-             Per foto mulai 35%
-          ===================== */
-
           setProgressUpload(
             35,
             "Menyiapkan upload foto",
@@ -5804,10 +6206,6 @@ function uploadSemuaFoto(
 
 
           .then(function(base64) {
-
-            /* =====================
-               65%
-            ===================== */
 
             setProgressUpload(
               65,
@@ -5862,10 +6260,6 @@ function uploadSemuaFoto(
 
             }
 
-
-            /* =====================
-               85%
-            ===================== */
 
             setProgressUpload(
               85,
@@ -6245,6 +6639,17 @@ function resetFormPemeriksaan() {
   }
 
 
+  /*
+   * Reset TTD.
+   */
+
+  signatureServerSaved =
+    false;
+
+  signatureServerData =
+    "";
+
+
   clearSignature();
 
 
@@ -6479,21 +6884,25 @@ document.addEventListener(
       "================================="
     );
 
-
     console.log(
       "SISTEM CHECKLIST LANGSIR"
     );
-
 
     console.log(
       "LOGIN MANUAL AKTIF"
     );
 
-
     console.log(
       "PROGRESS 10-35-65-85-100 AKTIF"
     );
 
+    console.log(
+      "TTD SERVER SAVE AKTIF"
+    );
+
+    console.log(
+      "SIMPAN & SELESAI + TTD AKTIF"
+    );
 
     console.log(
       "================================="
@@ -6529,6 +6938,13 @@ document.addEventListener(
 
 
     idPemeriksaanAktif =
+      "";
+
+
+    signatureServerSaved =
+      false;
+
+    signatureServerData =
       "";
 
 
@@ -6615,9 +7031,19 @@ console.log(
   typeof window.loginPengguna
 );
 
+console.log(
+  "FUNCTION GLOBAL READY: simpanTTD =",
+  typeof window.simpanTTD
+);
+
+console.log(
+  "FUNCTION GLOBAL READY: simpanPemeriksaan =",
+  typeof window.simpanPemeriksaan
+);
+
 </script>
 
 </body>
 
 </html>
-```
+
