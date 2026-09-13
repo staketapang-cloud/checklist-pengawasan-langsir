@@ -1521,75 +1521,209 @@ var sedangLogin = false;
 // ======================================================
 // PREVIEW HASIL AKHIR - FOTO DARI SERVER
 // ======================================================
-
 async function tampilkanPreviewHasilAkhir() {
     try {
-        var box = document.getElementById("previewHasilAkhirBox");
-        var info = document.getElementById("previewInfoHasilAkhir");
-        var fotoContainer = document.getElementById("previewFotoHasilAkhir");
-        var tidakAdaFoto = document.getElementById("previewTidakAdaFoto");
-
-        if (!box || !info || !fotoContainer) {
-            console.warn("Elemen Preview Hasil Akhir belum ditemukan.");
+        if (!idPemeriksaanAktif) {
+            console.warn("Preview: ID pemeriksaan belum tersedia.");
             return;
         }
 
-        var id = String(idPemeriksaanAktif || "").trim();
+        const box = document.getElementById("previewHasilAkhirBox");
+        const info = document.getElementById("previewInfoHasilAkhir");
+        const img = document.getElementById("previewFotoHasilAkhir");
+        const tidakAda = document.getElementById("previewTidakAdaFoto");
 
-        if (!id) {
-            console.warn("ID_PEMERIKSAAN belum tersedia.");
+        if (!box) {
+            console.warn("previewHasilAkhirBox tidak ditemukan.");
             return;
         }
 
         // Tampilkan kotak preview
         box.style.display = "block";
 
-        // Bersihkan isi lama
-        fotoContainer.innerHTML = "";
-        tidakAdaFoto.style.display = "none";
+        if (info) {
+            info.innerHTML =
+                "ID Pemeriksaan: <b>" +
+                idPemeriksaanAktif +
+                "</b><br>" +
+                "Sedang mengambil hasil checklist...";
+        }
 
-        // Ambil data transaksi
-        var urlTransaksi =
+        if (img) {
+            img.style.display = "none";
+            img.removeAttribute("src");
+        }
+
+        if (tidakAda) {
+            tidakAda.style.display = "none";
+        }
+
+        // =====================================================
+        // AMBIL DATA FOTO TRANSAKSI
+        // =====================================================
+        const url =
             API_URL +
-            "?action=transaksi&id_pemeriksaan=" +
-            encodeURIComponent(id);
+            "?action=foto_transaksi&id_pemeriksaan=" +
+            encodeURIComponent(idPemeriksaanAktif);
 
-        var responseTransaksi = await fetch(urlTransaksi);
-        var hasilTransaksi = await responseTransaksi.json();
+        const response = await fetch(url, {
+            method: "GET",
+            cache: "no-store"
+        });
 
-        var transaksi = null;
+        if (!response.ok) {
+            throw new Error(
+                "Gagal mengambil data foto. HTTP " +
+                response.status
+            );
+        }
+
+        const hasil = await response.json();
+
+        console.log(
+            "HASIL FOTO TRANSAKSI:",
+            hasil
+        );
 
         if (
-            hasilTransaksi &&
-            hasilTransaksi.success &&
-            hasilTransaksi.data
+            !hasil ||
+            hasil.success !== true ||
+            !Array.isArray(hasil.data)
         ) {
-            transaksi = hasilTransaksi.data;
+            if (info) {
+                info.innerHTML =
+                    "Checklist berhasil disimpan.<br>" +
+                    "Data JPG belum tersedia.";
+            }
+
+            if (tidakAda) {
+                tidakAda.style.display = "block";
+                tidakAda.innerHTML =
+                    "JPG checklist belum tersedia.";
+            }
+
+            return;
         }
 
-        // Tampilkan informasi pemeriksaan
-        if (transaksi) {
+        // =====================================================
+        // CARI FOTO/JPG CHECKLIST
+        // =====================================================
+        const daftarFoto = hasil.data;
 
-            info.innerHTML = `
-                <div><strong>ID Pemeriksaan:</strong> ${escapeHtmlPreview(transaksi.ID_PEMERIKSAAN || id)}</div>
-                <div><strong>Tanggal:</strong> ${escapeHtmlPreview(transaksi.TANGGAL || "-")}</div>
-                <div><strong>Dinas Langsir:</strong> ${escapeHtmlPreview(transaksi.DINAS_LANGSIR || "-")}</div>
-                <div><strong>Stasiun:</strong> ${escapeHtmlPreview(transaksi.STASIUN || "-")}</div>
-                <div><strong>Lokomotif:</strong> ${escapeHtmlPreview(transaksi.LOKOMOTIF || "-")}</div>
-                <div><strong>Masinis:</strong> ${escapeHtmlPreview(transaksi.MASINIS || "-")}</div>
-                <div><strong>Asisten Masinis:</strong> ${escapeHtmlPreview(transaksi.ASISTEN_MASINIS || "-")}</div>
-                <div><strong>Petugas Schowing:</strong> ${escapeHtmlPreview(transaksi.PETUGAS_SCHOWING || "-")}</div>
-                <div><strong>Status:</strong> ${escapeHtmlPreview(transaksi.STATUS || "-")}</div>
-                <div><strong>Catatan:</strong> ${escapeHtmlPreview(transaksi.CATATAN || "-")}</div>
-            `;
-        } else {
+        if (daftarFoto.length === 0) {
+            if (info) {
+                info.innerHTML =
+                    "Checklist berhasil disimpan.<br>" +
+                    "Belum ada JPG checklist.";
+            }
 
-            info.innerHTML = `
-                <div><strong>ID Pemeriksaan:</strong> ${escapeHtmlPreview(id)}</div>
-                <div><strong>Status:</strong> Selesai</div>
-            `;
+            if (tidakAda) {
+                tidakAda.style.display = "block";
+                tidakAda.innerHTML =
+                    "Belum ada JPG checklist.";
+            }
+
+            return;
         }
 
+        // Ambil foto pertama yang mempunyai URL
+        let fotoDitemukan = null;
+
+        for (let i = 0; i < daftarFoto.length; i++) {
+            const item = daftarFoto[i];
+
+            const urlFoto =
+                item.URL ||
+                item.url ||
+                item.LINK ||
+                item.link ||
+                item.FILE_URL ||
+                item.file_url ||
+                item.URL_FOTO ||
+                item.url_foto ||
+                "";
+
+            if (urlFoto) {
+                fotoDitemukan = urlFoto;
+                break;
+            }
+        }
+
+        if (!fotoDitemukan) {
+            if (info) {
+                info.innerHTML =
+                    "Checklist berhasil disimpan.<br>" +
+                    "Data foto ada, tetapi URL JPG tidak ditemukan.";
+            }
+
+            if (tidakAda) {
+                tidakAda.style.display = "block";
+                tidakAda.innerHTML =
+                    "URL JPG tidak ditemukan.";
+            }
+
+            return;
+        }
+
+        // =====================================================
+        // TAMPILKAN JPG
+        // =====================================================
+        if (img) {
+            img.src = fotoDitemukan;
+            img.style.display = "block";
+
+            img.onload = function () {
+                console.log(
+                    "JPG checklist berhasil ditampilkan."
+                );
+
+                if (info) {
+                    info.innerHTML =
+                        "✓ Checklist berhasil disimpan.<br>" +
+                        "✓ JPG checklist berhasil ditampilkan.";
+                }
+            };
+
+            img.onerror = function () {
+                console.error(
+                    "JPG gagal ditampilkan:",
+                    fotoDitemukan
+                );
+
+                if (info) {
+                    info.innerHTML =
+                        "Checklist berhasil disimpan.<br>" +
+                        "JPG ditemukan tetapi tidak dapat ditampilkan.";
+                }
+
+                img.style.display = "none";
+
+                if (tidakAda) {
+                    tidakAda.style.display = "block";
+                    tidakAda.innerHTML =
+                        "JPG tidak dapat ditampilkan.";
+                }
+            };
+        }
+
+    } catch (error) {
+        console.error(
+            "Preview Hasil Akhir gagal:",
+            error
+        );
+
+        const info =
+            document.getElementById(
+                "previewInfoHasilAkhir"
+            );
+
+        if (info) {
+            info.innerHTML =
+                "Checklist berhasil disimpan.<br>" +
+                "Preview JPG gagal dimuat.";
+        }
+    }
+}
         // ==================================================
         // AMBIL FOTO DARI SERVER
         // ==================================================
@@ -5145,7 +5279,17 @@ function simpanPemeriksaan() {
       "Pemeriksaan dan tanda tangan selesai diproses."
     );
 
-
+// =====================================================
+// TAMPILKAN PREVIEW JPG CHECKLIST
+// =====================================================
+try {
+    await tampilkanPreviewHasilAkhir();
+} catch (errorPreview) {
+    console.error(
+        "Gagal menampilkan Preview Hasil Akhir:",
+        errorPreview
+    );
+}
     tampilkanStatus(
       "Form Checklist Pengawasan Langsir Anda Telah Terekam.\n\n" +
       "ID Pemeriksaan: " +
@@ -5229,16 +5373,6 @@ function simpanPemeriksaan() {
 // TAMPILKAN PREVIEW HASIL AKHIR
 // ======================================================
 
-(async function () {
-    try {
-        await tampilkanPreviewHasilAkhir();
-    } catch (errorPreview) {
-        console.error(
-            "Preview Hasil Akhir gagal ditampilkan:",
-            errorPreview
-        );
-    }
-})();
 /* =========================================================
    INISIALISASI CANVAS TTD
 ========================================================= */
