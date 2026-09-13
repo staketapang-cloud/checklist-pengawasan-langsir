@@ -4831,10 +4831,11 @@ function simpanTTD() {
 
 }
 
-
 /* =========================================================
    SIMPAN & SELESAI
-   SEKARANG TERMASUK TTD
+   FINAL
+   PROGRESS:
+   10% → 35% → 65% → 85% → 100%
 ========================================================= */
 
 function simpanPemeriksaan() {
@@ -4843,6 +4844,10 @@ function simpanPemeriksaan() {
     return;
   }
 
+
+  /* =====================================================
+     VALIDASI
+  ===================================================== */
 
   if (!validasiIdentitas()) {
     return;
@@ -4854,8 +4859,7 @@ function simpanPemeriksaan() {
   }
 
 
-  sedangSimpanPemeriksaan =
-    true;
+  sedangSimpanPemeriksaan = true;
 
 
   var tombol =
@@ -4872,8 +4876,7 @@ function simpanPemeriksaan() {
 
   if (tombol) {
 
-    tombol.disabled =
-      true;
+    tombol.disabled = true;
 
     tombol.textContent =
       "MENYIMPAN...";
@@ -4883,17 +4886,14 @@ function simpanPemeriksaan() {
 
   if (btnTTD) {
 
-    btnTTD.disabled =
-      true;
+    btnTTD.disabled = true;
 
   }
 
 
-  /*
-   * =====================================================
-   * 10%
-   * =====================================================
-   */
+  /* =====================================================
+     10%
+  ===================================================== */
 
   setProgressSimpan(
     10,
@@ -4908,11 +4908,9 @@ function simpanPemeriksaan() {
   );
 
 
-  /*
-   * =====================================================
-   * PASTIKAN ID
-   * =====================================================
-   */
+  /* =====================================================
+     PASTIKAN ID
+  ===================================================== */
 
   pastikanIdPemeriksaan()
 
@@ -4923,15 +4921,19 @@ function simpanPemeriksaan() {
       String(id).trim();
 
 
-    /*
-     * =================================================
-     * 35%
-     * =================================================
-     */
+    sessionStorage.setItem(
+      "idPemeriksaanAktif",
+      idPemeriksaanAktif
+    );
+
+
+    /* =================================================
+       35%
+    ================================================= */
 
     setProgressSimpan(
       35,
-      "Mengirim data pemeriksaan",
+      "Menyimpan data pemeriksaan",
       "2 / 5",
       "Data checklist sedang dikirim ke server..."
     );
@@ -4946,15 +4948,41 @@ function simpanPemeriksaan() {
       ambilDataForm();
 
 
+    /*
+     * Pastikan ID menggunakan ID aktif.
+     */
+
     data.ID_PEMERIKSAAN =
       idPemeriksaanAktif;
+
+
+    /*
+     * Status akhir.
+     */
 
     data.STATUS =
       "SELESAI";
 
+
+    /*
+     * Waktu selesai.
+     */
+
     data.WAKTU_SELESAI =
       buatTimestamp();
 
+
+    console.log(
+      "DATA FINAL SIMPAN PEMERIKSAAN:",
+      data
+    );
+
+
+    /*
+     * =================================================
+     * POST FINAL
+     * =================================================
+     */
 
     return kirimRequestPost(
       "simpan_pemeriksaan",
@@ -4986,40 +5014,30 @@ function simpanPemeriksaan() {
     }
 
 
-    /*
-     * =================================================
-     * 65%
-     * =================================================
-     *
-     * Jika TTD sudah tersimpan sebelumnya:
-     * tidak dikirim ulang.
-     *
-     * Jika user menggambar TTD tetapi belum
-     * menyimpannya:
-     * TTD otomatis dikirim sekarang.
-     */
+    /* =================================================
+       65%
+    ================================================= */
 
     setProgressSimpan(
       65,
       "Memproses tanda tangan",
       "3 / 5",
-      "Memeriksa status tanda tangan..."
+      "Memastikan tanda tangan telah tersimpan..."
     );
 
 
     tampilkanStatus(
-      "Memeriksa tanda tangan..."
+      "Memastikan tanda tangan..."
     );
 
 
     /*
-     * Jika TTD sudah pernah berhasil disimpan,
-     * langsung lanjut.
+     * =================================================
+     * TTD SUDAH TERSIMPAN
+     * =================================================
      */
 
-    if (
-      signatureServerSaved
-    ) {
+    if (signatureServerSaved === true) {
 
       console.log(
         "TTD SUDAH TERSIMPAN - TIDAK DIKIRIM ULANG"
@@ -5028,11 +5046,9 @@ function simpanPemeriksaan() {
 
       return {
 
-        success:
-          true,
+        success: true,
 
-        ttdSudahTersimpan:
-          true
+        ttdSudahTersimpan: true
 
       };
 
@@ -5040,8 +5056,9 @@ function simpanPemeriksaan() {
 
 
     /*
-     * Jika canvas belum ada / belum ada tinta,
-     * lanjut tanpa TTD.
+     * =================================================
+     * CEK CANVAS
+     * =================================================
      */
 
     if (!signatureCanvas) {
@@ -5054,6 +5071,10 @@ function simpanPemeriksaan() {
     }
 
 
+    /*
+     * Tidak ada TTD.
+     */
+
     if (
       !signatureCanvas ||
       !canvasHasInk(
@@ -5062,17 +5083,15 @@ function simpanPemeriksaan() {
     ) {
 
       console.log(
-        "Tidak ada TTD yang perlu disimpan."
+        "Tidak ada TTD baru yang perlu disimpan."
       );
 
 
       return {
 
-        success:
-          true,
+        success: true,
 
-        ttdSudahTersimpan:
-          false
+        ttdSudahTersimpan: false
 
       };
 
@@ -5080,8 +5099,9 @@ function simpanPemeriksaan() {
 
 
     /*
-     * Ada TTD yang belum disimpan.
-     * Ambil dan kirim ke server.
+     * =================================================
+     * TTD ADA TAPI BELUM TERSIMPAN
+     * =================================================
      */
 
     var signature =
@@ -5090,7 +5110,7 @@ function simpanPemeriksaan() {
 
     setProgressSimpan(
       65,
-      "Menyimpan tanda tangan ke server",
+      "Menyimpan tanda tangan",
       "3 / 5",
       "Tanda tangan ditemukan. Sedang dikirim ke server..."
     );
@@ -5117,11 +5137,9 @@ function simpanPemeriksaan() {
     );
 
 
-    /*
-     * =================================================
-     * 85%
-     * =================================================
-     */
+    /* =================================================
+       85%
+    ================================================= */
 
     setProgressSimpan(
       85,
@@ -5132,14 +5150,13 @@ function simpanPemeriksaan() {
 
 
     tampilkanStatus(
-      "Finalisasi pemeriksaan dan tanda tangan..."
+      "Finalisasi pemeriksaan..."
     );
 
 
     /*
-     * Verifikasi transaksi dilakukan.
-     * Tidak menggagalkan proses bila endpoint
-     * verifikasi lama tidak mengembalikan TTD.
+     * Verifikasi hanya membaca transaksi.
+     * Tidak melakukan penyimpanan ulang.
      */
 
     return verifikasiTTDServer();
@@ -5155,11 +5172,9 @@ function simpanPemeriksaan() {
     );
 
 
-    /*
-     * =================================================
-     * 100%
-     * =================================================
-     */
+    /* =================================================
+       100%
+    ================================================= */
 
     setProgressSimpan(
       100,
@@ -5168,18 +5183,7 @@ function simpanPemeriksaan() {
       "Pemeriksaan dan tanda tangan selesai diproses."
     );
 
-// =====================================================
-// TAMPILKAN PREVIEW JPG CHECKLIST
-// =====================================================
-// =====================================================
-// TAMPILKAN PREVIEW JPG CHECKLIST
-// =====================================================
-tampilkanPreviewHasilAkhir().catch(function(errorPreview) {
-    console.error(
-        "Gagal menampilkan Preview Hasil Akhir:",
-        errorPreview
-    );
-});
+
     tampilkanStatus(
       "Form Checklist Pengawasan Langsir Anda Telah Terekam.\n\n" +
       "ID Pemeriksaan: " +
@@ -5187,14 +5191,33 @@ tampilkanPreviewHasilAkhir().catch(function(errorPreview) {
     );
 
 
+    /* =================================================
+       PREVIEW JPG
+    ================================================= */
+
+    tampilkanPreviewHasilAkhir()
+      .catch(function(errorPreview) {
+
+        console.error(
+          "Gagal menampilkan Preview Hasil Akhir:",
+          errorPreview
+        );
+
+      });
+
+
+    /* =================================================
+       NOTIFIKASI
+    ================================================= */
+
     tampilkanNotifFoto(
-      "Form Checklist Pengawasan Langsir Anda Telah Terekam",
+      "Pemeriksaan berhasil disimpan",
       "Form Checklist Pengawasan Langsir telah berhasil disimpan.\n\n" +
       "ID Pemeriksaan: " +
       idPemeriksaanAktif +
       "\n\n" +
       "Tanda tangan juga telah diproses ke server.\n\n" +
-      "Silakan tekan OK untuk keluar.",
+      "Silakan tekan OK.",
       "login"
     );
 
@@ -5258,7 +5281,6 @@ tampilkanPreviewHasilAkhir().catch(function(errorPreview) {
   });
 
 }
-
 // ======================================================
 // TAMPILKAN PREVIEW HASIL AKHIR
 // ======================================================
