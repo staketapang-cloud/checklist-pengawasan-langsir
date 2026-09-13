@@ -1216,7 +1216,63 @@ body {
         >
 
       </div>
+<!-- =========================================
+     PREVIEW HASIL AKHIR CHECKLIST
+     ========================================= -->
+<div id="previewHasilAkhirBox" style="
+    display:none;
+    margin-top:20px;
+    padding:20px;
+    background:#ffffff;
+    border:1px solid #d9e2ec;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+">
 
+    <h3 style="
+        margin-top:0;
+        margin-bottom:15px;
+        color:#1f4e78;
+        text-align:center;
+    ">
+        PREVIEW HASIL AKHIR CHECKLIST
+    </h3>
+
+    <div id="previewInfoHasilAkhir" style="
+        margin-bottom:20px;
+        padding:15px;
+        background:#f8f9fa;
+        border-radius:8px;
+        line-height:1.7;
+    ">
+    </div>
+
+    <h4 style="
+        color:#1f4e78;
+        margin-bottom:10px;
+    ">
+        FOTO HASIL PEMERIKSAAN
+    </h4>
+
+    <div id="previewFotoHasilAkhir" style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+        gap:15px;
+    ">
+    </div>
+
+    <div id="previewTidakAdaFoto" style="
+        display:none;
+        padding:15px;
+        text-align:center;
+        color:#777;
+        background:#f8f9fa;
+        border-radius:8px;
+    ">
+        Belum ada foto yang tersimpan.
+    </div>
+
+</div>
 
       <div id="previewFoto"></div>
 
@@ -1462,7 +1518,207 @@ var sedangSimpanPemeriksaan = false;
 var sedangUploadFoto = false;
 var sedangLogin = false;
 
+// ======================================================
+// PREVIEW HASIL AKHIR - FOTO DARI SERVER
+// ======================================================
 
+async function tampilkanPreviewHasilAkhir() {
+    try {
+        var box = document.getElementById("previewHasilAkhirBox");
+        var info = document.getElementById("previewInfoHasilAkhir");
+        var fotoContainer = document.getElementById("previewFotoHasilAkhir");
+        var tidakAdaFoto = document.getElementById("previewTidakAdaFoto");
+
+        if (!box || !info || !fotoContainer) {
+            console.warn("Elemen Preview Hasil Akhir belum ditemukan.");
+            return;
+        }
+
+        var id = String(idPemeriksaanAktif || "").trim();
+
+        if (!id) {
+            console.warn("ID_PEMERIKSAAN belum tersedia.");
+            return;
+        }
+
+        // Tampilkan kotak preview
+        box.style.display = "block";
+
+        // Bersihkan isi lama
+        fotoContainer.innerHTML = "";
+        tidakAdaFoto.style.display = "none";
+
+        // Ambil data transaksi
+        var urlTransaksi =
+            API_URL +
+            "?action=transaksi&id_pemeriksaan=" +
+            encodeURIComponent(id);
+
+        var responseTransaksi = await fetch(urlTransaksi);
+        var hasilTransaksi = await responseTransaksi.json();
+
+        var transaksi = null;
+
+        if (
+            hasilTransaksi &&
+            hasilTransaksi.success &&
+            hasilTransaksi.data
+        ) {
+            transaksi = hasilTransaksi.data;
+        }
+
+        // Tampilkan informasi pemeriksaan
+        if (transaksi) {
+
+            info.innerHTML = `
+                <div><strong>ID Pemeriksaan:</strong> ${escapeHtmlPreview(transaksi.ID_PEMERIKSAAN || id)}</div>
+                <div><strong>Tanggal:</strong> ${escapeHtmlPreview(transaksi.TANGGAL || "-")}</div>
+                <div><strong>Dinas Langsir:</strong> ${escapeHtmlPreview(transaksi.DINAS_LANGSIR || "-")}</div>
+                <div><strong>Stasiun:</strong> ${escapeHtmlPreview(transaksi.STASIUN || "-")}</div>
+                <div><strong>Lokomotif:</strong> ${escapeHtmlPreview(transaksi.LOKOMOTIF || "-")}</div>
+                <div><strong>Masinis:</strong> ${escapeHtmlPreview(transaksi.MASINIS || "-")}</div>
+                <div><strong>Asisten Masinis:</strong> ${escapeHtmlPreview(transaksi.ASISTEN_MASINIS || "-")}</div>
+                <div><strong>Petugas Schowing:</strong> ${escapeHtmlPreview(transaksi.PETUGAS_SCHOWING || "-")}</div>
+                <div><strong>Status:</strong> ${escapeHtmlPreview(transaksi.STATUS || "-")}</div>
+                <div><strong>Catatan:</strong> ${escapeHtmlPreview(transaksi.CATATAN || "-")}</div>
+            `;
+        } else {
+
+            info.innerHTML = `
+                <div><strong>ID Pemeriksaan:</strong> ${escapeHtmlPreview(id)}</div>
+                <div><strong>Status:</strong> Selesai</div>
+            `;
+        }
+
+        // ==================================================
+        // AMBIL FOTO DARI SERVER
+        // ==================================================
+
+        var urlFoto =
+            API_URL +
+            "?action=foto_transaksi&id_pemeriksaan=" +
+            encodeURIComponent(id);
+
+        var responseFoto = await fetch(urlFoto);
+        var hasilFoto = await responseFoto.json();
+
+        console.log("HASIL FOTO SERVER:", hasilFoto);
+
+        if (
+            !hasilFoto ||
+            !hasilFoto.success ||
+            !Array.isArray(hasilFoto.data) ||
+            hasilFoto.data.length === 0
+        ) {
+            tidakAdaFoto.style.display = "block";
+            return;
+        }
+
+        // ==================================================
+        // TAMPILKAN FOTO
+        // ==================================================
+
+        hasilFoto.data.forEach(function(foto, index) {
+
+            var url = foto.URL_FOTO || foto.url_foto || "";
+
+            if (!url) {
+                return;
+            }
+
+            var kartu = document.createElement("div");
+
+            kartu.style.cssText = `
+                border:1px solid #ddd;
+                border-radius:10px;
+                padding:8px;
+                background:#fff;
+                overflow:hidden;
+            `;
+
+            var img = document.createElement("img");
+
+            img.src = url;
+            img.alt = foto.NAMA_FILE || ("Foto " + (index + 1));
+
+            img.style.cssText = `
+                width:100%;
+                height:180px;
+                object-fit:cover;
+                display:block;
+                border-radius:7px;
+                cursor:pointer;
+            `;
+
+            // Klik foto → buka ukuran besar
+            img.onclick = function() {
+                window.open(url, "_blank");
+            };
+
+            var nama = document.createElement("div");
+
+            nama.textContent =
+                foto.NAMA_FILE ||
+                ("Foto " + (index + 1));
+
+            nama.style.cssText = `
+                margin-top:7px;
+                font-size:13px;
+                color:#555;
+                word-break:break-word;
+            `;
+
+            kartu.appendChild(img);
+            kartu.appendChild(nama);
+
+            fotoContainer.appendChild(kartu);
+        });
+
+    } catch (error) {
+
+        console.error(
+            "ERROR PREVIEW HASIL AKHIR:",
+            error
+        );
+
+        var infoError =
+            document.getElementById("previewInfoHasilAkhir");
+
+        if (infoError) {
+            infoError.innerHTML = `
+                <div style="
+                    color:#b02a37;
+                    background:#f8d7da;
+                    padding:12px;
+                    border-radius:8px;
+                ">
+                    Gagal mengambil data Preview Hasil Akhir.
+                    <br>
+                    ${escapeHtmlPreview(error.message || error)}
+                </div>
+            `;
+        }
+    }
+}
+
+
+// ======================================================
+// ESCAPE HTML UNTUK PREVIEW
+// ======================================================
+
+function escapeHtmlPreview(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 /* =========================================================
    ESCAPE HTML
 ========================================================= */
@@ -4969,7 +5225,18 @@ function simpanPemeriksaan() {
 
 }
 
+// ======================================================
+// TAMPILKAN PREVIEW HASIL AKHIR
+// ======================================================
 
+try {
+    await tampilkanPreviewHasilAkhir();
+} catch (errorPreview) {
+    console.error(
+        "Preview Hasil Akhir gagal ditampilkan:",
+        errorPreview
+    );
+}
 /* =========================================================
    INISIALISASI CANVAS TTD
 ========================================================= */
