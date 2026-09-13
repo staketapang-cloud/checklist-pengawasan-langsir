@@ -5282,14 +5282,15 @@ function simpanPemeriksaan() {
 // =====================================================
 // TAMPILKAN PREVIEW JPG CHECKLIST
 // =====================================================
-try {
-    await tampilkanPreviewHasilAkhir();
-} catch (errorPreview) {
+// =====================================================
+// TAMPILKAN PREVIEW JPG CHECKLIST
+// =====================================================
+tampilkanPreviewHasilAkhir().catch(function(errorPreview) {
     console.error(
         "Gagal menampilkan Preview Hasil Akhir:",
         errorPreview
     );
-}
+});
     tampilkanStatus(
       "Form Checklist Pengawasan Langsir Anda Telah Terekam.\n\n" +
       "ID Pemeriksaan: " +
