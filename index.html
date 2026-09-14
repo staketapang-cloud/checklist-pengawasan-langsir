@@ -5705,66 +5705,64 @@ function tampilkanPreviewHasilAkhir() {
         "bold 9px Arial";
 
 
-      var identitasKiri = [
+     var identitasKiri = [
 
-        [
-          "Hari / Tanggal",
-          data.TANGGAL || "-"
-        ],
+  [
+    "Hari / Tanggal",
+    data.TANGGAL || "-"
+  ],
 
-        [
-          "Dinas Langsir",
-          data.DINAS_LANGSIR || "-"
-        ],
+  [
+    "Dinas Langsir",
+    data.DINAS_LANGSIR || "-"
+  ],
 
-        [
-          "Stasiun",
-          data.STASIUN || "-"
-        ],
+  [
+    "Stasiun",
+    data.STASIUN || "-"
+  ],
 
-        [
-          "Lokomotif",
-          data.LOKOMOTIF || "-"
-        ],
+  [
+    "Lokomotif",
+    data.LOKOMOTIF || "-"
+  ]
 
-        [
-          "Masinis",
-          data.MASINIS || "-"
-        ]
-
-      ];
+];
 
 
-      var identitasKanan = [
+var identitasKanan = [
 
-        [
-          "Asisten Masinis",
-          data.ASISTEN_MASINIS || "-"
-        ],
+  [
+    "Masinis",
+    data.MASINIS || "-"
+  ],
 
-        [
-          "PLR 1",
-          data.PLR1 || "-"
-        ],
+  [
+    "Asisten Masinis",
+    data.ASISTEN_MASINIS || "-"
+  ],
 
-        [
-          "PLR 2",
-          data.PLR2 || "-"
-        ],
+  [
+    "PLR 1",
+    data.PLR1 || "-"
+  ],
 
-        [
-          "PLR Dipo",
-          data.PLR_DIPO || "-"
-        ],
+  [
+    "PLR 2",
+    data.PLR2 || "-"
+  ],
 
-        [
-          "Petugas Schowing",
-          data.PETUGAS_SCHOWING || "-"
-        ]
+  [
+    "PLR Dipo",
+    data.PLR_DIPO || "-"
+  ],
 
-      ];
+  [
+    "Petugas Schowing",
+    data.PETUGAS_SCHOWING || "-"
+  ]
 
-
+];
       for (
         var i = 0;
         i < 5;
@@ -6229,11 +6227,8 @@ function tampilkanPreviewHasilAkhir() {
             "#000000";
 
 
-          ctx.fillText(
-            item.nomor ||
-            String(
-              index + 1
-            ),
+ctx.fillText(
+  String(index + 1),
             colX1 +
             (
               colNo / 2
