@@ -6759,25 +6759,42 @@ y +=
 
 
 /* =====================================================
-   KELOMPOK CHECKLIST - VERSI SEDERHANA
+   KELOMPOK CHECKLIST
+   VERSI STABIL - TANPA FOREACH BERTINGKAT
 ===================================================== */
 
 var kategoriSebelumnya = "";
 
-daftarChecklist.forEach(function (item, index) {
+for (
+  var indexChecklist = 0;
+  indexChecklist < daftarChecklist.length;
+  indexChecklist++
+) {
 
-  var kategori = String(item.kategori || "");
-  var nomor = "";
+  var item =
+    daftarChecklist[indexChecklist];
 
-  /* ================================================
-     TENTUKAN NOMOR KELOMPOK
-  ================================================ */
+  var kategori =
+    String(item.kategori || "");
+
+  var nomorKelompok =
+    "";
+
+  var subKelompok =
+    "";
+
+  /* =================================================
+     TENTUKAN KELOMPOK
+  ================================================= */
 
   if (
-    kategori.indexOf("Kelengkapan Dokumen") !== -1
+    kategori.indexOf(
+      "Kelengkapan Dokumen"
+    ) !== -1
   ) {
 
-    nomor = "1";
+    nomorKelompok =
+      "1";
 
   }
   else if (
@@ -6786,7 +6803,11 @@ daftarChecklist.forEach(function (item, index) {
     ) !== -1
   ) {
 
-    nomor = "2";
+    nomorKelompok =
+      "2";
+
+    subKelompok =
+      "a.";
 
   }
   else if (
@@ -6795,7 +6816,11 @@ daftarChecklist.forEach(function (item, index) {
     ) !== -1
   ) {
 
-    nomor = "2";
+    nomorKelompok =
+      "2";
+
+    subKelompok =
+      "b.";
 
   }
   else if (
@@ -6804,62 +6829,48 @@ daftarChecklist.forEach(function (item, index) {
     ) !== -1
   ) {
 
-    nomor = "3";
+    nomorKelompok =
+      "3";
 
   }
 
-  /* ================================================
-     SUB NOMOR A / B
-  ================================================ */
+  /* =================================================
+     NOMOR YANG DITAMPILKAN
+  ================================================= */
 
-  var subNomor = "";
-
-  if (
-    kategori.indexOf(
-      "Menggunakan Perintah Langsir"
-    ) !== -1
-  ) {
-
-    subNomor = "a.";
-
-  }
+  var tampilNomor =
+    "";
 
   if (
-    kategori.indexOf(
-      "Menggunakan Isyarat Langsir"
-    ) !== -1
+    kategori !==
+    kategoriSebelumnya
   ) {
 
-    subNomor = "b.";
-
-  }
-
-  /* ================================================
-     NOMOR HANYA DITAMPILKAN PADA BARIS AWAL
-  ================================================ */
-
-  var tampilNomor = "";
-
-  if (
-    kategori !== kategoriSebelumnya
-  ) {
-
-    tampilNomor = nomor;
-
-    if (subNomor !== "") {
+    if (
+      subKelompok !== ""
+    ) {
 
       tampilNomor =
-        nomor + "  " + subNomor;
+        nomorKelompok +
+        "  " +
+        subKelompok;
+
+    }
+    else {
+
+      tampilNomor =
+        nomorKelompok;
 
     }
 
   }
 
-  kategoriSebelumnya = kategori;
+  kategoriSebelumnya =
+    kategori;
 
-  /* ================================================
-     TEKS
-  ================================================ */
+  /* =================================================
+     SIAPKAN TEKS
+  ================================================= */
 
   var teksUraian =
     pecahTeks(
@@ -6885,25 +6896,60 @@ daftarChecklist.forEach(function (item, index) {
       2
     );
 
+  /* =================================================
+     TINGGI BARIS
+  ================================================= */
+
   var jumlahBaris =
-    Math.max(
-      teksUraian.length,
-      teksStandar.length,
-      teksTemuan.length,
-      1
-    );
+    teksUraian.length;
+
+  if (
+    teksStandar.length >
+    jumlahBaris
+  ) {
+
+    jumlahBaris =
+      teksStandar.length;
+
+  }
+
+  if (
+    teksTemuan.length >
+    jumlahBaris
+  ) {
+
+    jumlahBaris =
+      teksTemuan.length;
+
+  }
+
+  if (
+    jumlahBaris < 1
+  ) {
+
+    jumlahBaris =
+      1;
+
+  }
 
   var tinggiBaris =
-    Math.max(
-      30,
-      jumlahBaris * 13 + 10
-    );
+    jumlahBaris * 13 + 10;
 
-  /* ================================================
-     BACKGROUND
-  ================================================ */
+  if (
+    tinggiBaris < 30
+  ) {
 
-  ctx.fillStyle = "#ffffff";
+    tinggiBaris =
+      30;
+
+  }
+
+  /* =================================================
+     BACKGROUND BARIS
+  ================================================= */
+
+  ctx.fillStyle =
+    "#ffffff";
 
   ctx.fillRect(
     tableX,
@@ -6912,13 +6958,15 @@ daftarChecklist.forEach(function (item, index) {
     tinggiBaris
   );
 
-  /* ================================================
+  /* =================================================
      BORDER
-  ================================================ */
+  ================================================= */
 
-  ctx.strokeStyle = "#777777";
+  ctx.strokeStyle =
+    "#777777";
 
-  ctx.lineWidth = 1;
+  ctx.lineWidth =
+    1;
 
   ctx.strokeRect(
     tableX,
@@ -6927,9 +6975,9 @@ daftarChecklist.forEach(function (item, index) {
     tinggiBaris
   );
 
-  /* ================================================
+  /* =================================================
      GARIS KOLOM
-  ================================================ */
+  ================================================= */
 
   ctx.beginPath();
 
@@ -6975,107 +7023,125 @@ daftarChecklist.forEach(function (item, index) {
 
   ctx.stroke();
 
-  /* ================================================
+  /* =================================================
      NOMOR
-  ================================================ */
-
-  ctx.fillStyle = "#000000";
-
-  ctx.font = fontTabelBold;
-
-  ctx.textAlign = "center";
+  ================================================= */
 
   if (
     tampilNomor !== ""
   ) {
 
+    ctx.fillStyle =
+      "#000000";
+
+    ctx.font =
+      fontTabelBold;
+
+    ctx.textAlign =
+      "center";
+
     ctx.fillText(
       tampilNomor,
-      colX1 + colNo / 2,
+      colX1 + (colNo / 2),
       y + 18
     );
 
   }
 
-  /* ================================================
+  /* =================================================
      URAIAN
-  ================================================ */
+  ================================================= */
 
-  ctx.textAlign = "left";
+  ctx.fillStyle =
+    "#000000";
 
-  ctx.font = fontTabel;
+  ctx.font =
+    fontTabel;
 
-  teksUraian.forEach(
-    function (baris, i) {
+  ctx.textAlign =
+    "left";
 
-      ctx.fillText(
-        baris,
-        colX2 + 6,
-        y + 14 + i * 13
-      );
+  for (
+    var iUraian = 0;
+    iUraian < teksUraian.length;
+    iUraian++
+  ) {
 
-    }
-  );
+    ctx.fillText(
+      teksUraian[iUraian],
+      colX2 + 6,
+      y + 14 + (iUraian * 13)
+    );
 
-  /* ================================================
+  }
+
+  /* =================================================
      STANDAR
-  ================================================ */
+  ================================================= */
 
-  teksStandar.forEach(
-    function (baris, i) {
+  for (
+    var iStandar = 0;
+    iStandar < teksStandar.length;
+    iStandar++
+  ) {
 
-      ctx.fillText(
-        baris,
-        colX3 + 6,
-        y + 14 + i * 13
-      );
+    ctx.fillText(
+      teksStandar[iStandar],
+      colX3 + 6,
+      y + 14 + (iStandar * 13)
+    );
 
-    }
-  );
+  }
 
-  /* ================================================
+  /* =================================================
      HASIL
-  ================================================ */
+  ================================================= */
 
-  ctx.textAlign = "center";
+  ctx.textAlign =
+    "center";
 
-  ctx.font = fontTabelBold;
+  ctx.font =
+    fontTabelBold;
 
   ctx.fillText(
     item.hasil || "",
-    colX4 + colHasil / 2,
+    colX4 + (colHasil / 2),
     y + 18
   );
 
-  /* ================================================
+  /* =================================================
      TEMUAN
-  ================================================ */
+  ================================================= */
 
-  ctx.textAlign = "left";
+  ctx.textAlign =
+    "left";
 
-  ctx.font = fontTabel;
+  ctx.font =
+    fontTabel;
 
-  teksTemuan.forEach(
-    function (baris, i) {
+  for (
+    var iTemuan = 0;
+    iTemuan < teksTemuan.length;
+    iTemuan++
+  ) {
 
-      ctx.fillText(
-        baris,
-        colX5 + 6,
-        y + 14 + i * 13
-      );
+    ctx.fillText(
+      teksTemuan[iTemuan],
+      colX5 + 6,
+      y + 14 + (iTemuan * 13)
+    );
 
-    }
-  );
+  }
 
-  /* ================================================
-     BARIS BERIKUTNYA
-  ================================================ */
+  /* =================================================
+     PINDAH KE BARIS BERIKUTNYA
+  ================================================= */
 
   y =
     y +
     tinggiBaris;
 
-});
+}
 
 
 /* =====================================================
