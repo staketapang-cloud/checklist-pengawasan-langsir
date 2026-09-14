@@ -5868,33 +5868,81 @@ function tampilkanPreviewHasilAkhir() {
         "10px Arial";
 
 
-      /* =====================================================
-         CANVAS
-      ===================================================== */
+/* =====================================================
+   CANVAS
+===================================================== */
 
-      var canvas =
-        document.createElement(
-          "canvas"
-        );
-
-
-      var ctx =
-        canvas.getContext(
-          "2d"
-        );
+var canvas =
+  document.createElement(
+    "canvas"
+  );
 
 
-      if (!ctx) {
-
-        throw new Error(
-          "Canvas tidak dapat dibuat."
-        );
-
-      }
+canvas.width =
+  canvasWidth;
 
 
-      canvas.width =
-        canvasWidth;
+canvas.height =
+  canvasHeight;
+
+
+var ctx =
+  canvas.getContext(
+    "2d"
+  );
+
+
+if (!ctx) {
+
+  throw new Error(
+    "Canvas tidak dapat dibuat."
+  );
+
+}
+
+
+/* =====================================================
+   RESET AWAL CANVAS
+===================================================== */
+
+ctx.setTransform(
+  1,
+  0,
+  0,
+  1,
+  0,
+  0
+);
+
+ctx.globalAlpha =
+  1;
+
+ctx.globalCompositeOperation =
+  "source-over";
+
+ctx.fillStyle =
+  "#ffffff";
+
+ctx.fillRect(
+  0,
+  0,
+  canvasWidth,
+  canvasHeight
+);
+
+ctx.fillStyle =
+  "#000000";
+
+ctx.strokeStyle =
+  "#000000";
+
+ctx.textAlign =
+  "left";
+
+ctx.textBaseline =
+  "alphabetic";
+
+
 /* =====================================================
    LOGO KAI
 ===================================================== */
@@ -5904,9 +5952,7 @@ var logoKAI =
     "logoKaiHeader"
   );
 
-if (
-  !logoKAI
-) {
+if (!logoKAI) {
 
   console.warn(
     "ELEMENT LOGO KAI TIDAK DITEMUKAN"
