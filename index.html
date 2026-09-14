@@ -5883,11 +5883,36 @@ function tampilkanPreviewHasilAkhir() {
       canvas.width =
         canvasWidth;
 
+/* =====================================================
+   LOGO KAI
+===================================================== */
 
-      canvas.height =
-        canvasHeight;
+var logoKAI =
+  new Image();
 
+logoKAI.src =
+  "logo-kai.png.png";
 
+logoKAI.onload =
+  function() {
+
+    console.log(
+      "LOGO KAI BERHASIL DIMUAT"
+    );
+
+  };
+
+logoKAI.onerror =
+  function() {
+
+    console.error(
+      "LOGO KAI GAGAL DIMUAT:",
+      logoKAI.src
+    );
+
+  };
+canvas.height =
+  canvasHeight;
       /* =====================================================
          LATAR PUTIH
       ===================================================== */
@@ -6109,141 +6134,200 @@ function tampilkanPreviewHasilAkhir() {
         32;
 
 
-      /* =====================================================
-         HEADER
-      ===================================================== */
+    /* =====================================================
+   HEADER
+===================================================== */
 
-      ctx.textAlign =
-        "center";
+ctx.textAlign =
+  "center";
 
+ctx.fillStyle =
+  "#1f4e78";
 
-      ctx.fillStyle =
-        "#1f4e78";
-
-
-      ctx.font =
-        fontJudul;
+ctx.font =
+  fontJudul;
 
 
-      ctx.fillText(
-        "CHECKLIST PENGAWASAN KEGIATAN LANGSIR",
-        canvasWidth / 2,
-        y + 20
-      );
+/* =====================================================
+   LOGO KAI
+===================================================== */
+
+var ukuranLogo =
+  58;
+
+var logoX =
+  margin;
+
+var logoY =
+  28;
 
 
-      y +=
-        28;
+/*
+ * Logo hanya digambar jika
+ * sudah berhasil dimuat.
+ */
+
+if (
+  logoKAI &&
+  logoKAI.complete &&
+  logoKAI.naturalWidth > 0
+) {
+
+  ctx.drawImage(
+    logoKAI,
+    logoX,
+    logoY,
+    ukuranLogo,
+    ukuranLogo
+  );
+
+}
+/* =====================================================
+   GAMBAR LOGO KAI
+===================================================== */
+
+if (
+  logoKAI &&
+  logoKAI.complete &&
+  logoKAI.naturalWidth > 0
+) {
+
+  ctx.drawImage(
+    logoKAI,
+    margin,
+    20,
+    58,
+    58
+  );
+
+}
+
+/* =====================================================
+   JUDUL
+===================================================== */
+
+ctx.fillText(
+  "CHECKLIST PENGAWASAN KEGIATAN LANGSIR",
+  (
+    canvasWidth / 2
+  ) +
+  25,
+  y + 20
+);
 
 
-      ctx.fillStyle =
-        "#000000";
+y +=
+  28;
 
 
-      ctx.font =
-        fontSubJudul;
+ctx.fillStyle =
+  "#000000";
 
 
-      ctx.fillText(
-        "HASIL PEMERIKSAAN",
-        canvasWidth / 2,
-        y + 12
-      );
+ctx.font =
+  fontSubJudul;
 
 
-      y +=
-        28;
+ctx.fillText(
+  "HASIL PEMERIKSAAN",
+  canvasWidth / 2,
+  y + 12
+);
 
 
-      /*
-       * Garis header.
-       */
-
-      ctx.strokeStyle =
-        "#1f4e78";
+y +=
+  28;
 
 
-      ctx.lineWidth =
-        2;
+/*
+ * Garis header.
+ */
+
+ctx.strokeStyle =
+  "#1f4e78";
 
 
-      ctx.beginPath();
+ctx.lineWidth =
+  2;
 
 
-      ctx.moveTo(
-        margin,
-        y
-      );
+ctx.beginPath();
 
 
-      ctx.lineTo(
-        canvasWidth -
-        margin,
-        y
-      );
+ctx.moveTo(
+  margin,
+  y
+);
 
 
-      ctx.stroke();
+ctx.lineTo(
+  canvasWidth -
+  margin,
+  y
+);
 
 
-      y +=
-        18;
+ctx.stroke();
 
 
-      /* =====================================================
-         IDENTITAS
-      ===================================================== */
-
-      ctx.textAlign =
-        "left";
+y +=
+  18;
 
 
-      ctx.font =
-        fontBold;
+/* =====================================================
+   IDENTITAS
+===================================================== */
+
+ctx.textAlign =
+  "left";
 
 
-      ctx.fillStyle =
-        "#1f4e78";
+ctx.font =
+  fontBold;
 
 
-      ctx.fillText(
-        "DATA PEMERIKSAAN",
-        margin,
-        y
-      );
+ctx.fillStyle =
+  "#1f4e78";
 
 
-      y +=
-        16;
+ctx.fillText(
+  "DATA PEMERIKSAAN",
+  margin,
+  y
+);
 
 
-      /*
-       * Area identitas dibuat
-       * dua kolom.
-       */
-
-      var leftX =
-        margin;
+y +=
+  16;
 
 
-      var rightX =
-        margin +
-        585;
+/*
+ * Area identitas dibuat
+ * dua kolom.
+ */
+
+var leftX =
+  margin;
 
 
-      var labelOffset =
-        92;
+var rightX =
+  margin +
+  585;
 
 
-      var identitasFont =
-        "12px Arial";
+var labelOffset =
+  92;
 
 
-      var identitasBold =
-        "bold 12px Arial";
+var identitasFont =
+  "12px Arial";
 
 
-     var identitasKiri = [
+var identitasBold =
+  "bold 12px Arial";
+
+
+var identitasKiri = [
 
   [
     "Hari / Tanggal",
@@ -6301,6 +6385,12 @@ var identitasKanan = [
   ]
 
 ];
+
+
+/* =====================================================
+   TAMPILKAN IDENTITAS
+===================================================== */
+
 for (
   var i = 0;
   i < 6;
@@ -6316,8 +6406,7 @@ for (
 
 
   /*
-   * Kolom kiri.
-   * Data kiri hanya 4 baris.
+   * KOLOM KIRI
    */
 
   if (
@@ -6351,8 +6440,7 @@ for (
 
 
   /*
-   * Kolom kanan.
-   * Data kanan ada 6 baris.
+   * KOLOM KANAN
    */
 
   if (
@@ -6386,83 +6474,19 @@ for (
 
 }
 
-        var yy =
-          y +
-          (
-            i *
-            16
-          );
 
+/*
+ * Karena kolom kanan mempunyai
+ * 6 baris, tinggi area mengikuti
+ * 6 baris.
+ */
 
-        /*
-         * Kolom kiri.
-         */
-
-        ctx.font =
-          identitasBold;
-
-
-        ctx.fillStyle =
-          "#000000";
-
-
-        ctx.fillText(
-          identitasKiri[i][0] +
-          " :",
-          leftX,
-          yy
-        );
-
-
-        ctx.font =
-          identitasFont;
-
-
-        ctx.fillText(
-          identitasKiri[i][1],
-          leftX +
-          labelOffset,
-          yy
-        );
-
-
-        /*
-         * Kolom kanan.
-         */
-
-        ctx.font =
-          identitasBold;
-
-
-        ctx.fillText(
-          identitasKanan[i][0] +
-          " :",
-          rightX,
-          yy
-        );
-
-
-        ctx.font =
-          identitasFont;
-
-
-        ctx.fillText(
-          identitasKanan[i][1],
-          rightX +
-          105,
-          yy
-        );
-
-      }
-
-
-      y +=
-        (
-          5 *
-          16
-        ) +
-        10;
-
+y +=
+  (
+    6 *
+    16
+  ) +
+  10;
 
       /* =====================================================
          GARIS PEMBATAS
