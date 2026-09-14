@@ -5903,7 +5903,41 @@ function tampilkanPreviewHasilAkhir() {
         canvasHeight
       );
 
+/* =====================================================
+   LOGO KAI - POJOK KIRI ATAS
+===================================================== */
 
+var logoKAI =
+  document.getElementById(
+    "logoKaiHeader"
+  );
+
+
+if (
+  logoKAI &&
+  logoKAI.complete &&
+  logoKAI.naturalWidth > 0
+) {
+
+  ctx.drawImage(
+    logoKAI,
+    margin,
+    18,
+    58,
+    58
+  );
+
+  console.log(
+    "LOGO KAI BERHASIL DIGAMBAR"
+  );
+
+} else {
+
+  console.warn(
+    "LOGO KAI TIDAK DITEMUKAN"
+  );
+
+}
       /* =====================================================
          FUNGSI TEXT WRAP
       ===================================================== */
