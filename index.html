@@ -14,35 +14,6 @@
 <link rel="icon" href="data:,">
 
 <style>
-      /* Tambahan Pengaturan Preview A4 */
-#previewHasilAkhirBox {
-  width: 210mm;
-  max-width: 100%;
-  min-height: 297mm;
-  margin: 20px auto;
-  background: white;
-  padding: 20mm;
-  box-shadow: 0 0 10px rgba(0,0,0,0.15);
-  box-sizing: border-box;
-}
-
-@media print {
-  body * {
-    visibility: hidden;
-  }
-  #previewHasilAkhirBox, #previewHasilAkhirBox * {
-    visibility: visible;
-  }
-  #previewHasilAkhirBox {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin: 0;
-    box-shadow: none;
-    border: none;
-  }
-}
 
 /* =========================================================
    RESET
@@ -894,19 +865,7 @@ body {
 ========================================================= -->
 
 <div id="app">
-<div id="boxLogin" style="max-width: 400px; margin: 50px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-    <h3 style="margin-top: 0; text-align: center; color: #1f4e78;">Login Pengawas Langsir</h3>
-    <div class="form-group">
-      <label for="inputNipp">NIPP / Username</label>
-      <input type="text" id="inputNipp" placeholder="Masukkan NIPP Anda">
-    </div>
-    <div class="form-group">
-      <label for="inputPassword">Password</label>
-      <input type="password" id="inputPassword" placeholder="Masukkan Password">
-    </div>
-    <div id="statusLogin" class="status-box" style="display: none;"></div>
-    <button type="button" class="btn btn-simpan" style="width: 100%; margin-top: 10px;" onclick="window.loginPengguna()">LOGIN</button>
-  </div>
+
   <div
     id="infoUser"
     class="info-user">
@@ -920,185 +879,1027 @@ body {
     </h2>
 
 
-<div id="formPemeriksaan">
-    <h2>Lampiran 2. Checklist Pengawasan Kegiatan Langsir</h2>
+    <!-- IDENTITAS -->
 
-    <!-- IDENTITAS & DATA PETUGAS (7 NOMOR) -->
-    <div id="identitasPemeriksaan" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-      <div>
-        <div class="form-group">
-          <label for="tanggalPemeriksaan">Hari / Tanggal</label>
-          <input type="date" id="tanggalPemeriksaan">
-        </div>
+    <div id="identitasPemeriksaan">
 
-        <div class="form-group">
-          <label for="dinasLangsirPemeriksaan">Dinas Langsir</label>
-          <select id="dinasLangsirPemeriksaan">
-            <option value="">Pilih Dinas Langsir</option>
-            <option value="DINAS PAGI">DINAS PAGI</option>
-            <option value="DINAS SIANG">DINAS SIANG</option>
-            <option value="DINAS MALAM">DINAS MALAM</option>
-          </select>
-        </div>
+      <div class="form-group">
 
-        <div class="form-group">
-          <label for="stasiunPemeriksaan">Stasiun / Emplasemen</label>
-          <select id="stasiunPemeriksaan">
-            <option value="">Pilih Stasiun / Emplasemen</option>
-          </select>
-        </div>
+        <label for="tanggalPemeriksaan">
+          Hari / Tanggal
+        </label>
 
-        <div class="form-group">
-          <label for="lokomotifPemeriksaan">Lokomotif</label>
-          <select id="lokomotifPemeriksaan">
-            <option value="">Pilih Lokomotif</option>
-          </select>
-        </div>
+        <input
+          type="date"
+          id="tanggalPemeriksaan"
+        >
+
       </div>
 
-      <div>
-        <div class="section-title" style="margin-top:0;">Data Petugas Langsir</div>
 
-        <div class="form-group">
-          <label for="masinisPemeriksaan">1) Masinis</label>
-          <input type="text" id="masinisPemeriksaan" list="listMasinis" placeholder="Ketik Nama atau NIPP Masinis">
-          <datalist id="listMasinis"></datalist>
-        </div>
+      <div class="form-group">
 
-        <div class="form-group">
-          <label for="asistenMasinisPemeriksaan">2) Asisten Masinis</label>
-          <input type="text" id="asistenMasinisPemeriksaan" list="listAsistenMasinis" placeholder="Ketik Nama atau NIPP Asisten Masinis">
-          <datalist id="listAsistenMasinis"></datalist>
-        </div>
+        <label for="dinasLangsirPemeriksaan">
+          Dinas Langsir
+        </label>
 
-        <div class="form-group">
-          <label for="plr1Pemeriksaan">3) PLR 1</label>
-          <input type="text" id="plr1Pemeriksaan" list="listPlr1" placeholder="Ketik Nama atau NIPP PLR 1">
-          <datalist id="listPlr1"></datalist>
-        </div>
+        <select id="dinasLangsirPemeriksaan">
 
-        <div class="form-group">
-          <label for="plr2Pemeriksaan">4) PLR 2</label>
-          <input type="text" id="plr2Pemeriksaan" list="listPlr2" placeholder="Ketik Nama atau NIPP PLR 2">
-          <datalist id="listPlr2"></datalist>
-        </div>
+          <option value="">
+            Pilih Dinas Langsir
+          </option>
 
-        <div class="form-group">
-          <label for="plr3Pemeriksaan">5) PLR 3</label>
-          <input type="text" id="plr3Pemeriksaan" list="listPlr3" placeholder="Ketik Nama atau NIPP PLR 3">
-          <datalist id="listPlr3"></datalist>
-        </div>
+          <option value="DINAS PAGI">
+            DINAS PAGI
+          </option>
 
-        <div class="form-group">
-          <label for="plr4Pemeriksaan">6) PLR 4</label>
-          <input type="text" id="plr4Pemeriksaan" list="listPlr4" placeholder="Ketik Nama atau NIPP PLR 4">
-          <datalist id="listPlr4"></datalist>
-        </div>
+          <option value="DINAS SIANG">
+            DINAS SIANG
+          </option>
 
-        <div class="form-group">
-          <label for="plr5Pemeriksaan">7) PLR 5</label>
-          <input type="text" id="plr5Pemeriksaan" list="listPlr5" placeholder="Ketik Nama atau NIPP PLR 5">
-          <datalist id="listPlr5"></datalist>
-        </div>
+          <option value="DINAS MALAM">
+            DINAS MALAM
+          </option>
+
+        </select>
+
       </div>
+
+
+      <div class="form-group">
+
+        <label for="stasiunPemeriksaan">
+          Stasiun / Emplasemen
+        </label>
+
+        <select id="stasiunPemeriksaan">
+
+          <option value="">
+            Pilih Stasiun / Emplasemen
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="lokomotifPemeriksaan">
+          Lokomotif
+        </label>
+
+        <select id="lokomotifPemeriksaan">
+
+          <option value="">
+            Pilih Lokomotif
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="section-title">
+        Data Petugas
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="masinisPemeriksaan">
+          Masinis
+        </label>
+
+        <input
+          type="text"
+          id="masinisPemeriksaan"
+          list="listMasinis"
+          placeholder="Ketik Nama atau NIPP Masinis"
+        >
+
+        <datalist id="listMasinis"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="asistenMasinisPemeriksaan">
+          Asisten Masinis
+        </label>
+
+        <input
+          type="text"
+          id="asistenMasinisPemeriksaan"
+          list="listAsistenMasinis"
+          placeholder="Ketik Nama atau NIPP Asisten Masinis"
+        >
+
+        <datalist id="listAsistenMasinis"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="plr1Pemeriksaan">
+          PLR 1
+        </label>
+
+        <input
+          type="text"
+          id="plr1Pemeriksaan"
+          list="listPlr1"
+          placeholder="Ketik Nama atau NIPP PLR 1"
+        >
+
+        <datalist id="listPlr1"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="plr2Pemeriksaan">
+          PLR 2
+        </label>
+
+        <input
+          type="text"
+          id="plr2Pemeriksaan"
+          list="listPlr2"
+          placeholder="Ketik Nama atau NIPP PLR 2"
+        >
+
+        <datalist id="listPlr2"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="plrDipoPemeriksaan">
+          PLR DIPO
+        </label>
+
+        <input
+          type="text"
+          id="plrDipoPemeriksaan"
+          list="listPlrDipo"
+          placeholder="Ketik Nama atau NIPP PLR DIPO"
+        >
+
+        <datalist id="listPlrDipo"></datalist>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="petugasSchowingPemeriksaan">
+          Petugas Schowing
+        </label>
+
+        <input
+          type="text"
+          id="petugasSchowingPemeriksaan"
+          list="listSchowing"
+          placeholder="Ketik Nama atau NIPP Petugas Schowing"
+        >
+
+        <datalist id="listSchowing"></datalist>
+
+      </div>
+
     </div>
 
-    <!-- CHECKLIST FORMAT TABEL FORMAL -->
-    <div class="section-title">Checklist Pengawasan</div>
-    <div id="checklistContainer" class="checklist-container">
-      <div class="loading">Memuat checklist...</div>
+
+    <!-- CHECKLIST -->
+
+    <div class="section-title">
+      Checklist Pengawasan
     </div>
+
+
+    <div
+      id="checklistContainer"
+      class="checklist-container">
+
+      <div class="loading">
+        Memuat checklist...
+      </div>
+
+    </div>
+
 
     <!-- CATATAN -->
+
     <div class="catatan-umum">
-      <label for="catatanPemeriksaan">Catatan :</label>
-      <textarea id="catatanPemeriksaan" placeholder="Tulis catatan / temuan pemeriksaan..."></textarea>
+
+      <label for="catatanPemeriksaan">
+        CATATAN:
+      </label>
+
+      <textarea
+        id="catatanPemeriksaan"
+        placeholder="Tulis catatan / temuan pemeriksaan..."
+      ></textarea>
+
     </div>
 
-    <div id="statusBox" class="status-box"></div>
+
+    <div
+      id="statusBox"
+      class="status-box">
+    </div>
+
 
     <!-- PROGRESS SIMPAN -->
-    <div id="progressSimpan" class="progress-box">
+
+    <div
+      id="progressSimpan"
+      class="progress-box">
+
       <div class="progress-label">
-        <span id="progressSimpanLabel">Menyimpan pemeriksaan</span>
-        <span id="progressSimpanStep">0 / 5</span>
+
+        <span id="progressSimpanLabel">
+          Menyimpan pemeriksaan
+        </span>
+
+        <span id="progressSimpanStep">
+          0 / 5
+        </span>
+
       </div>
+
       <div class="progress-track">
-        <div id="progressSimpanBar" class="progress-bar"></div>
+
+        <div
+          id="progressSimpanBar"
+          class="progress-bar">
+        </div>
+
       </div>
-      <div id="progressSimpanPercent" class="progress-percent">0%</div>
-      <div id="progressSimpanNote" class="progress-note">Menunggu proses penyimpanan...</div>
+
+      <div
+        id="progressSimpanPercent"
+        class="progress-percent">
+        0%
+      </div>
+
+      <div
+        id="progressSimpanNote"
+        class="progress-note">
+        Menunggu proses penyimpanan...
+      </div>
+
     </div>
+
 
     <!-- BUTTON -->
+
     <div class="button-group">
-      <button type="button" class="btn btn-foto" onclick="window.uploadFoto()">UPLOAD FOTO</button>
-      <button type="button" id="btnTTD" class="btn btn-ttd" onclick="window.tampilkanTTD()">TTD</button>
-      <button type="button" id="btnSimpanPemeriksaan" class="btn btn-simpan" onclick="window.simpanPemeriksaan()">SIMPAN & SELESAI</button>
-    </div>
 
-    <!-- PREVIEW HASIL AKHIR (Gaya A4 Resmi) -->
-    <div id="previewHasilAkhirBox">
-      <h3 style="margin-top:0; margin-bottom:15px; color:#1f4e78; text-align:center;">PREVIEW HASIL PEMERIKSAAN</h3>
-      <div id="previewInfoHasilAkhir" style="margin-bottom:20px; padding:15px; background:#f8f9fa; border-radius:8px; line-height:1.7;"></div>
-      <h4 style="color:#1f4e78; margin-bottom:10px;">FOTO HASIL PEMERIKSAAN</h4>
-      <div id="previewFotoHasilAkhir" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:15px;"></div>
-      <div id="previewTidakAdaFoto" style="display:none; padding:15px; text-align:center; color:#777; background:#f8f9fa; border-radius:8px;">Belum ada foto yang tersimpan.</div>
-    </div>
+      <button
+        type="button"
+        class="btn btn-foto"
+        onclick="window.uploadFoto()"
+      >
+        UPLOAD FOTO
+      </button>
 
-    <!-- FOTO BOX -->
+
+      <button
+        type="button"
+        id="btnTTD"
+        class="btn btn-ttd"
+        onclick="window.tampilkanTTD()"
+      >
+        TTD
+      </button>
+
+
+      <button
+        type="button"
+        id="btnSimpanPemeriksaan"
+        class="btn btn-simpan"
+        onclick="window.simpanPemeriksaan()"
+      >
+        SIMPAN & SELESAI
+      </button>
+
+
+       </div>
+
+
+    <!-- FOTO -->
+
     <div id="uploadFotoBox">
-      <div class="section-title">Upload Foto Dokumentasi</div>
+
+      <div class="section-title">
+        Upload Foto Dokumentasi
+      </div>
+
+
       <div class="form-group">
-        <label for="fotoPemeriksaan">Pilih Foto</label>
-        <input type="file" id="fotoPemeriksaan" accept="image/*" multiple>
+
+        <label for="fotoPemeriksaan">
+          Pilih Foto
+        </label>
+
+        <input
+          type="file"
+          id="fotoPemeriksaan"
+          accept="image/*"
+          multiple
+        >
+
       </div>
-      <div id="previewFoto"></div>
-      <div class="button-group">
-        <button type="button" id="btnKirimFoto" class="btn btn-simpan" onclick="window.kirimFoto()">KIRIM FOTO</button>
-      </div>
-      <div id="statusUploadFoto" class="status-box"></div>
-      
-      <div id="progressUploadFoto" class="progress-box">
-        <div class="progress-label">
-          <span id="progressUploadLabel">Upload foto</span>
-          <span id="progressUploadCount">0 / 0</span>
-        </div>
-        <div class="progress-track">
-          <div id="progressUploadBar" class="progress-bar"></div>
-        </div>
-        <div id="progressUploadPercent" class="progress-percent">0%</div>
-        <div id="progressUploadNote" class="progress-note">Menunggu proses upload...</div>
-      </div>
+<!-- =========================================
+     ... CHECKLIST
+     ========================================= -->
+<div id="previewHasilAkhirBox" style="
+    display:none;
+    margin-top:20px;
+    padding:20px;
+    background:#ffffff;
+    border:1px solid #d9e2ec;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+">
+
+    <h3 style="
+        margin-top:0;
+        margin-bottom:15px;
+        color:#1f4e78;
+        text-align:center;
+    ">
+        ... CHECKLIST
+    </h3>
+
+    <div id="previewInfoHasilAkhir" style="
+        margin-bottom:20px;
+        padding:15px;
+        background:#f8f9fa;
+        border-radius:8px;
+        line-height:1.7;
+    ">
     </div>
 
-    <!-- TTD BOX -->
-    <div id="ttdBox" class="ttd-box">
-      <h3>Tanda Tangan Digital Petugas Pengawas Langsir</h3>
-      <div class="signature-wrapper">
-        <canvas id="signatureCanvas"></canvas>
+    <h4 style="
+        color:#1f4e78;
+        margin-bottom:10px;
+    ">
+        FOTO HASIL PEMERIKSAAN
+    </h4>
+
+    <div id="previewFotoHasilAkhir" style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+        gap:15px;
+    ">
+    </div>
+
+    <div id="previewTidakAdaFoto" style="
+        display:none;
+        padding:15px;
+        text-align:center;
+        color:#777;
+        background:#f8f9fa;
+        border-radius:8px;
+    ">
+        Belum ada foto yang tersimpan.
+    </div>
+
+</div>
+
+      <div id="previewFoto"></div>
+
+
+      <div class="button-group">
+
+        <button
+          type="button"
+          id="btnKirimFoto"
+          class="btn btn-simpan"
+          onclick="window.kirimFoto()"
+        >
+          KIRIM FOTO
+        </button>
+
       </div>
-      <div id="ttdStatus" class="ttd-status"></div>
-      
-      <div id="progressTTD" class="progress-box">
+
+
+      <div
+        id="statusUploadFoto"
+        class="status-box">
+      </div>
+
+
+      <div
+        id="progressUploadFoto"
+        class="progress-box">
+
         <div class="progress-label">
-          <span id="progressTTDLabel">Menyimpan TTD</span>
-          <span id="progressTTDStep">0 / 5</span>
+
+          <span id="progressUploadLabel">
+            Upload foto
+          </span>
+
+          <span id="progressUploadCount">
+            0 / 0
+          </span>
+
         </div>
+
         <div class="progress-track">
-          <div id="progressTTDBar" class="progress-bar"></div>
+
+          <div
+            id="progressUploadBar"
+            class="progress-bar">
+          </div>
+
         </div>
-        <div id="progressTTDPercent" class="progress-percent">0%</div>
-        <div id="progressTTDNote" class="progress-note">Menunggu proses TTD...</div>
+
+        <div
+          id="progressUploadPercent"
+          class="progress-percent">
+          0%
+        </div>
+
+        <div
+          id="progressUploadNote"
+          class="progress-note">
+          Menunggu proses upload...
+        </div>
+
       </div>
+
+    </div>
+
+
+    <!-- TTD -->
+
+    <div
+      id="ttdBox"
+      class="ttd-box">
+
+      <h3>
+        Tanda Tangan Digital
+      </h3>
+
+
+      <div class="ttd-info">
+
+        Silakan tanda tangan pada kotak di bawah ini.
+        Pastikan tanda tangan sudah terlihat jelas
+        sebelum menekan tombol <strong>Simpan TTD</strong>.
+
+      </div>
+
+
+      <div class="signature-wrapper">
+
+        <canvas
+          id="signatureCanvas">
+        </canvas>
+
+      </div>
+
+
+      <div
+        id="ttdStatus"
+        class="ttd-status">
+      </div>
+
+
+      <div
+        id="progressTTD"
+        class="progress-box">
+
+        <div class="progress-label">
+
+          <span id="progressTTDLabel">
+            Menyimpan TTD
+          </span>
+
+          <span id="progressTTDStep">
+            0 / 5
+          </span>
+
+        </div>
+
+        <div class="progress-track">
+
+          <div
+            id="progressTTDBar"
+            class="progress-bar">
+          </div>
+
+        </div>
+
+        <div
+          id="progressTTDPercent"
+          class="progress-percent">
+          0%
+        </div>
+
+        <div
+          id="progressTTDNote"
+          class="progress-note">
+          Menunggu proses TTD...
+        </div>
+
+      </div>
+
 
       <div class="ttd-buttons">
-        <button type="button" id="btnClearTTD" class="btn-clear" onclick="window.clearSignature()">Hapus</button>
-        <button type="button" id="btnSaveTTD" class="btn-save-ttd" onclick="window.simpanTTD()">Simpan TTD</button>
+
+        <button
+          type="button"
+          id="btnClearTTD"
+          class="btn-clear"
+          onclick="window.clearSignature()"
+        >
+          Hapus
+        </button>
+
+
+        <button
+          type="button"
+          id="btnSaveTTD"
+          class="btn-save-ttd"
+          onclick="window.simpanTTD()"
+        >
+          Simpan TTD
+        </button>
+
       </div>
+
     </div>
 
   </div>
+
+</div>
+
+
+<!-- =========================================================
+     NOTIFIKASI
+========================================================= -->
+
+<div
+  id="notifFoto"
+  class="notif-overlay">
+
+  <div class="notif-box">
+
+    <div
+      id="notifFotoTitle"
+      class="notif-title">
+      Informasi
+    </div>
+
+    <div
+      id="notifFotoMessage"
+      class="notif-message">
+    </div>
+
+    <div class="notif-footer">
+
+      <button
+        type="button"
+        id="notifFotoButton"
+        class="notif-ok"
+        onclick="window.tutupNotifFoto()"
+      >
+        OK
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   KONFIGURASI API
+========================================================= */
+
+var API_URL =
+  "https://script.google.com/macros/s/AKfycbw5JhXwGZT0mGzuqFK2JigaN69nLy9WYtoMZLSHehtPUI4YSg0ZSfjA686fY8aaOS7UVQ/exec";
+
+
+/* =========================================================
+   VARIABLE GLOBAL
+========================================================= */
+
+var idPemeriksaanAktif = "";
+
+var signatureCanvas = null;
+var signatureContext = null;
+var sedangMenggambar = false;
+var signatureInitialized = false;
+var signatureHasInk = false;
+
+/*
+ * Menyimpan data TTD yang sudah berhasil dikirim.
+ * Ini penting supaya SIMPAN & SELESAI tidak
+ * mengirim TTD berkali-kali.
+ */
+var signatureServerSaved = false;
+var signatureServerData = "";
+
+var sedangSimpanTTD = false;
+var sedangSimpanPemeriksaan = false;
+var sedangUploadFoto = false;
+var sedangLogin = false;
+
+
+function escapeHtmlPreview(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(text) {
+
+  var div =
+    document.createElement("div");
+
+  div.textContent =
+    text == null ? "" : String(text);
+
+  return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   ID PEMERIKSAAN
+========================================================= */
+
+function buatIdPemeriksaan() {
+
+  return "TRX" + Date.now();
+
+}
+
+
+/* =========================================================
+   WAKTU SERVER / CLIENT
+========================================================= */
+
+function buatTimestamp() {
+
+  var sekarang =
+    new Date();
+
+  return sekarang.toISOString();
+
+}
+
+
+/* =========================================================
+   STATUS LOGIN
+========================================================= */
+
+function tampilkanStatusLogin(pesan) {
+
+  var box =
+    document.getElementById(
+      "statusLogin"
+    );
+
+  if (!box) {
+    return;
+  }
+
+  box.textContent =
+    pesan || "";
+
+  box.style.display =
+    pesan ? "block" : "none";
+
+}
+
+
+/* =========================================================
+   STATUS UMUM
+========================================================= */
+
+function tampilkanStatus(pesan) {
+
+  var box =
+    document.getElementById(
+      "statusBox"
+    );
+
+  if (!box) {
+    return;
+  }
+
+  box.textContent =
+    pesan || "";
+
+  box.style.display =
+    pesan ? "block" : "none";
+
+}
+
+
+/* =========================================================
+   PROGRESS GENERIC - DIPERBAIKI
+========================================================= */
+
+function setProgressGeneric(
+  boxId,
+  percent,
+  label,
+  stepText,
+  note
+) {
+
+  /*
+   * PERBAIKAN UTAMA:
+   *
+   * Sebelumnya fungsi mencari:
+   * progressSimpanBox
+   *
+   * Padahal ID sebenarnya:
+   * progressSimpan
+   *
+   * Sekarang boxId langsung digunakan.
+   */
+
+  var box =
+    document.getElementById(
+      boxId
+    );
+
+  var bar =
+    document.getElementById(
+      boxId + "Bar"
+    );
+
+  var percentEl =
+    document.getElementById(
+      boxId + "Percent"
+    );
+
+  var labelEl =
+    document.getElementById(
+      boxId + "Label"
+    );
+
+  var stepEl =
+    document.getElementById(
+      boxId + "Step"
+    );
+
+  var noteEl =
+    document.getElementById(
+      boxId + "Note"
+    );
+
+
+  /*
+   * Untuk upload foto ID-nya berbeda:
+   * progressUploadFoto
+   * sehingga ditangani oleh fungsi sendiri.
+   */
+
+  var nilai =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        Number(percent) || 0
+      )
+    );
+
+
+  if (box) {
+
+    box.style.display =
+      "block";
+
+  }
+
+
+  if (bar) {
+
+    bar.style.width =
+      nilai + "%";
+
+  }
+
+
+  if (percentEl) {
+
+    percentEl.textContent =
+      Math.round(nilai) + "%";
+
+  }
+
+
+  if (labelEl) {
+
+    labelEl.textContent =
+      label || "";
+
+  }
+
+
+  if (stepEl) {
+
+    stepEl.textContent =
+      stepText || "";
+
+  }
+
+
+  if (noteEl) {
+
+    noteEl.textContent =
+      note || "";
+
+  }
+
+
+  console.log(
+    "PROGRESS:",
+    boxId,
+    nilai + "%",
+    label,
+    stepText,
+    note
+  );
+
+}
+
+
+/* =========================================================
+   PROGRESS LOGIN
+========================================================= */
+
+function setProgressLogin(
+  percent,
+  label,
+  step,
+  note
+) {
+
+  setProgressGeneric(
+    "progressLogin",
+    percent,
+    label,
+    step,
+    note
+  );
+
+}
+
+
+/* =========================================================
+   PROGRESS SIMPAN
+========================================================= */
+
+function setProgressSimpan(
+  percent,
+  label,
+  step,
+  note
+) {
+
+  setProgressGeneric(
+    "progressSimpan",
+    percent,
+    label,
+    step,
+    note
+  );
+
+}
+
+
+/* =========================================================
+   PROGRESS TTD
+========================================================= */
+
+function setProgressTTD(
+  percent,
+  label,
+  step,
+  note
+) {
+
+  setProgressGeneric(
+    "progressTTD",
+    percent,
+    label,
+    step,
+    note
+  );
+
+}
+
+
+/* =========================================================
+   PROGRESS FOTO
+========================================================= */
+
+function setProgressUpload(
+  percent,
+  label,
+  countText,
+  note
+) {
+
+  var box =
+    document.getElementById(
+      "progressUploadFoto"
+    );
+
+  var bar =
+    document.getElementById(
+      "progressUploadBar"
+    );
+
+  var percentEl =
+    document.getElementById(
+      "progressUploadPercent"
+    );
+
+  var labelEl =
+    document.getElementById(
+      "progressUploadLabel"
+    );
+
+  var countEl =
+    document.getElementById(
+      "progressUploadCount"
+    );
+
+  var noteEl =
+    document.getElementById(
+      "progressUploadNote"
+    );
+
+
+  var nilai =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        Number(percent) || 0
+      )
+    );
+
+
+  if (box) {
+    box.style.display = "block";
+  }
+
+  if (bar) {
+    bar.style.width = nilai + "%";
+  }
+
+  if (percentEl) {
+    percentEl.textContent =
+      Math.round(nilai) + "%";
+  }
+
+  if (labelEl) {
+    labelEl.textContent =
+      label || "Upload foto";
+  }
+
+  if (countEl) {
+    countEl.textContent =
+      countText || "";
+  }
+
+  if (noteEl) {
+    noteEl.textContent =
+      note || "";
+  }
+
+}
 
 
 /* =========================================================
@@ -4271,9 +5072,18 @@ function simpanPemeriksaan() {
 
 }
 /* =========================================================
-   PREVIEW HASIL AKHIR - JPG
-   Membaca checklist YA/TIDAK + TEMUAN + CATATAN
-   kemudian membuat gambar JPG secara langsung
+   PREVIEW HASIL AKHIR - JPG A4 PORTRAIT
+   =========================================================
+   FORMAT:
+   - A4 Portrait
+   - Header / Judul
+   - Identitas Pemeriksaan
+   - Tabel Checklist
+   - Catatan
+   - ID Pemeriksaan
+   - Kolom TTD kanan bawah
+   - Nama / NIPP / Jabatan
+   - Download JPG
 ========================================================= */
 
 function tampilkanPreviewHasilAkhir() {
@@ -4287,7 +5097,7 @@ function tampilkanPreviewHasilAkhir() {
       );
 
       console.log(
-        "MEMBUAT PREVIEW HASIL AKHIR JPG"
+        "MEMBUAT PREVIEW HASIL AKHIR JPG A4"
       );
 
       console.log(
@@ -4313,7 +5123,7 @@ function tampilkanPreviewHasilAkhir() {
 
 
       /* =====================================================
-         AMBIL SEMUA ITEM CHECKLIST
+         AMBIL CHECKLIST
       ===================================================== */
 
       var items =
@@ -4349,107 +5159,163 @@ function tampilkanPreviewHasilAkhir() {
       var daftarChecklist = [];
 
 
-      items.forEach(function(item, index) {
+      items.forEach(
+        function(item, index) {
 
-        var nomorElement =
-          item.querySelector(
-            ".checklist-number"
-          );
-
-
-        var kategoriElement =
-          item.querySelector(
-            ".checklist-category"
-          );
+          var nomorElement =
+            item.querySelector(
+              ".checklist-number"
+            );
 
 
-        var pertanyaanElement =
-          item.querySelector(
-            ".checklist-question"
-          );
+          var kategoriElement =
+            item.querySelector(
+              ".checklist-category"
+            );
 
 
-        var standarElement =
-          item.querySelector(
-            ".checklist-standard"
-          );
+          var pertanyaanElement =
+            item.querySelector(
+              ".checklist-question"
+            );
 
 
-        var pilihan =
-          item.querySelector(
-            "input[type='radio']:checked"
-          );
+          var standarElement =
+            item.querySelector(
+              ".checklist-standard"
+            );
 
 
-        var temuanElement =
-          item.querySelector(
-            ".temuan-input"
-          );
+          var pilihan =
+            item.querySelector(
+              "input[type='radio']:checked"
+            );
 
 
-        var nomor =
-          nomorElement
-            ? nomorElement.textContent.trim()
-            : "Checklist " + (index + 1);
+          var temuanElement =
+            item.querySelector(
+              ".temuan-input"
+            );
 
 
-        var kategori =
-          kategoriElement
-            ? kategoriElement.textContent.trim()
-            : "";
+          var nomor =
+            nomorElement
+              ? nomorElement.textContent.trim()
+              : String(index + 1);
 
 
-        var pertanyaan =
-          pertanyaanElement
-            ? pertanyaanElement.textContent.trim()
-            : "";
+          var kategori =
+            kategoriElement
+              ? kategoriElement.textContent.trim()
+              : "";
 
 
-        var standar =
-          standarElement
-            ? standarElement.textContent.trim()
-            : "";
+          var pertanyaan =
+            pertanyaanElement
+              ? pertanyaanElement.textContent.trim()
+              : "";
 
 
-        var hasil =
-          pilihan
-            ? pilihan.value
-            : "";
+          var standar =
+            standarElement
+              ? standarElement.textContent.trim()
+              : "";
 
 
-        var temuan =
-          temuanElement
-            ? temuanElement.value.trim()
-            : "";
+          var hasil =
+            pilihan
+              ? pilihan.value
+              : "";
 
 
-        daftarChecklist.push({
+          var temuan =
+            temuanElement
+              ? temuanElement.value.trim()
+              : "";
 
-          nomor:
-            nomor,
 
-          kategori:
-            kategori,
+          daftarChecklist.push({
 
-          pertanyaan:
-            pertanyaan,
+            nomor:
+              nomor,
 
-          standar:
-            standar,
+            kategori:
+              kategori,
 
-          hasil:
-            hasil,
+            pertanyaan:
+              pertanyaan,
 
-          temuan:
-            temuan
+            standar:
+              standar,
 
-        });
+            hasil:
+              hasil,
 
-      });
+            temuan:
+              temuan
+
+          });
+
+        }
+      );
 
 
       /* =====================================================
-         BUAT CANVAS
+         KONFIGURASI A4
+         Rasio A4 = 210 x 297
+      ===================================================== */
+
+      var canvasWidth =
+        1240;
+
+
+      var canvasHeight =
+        Math.round(
+          canvasWidth *
+          (297 / 210)
+        );
+
+
+      /*
+       * canvasHeight sekitar 1754 px
+       */
+
+
+      var margin =
+        60;
+
+
+      var contentWidth =
+        canvasWidth -
+        (margin * 2);
+
+
+      var lineHeight =
+        28;
+
+
+      var fontNormal =
+        "20px Arial";
+
+
+      var fontSmall =
+        "17px Arial";
+
+
+      var fontBold =
+        "bold 20px Arial";
+
+
+      var fontHeader =
+        "bold 26px Arial";
+
+
+      var fontTitle =
+        "bold 30px Arial";
+
+
+      /* =====================================================
+         CANVAS
       ===================================================== */
 
       var canvas =
@@ -4473,24 +5339,6 @@ function tampilkanPreviewHasilAkhir() {
       }
 
 
-      /*
-       * Lebar JPG.
-       */
-
-      var canvasWidth =
-        1200;
-
-
-      /*
-       * Perkiraan tinggi awal.
-       * Nanti canvas akan disesuaikan
-       * berdasarkan isi.
-       */
-
-      var canvasHeight =
-        1000;
-
-
       canvas.width =
         canvasWidth;
 
@@ -4500,52 +5348,26 @@ function tampilkanPreviewHasilAkhir() {
 
 
       /* =====================================================
-         KONFIGURASI TULISAN
+         LATAR PUTIH
       ===================================================== */
 
-      var margin =
-        60;
-
-      var contentWidth =
-        canvasWidth -
-        (
-          margin * 2
-        );
+      ctx.fillStyle =
+        "#ffffff";
 
 
-      var y =
-        60;
-
-
-      var lineHeight =
-        30;
-
-
-      var sectionGap =
-        20;
-
-
-      var fontNormal =
-        "24px Arial";
-
-
-      var fontSmall =
-        "20px Arial";
-
-
-      var fontBold =
-        "bold 24px Arial";
-
-
-      var fontTitle =
-        "bold 34px Arial";
+      ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
 
 
       /* =====================================================
-         HITUNG TINGGI TEKS
+         FUNGSI WRAP TEXT
       ===================================================== */
 
-      function hitungBaris(
+      function pecahTeks(
         text,
         maxWidth,
         font
@@ -4553,13 +5375,8 @@ function tampilkanPreviewHasilAkhir() {
 
         text =
           String(
-            text || ""
+            text || "-"
           );
-
-
-        if (!text) {
-          return 1;
-        }
 
 
         ctx.font =
@@ -4567,13 +5384,12 @@ function tampilkanPreviewHasilAkhir() {
 
 
         var words =
-          text.split(
-            " "
-          );
+          text.split(/\s+/);
 
 
         var lines =
           [];
+
 
         var line =
           "";
@@ -4604,6 +5420,7 @@ function tampilkanPreviewHasilAkhir() {
                 line
               );
 
+
               line =
                 word;
 
@@ -4629,146 +5446,27 @@ function tampilkanPreviewHasilAkhir() {
         }
 
 
-        return Math.max(
-          1,
-          lines.length
-        );
+        return lines.length
+          ? lines
+          : ["-"];
 
       }
 
 
-      function tinggiTeks(
-        text,
-        maxWidth,
-        font
-      ) {
-
-        return (
-          hitungBaris(
-            text,
-            maxWidth,
-            font
-          ) *
-          lineHeight
-        );
-
-      }
-
-
-      /* =====================================================
-         HITUNG TINGGI TOTAL JPG
-      ===================================================== */
-
-      var tinggiPerkiraan =
-        300;
-
-
-      daftarChecklist.forEach(
-        function(item) {
-
-          tinggiPerkiraan +=
-            55;
-
-
-          tinggiPerkiraan +=
-            tinggiTeks(
-              item.pertanyaan,
-              contentWidth,
-              fontNormal
-            );
-
-
-          if (item.standar) {
-
-            tinggiPerkiraan +=
-              tinggiTeks(
-                item.standar,
-                contentWidth,
-                fontSmall
-              );
-
-          }
-
-
-          if (item.kategori) {
-
-            tinggiPerkiraan +=
-              30;
-
-          }
-
-
-          tinggiPerkiraan +=
-            45;
-
-
-          if (item.temuan) {
-
-            tinggiPerkiraan +=
-              25;
-
-
-            tinggiPerkiraan +=
-              tinggiTeks(
-                "Temuan: " +
-                item.temuan,
-                contentWidth - 20,
-                fontSmall
-              );
-
-          }
-
-
-          tinggiPerkiraan +=
-            25;
-
-        }
-      );
-
-
-      tinggiPerkiraan +=
-        200;
-
-
-      canvas.height =
-        Math.max(
-          1000,
-          tinggiPerkiraan
-        );
-
-
-      /* =====================================================
-         LATAR PUTIH
-      ===================================================== */
-
-      ctx.fillStyle =
-        "#ffffff";
-
-
-      ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
-
-
-      /* =====================================================
-         FUNGSI TULIS TEKS WRAP
-      ===================================================== */
-
-      function tulisTeks(
+      function tulisWrap(
         text,
         x,
         startY,
         maxWidth,
         font,
-        warna
+        color
       ) {
 
-        text =
-          String(
-            text || ""
+        var lines =
+          pecahTeks(
+            text,
+            maxWidth,
+            font
           );
 
 
@@ -4777,83 +5475,29 @@ function tampilkanPreviewHasilAkhir() {
 
 
         ctx.fillStyle =
-          warna || "#000000";
-
-
-        var words =
-          text.split(
-            " "
-          );
-
-
-        var line =
-          "";
+          color ||
+          "#000000";
 
 
         var currentY =
           startY;
 
 
-        words.forEach(
-          function(word) {
+        lines.forEach(
+          function(line) {
 
-            var test =
-              line
-                ? line + " " + word
-                : word;
-
-
-            var width =
-              ctx.measureText(
-                test
-              ).width;
+            ctx.fillText(
+              line,
+              x,
+              currentY
+            );
 
 
-            if (
-              width >
-              maxWidth &&
-              line
-            ) {
-
-              ctx.fillText(
-                line,
-                x,
-                currentY
-              );
-
-
-              line =
-                word;
-
-
-              currentY +=
-                lineHeight;
-
-            }
-
-            else {
-
-              line =
-                test;
-
-            }
+            currentY +=
+              lineHeight;
 
           }
         );
-
-
-        if (line) {
-
-          ctx.fillText(
-            line,
-            x,
-            currentY
-          );
-
-          currentY +=
-            lineHeight;
-
-        }
 
 
         return currentY;
@@ -4862,8 +5506,12 @@ function tampilkanPreviewHasilAkhir() {
 
 
       /* =====================================================
-         JUDUL
+         HEADER A4
       ===================================================== */
+
+      var y =
+        55;
+
 
       ctx.textAlign =
         "center";
@@ -4878,18 +5526,29 @@ function tampilkanPreviewHasilAkhir() {
 
 
       ctx.fillText(
-        "CHECKLIST PENGAWASAN KEGIATAN LANGSIR",
+        "CHECKLIST PENGAWASAN",
         canvasWidth / 2,
         y
       );
 
 
       y +=
-        50;
+        38;
+
+
+      ctx.fillText(
+        "KEGIATAN LANGSIR",
+        canvasWidth / 2,
+        y
+      );
+
+
+      y +=
+        35;
 
 
       ctx.font =
-        "bold 26px Arial";
+        "bold 20px Arial";
 
 
       ctx.fillStyle =
@@ -4904,172 +5563,10 @@ function tampilkanPreviewHasilAkhir() {
 
 
       y +=
-        50;
+        30;
 
 
-      ctx.textAlign =
-        "left";
-
-
-      /* =====================================================
-         IDENTITAS PEMERIKSAAN
-      ===================================================== */
-
-      ctx.font =
-        fontNormal;
-
-
-      ctx.fillStyle =
-        "#000000";
-
-
-      y =
-        tulisTeks(
-          "Tanggal Pemeriksaan : " +
-          (
-            data.TANGGAL ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y =
-        tulisTeks(
-          "Dinas Langsir : " +
-          (
-            data.DINAS_LANGSIR ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y =
-        tulisTeks(
-          "Stasiun : " +
-          (
-            data.STASIUN ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y =
-        tulisTeks(
-          "Lokomotif : " +
-          (
-            data.LOKOMOTIF ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y =
-        tulisTeks(
-          "Masinis : " +
-          (
-            data.MASINIS ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y =
-        tulisTeks(
-          "Asisten Masinis : " +
-          (
-            data.ASISTEN_MASINIS ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y =
-        tulisTeks(
-          "PLR 1 : " +
-          (
-            data.PLR1 ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y =
-        tulisTeks(
-          "PLR 2 : " +
-          (
-            data.PLR2 ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y =
-        tulisTeks(
-          "PLR DIPO : " +
-          (
-            data.PLR_DIPO ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y =
-        tulisTeks(
-          "Petugas Schowing : " +
-          (
-            data.PETUGAS_SCHOWING ||
-            "-"
-          ),
-          margin,
-          y,
-          contentWidth,
-          fontNormal
-        );
-
-
-      y +=
-        sectionGap;
-
-
-      /* =====================================================
-         GARIS
-      ===================================================== */
+      /* garis header */
 
       ctx.beginPath();
 
@@ -5096,12 +5593,196 @@ function tampilkanPreviewHasilAkhir() {
         35;
 
 
+      ctx.textAlign =
+        "left";
+
+
+      /* =====================================================
+         IDENTITAS PEMERIKSAAN
+      ===================================================== */
+
+      ctx.font =
+        fontHeader;
+
+
+      ctx.fillStyle =
+        "#1f4e78";
+
+
+      ctx.fillText(
+        "DATA PEMERIKSAAN",
+        margin,
+        y
+      );
+
+
+      y +=
+        32;
+
+
+      /*
+       * Dua kolom.
+       */
+
+      var kolomKiri =
+        margin;
+
+
+      var kolomKanan =
+        margin + 570;
+
+
+      var nilaiKiri = [
+        [
+          "Tanggal",
+          data.TANGGAL || "-"
+        ],
+        [
+          "Dinas Langsir",
+          data.DINAS_LANGSIR || "-"
+        ],
+        [
+          "Stasiun",
+          data.STASIUN || "-"
+        ],
+        [
+          "Lokomotif",
+          data.LOKOMOTIF || "-"
+        ],
+        [
+          "Masinis",
+          data.MASINIS || "-"
+        ]
+      ];
+
+
+      var nilaiKanan = [
+        [
+          "Asisten Masinis",
+          data.ASISTEN_MASINIS || "-"
+        ],
+        [
+          "PLR 1",
+          data.PLR1 || "-"
+        ],
+        [
+          "PLR 2",
+          data.PLR2 || "-"
+        ],
+        [
+          "PLR DIPO",
+          data.PLR_DIPO || "-"
+        ],
+        [
+          "Petugas Schowing",
+          data.PETUGAS_SCHOWING || "-"
+        ]
+      ];
+
+
+      ctx.font =
+        fontNormal;
+
+
+      for (
+        var i = 0;
+        i < 5;
+        i++
+      ) {
+
+        ctx.fillStyle =
+          "#333333";
+
+
+        ctx.font =
+          "bold 17px Arial";
+
+
+        ctx.fillText(
+          nilaiKiri[i][0] + " :",
+          kolomKiri,
+          y
+        );
+
+
+        ctx.font =
+          fontSmall;
+
+
+        ctx.fillText(
+          nilaiKiri[i][1],
+          kolomKiri + 145,
+          y
+        );
+
+
+        ctx.font =
+          "bold 17px Arial";
+
+
+        ctx.fillText(
+          nilaiKanan[i][0] + " :",
+          kolomKanan,
+          y
+        );
+
+
+        ctx.font =
+          fontSmall;
+
+
+        ctx.fillText(
+          nilaiKanan[i][1],
+          kolomKanan + 145,
+          y
+        );
+
+
+        y +=
+          28;
+
+      }
+
+
+      y +=
+        15;
+
+
+      /* =====================================================
+         GARIS
+      ===================================================== */
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        margin,
+        y
+      );
+
+      ctx.lineTo(
+        canvasWidth - margin,
+        y
+      );
+
+      ctx.strokeStyle =
+        "#999999";
+
+      ctx.lineWidth =
+        1;
+
+      ctx.stroke();
+
+
+      y +=
+        30;
+
+
       /* =====================================================
          JUDUL CHECKLIST
       ===================================================== */
 
       ctx.font =
-        "bold 28px Arial";
+        fontHeader;
 
 
       ctx.fillStyle =
@@ -5116,22 +5797,335 @@ function tampilkanPreviewHasilAkhir() {
 
 
       y +=
-        45;
+        25;
 
 
       /* =====================================================
-         CHECKLIST
+         TABEL CHECKLIST
+      ===================================================== */
+
+      var tableX =
+        margin;
+
+
+      var tableWidth =
+        contentWidth;
+
+
+      /*
+       * Kolom:
+       * No
+       * Uraian
+       * Standar
+       * Hasil
+       * Temuan
+       */
+
+      var colNo =
+        55;
+
+
+      var colUraian =
+        370;
+
+
+      var colStandar =
+        230;
+
+
+      var colHasil =
+        100;
+
+
+      var colTemuan =
+        tableWidth -
+        (
+          colNo +
+          colUraian +
+          colStandar +
+          colHasil
+        );
+
+
+      var colX1 =
+        tableX;
+
+
+      var colX2 =
+        colX1 + colNo;
+
+
+      var colX3 =
+        colX2 + colUraian;
+
+
+      var colX4 =
+        colX3 + colStandar;
+
+
+      var colX5 =
+        colX4 + colHasil;
+
+
+      var headerHeight =
+        48;
+
+
+      /*
+       * Header background.
+       */
+
+      ctx.fillStyle =
+        "#1f4e78";
+
+
+      ctx.fillRect(
+        tableX,
+        y,
+        tableWidth,
+        headerHeight
+      );
+
+
+      /*
+       * Header text.
+       */
+
+      ctx.fillStyle =
+        "#ffffff";
+
+
+      ctx.font =
+        "bold 16px Arial";
+
+
+      ctx.textAlign =
+        "center";
+
+
+      ctx.fillText(
+        "NO",
+        colX1 + (colNo / 2),
+        y + 30
+      );
+
+
+      ctx.fillText(
+        "URAIAN",
+        colX2 + (colUraian / 2),
+        y + 30
+      );
+
+
+      ctx.fillText(
+        "STANDAR",
+        colX3 + (colStandar / 2),
+        y + 30
+      );
+
+
+      ctx.fillText(
+        "HASIL",
+        colX4 + (colHasil / 2),
+        y + 30
+      );
+
+
+      ctx.fillText(
+        "TEMUAN",
+        colX5 + (colTemuan / 2),
+        y + 30
+      );
+
+
+      y +=
+        headerHeight;
+
+
+      /* =====================================================
+         BARIS CHECKLIST
       ===================================================== */
 
       daftarChecklist.forEach(
         function(item, index) {
 
+          var uraian =
+            item.pertanyaan ||
+            "-";
+
+
+          if (item.kategori) {
+
+            uraian =
+              item.kategori +
+              "\n" +
+              uraian;
+
+          }
+
+
+          var uraianLines =
+            pecahTeks(
+              uraian,
+              colUraian - 20,
+              fontSmall
+            );
+
+
+          var standarLines =
+            pecahTeks(
+              item.standar ||
+              "-",
+              colStandar - 20,
+              fontSmall
+            );
+
+
+          var temuanLines =
+            pecahTeks(
+              item.temuan ||
+              "-",
+              colTemuan - 20,
+              fontSmall
+            );
+
+
+          var jumlahBaris =
+            Math.max(
+              uraianLines.length,
+              standarLines.length,
+              temuanLines.length,
+              1
+            );
+
+
+          var rowHeight =
+            Math.max(
+              48,
+              (
+                jumlahBaris *
+                22
+              ) + 24
+            );
+
+
+          /*
+           * Batasi agar tetap
+           * berada di halaman A4.
+           */
+
+          if (
+            y +
+            rowHeight >
+            canvasHeight -
+            400
+          ) {
+
+            rowHeight =
+              Math.max(
+                45,
+                canvasHeight -
+                400 -
+                y
+              );
+
+          }
+
+
+          /*
+           * Background baris selang-seling.
+           */
+
+          if (
+            index % 2 === 1
+          ) {
+
+            ctx.fillStyle =
+              "#f7f7f7";
+
+
+            ctx.fillRect(
+              tableX,
+              y,
+              tableWidth,
+              rowHeight
+            );
+
+          }
+
+
+          /*
+           * Border horizontal.
+           */
+
+          ctx.strokeStyle =
+            "#bdbdbd";
+
+
+          ctx.lineWidth =
+            1;
+
+
+          ctx.beginPath();
+
+          ctx.moveTo(
+            tableX,
+            y
+          );
+
+          ctx.lineTo(
+            tableX +
+            tableWidth,
+            y
+          );
+
+          ctx.stroke();
+
+
+          /*
+           * Border vertikal.
+           */
+
+          [
+            colX1,
+            colX2,
+            colX3,
+            colX4,
+            colX5,
+            tableX +
+            tableWidth
+          ].forEach(
+            function(x) {
+
+              ctx.beginPath();
+
+              ctx.moveTo(
+                x,
+                y
+              );
+
+              ctx.lineTo(
+                x,
+                y +
+                rowHeight
+              );
+
+              ctx.stroke();
+
+            }
+          );
+
+
           /*
            * Nomor.
            */
 
+          ctx.textAlign =
+            "center";
+
+
           ctx.font =
-            fontBold;
+            "bold 16px Arial";
 
 
           ctx.fillStyle =
@@ -5139,108 +6133,94 @@ function tampilkanPreviewHasilAkhir() {
 
 
           ctx.fillText(
-            (
+            String(
               index + 1
-            ) +
-            ". " +
-            item.nomor,
-            margin,
-            y
+            ),
+            colX1 +
+            (colNo / 2),
+            y + 28
           );
 
 
-          y +=
-            35;
-
-
           /*
-           * Kategori.
+           * Uraian.
            */
 
-          if (item.kategori) {
+          ctx.textAlign =
+            "left";
 
-            ctx.font =
-              "bold 20px Arial";
-
-
-            ctx.fillStyle =
-              "#555555";
-
-
-            y =
-              tulisTeks(
-                item.kategori,
-                margin + 20,
-                y,
-                contentWidth - 20,
-                "bold 20px Arial",
-                "#555555"
-              );
-
-          }
-
-
-          /*
-           * Pertanyaan.
-           */
 
           ctx.font =
-            fontNormal;
+            fontSmall;
 
 
-          ctx.fillStyle =
-            "#000000";
+          var uraianY =
+            y + 23;
 
 
-          y =
-            tulisTeks(
-              item.pertanyaan,
-              margin + 20,
-              y,
-              contentWidth - 20,
-              fontNormal,
-              "#000000"
-            );
+          uraianLines.forEach(
+            function(line) {
+
+              ctx.fillText(
+                line,
+                colX2 + 10,
+                uraianY
+              );
+
+
+              uraianY +=
+                22;
+
+            }
+          );
 
 
           /*
            * Standar.
            */
 
-          if (item.standar) {
-
-            y +=
-              5;
+          var standarY =
+            y + 23;
 
 
-            y =
-              tulisTeks(
-                item.standar,
-                margin + 20,
-                y,
-                contentWidth - 20,
-                fontSmall,
-                "#555555"
+          standarLines.forEach(
+            function(line) {
+
+              ctx.fillText(
+                line,
+                colX3 + 10,
+                standarY
               );
 
-          }
+
+              standarY +=
+                22;
+
+            }
+          );
 
 
           /*
-           * HASIL YA / TIDAK
+           * HASIL.
            */
 
-          y +=
-            5;
+          ctx.textAlign =
+            "center";
 
 
           ctx.font =
-            "bold 25px Arial";
+            "bold 17px Arial";
+
+
+          var hasil =
+            String(
+              item.hasil ||
+              "-"
+            ).toUpperCase();
 
 
           if (
-            item.hasil ===
-            "YA"
+            hasil === "YA"
           ) {
 
             ctx.fillStyle =
@@ -5249,8 +6229,7 @@ function tampilkanPreviewHasilAkhir() {
           }
 
           else if (
-            item.hasil ===
-            "TIDAK"
+            hasil === "TIDAK"
           ) {
 
             ctx.fillStyle =
@@ -5261,117 +6240,97 @@ function tampilkanPreviewHasilAkhir() {
           else {
 
             ctx.fillStyle =
-              "#000000";
+              "#555555";
 
           }
 
 
           ctx.fillText(
-            "HASIL: " +
-            (
-              item.hasil ||
-              "-"
-            ),
-            margin + 20,
-            y
+            hasil,
+            colX4 +
+            (colHasil / 2),
+            y + 28
           );
 
 
-          y +=
-            35;
-
-
           /*
-           * TEMUAN
+           * TEMUAN.
            */
 
-          if (item.temuan) {
-
-            ctx.font =
-              "bold 20px Arial";
+          ctx.textAlign =
+            "left";
 
 
-            ctx.fillStyle =
-              "#000000";
+          ctx.font =
+            fontSmall;
 
 
-            y =
-              tulisTeks(
-                "Temuan: " +
-                item.temuan,
-                margin + 20,
-                y,
-                contentWidth - 20,
-                fontSmall,
-                "#000000"
+          ctx.fillStyle =
+            "#000000";
+
+
+          var temuanY =
+            y + 23;
+
+
+          temuanLines.forEach(
+            function(line) {
+
+              ctx.fillText(
+                line,
+                colX5 + 10,
+                temuanY
               );
 
-          }
 
-          else {
+              temuanY +=
+                22;
 
-            ctx.font =
-              fontSmall;
-
-            ctx.fillStyle =
-              "#777777";
-
-
-            ctx.fillText(
-              "Temuan: -",
-              margin + 20,
-              y
-            );
-
-
-            y +=
-              lineHeight;
-
-          }
-
-
-          /*
-           * Garis pemisah.
-           */
-
-          y +=
-            10;
-
-
-          ctx.beginPath();
-
-          ctx.moveTo(
-            margin,
-            y
+            }
           );
-
-          ctx.lineTo(
-            canvasWidth - margin,
-            y
-          );
-
-          ctx.strokeStyle =
-            "#dddddd";
-
-          ctx.lineWidth =
-            1;
-
-          ctx.stroke();
 
 
           y +=
-            25;
+            rowHeight;
 
         }
       );
+
+
+      /*
+       * Border bawah tabel.
+       */
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        tableX,
+        y
+      );
+
+      ctx.lineTo(
+        tableX +
+        tableWidth,
+        y
+      );
+
+      ctx.stroke();
+
+
+      y +=
+        30;
 
 
       /* =====================================================
          CATATAN
       ===================================================== */
 
+      ctx.textAlign =
+        "left";
+
+
       ctx.font =
-        "bold 28px Arial";
+        fontHeader;
 
 
       ctx.fillStyle =
@@ -5386,55 +6345,79 @@ function tampilkanPreviewHasilAkhir() {
 
 
       y +=
-        40;
+        28;
 
 
-      y =
-        tulisTeks(
+      var catatanBoxHeight =
+        100;
+
+
+      ctx.strokeStyle =
+        "#999999";
+
+
+      ctx.lineWidth =
+        1;
+
+
+      ctx.strokeRect(
+        margin,
+        y,
+        contentWidth,
+        catatanBoxHeight
+      );
+
+
+      ctx.font =
+        fontSmall;
+
+
+      ctx.fillStyle =
+        "#000000";
+
+
+      var catatanLines =
+        pecahTeks(
           data.CATATAN ||
           "-",
-          margin,
-          y,
-          contentWidth,
-          fontNormal,
-          "#000000"
+          contentWidth - 25,
+          fontSmall
+        );
+
+
+      var catatanY =
+        y + 25;
+
+
+      catatanLines
+        .slice(
+          0,
+          3
+        )
+        .forEach(
+          function(line) {
+
+            ctx.fillText(
+              line,
+              margin + 12,
+              catatanY
+            );
+
+
+            catatanY +=
+              22;
+
+          }
         );
 
 
       y +=
-        30;
+        catatanBoxHeight +
+        25;
 
 
       /* =====================================================
-         ID PEMERIKSAAN
-      ===================================================== */
-
-      ctx.font =
-        "bold 22px Arial";
-
-
-      ctx.fillStyle =
-        "#555555";
-
-
-      ctx.fillText(
-        "ID Pemeriksaan: " +
-        (
-          data.ID_PEMERIKSAAN ||
-          idPemeriksaanAktif ||
-          "-"
-        ),
-        margin,
-        y
-      );
-
-
-      y +=
-        35;
-
-
-      /* =====================================================
-         PEMERIKSA
+         INFORMASI PEMERIKSAAN
       ===================================================== */
 
       ctx.font =
@@ -5446,7 +6429,23 @@ function tampilkanPreviewHasilAkhir() {
 
 
       ctx.fillText(
-        "Pemeriksa: " +
+        "ID Pemeriksaan : " +
+        (
+          data.ID_PEMERIKSAAN ||
+          idPemeriksaanAktif ||
+          "-"
+        ),
+        margin,
+        y
+      );
+
+
+      y +=
+        25;
+
+
+      ctx.fillText(
+        "Pemeriksa : " +
         (
           data.NAMA ||
           "-"
@@ -5457,11 +6456,11 @@ function tampilkanPreviewHasilAkhir() {
 
 
       y +=
-        30;
+        25;
 
 
       ctx.fillText(
-        "NIPP: " +
+        "NIPP : " +
         (
           data.NIPP ||
           "-"
@@ -5472,11 +6471,11 @@ function tampilkanPreviewHasilAkhir() {
 
 
       y +=
-        30;
+        25;
 
 
       ctx.fillText(
-        "Jabatan: " +
+        "Jabatan : " +
         (
           data.JABATAN ||
           "-"
@@ -5487,52 +6486,320 @@ function tampilkanPreviewHasilAkhir() {
 
 
       /* =====================================================
-         POTONG CANVAS SESUAI ISI
+         TANDA TANGAN - KANAN BAWAH
       ===================================================== */
 
-      var hasilCanvas =
-        document.createElement(
-          "canvas"
-        );
+      var ttdWidth =
+        330;
 
 
-      var tinggiAkhir =
-        Math.min(
-          canvas.height,
-          y + 60
-        );
+      var ttdHeight =
+        250;
 
 
-      hasilCanvas.width =
-        canvas.width;
+      var ttdX =
+        canvasWidth -
+        margin -
+        ttdWidth;
 
 
-      hasilCanvas.height =
-        tinggiAkhir;
+      var ttdY =
+        canvasHeight -
+        margin -
+        ttdHeight;
 
 
-      var hasilCtx =
-        hasilCanvas.getContext(
-          "2d"
-        );
+      /*
+       * Garis pembatas
+       * area tanda tangan.
+       */
+
+      ctx.strokeStyle =
+        "#333333";
 
 
-      hasilCtx.fillStyle =
-        "#ffffff";
+      ctx.lineWidth =
+        1;
 
 
-      hasilCtx.fillRect(
-        0,
-        0,
-        hasilCanvas.width,
-        hasilCanvas.height
+      ctx.strokeRect(
+        ttdX,
+        ttdY,
+        ttdWidth,
+        ttdHeight
       );
 
 
-      hasilCtx.drawImage(
-        canvas,
-        0,
-        0
+      /*
+       * Judul TTD.
+       */
+
+      ctx.textAlign =
+        "center";
+
+
+      ctx.font =
+        "bold 18px Arial";
+
+
+      ctx.fillStyle =
+        "#000000";
+
+
+      ctx.fillText(
+        "TANDA TANGAN PEMERIKSA",
+        ttdX +
+        (ttdWidth / 2),
+        ttdY + 28
+      );
+
+
+      /*
+       * Waktu / tempat.
+       */
+
+      ctx.font =
+        "16px Arial";
+
+
+      ctx.fillText(
+        "Pemeriksa",
+        ttdX +
+        (ttdWidth / 2),
+        ttdY + 52
+      );
+
+
+      /* =====================================================
+         AMBIL TTD DARI CANVAS
+      ===================================================== */
+
+      var canvasTTD =
+        document.getElementById(
+          "signatureCanvas"
+        );
+
+
+      if (
+        canvasTTD &&
+        canvasTTD.width > 0 &&
+        canvasTTD.height > 0
+      ) {
+
+        try {
+
+          var ttdData =
+            canvasTTD.toDataURL(
+              "image/png"
+            );
+
+
+          if (
+            ttdData &&
+            ttdData.indexOf(
+              "data:image"
+            ) === 0
+          ) {
+
+            var ttdImage =
+              new Image();
+
+
+            /*
+             * Karena Image
+             * membutuhkan waktu
+             * untuk dimuat, kita
+             * tampilkan versi TTD
+             * ketika sudah tersedia.
+             */
+
+            ttdImage.onload =
+              function() {
+
+                try {
+
+                  var maxTTDWidth =
+                    ttdWidth - 40;
+
+
+                  var maxTTDHeight =
+                    105;
+
+
+                  var ratio =
+                    Math.min(
+                      maxTTDWidth /
+                      ttdImage.width,
+                      maxTTDHeight /
+                      ttdImage.height
+                    );
+
+
+                  var drawWidth =
+                    ttdImage.width *
+                    ratio;
+
+
+                  var drawHeight =
+                    ttdImage.height *
+                    ratio;
+
+
+                  ctx.drawImage(
+                    ttdImage,
+                    ttdX +
+                    (
+                      ttdWidth -
+                      drawWidth
+                    ) / 2,
+                    ttdY + 65,
+                    drawWidth,
+                    drawHeight
+                  );
+
+
+                  /*
+                   * Nama.
+                   */
+
+                  ctx.textAlign =
+                    "center";
+
+
+                  ctx.font =
+                    "bold 17px Arial";
+
+
+                  ctx.fillStyle =
+                    "#000000";
+
+
+                  ctx.fillText(
+                    data.NAMA ||
+                    "-",
+                    ttdX +
+                    (ttdWidth / 2),
+                    ttdY + 195
+                  );
+
+
+                  /*
+                   * NIPP.
+                   */
+
+                  ctx.font =
+                    "15px Arial";
+
+
+                  ctx.fillText(
+                    "NIPP: " +
+                    (
+                      data.NIPP ||
+                      "-"
+                    ),
+                    ttdX +
+                    (ttdWidth / 2),
+                    ttdY + 218
+                  );
+
+
+                  /*
+                   * Jabatan.
+                   */
+
+                  ctx.fillText(
+                    data.JABATAN ||
+                    "-",
+                    ttdX +
+                    (ttdWidth / 2),
+                    ttdY + 238
+                  );
+
+
+                }
+                catch (
+                  errorTTD
+                ) {
+
+                  console.error(
+                    "Gagal menggambar TTD:",
+                    errorTTD
+                  );
+
+                }
+
+              };
+
+
+            ttdImage.src =
+              ttdData;
+
+          }
+
+        }
+        catch (
+          errorCanvasTTD
+        ) {
+
+          console.warn(
+            "TTD belum dapat dibaca:",
+            errorCanvasTTD
+          );
+
+        }
+
+      }
+
+
+      /* =====================================================
+         TEKS TTD JIKA TTD BELUM TERSEDIA
+      ===================================================== */
+
+      ctx.textAlign =
+        "center";
+
+
+      ctx.font =
+        "15px Arial";
+
+
+      ctx.fillStyle =
+        "#777777";
+
+
+      ctx.fillText(
+        "Tanda tangan",
+        ttdX +
+        (ttdWidth / 2),
+        ttdY + 125
+      );
+
+
+      /*
+       * Catatan:
+       * TTD dari canvas akan
+       * menggambar di atas area ini
+       * apabila tersedia.
+       */
+
+
+      /* =====================================================
+         BORDER HALAMAN A4
+      ===================================================== */
+
+      ctx.strokeStyle =
+        "#1f1f1f";
+
+
+      ctx.lineWidth =
+        2;
+
+
+      ctx.strokeRect(
+        15,
+        15,
+        canvasWidth - 30,
+        canvasHeight - 30
       );
 
 
@@ -5541,7 +6808,7 @@ function tampilkanPreviewHasilAkhir() {
       ===================================================== */
 
       var jpg =
-        hasilCanvas.toDataURL(
+        canvas.toDataURL(
           "image/jpeg",
           0.92
         );
@@ -5562,7 +6829,7 @@ function tampilkanPreviewHasilAkhir() {
 
 
       console.log(
-        "JPG PREVIEW BERHASIL DIBUAT"
+        "JPG A4 PREVIEW BERHASIL DIBUAT"
       );
 
 
@@ -5647,8 +6914,12 @@ function tampilkanPreviewHasilAkhir() {
         );
 
 
+      container.style.width =
+        "100%";
+
+
       container.style.maxWidth =
-        "1100px";
+        "900px";
 
 
       container.style.margin =
@@ -5663,12 +6934,12 @@ function tampilkanPreviewHasilAkhir() {
         "15px";
 
 
-      container.style.borderRadius =
-        "10px";
-
-
       container.style.boxSizing =
         "border-box";
+
+
+      container.style.borderRadius =
+        "8px";
 
 
       /* =====================================================
@@ -5682,7 +6953,7 @@ function tampilkanPreviewHasilAkhir() {
 
 
       title.textContent =
-        "PREVIEW HASIL CHECKLIST";
+        "PREVIEW HASIL CHECKLIST — A4";
 
 
       title.style.fontWeight =
@@ -5725,7 +6996,7 @@ function tampilkanPreviewHasilAkhir() {
 
 
       img.alt =
-        "Preview Hasil Checklist";
+        "Preview Hasil Checklist A4";
 
 
       img.style.width =
@@ -5741,7 +7012,11 @@ function tampilkanPreviewHasilAkhir() {
 
 
       img.style.border =
-        "1px solid #ddd";
+        "1px solid #cccccc";
+
+
+      img.style.boxSizing =
+        "border-box";
 
 
       container.appendChild(
@@ -5750,7 +7025,7 @@ function tampilkanPreviewHasilAkhir() {
 
 
       /* =====================================================
-         TOMBOL
+         TOMBOL AREA
       ===================================================== */
 
       var tombolArea =
@@ -5845,7 +7120,7 @@ function tampilkanPreviewHasilAkhir() {
 
 
           link.download =
-            "Checklist_Langsir_" +
+            "Checklist_Langsir_A4_" +
             idFile +
             ".jpg";
 
@@ -5947,6 +7222,7 @@ function tampilkanPreviewHasilAkhir() {
       ===================================================== */
 
       resolve({
+
         success:
           true,
 
@@ -5966,7 +7242,7 @@ function tampilkanPreviewHasilAkhir() {
     catch (error) {
 
       console.error(
-        "GAGAL MEMBUAT PREVIEW JPG:",
+        "GAGAL MEMBUAT PREVIEW JPG A4:",
         error
       );
 
