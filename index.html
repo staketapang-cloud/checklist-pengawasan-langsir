@@ -4459,7 +4459,65 @@ function kirimRequestPost(
 
 }
 
+/* =========================================================
+   GET REQUEST
+========================================================= */
 
+function kirimRequestGet(
+  action
+) {
+
+  var url =
+    API_URL +
+    "?action=" +
+    encodeURIComponent(action);
+
+
+  console.log(
+    "GET API:",
+    action
+  );
+
+
+  return fetch(
+    url,
+    {
+      method: "GET"
+    }
+  )
+
+
+  .then(function(response) {
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
+    }
+
+
+    return response.text();
+
+  })
+
+
+  .then(function(text) {
+
+    console.log(
+      "RESPONSE GET:",
+      action,
+      text
+    );
+
+
+    return parseApiResponse(text);
+
+  });
+
+}
 /* =========================================================
    BUAT DATA TTD
 ========================================================= */
