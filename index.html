@@ -6190,60 +6190,56 @@ function tampilkanPreviewHasilAkhir() {
         18;
 
 
-      /* =====================================================
-         IDENTITAS
-      ===================================================== */
+ /* =====================================================
+   IDENTITAS
+===================================================== */
 
-      ctx.textAlign =
-        "left";
+ctx.textAlign =
+  "left";
 
+ctx.font =
+  fontBold;
 
-      ctx.font =
-        fontBold;
+ctx.fillStyle =
+  "#1f4e78";
 
+ctx.fillText(
+  "DATA PEMERIKSAAN",
+  margin,
+  y
+);
 
-      ctx.fillStyle =
-        "#1f4e78";
-
-
-      ctx.fillText(
-        "DATA PEMERIKSAAN",
-        margin,
-        y
-      );
-
-
-      y +=
-        16;
+y +=
+  16;
 
 
-      /*
-       * Area identitas dibuat
-       * dua kolom.
-       */
+/*
+ * Area identitas dibuat
+ * dua kolom.
+ */
 
-      var leftX =
-        margin;
+var leftX =
+  margin;
 
+var rightX =
+  margin +
+  585;
 
-      var rightX =
-        margin +
-        585;
+var labelOffset =
+  92;
 
+var identitasFont =
+  "9px Arial";
 
-      var labelOffset =
-        92;
-
-
-      var identitasFont =
-        "9px Arial";
-
-
-      var identitasBold =
-        "bold 9px Arial";
+var identitasBold =
+  "bold 9px Arial";
 
 
-     var identitasKiri = [
+/* =====================================================
+   IDENTITAS KIRI
+===================================================== */
+
+var identitasKiri = [
 
   [
     "Hari / Tanggal",
@@ -6267,6 +6263,10 @@ function tampilkanPreviewHasilAkhir() {
 
 ];
 
+
+/* =====================================================
+   IDENTITAS KANAN
+===================================================== */
 
 var identitasKanan = [
 
@@ -6301,90 +6301,137 @@ var identitasKanan = [
   ]
 
 ];
-      for (
-        var i = 0;
-        i < 5;
-        i++
-      ) {
-
-        var yy =
-          y +
-          (
-            i *
-            16
-          );
 
 
-        /*
-         * Kolom kiri.
-         */
+/* =====================================================
+   GAMBAR IDENTITAS
+===================================================== */
 
-        ctx.font =
-          identitasBold;
+for (
+  var i = 0;
+  i < 6;
+  i++
+) {
 
-
-        ctx.fillStyle =
-          "#000000";
-
-
-        ctx.fillText(
-          identitasKiri[i][0] +
-          " :",
-          leftX,
-          yy
-        );
+  var yy =
+    y +
+    (
+      i *
+      16
+    );
 
 
-        ctx.font =
-          identitasFont;
+  /* ===================================================
+     KOLOM KIRI
+  =================================================== */
+
+  if (
+    identitasKiri[i]
+  ) {
+
+    ctx.font =
+      identitasBold;
+
+    ctx.fillStyle =
+      "#000000";
+
+    ctx.fillText(
+      identitasKiri[i][0] +
+      " :",
+      leftX,
+      yy
+    );
 
 
-        ctx.fillText(
-          identitasKiri[i][1],
-          leftX +
-          labelOffset,
-          yy
-        );
+    ctx.font =
+      identitasFont;
+
+    ctx.fillText(
+      identitasKiri[i][1],
+      leftX +
+      labelOffset,
+      yy
+    );
+
+  }
 
 
-        /*
-         * Kolom kanan.
-         */
+  /* ===================================================
+     KOLOM KANAN
+  =================================================== */
 
-        ctx.font =
-          identitasBold;
+  if (
+    identitasKanan[i]
+  ) {
 
+    ctx.font =
+      identitasBold;
 
-        ctx.fillText(
-          identitasKanan[i][0] +
-          " :",
-          rightX,
-          yy
-        );
+    ctx.fillStyle =
+      "#000000";
 
-
-        ctx.font =
-          identitasFont;
-
-
-        ctx.fillText(
-          identitasKanan[i][1],
-          rightX +
-          105,
-          yy
-        );
-
-      }
+    ctx.fillText(
+      identitasKanan[i][0] +
+      " :",
+      rightX,
+      yy
+    );
 
 
-      y +=
-        (
-          5 *
-          16
-        ) +
-        10;
+    ctx.font =
+      identitasFont;
+
+    ctx.fillText(
+      identitasKanan[i][1],
+      rightX +
+      105,
+      yy
+    );
+
+  }
+
+}
 
 
+/* =====================================================
+   LANJUT KE BAGIAN BAWAH IDENTITAS
+===================================================== */
+
+y +=
+  (
+    6 *
+    16
+  ) +
+  10;
+
+
+/* =====================================================
+   GARIS PEMBATAS
+===================================================== */
+
+ctx.strokeStyle =
+  "#888888";
+
+ctx.lineWidth =
+  1;
+
+ctx.beginPath();
+
+ctx.moveTo(
+  margin,
+  y
+);
+
+ctx.lineTo(
+  canvasWidth -
+  margin,
+  y
+);
+
+ctx.stroke();
+
+y +=
+  12;
       /* =====================================================
          GARIS PEMBATAS
       ===================================================== */
