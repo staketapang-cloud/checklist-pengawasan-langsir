@@ -5625,7 +5625,7 @@ function simpanPemeriksaan() {
    - TTD langsung diambil dari signatureCanvas
 ========================================================= */
 
-function tampilkanPreviewHasilAkhir() {
+async function tampilkanPreviewHasilAkhir() {
 
   return new Promise(function(resolve, reject) {
 
@@ -5912,29 +5912,78 @@ var logoKAI =
     "logoKaiHeader"
   );
 
+if (logoKAI) {
 
-if (
-  logoKAI &&
-  logoKAI.complete &&
-  logoKAI.naturalWidth > 0
-) {
+  try {
 
-  ctx.drawImage(
-    logoKAI,
-    margin,
-    18,
-    58,
-    58
-  );
+    /*
+     * Pastikan gambar sudah dimuat
+     */
+    if (!logoKAI.complete) {
 
-  console.log(
-    "LOGO KAI BERHASIL DIGAMBAR"
-  );
+      await new Promise(
+        function(resolve, reject) {
+
+          logoKAI.onload =
+            function() {
+              resolve();
+            };
+
+          logoKAI.onerror =
+            function() {
+              reject(
+                new Error(
+                  "Gagal memuat logo KAI."
+                )
+              );
+            };
+
+        }
+      );
+
+    }
+
+    /*
+     * Pastikan gambar benar-benar valid
+     */
+    if (
+      logoKAI.naturalWidth > 0 &&
+      logoKAI.naturalHeight > 0
+    ) {
+
+      ctx.drawImage(
+        logoKAI,
+        margin,
+        18,
+        58,
+        58
+      );
+
+      console.log(
+        "LOGO KAI BERHASIL DIGAMBAR"
+      );
+
+    } else {
+
+      console.warn(
+        "LOGO KAI ADA, TETAPI UKURAN GAMBAR 0"
+      );
+
+    }
+
+  } catch (errorLogo) {
+
+    console.error(
+      "GAGAL MEMUAT LOGO KAI:",
+      errorLogo
+    );
+
+  }
 
 } else {
 
   console.warn(
-    "LOGO KAI TIDAK DITEMUKAN"
+    "ELEMENT logoKaiHeader TIDAK DITEMUKAN"
   );
 
 }
