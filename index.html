@@ -5844,15 +5844,15 @@ function tampilkanPreviewHasilAkhir() {
 
 
       var fontTabel =
-        "9px Arial";
+        "12px Arial";
 
 
       var fontTabelBold =
-        "bold 9px Arial";
+        "bold 12px Arial";
 
 
       var fontKecil =
-        "8px Arial";
+        "10px Arial";
 
 
       /* =====================================================
@@ -6236,11 +6236,11 @@ function tampilkanPreviewHasilAkhir() {
 
 
       var identitasFont =
-        "9px Arial";
+        "12px Arial";
 
 
       var identitasBold =
-        "bold 9px Arial";
+        "bold 12px Arial";
 
 
      var identitasKiri = [
@@ -6303,9 +6303,88 @@ var identitasKanan = [
 ];
 for (
   var i = 0;
-  i < 4;
+  i < 6;
   i++
 ) {
+
+  var yy =
+    y +
+    (
+      i *
+      16
+    );
+
+
+  /*
+   * Kolom kiri.
+   * Data kiri hanya 4 baris.
+   */
+
+  if (
+    identitasKiri[i]
+  ) {
+
+    ctx.font =
+      identitasBold;
+
+    ctx.fillStyle =
+      "#000000";
+
+    ctx.fillText(
+      identitasKiri[i][0] +
+      " :",
+      leftX,
+      yy
+    );
+
+    ctx.font =
+      identitasFont;
+
+    ctx.fillText(
+      identitasKiri[i][1],
+      leftX +
+      labelOffset,
+      yy
+    );
+
+  }
+
+
+  /*
+   * Kolom kanan.
+   * Data kanan ada 6 baris.
+   */
+
+  if (
+    identitasKanan[i]
+  ) {
+
+    ctx.font =
+      identitasBold;
+
+    ctx.fillStyle =
+      "#000000";
+
+    ctx.fillText(
+      identitasKanan[i][0] +
+      " :",
+      rightX,
+      yy
+    );
+
+    ctx.font =
+      identitasFont;
+
+    ctx.fillText(
+      identitasKanan[i][1],
+      rightX +
+      105,
+      yy
+    );
+
+  }
+
+}
 
         var yy =
           y +
@@ -6536,7 +6615,7 @@ for (
 
 
       ctx.font =
-        "bold 8px Arial";
+        "bold 10px Arial";
 
 
       ctx.textAlign =
