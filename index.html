@@ -717,8 +717,21 @@ body {
 
 
 <body>
+<img
+  id="logoKaiHeader"
+  src="logo-kai.png.png"
+  style="display:none;"
+>
+<!-- =========================================================
+     LOGO KAI UNTUK PREVIEW
+========================================================= -->
 
-
+<img
+  id="logoKaiHeader"
+  src="logo-kai.png.png"
+  alt="Logo KAI"
+  style="display:none;"
+>
 <!-- =========================================================
      HEADER
 ========================================================= -->
@@ -5882,53 +5895,31 @@ function tampilkanPreviewHasilAkhir() {
 
       canvas.width =
         canvasWidth;
-
 /* =====================================================
    LOGO KAI
 ===================================================== */
 
 var logoKAI =
-  new Image();
+  document.getElementById(
+    "logoKaiHeader"
+  );
 
-logoKAI.src =
-  "logo-kai.png.png";
+if (
+  !logoKAI
+) {
 
-logoKAI.onload =
-  function() {
+  console.warn(
+    "ELEMENT LOGO KAI TIDAK DITEMUKAN"
+  );
 
-    console.log(
-      "LOGO KAI BERHASIL DIMUAT"
-    );
+} else {
 
-  };
+  console.log(
+    "ELEMENT LOGO KAI DITEMUKAN:",
+    logoKAI.src
+  );
 
-logoKAI.onerror =
-  function() {
-
-    console.error(
-      "LOGO KAI GAGAL DIMUAT:",
-      logoKAI.src
-    );
-
-  };
-canvas.height =
-  canvasHeight;
-      /* =====================================================
-         LATAR PUTIH
-      ===================================================== */
-
-      ctx.fillStyle =
-        "#ffffff";
-
-
-      ctx.fillRect(
-        0,
-        0,
-        canvasWidth,
-        canvasHeight
-      );
-
-
+}
       /* =====================================================
          FUNGSI TEXT WRAP
       ===================================================== */
@@ -6192,12 +6183,46 @@ if (
   logoKAI.naturalWidth > 0
 ) {
 
+/* =====================================================
+   GAMBAR LOGO KAI
+===================================================== */
+
+/* =====================================================
+   GAMBAR LOGO KAI
+===================================================== */
+if (
+  logoKAI &&
+  logoKAI.complete &&
+  logoKAI.naturalWidth > 0
+) {
   ctx.drawImage(
     logoKAI,
     margin,
     20,
     58,
     58
+  );
+}
+  console.log(
+    "LOGO KAI BERHASIL DIGAMBAR KE CANVAS"
+  );
+
+} else {
+
+  console.warn(
+    "LOGO KAI BELUM SIAP DIGAMBAR"
+  );
+
+}
+
+  console.log(
+    "LOGO KAI BERHASIL DIGAMBAR KE CANVAS"
+  );
+
+} else {
+
+  console.warn(
+    "LOGO KAI TIDAK DIGAMBAR"
   );
 
 }
@@ -6208,10 +6233,7 @@ if (
 
 ctx.fillText(
   "CHECKLIST PENGAWASAN KEGIATAN LANGSIR",
-  (
-    canvasWidth / 2
-  ) +
-  25,
+  canvasWidth / 2 + 40,
   y + 20
 );
 
