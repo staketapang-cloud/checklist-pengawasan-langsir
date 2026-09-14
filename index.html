@@ -756,13 +756,34 @@ body {
     Nama
   </label>
 
-<input
-  type="text"
-  id="loginNama"
-  placeholder="Ketik Nama"
-  autocomplete="off"
->
+<div style="position:relative;">
 
+  <input
+    type="text"
+    id="loginNama"
+    placeholder="Ketik Nama"
+    autocomplete="off"
+  >
+
+  <div
+    id="suggestionNamaLogin"
+    style="
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      background:#fff;
+      border:1px solid #ccc;
+      border-radius:6px;
+      max-height:220px;
+      overflow-y:auto;
+      z-index:9999;
+      box-shadow:0 4px 10px rgba(0,0,0,0.15);
+    ">
+  </div>
+
+</div>
 </div>
 
     </div>
@@ -2207,19 +2228,12 @@ function kembaliKeLogin() {
 
 function muatDaftarUserLogin() {
 
-  var namaSelect =
+  var namaInput =
     document.getElementById("loginNama");
 
-  if (!namaSelect) {
+  if (!namaInput) {
     return;
   }
-
-
-  namaSelect.innerHTML =
-    '<option value="">Memuat daftar nama...</option>';
-
-  namaSelect.disabled = true;
-
 
   kirimRequestGet("user")
 
@@ -2229,7 +2243,6 @@ function muatDaftarUserLogin() {
         "DAFTAR USER LOGIN:",
         result
       );
-
 
       if (
         !result ||
@@ -2244,101 +2257,30 @@ function muatDaftarUserLogin() {
 
       }
 
-
       var daftar =
         Array.isArray(result.data)
           ? result.data
           : [];
 
-window.daftarUserLogin =
-  daftar;
-      namaSelect.innerHTML =
-        '<option value="">-- Pilih Nama --</option>';
+      /* =========================================
+         SIMPAN DAFTAR USER KE MEMORY
+      ========================================= */
 
-
-      daftar.forEach(function(user) {
-
-        if (!user) {
-          return;
-        }
-
-
-        var nama =
-          String(
-            user.NAMA || ""
-          ).trim();
-
-        var nipp =
-          String(
-            user.NIPP || ""
-          ).trim();
-
-        var jabatan =
-          String(
-            user.JABATAN || ""
-          ).trim();
-
-
-        if (!nama) {
-          return;
-        }
-
-
-        var option =
-          document.createElement("option");
-
-
-        option.value =
-          nama;
-
-        option.textContent =
-          nama;
-
-
-        option.dataset.nipp =
-          nipp;
-
-        option.dataset.jabatan =
-          jabatan;
-
-
-        namaSelect.appendChild(
-          option
-        );
-
-      });
-
-
-      namaSelect.disabled = false;
-
-
-      /*
-         CEK JUMLAH DATA USER
-         Jangan menggunakan options.length
-         karena beberapa browser bisa
-         membaca property tersebut berbeda.
-      */
-
-      if (
-        namaSelect.options &&
-        namaSelect.options.length <= 1
-      ) {
-
-        namaSelect.innerHTML =
-          '<option value="">-- Tidak ada user aktif --</option>';
-
-        namaSelect.disabled = true;
-
-      }
-
+      window.daftarUserLogin =
+        daftar;
 
       console.log(
         "JUMLAH USER LOGIN:",
         daftar.length
       );
 
-    })
+      /* =========================================
+         AKTIFKAN AUTOCOMPLETE NAMA
+      ========================================= */
 
+      buatAutocompleteNamaLogin();
+
+    })
 
     .catch(function(error) {
 
@@ -2346,18 +2288,6 @@ window.daftarUserLogin =
         "GAGAL MEMUAT USER LOGIN:",
         error
       );
-
-
-      namaSelect.innerHTML =
-        '<option value="">Gagal memuat daftar nama</option>';
-
-      namaSelect.disabled = true;
-
-
-      /*
-         Untuk sementara jangan alert,
-         supaya halaman tidak terganggu.
-      */
 
       console.warn(
         "Daftar user login gagal dimuat:",
@@ -2462,6 +2392,267 @@ function isiDataUserDariNama() {
     jabatanElement.value = "";
 
   }
+
+}
+      /* =========================================================
+   AUTOCOMPLETE PILIHAN NAMA LOGIN
+========================================================= */
+
+function buatAutocompleteNamaLogin() {
+
+  var namaInput =
+    document.getElementById(
+      "loginNama"
+    );
+
+  var suggestionBox =
+    document.getElementById(
+      "suggestionNamaLogin"
+    );
+
+  if (
+    !namaInput ||
+    !suggestionBox
+  ) {
+
+    console.warn(
+      "Kotak autocomplete nama tidak ditemukan."
+    );
+
+    return;
+  }
+
+
+  /* =========================================
+     HINDARI EVENT DIPASANG BERULANG
+  ========================================= */
+
+  if (
+    namaInput.dataset.autocompleteAktif ===
+    "Y"
+  ) {
+    return;
+  }
+
+  namaInput.dataset.autocompleteAktif =
+    "Y";
+
+
+  /* =========================================
+     SAAT USER MENGETIK
+  ========================================= */
+
+  namaInput.addEventListener(
+    "input",
+    function() {
+
+      var keyword =
+        String(
+          namaInput.value || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+      suggestionBox.innerHTML = "";
+
+
+      if (!keyword) {
+
+        suggestionBox.style.display =
+          "none";
+
+        return;
+      }
+
+
+      var daftar =
+        window.daftarUserLogin || [];
+
+
+      var hasil =
+        daftar.filter(
+          function(user) {
+
+            if (!user) {
+              return false;
+            }
+
+            var nama =
+              String(
+                user.NAMA || ""
+              )
+              .trim()
+              .toLowerCase();
+
+            return nama.includes(
+              keyword
+            );
+
+          }
+        );
+
+
+      if (!hasil.length) {
+
+        suggestionBox.style.display =
+          "none";
+
+        return;
+      }
+
+
+      /* =====================================
+         TAMPILKAN HASIL NAMA
+      ===================================== */
+
+      hasil.forEach(
+        function(user) {
+
+          var item =
+            document.createElement(
+              "div"
+            );
+
+
+          item.textContent =
+            user.NAMA;
+
+
+          item.style.padding =
+            "10px 12px";
+
+          item.style.cursor =
+            "pointer";
+
+          item.style.background =
+            "#ffffff";
+
+          item.style.borderBottom =
+            "1px solid #eeeeee";
+
+
+          /* Hover */
+
+          item.addEventListener(
+            "mouseenter",
+            function() {
+
+              item.style.background =
+                "#f1f5f9";
+
+            }
+          );
+
+
+          item.addEventListener(
+            "mouseleave",
+            function() {
+
+              item.style.background =
+                "#ffffff";
+
+            }
+          );
+
+
+          /* =================================
+             PILIH NAMA
+          ================================= */
+
+          item.addEventListener(
+            "mousedown",
+            function(event) {
+
+              event.preventDefault();
+
+
+              namaInput.value =
+                user.NAMA || "";
+
+
+              var nippElement =
+                document.getElementById(
+                  "loginNipp"
+                );
+
+
+              var jabatanElement =
+                document.getElementById(
+                  "loginJabatan"
+                );
+
+
+              if (nippElement) {
+
+                nippElement.value =
+                  user.NIPP || "";
+
+              }
+
+
+              if (jabatanElement) {
+
+                jabatanElement.value =
+                  user.JABATAN || "";
+
+              }
+
+
+              suggestionBox.style.display =
+                "none";
+
+
+              console.log(
+                "NAMA DIPILIH:",
+                user.NAMA,
+                "NIPP:",
+                user.NIPP,
+                "JABATAN:",
+                user.JABATAN
+              );
+
+            }
+          );
+
+
+          suggestionBox.appendChild(
+            item
+          );
+
+        }
+      );
+
+
+      suggestionBox.style.display =
+        "block";
+
+    }
+  );
+
+
+  /* =========================================
+     KLIK DI LUAR KOTAK
+  ========================================= */
+
+  document.addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target !== namaInput &&
+        !suggestionBox.contains(
+          event.target
+        )
+      ) {
+
+        suggestionBox.style.display =
+          "none";
+
+      }
+
+    }
+  );
 
 }
 /* =========================================================
