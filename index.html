@@ -5907,14 +5907,16 @@ function tampilkanPreviewHasilAkhir() {
    LOGO KAI - POJOK KIRI ATAS
 ===================================================== */
 
-var logoKAI =
-  new Image();
+if (
+  window.logoKAI &&
+  window.logoKAI.complete &&
+  window.logoKAI.naturalWidth > 0
+) {
 
-logoKAI.onload =
-  function() {
+  try {
 
     ctx.drawImage(
-      logoKAI,
+      window.logoKAI,
       margin,
       18,
       58,
@@ -5922,27 +5924,25 @@ logoKAI.onload =
     );
 
     console.log(
-      "LOGO KAI BERHASIL DIMUAT"
+      "LOGO KAI BERHASIL DIGAMBAR KE CANVAS"
     );
 
-  };
-
-logoKAI.onerror =
-  function() {
+  } catch (errorLogo) {
 
     console.error(
-      "LOGO KAI GAGAL DIMUAT:",
-      logoKAI.src
+      "GAGAL MENGGAMBAR LOGO KAI:",
+      errorLogo
     );
 
-  };
+  }
 
-/*
- * File logo berada di repository GitHub
- * yang sama dengan index.html
- */
-logoKAI.src =
-  "logo-kai.png.png";
+} else {
+
+  console.warn(
+    "LOGO KAI TIDAK SIAP DIGAMBAR"
+  );
+
+}
       /* =====================================================
          FUNGSI TEXT WRAP
       ===================================================== */
@@ -10085,7 +10085,271 @@ console.log(
   "FUNCTION GLOBAL READY: simpanPemeriksaan =",
   typeof window.simpanPemeriksaan
 );
+/* =========================================================
+   FIX FINAL LOGO KAI
+   - Memuat logo sebelum preview
+   - Menunggu logo selesai dimuat
+   - Memastikan window.logoKAI tersedia
+   - Tidak menggunakan await
+   - Tidak mengubah Apps Script / Google Sheets
+========================================================= */
 
+(function () {
+
+  console.log(
+    "MEMULAI SISTEM LOGO KAI..."
+  );
+
+  /* =======================================================
+     1. BUAT OBJECT LOGO
+  ======================================================= */
+
+  window.logoKAI =
+    new Image();
+
+  window.logoKAI.onload =
+    function () {
+
+      console.log(
+        "LOGO KAI BERHASIL DIMUAT:",
+        window.logoKAI.naturalWidth,
+        "x",
+        window.logoKAI.naturalHeight
+      );
+
+    };
+
+  window.logoKAI.onerror =
+    function () {
+
+      console.error(
+        "LOGO KAI GAGAL DIMUAT:",
+        window.logoKAI.src
+      );
+
+    };
+
+  window.logoKAI.src =
+    "logo-kai.png.png";
+
+
+  /* =======================================================
+     2. SIMPAN FUNGSI PREVIEW ASLI
+  ======================================================= */
+
+  var previewAsli =
+    window.tampilkanPreviewHasilAkhir;
+
+
+  if (
+    typeof previewAsli !==
+    "function"
+  ) {
+
+    console.error(
+      "FUNGSI tampilkanPreviewHasilAkhir TIDAK DITEMUKAN"
+    );
+
+    return;
+
+  }
+
+
+  /* =======================================================
+     3. GANTI PEMANGGILAN PREVIEW
+     TANPA MENGGUNAKAN await
+  ======================================================= */
+
+  window.tampilkanPreviewHasilAkhir =
+    function () {
+
+      return new Promise(
+        function (
+          resolve,
+          reject
+        ) {
+
+          /* =================================================
+             JIKA LOGO SUDAH SELESAI DIMUAT
+          ================================================= */
+
+          if (
+            window.logoKAI.complete &&
+            window.logoKAI.naturalWidth > 0
+          ) {
+
+            console.log(
+              "LOGO KAI SUDAH SIAP"
+            );
+
+            try {
+
+              var hasil =
+                previewAsli();
+
+              Promise.resolve(
+                hasil
+              )
+                .then(
+                  function (result) {
+
+                    resolve(
+                      result
+                    );
+
+                  }
+                )
+                .catch(
+                  function (error) {
+
+                    reject(
+                      error
+                    );
+
+                  }
+                );
+
+            } catch (errorPreview) {
+
+              reject(
+                errorPreview
+              );
+
+            }
+
+            return;
+
+          }
+
+
+          /* =================================================
+             TUNGGU LOGO SELESAI DIMUAT
+          ================================================= */
+
+          console.log(
+            "MENUNGGU LOGO KAI SELESAI DIMUAT..."
+          );
+
+
+          window.logoKAI.onload =
+            function () {
+
+              console.log(
+                "LOGO KAI SELESAI DIMUAT - PREVIEW DIMULAI"
+              );
+
+              try {
+
+                var hasil =
+                  previewAsli();
+
+                Promise.resolve(
+                  hasil
+                )
+                  .then(
+                    function (result) {
+
+                      resolve(
+                        result
+                      );
+
+                    }
+                  )
+                  .catch(
+                    function (error) {
+
+                      reject(
+                        error
+                      );
+
+                    }
+                  );
+
+              } catch (errorPreview) {
+
+                reject(
+                  errorPreview
+                );
+
+              }
+
+            };
+
+
+          window.logoKAI.onerror =
+            function () {
+
+              console.error(
+                "LOGO KAI GAGAL DIMUAT:"
+              );
+
+              /*
+               * Preview tetap dijalankan
+               * walaupun logo gagal.
+               */
+
+              try {
+
+                var hasil =
+                  previewAsli();
+
+                Promise.resolve(
+                  hasil
+                )
+                  .then(
+                    function (result) {
+
+                      resolve(
+                        result
+                      );
+
+                    }
+                  )
+                  .catch(
+                    function (error) {
+
+                      reject(
+                        error
+                      );
+
+                    }
+                  );
+
+              } catch (errorPreview) {
+
+                reject(
+                  errorPreview
+                );
+
+              }
+
+            };
+
+        }
+      );
+
+    };
+
+
+  /* =======================================================
+     4. PASTIKAN LOGO SUDAH MULAI DIMUAT
+  ======================================================= */
+
+  if (
+    !window.logoKAI.src
+  ) {
+
+    window.logoKAI.src =
+      "logo-kai.png.png";
+
+  }
+
+
+  console.log(
+    "SISTEM LOGO KAI AKTIF"
+  );
+
+})();
 </script>
 
 </body>
