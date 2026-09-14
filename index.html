@@ -2199,7 +2199,6 @@ function kembaliKeLogin() {
   });
 
 }
-
 /* =========================================================
    MUAT DAFTAR USER LOGIN
 ========================================================= */
@@ -2207,18 +2206,12 @@ function kembaliKeLogin() {
 function muatDaftarUserLogin() {
 
   var namaSelect =
-    document.getElementById(
-      "loginNama"
-    );
+    document.getElementById("loginNama");
 
   if (!namaSelect) {
     return;
   }
 
-
-  /*
-     Tampilkan status awal
-  */
 
   namaSelect.innerHTML =
     '<option value="">Memuat daftar nama...</option>';
@@ -2226,56 +2219,41 @@ function muatDaftarUserLogin() {
   namaSelect.disabled = true;
 
 
-  /*
-     Ambil data USER dari Apps Script
-  */
+  kirimRequestGet("user")
 
-  kirimRequestGet(
-    "user"
-  )
+    .then(function(result) {
 
-  .then(function(result) {
-
-    console.log(
-      "DAFTAR USER LOGIN:",
-      result
-    );
-
-
-    if (
-      !result ||
-      result.success !== true
-    ) {
-
-      throw new Error(
-        result && result.message
-          ? result.message
-          : "Daftar user gagal dimuat."
+      console.log(
+        "DAFTAR USER LOGIN:",
+        result
       );
 
-    }
+
+      if (
+        !result ||
+        result.success !== true
+      ) {
+
+        throw new Error(
+          result && result.message
+            ? result.message
+            : "Daftar user gagal dimuat."
+        );
+
+      }
 
 
-    var daftar =
-      Array.isArray(result.data)
-        ? result.data
-        : [];
+      var daftar =
+        Array.isArray(result.data)
+          ? result.data
+          : [];
 
 
-    /*
-       Kosongkan dropdown
-    */
-
-    namaSelect.innerHTML =
-      '<option value="">-- Pilih Nama --</option>';
+      namaSelect.innerHTML =
+        '<option value="">-- Pilih Nama --</option>';
 
 
-    /*
-       Masukkan user AKTIF
-    */
-
-    daftar.forEach(
-      function(user) {
+      daftar.forEach(function(user) {
 
         if (!user) {
           return;
@@ -2304,9 +2282,7 @@ function muatDaftarUserLogin() {
 
 
         var option =
-          document.createElement(
-            "option"
-          );
+          document.createElement("option");
 
 
         option.value =
@@ -2315,11 +2291,6 @@ function muatDaftarUserLogin() {
         option.textContent =
           nama;
 
-
-        /*
-           Simpan NIPP dan Jabatan
-           di option dropdown.
-        */
 
         option.dataset.nipp =
           nipp;
@@ -2332,55 +2303,68 @@ function muatDaftarUserLogin() {
           option
         );
 
+      });
+
+
+      namaSelect.disabled = false;
+
+
+      /*
+         CEK JUMLAH DATA USER
+         Jangan menggunakan options.length
+         karena beberapa browser bisa
+         membaca property tersebut berbeda.
+      */
+
+      if (
+        namaSelect.options &&
+        namaSelect.options.length <= 1
+      ) {
+
+        namaSelect.innerHTML =
+          '<option value="">-- Tidak ada user aktif --</option>';
+
+        namaSelect.disabled = true;
+
       }
-    );
 
 
-    namaSelect.disabled = false;
+      console.log(
+        "JUMLAH USER LOGIN:",
+        daftar.length
+      );
+
+    })
 
 
-    /*
-       Jika tidak ada user
-    */
+    .catch(function(error) {
 
-    if (
-      namaSelect.options.length <= 1
-    ) {
+      console.error(
+        "GAGAL MEMUAT USER LOGIN:",
+        error
+      );
+
 
       namaSelect.innerHTML =
-        '<option value="">-- Tidak ada user aktif --</option>';
+        '<option value="">Gagal memuat daftar nama</option>';
 
       namaSelect.disabled = true;
 
-    }
 
-  })
+      /*
+         Untuk sementara jangan alert,
+         supaya halaman tidak terganggu.
+      */
 
-  .catch(function(error) {
+      console.warn(
+        "Daftar user login gagal dimuat:",
+        error.message
+      );
 
-    console.error(
-      "GAGAL MEMUAT USER LOGIN:",
-      error
-    );
-
-
-    namaSelect.innerHTML =
-      '<option value="">Gagal memuat daftar nama</option>';
-
-    namaSelect.disabled = true;
-
-
-    alert(
-      "Daftar nama login gagal dimuat.\n\n" +
-      error.message
-    );
-
-  });
+    });
 
 }
-
-
-/* =========================================================
+===================================================
    AUTO ISI NIPP & JABATAN
 ========================================================= */
 
