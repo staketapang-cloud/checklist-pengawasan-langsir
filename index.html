@@ -9914,218 +9914,327 @@ console.log(
 })();
 </script>
 <script>
+<script>
 /* =========================================================
    FIX FINAL DROPDOWN LOGIN
-   Tidak menggunakan autocomplete lama
+   NAMA -> NIPP + JABATAN OTOMATIS
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
 
-  var loginNama =
-    document.getElementById("loginNama");
+    var loginNama =
+      document.getElementById(
+        "loginNama"
+      );
 
-  var loginNipp =
-    document.getElementById("loginNipp");
+    var loginNipp =
+      document.getElementById(
+        "loginNipp"
+      );
 
-  var loginJabatan =
-    document.getElementById("loginJabatan");
-
-
-  if (
-    !loginNama ||
-    !loginNipp ||
-    !loginJabatan
-  ) {
-
-    console.error(
-      "FIX DROPDOWN: element login tidak ditemukan."
-    );
-
-    return;
-  }
-
-
-  console.log(
-    "FIX DROPDOWN: mulai memuat 21 user..."
-  );
-
-
-  /* =======================================================
-     PASTIKAN BENAR-BENAR SELECT
-  ======================================================= */
-
-  if (
-    loginNama.tagName.toLowerCase() !== "select"
-  ) {
-
-    console.error(
-      "FIX DROPDOWN: loginNama bukan SELECT."
-    );
-
-    return;
-  }
-
-
-  /* =======================================================
-     MUAT USER DARI API
-  ======================================================= */
-
-  kirimRequestGet("user")
-    .then(function (response) {
-
-      console.log(
-        "FIX DROPDOWN RESPONSE:",
-        response
+    var loginJabatan =
+      document.getElementById(
+        "loginJabatan"
       );
 
 
-      if (
-        !response ||
-        response.success !== true ||
-        !Array.isArray(response.data)
-      ) {
+    /* =====================================================
+       CEK ELEMENT
+    ===================================================== */
 
-        console.error(
-          "FIX DROPDOWN: data user tidak valid.",
-          response
-        );
-
-        return;
-      }
-
-
-      /* ===================================================
-         KOSONGKAN SELECT
-      =================================================== */
-
-      loginNama.innerHTML =
-        '<option value="">-- Pilih Nama --</option>';
-
-
-      /* ===================================================
-         MASUKKAN SEMUA USER
-      =================================================== */
-
-      for (
-        var i = 0;
-        i < response.data.length;
-        i++
-      ) {
-
-        var user =
-          response.data[i];
-
-
-        if (!user) {
-          continue;
-        }
-
-
-        var nama =
-          String(user.NAMA || "").trim();
-
-        var nipp =
-          String(user.NIPP || "").trim();
-
-        var jabatan =
-          String(user.JABATAN || "").trim();
-
-
-        if (!nama) {
-          continue;
-        }
-
-
-        var option =
-          document.createElement("option");
-
-
-        option.value =
-          nama;
-
-        option.textContent =
-          nama;
-
-        option.setAttribute(
-          "data-nipp",
-          nipp
-        );
-
-        option.setAttribute(
-          "data-jabatan",
-          jabatan
-        );
-
-
-        loginNama.appendChild(option);
-
-      }
-
-
-      console.log(
-        "FIX DROPDOWN: JUMLAH NAMA =",
-        loginNama.options.length - 1
-      );
-
-    })
-    .catch(function (error) {
+    if (
+      !loginNama ||
+      !loginNipp ||
+      !loginJabatan
+    ) {
 
       console.error(
-        "FIX DROPDOWN: gagal memuat user.",
-        error
+        "FIX DROPDOWN: element login tidak ditemukan."
       );
 
-    });
-
-
-  /* =======================================================
-     EVENT PILIH NAMA
-  ======================================================= */
-
-  loginNama.addEventListener(
-    "change",
-    function () {
-
-      var option =
-        loginNama.options[
-          loginNama.selectedIndex
-        ];
-
-
-      if (
-        !option ||
-        !option.value
-      ) {
-
-        loginNipp.value = "";
-        loginJabatan.value = "";
-
-        return;
-      }
-
-
-      loginNipp.value =
-        option.getAttribute("data-nipp") || "";
-
-
-      loginJabatan.value =
-        option.getAttribute("data-jabatan") || "";
-
-
-      console.log(
-        "FIX DROPDOWN PILIH:",
-        option.value,
-        "| NIPP:",
-        loginNipp.value,
-        "| JABATAN:",
-        loginJabatan.value
-      );
-
+      return;
     }
-  );
 
-});
+
+    console.log(
+      "FIX DROPDOWN: mulai memuat user..."
+    );
+
+
+    /* =====================================================
+       PASTIKAN loginNama ADALAH SELECT
+    ===================================================== */
+
+    if (
+      loginNama.tagName.toLowerCase() !==
+      "select"
+    ) {
+
+      console.error(
+        "FIX DROPDOWN: loginNama bukan SELECT."
+      );
+
+      return;
+    }
+
+
+    /* =====================================================
+       REQUEST USER
+    ===================================================== */
+
+    if (
+      typeof kirimRequestGet !==
+      "function"
+    ) {
+
+      console.error(
+        "FIX DROPDOWN: kirimRequestGet belum tersedia."
+      );
+
+      return;
+    }
+
+
+    kirimRequestGet("user")
+
+      .then(
+        function (response) {
+
+          console.log(
+            "FIX DROPDOWN RESPONSE:",
+            response
+          );
+
+
+          /* =================================================
+             VALIDASI RESPONSE
+          ================================================= */
+
+          if (
+            !response ||
+            response.success !== true ||
+            !Array.isArray(
+              response.data
+            )
+          ) {
+
+            console.error(
+              "FIX DROPDOWN: data user tidak valid.",
+              response
+            );
+
+            return;
+          }
+
+
+          /* =================================================
+             RESET DROPDOWN
+          ================================================= */
+
+          loginNama.innerHTML =
+            '<option value="">-- Pilih Nama --</option>';
+
+
+          var jumlahUser =
+            0;
+
+
+          /* =================================================
+             MASUKKAN USER KE DROPDOWN
+          ================================================= */
+
+          for (
+            var i = 0;
+            i < response.data.length;
+            i++
+          ) {
+
+            var user =
+              response.data[i];
+
+
+            if (!user) {
+              continue;
+            }
+
+
+            var nama =
+              String(
+                user.NAMA || ""
+              ).trim();
+
+
+            var nipp =
+              String(
+                user.NIPP || ""
+              ).trim();
+
+
+            var jabatan =
+              String(
+                user.JABATAN || ""
+              ).trim();
+
+
+            if (!nama) {
+              continue;
+            }
+
+
+            /* =============================================
+               BUAT OPTION
+            ============================================= */
+
+            var option =
+              document.createElement(
+                "option"
+              );
+
+
+            option.value =
+              nama;
+
+
+            option.textContent =
+              nama;
+
+
+            option.setAttribute(
+              "data-nipp",
+              nipp
+            );
+
+
+            option.setAttribute(
+              "data-jabatan",
+              jabatan
+            );
+
+
+            loginNama.appendChild(
+              option
+            );
+
+
+            jumlahUser++;
+
+          }
+
+
+          /* =================================================
+             LOG JUMLAH USER
+          ================================================= */
+
+          console.log(
+            "FIX DROPDOWN: JUMLAH NAMA =",
+            jumlahUser
+          );
+
+
+          /* =================================================
+             RESET NIPP & JABATAN
+          ================================================= */
+
+          loginNipp.value =
+            "";
+
+          loginJabatan.value =
+            "";
+
+        }
+      )
+
+      .catch(
+        function (error) {
+
+          console.error(
+            "FIX DROPDOWN: gagal memuat user:",
+            error
+          );
+
+        }
+      );
+
+
+    /* =====================================================
+       EVENT PILIH NAMA
+    ===================================================== */
+
+    loginNama.addEventListener(
+      "change",
+      function () {
+
+        var option =
+          loginNama.options[
+            loginNama.selectedIndex
+          ];
+
+
+        /* ===============================================
+           BELUM MEMILIH
+        =============================================== */
+
+        if (
+          !option ||
+          !option.value
+        ) {
+
+          loginNipp.value =
+            "";
+
+          loginJabatan.value =
+            "";
+
+          return;
+        }
+
+
+        /* ===============================================
+           AUTO NIPP
+        =============================================== */
+
+        loginNipp.value =
+          option.getAttribute(
+            "data-nipp"
+          ) || "";
+
+
+        /* ===============================================
+           AUTO JABATAN
+        =============================================== */
+
+        loginJabatan.value =
+          option.getAttribute(
+            "data-jabatan"
+          ) || "";
+
+
+        console.log(
+          "FIX DROPDOWN: NAMA =",
+          option.value
+        );
+
+
+        console.log(
+          "FIX DROPDOWN: NIPP =",
+          loginNipp.value
+        );
+
+
+        console.log(
+          "FIX DROPDOWN: JABATAN =",
+          loginJabatan.value
+        );
+
+      }
+    );
+
+  }
+);
 </script>
+
 </body>
 
 </html>
