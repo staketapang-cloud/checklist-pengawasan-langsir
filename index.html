@@ -747,38 +747,47 @@ body {
     <h2>Login Pengguna</h2>
 
     <p>
-      Silakan pilih data pengguna untuk masuk ke sistem.
+      Silakan masukkan data pengguna untuk masuk ke sistem.
     </p>
 
+<div class="form-group">
 
-    <!-- =====================================================
-         NAMA
-    ====================================================== -->
+  <label for="loginNama">
+    Nama
+  </label>
 
-    <div class="form-group">
+<div style="position:relative;">
 
-      <label for="loginNama">
-        Nama
-      </label>
+  <input
+    type="text"
+    id="loginNama"
+    placeholder="Ketik Nama"
+    autocomplete="off"
+  >
 
-      <select
-        id="loginNama"
-        name="loginNama"
-        required
-      >
+  <div
+    id="suggestionNamaLogin"
+    style="
+      display:none;
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      background:#fff;
+      border:1px solid #ccc;
+      border-radius:6px;
+      max-height:220px;
+      overflow-y:auto;
+      z-index:9999;
+      box-shadow:0 4px 10px rgba(0,0,0,0.15);
+    ">
+  </div>
 
-        <option value="">
-          -- Pilih Nama --
-        </option>
-
-      </select>
+</div>
+</div>
 
     </div>
 
-
-    <!-- =====================================================
-         NIPP
-    ====================================================== -->
 
     <div class="form-group">
 
@@ -789,19 +798,13 @@ body {
       <input
         type="text"
         id="loginNipp"
-        name="loginNipp"
         inputmode="numeric"
         autocomplete="off"
-        placeholder="NIPP otomatis"
-        readonly
+        placeholder="Masukkan NIPP"
       >
 
     </div>
 
-
-    <!-- =====================================================
-         JABATAN
-    ====================================================== -->
 
     <div class="form-group">
 
@@ -812,18 +815,12 @@ body {
       <input
         type="text"
         id="loginJabatan"
-        name="loginJabatan"
-        autocomplete="off"
-        placeholder="Jabatan otomatis"
-        readonly
+        placeholder="Masukkan Jabatan"
+        autocomplete="organization-title"
       >
 
     </div>
 
-
-    <!-- =====================================================
-         TOMBOL LOGIN
-    ====================================================== -->
 
     <button
       type="button"
@@ -836,24 +833,15 @@ body {
     </button>
 
 
-    <!-- =====================================================
-         STATUS LOGIN
-    ====================================================== -->
-
     <div
       id="statusLogin"
-      class="status-box"
-    ></div>
+      class="status-box">
+    </div>
 
-
-    <!-- =====================================================
-         PROGRESS LOGIN
-    ====================================================== -->
 
     <div
       id="progressLogin"
-      class="progress-box"
-    >
+      class="progress-box">
 
       <div class="progress-label">
 
@@ -867,30 +855,24 @@ body {
 
       </div>
 
-
       <div class="progress-track">
 
         <div
           id="progressLoginBar"
-          class="progress-bar"
-          style="width:0%;"
-        ></div>
+          class="progress-bar">
+        </div>
 
       </div>
-
 
       <div
         id="progressLoginPercent"
-        class="progress-percent"
-      >
+        class="progress-percent">
         0%
       </div>
 
-
       <div
         id="progressLoginNote"
-        class="progress-note"
-      >
+        class="progress-note">
         Menunggu proses login...
       </div>
 
@@ -899,6 +881,8 @@ body {
   </div>
 
 </div>
+
+
 <!-- =========================================================
      APPLICATION
 ========================================================= -->
@@ -2239,10 +2223,464 @@ function kembaliKeLogin() {
 
 }
 /* =========================================================
-   LOGIN MANUAL
+   MUAT DAFTAR USER LOGIN
 ========================================================= */
 
-function loginPengguna() {
+function muatDaftarUserLogin() {
+
+  var namaInput =
+    document.getElementById("loginNama");
+
+  if (!namaInput) {
+    return;
+  }
+
+  kirimRequestGet("user")
+
+    .then(function(result) {
+
+      console.log(
+        "DAFTAR USER LOGIN:",
+        result
+      );
+
+      if (
+        !result ||
+        result.success !== true
+      ) {
+
+        throw new Error(
+          result && result.message
+            ? result.message
+            : "Daftar user gagal dimuat."
+        );
+
+      }
+
+      var daftar =
+        Array.isArray(result.data)
+          ? result.data
+          : [];
+
+      /* =========================================
+         SIMPAN DAFTAR USER KE MEMORY
+      ========================================= */
+
+      window.daftarUserLogin =
+        daftar;
+
+      console.log(
+        "JUMLAH USER LOGIN:",
+        daftar.length
+      );
+
+      /* =========================================
+         AKTIFKAN AUTOCOMPLETE NAMA
+      ========================================= */
+
+      buatAutocompleteNamaLogin();
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "GAGAL MEMUAT USER LOGIN:",
+        error
+      );
+
+      console.warn(
+        "Daftar user login gagal dimuat:",
+        error.message
+      );
+
+    });
+
+}
+/* =========================================================
+   AUTO ISI NIPP & JABATAN DARI NAMA
+========================================================= */
+
+function isiDataUserDariNama() {
+
+  var namaElement =
+    document.getElementById("loginNama");
+
+  var nippElement =
+    document.getElementById("loginNipp");
+
+  var jabatanElement =
+    document.getElementById("loginJabatan");
+
+  if (
+    !namaElement ||
+    !nippElement ||
+    !jabatanElement
+  ) {
+    return;
+  }
+
+  var namaKetik =
+    String(
+      namaElement.value || ""
+    ).trim()
+    .toLowerCase();
+
+  if (!namaKetik) {
+
+    nippElement.value = "";
+    jabatanElement.value = "";
+
+    return;
+  }
+
+  var daftar =
+    window.daftarUserLogin || [];
+
+  var userDitemukan = null;
+
+  for (
+    var i = 0;
+    i < daftar.length;
+    i++
+  ) {
+
+    var user =
+      daftar[i];
+
+    if (!user) {
+      continue;
+    }
+
+    var namaUser =
+      String(
+        user.NAMA || ""
+      ).trim()
+      .toLowerCase();
+
+    if (
+      namaUser === namaKetik
+    ) {
+
+      userDitemukan =
+        user;
+
+      break;
+    }
+  }
+
+  if (userDitemukan) {
+
+    nippElement.value =
+      String(
+        userDitemukan.NIPP || ""
+      ).trim();
+
+    jabatanElement.value =
+      String(
+        userDitemukan.JABATAN || ""
+      ).trim();
+
+    console.log(
+      "USER DITEMUKAN:",
+      userDitemukan
+    );
+
+  } else {
+
+    nippElement.value = "";
+    jabatanElement.value = "";
+
+  }
+
+}
+      /* =========================================================
+   AUTOCOMPLETE PILIHAN NAMA LOGIN
+========================================================= */
+
+function buatAutocompleteNamaLogin() {
+
+  var namaInput =
+    document.getElementById(
+      "loginNama"
+    );
+
+  var suggestionBox =
+    document.getElementById(
+      "suggestionNamaLogin"
+    );
+
+  if (
+    !namaInput ||
+    !suggestionBox
+  ) {
+
+    console.warn(
+      "Kotak autocomplete nama tidak ditemukan."
+    );
+
+    return;
+  }
+
+
+  /* =========================================
+     HINDARI EVENT DIPASANG BERULANG
+  ========================================= */
+
+  if (
+    namaInput.dataset.autocompleteAktif ===
+    "Y"
+  ) {
+    return;
+  }
+
+  namaInput.dataset.autocompleteAktif =
+    "Y";
+
+
+  /* =========================================
+     SAAT USER MENGETIK
+  ========================================= */
+
+  namaInput.addEventListener(
+    "input",
+    function() {
+
+      var keyword =
+        String(
+          namaInput.value || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+      suggestionBox.innerHTML = "";
+
+
+      if (!keyword) {
+
+        suggestionBox.style.display =
+          "none";
+
+        return;
+      }
+
+
+      var daftar =
+        window.daftarUserLogin || [];
+
+
+      var hasil =
+        daftar.filter(
+          function(user) {
+
+            if (!user) {
+              return false;
+            }
+
+            var nama =
+              String(
+                user.NAMA || ""
+              )
+              .trim()
+              .toLowerCase();
+
+            return nama.includes(
+              keyword
+            );
+
+          }
+        );
+
+
+      if (!hasil.length) {
+
+        suggestionBox.style.display =
+          "none";
+
+        return;
+      }
+
+
+      /* =====================================
+         TAMPILKAN HASIL NAMA
+      ===================================== */
+
+      hasil.forEach(
+        function(user) {
+
+          var item =
+            document.createElement(
+              "div"
+            );
+
+
+          item.textContent =
+            user.NAMA;
+
+
+          item.style.padding =
+            "10px 12px";
+
+          item.style.cursor =
+            "pointer";
+
+          item.style.background =
+            "#ffffff";
+
+          item.style.borderBottom =
+            "1px solid #eeeeee";
+
+
+          /* Hover */
+
+          item.addEventListener(
+            "mouseenter",
+            function() {
+
+              item.style.background =
+                "#f1f5f9";
+
+            }
+          );
+
+
+          item.addEventListener(
+            "mouseleave",
+            function() {
+
+              item.style.background =
+                "#ffffff";
+
+            }
+          );
+
+
+          /* =================================
+             PILIH NAMA
+          ================================= */
+
+          item.addEventListener(
+            "mousedown",
+            function(event) {
+
+              event.preventDefault();
+
+
+              namaInput.value =
+                user.NAMA || "";
+
+
+              var nippElement =
+                document.getElementById(
+                  "loginNipp"
+                );
+
+
+              var jabatanElement =
+                document.getElementById(
+                  "loginJabatan"
+                );
+
+
+              if (nippElement) {
+
+                nippElement.value =
+                  user.NIPP || "";
+
+              }
+
+
+              if (jabatanElement) {
+
+                jabatanElement.value =
+                  user.JABATAN || "";
+
+              }
+
+
+              suggestionBox.style.display =
+                "none";
+
+
+              console.log(
+                "NAMA DIPILIH:",
+                user.NAMA,
+                "NIPP:",
+                user.NIPP,
+                "JABATAN:",
+                user.JABATAN
+              );
+
+            }
+          );
+
+
+          suggestionBox.appendChild(
+            item
+          );
+
+        }
+      );
+
+
+      suggestionBox.style.display =
+        "block";
+
+    }
+  );
+
+
+  /* =========================================
+     KLIK DI LUAR KOTAK
+  ========================================= */
+
+  document.addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target !== namaInput &&
+        !suggestionBox.contains(
+          event.target
+        )
+      ) {
+
+        suggestionBox.style.display =
+          "none";
+
+      }
+
+    }
+  );
+
+}
+/* =========================================================
+   AKTIFKAN USER LOGIN
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    var namaSelect =
+      document.getElementById("loginNama");
+
+
+    if (!namaSelect) {
+      return;
+    }
+
+namaSelect.addEventListener(
+  "input",
+  isiDataUserDariNama
+);
+
+
+    muatDaftarUserLogin();
+
+  }
+);
 /* =========================================================
    LOGIN MANUAL
 ========================================================= */
@@ -9914,8 +10352,7 @@ console.log(
 })();
 </script>
 
-<script>
-
-
 </body>
+
 </html>
+
