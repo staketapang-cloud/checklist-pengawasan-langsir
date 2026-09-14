@@ -2364,231 +2364,16 @@ function muatDaftarUserLogin() {
     });
 
 }
-
-function isiDataUserDariNama() {
-
-  var namaSelect =
-    document.getElementById(
-      "loginNama"
-    );
-
-  var nippElement =
-    document.getElementById(
-      "loginNipp"
-    );
-
-  var jabatanElement =
-    document.getElementById(
-      "loginJabatan"
-    );
-
-
-  if (
-    !namaSelect ||
-    !nippElement ||
-    !jabatanElement
-  ) {
-
-    return;
-
-  }
-
-
-  var option =
-    namaSelect.options[
-      namaSelect.selectedIndex
-    ];
-
-
-  if (
-    !option ||
-    !namaSelect.value
-  ) {
-
-    nippElement.value =
-      "";
-
-    jabatanElement.value =
-      "";
-
-    return;
-
-  }
-
-
-  nippElement.value =
-    option.dataset.nipp || "";
-
-
-  jabatanElement.value =
-    option.dataset.jabatan || "";
-
-}
-      document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    var namaSelect =
-      document.getElementById(
-        "loginNama"
-      );
-
-    if (!namaSelect) {
-      return;
-    }
-
-
-    namaSelect.addEventListener(
-      "change",
-      isiDataUserDariNama
-    );
-
-
-    muatDaftarUserLogin();
-
-  }
-);
-/* =========================================================
-   USER LOGIN - DROPDOWN
-========================================================= */
-
-function muatDaftarUserLogin() {
-
-  var namaSelect =
-    document.getElementById("loginNama");
-
-  if (!namaSelect) {
-    return;
-  }
-
-
-  namaSelect.innerHTML =
-    '<option value="">Memuat daftar nama...</option>';
-
-  namaSelect.disabled = true;
-
-
-  kirimRequestGet("user")
-
-    .then(function(result) {
-
-      console.log(
-        "DAFTAR USER LOGIN:",
-        result
-      );
-
-
-      if (
-        !result ||
-        result.success !== true
-      ) {
-
-        throw new Error(
-          result && result.message
-            ? result.message
-            : "Daftar user gagal dimuat."
-        );
-
-      }
-
-
-      var daftar =
-        Array.isArray(result.data)
-          ? result.data
-          : [];
-
-
-      namaSelect.innerHTML =
-        '<option value="">-- Pilih Nama --</option>';
-
-
-      daftar.forEach(function(user) {
-
-        if (!user) {
-          return;
-        }
-
-
-        var nama =
-          String(
-            user.NAMA || ""
-          ).trim();
-
-        var nipp =
-          String(
-            user.NIPP || ""
-          ).trim();
-
-        var jabatan =
-          String(
-            user.JABATAN || ""
-          ).trim();
-
-
-        if (!nama) {
-          return;
-        }
-
-
-        var option =
-          document.createElement("option");
-
-
-        option.value =
-          nama;
-
-        option.textContent =
-          nama;
-
-
-        option.dataset.nipp =
-          nipp;
-
-        option.dataset.jabatan =
-          jabatan;
-
-
-        namaSelect.appendChild(
-          option
-        );
-
-      });
-
-
-      namaSelect.disabled = false;
-
-
-      console.log(
-        "JUMLAH USER LOGIN:",
-        daftar.length
-      );
-
-    })
-
-
-    .catch(function(error) {
-
-      console.error(
-        "GAGAL MEMUAT USER LOGIN:",
-        error
-      );
-
-
-      namaSelect.innerHTML =
-        '<option value="">Gagal memuat daftar nama</option>';
-
-      namaSelect.disabled = true;
-
-    });
-
-}
-
-
 /* =========================================================
    AUTO ISI NIPP & JABATAN
 ========================================================= */
 
-function isiDataUserDariNama() {
+function isiDataUserDariNama(event) {
+
+  /*
+     Ambil langsung elemen dropdown
+     loginNama.
+  */
 
   var namaSelect =
     document.getElementById("loginNama");
@@ -2611,9 +2396,33 @@ function isiDataUserDariNama() {
   }
 
 
+  /*
+     Pastikan fungsi hanya bekerja
+     apabila event berasal dari
+     dropdown loginNama.
+  */
+
+  if (
+    event &&
+    event.target !== namaSelect
+  ) {
+
+    return;
+
+  }
+
+
+  /*
+     Ambil option yang sedang dipilih.
+  */
+
+  var selectedIndex =
+    namaSelect.selectedIndex;
+
+
   var option =
     namaSelect.options[
-      namaSelect.selectedIndex
+      selectedIndex
     ];
 
 
@@ -2622,14 +2431,20 @@ function isiDataUserDariNama() {
     !namaSelect.value
   ) {
 
-    nippElement.value = "";
+    nippElement.value =
+      "";
 
-    jabatanElement.value = "";
+    jabatanElement.value =
+      "";
 
     return;
 
   }
 
+
+  /*
+     Isi NIPP dan Jabatan otomatis.
+  */
 
   nippElement.value =
     option.dataset.nipp || "";
@@ -2637,9 +2452,17 @@ function isiDataUserDariNama() {
   jabatanElement.value =
     option.dataset.jabatan || "";
 
+
+  console.log(
+    "USER DIPILIH:",
+    namaSelect.value,
+    "NIPP:",
+    nippElement.value,
+    "JABATAN:",
+    jabatanElement.value
+  );
+
 }
-
-
 /* =========================================================
    AKTIFKAN USER LOGIN
 ========================================================= */
