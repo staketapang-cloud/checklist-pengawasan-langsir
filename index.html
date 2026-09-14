@@ -747,47 +747,37 @@ body {
     <h2>Login Pengguna</h2>
 
     <p>
-      Silakan masukkan data pengguna untuk masuk ke sistem.
+      Silakan pilih data pengguna untuk masuk ke sistem.
     </p>
 
-<div class="form-group">
 
-  <label for="loginNama">
-    Nama
-  </label>
+    <!-- =====================================================
+         NAMA
+    ====================================================== -->
 
-<div style="position:relative;">
+    <div class="form-group">
 
-  <input
-    type="text"
-    id="loginNama"
-    placeholder="Ketik Nama"
-    autocomplete="off"
-  >
+      <label for="loginNama">
+        Nama
+      </label>
 
-  <div
-    id="suggestionNamaLogin"
-    style="
-      display:none;
-      position:absolute;
-      top:100%;
-      left:0;
-      right:0;
-      background:#fff;
-      border:1px solid #ccc;
-      border-radius:6px;
-      max-height:220px;
-      overflow-y:auto;
-      z-index:9999;
-      box-shadow:0 4px 10px rgba(0,0,0,0.15);
-    ">
-  </div>
+      <select
+        id="loginNama"
+        required
+      >
 
-</div>
-</div>
+        <option value="">
+          -- Pilih Nama --
+        </option>
+
+      </select>
 
     </div>
 
+
+    <!-- =====================================================
+         NIPP
+    ====================================================== -->
 
     <div class="form-group">
 
@@ -800,11 +790,16 @@ body {
         id="loginNipp"
         inputmode="numeric"
         autocomplete="off"
-        placeholder="Masukkan NIPP"
+        placeholder="NIPP otomatis"
+        readonly
       >
 
     </div>
 
+
+    <!-- =====================================================
+         JABATAN
+    ====================================================== -->
 
     <div class="form-group">
 
@@ -815,12 +810,17 @@ body {
       <input
         type="text"
         id="loginJabatan"
-        placeholder="Masukkan Jabatan"
-        autocomplete="organization-title"
+        placeholder="Jabatan otomatis"
+        autocomplete="off"
+        readonly
       >
 
     </div>
 
+
+    <!-- =====================================================
+         TOMBOL LOGIN
+    ====================================================== -->
 
     <button
       type="button"
@@ -833,11 +833,19 @@ body {
     </button>
 
 
+    <!-- =====================================================
+         STATUS LOGIN
+    ====================================================== -->
+
     <div
       id="statusLogin"
       class="status-box">
     </div>
 
+
+    <!-- =====================================================
+         PROGRESS LOGIN
+    ====================================================== -->
 
     <div
       id="progressLogin"
@@ -855,6 +863,7 @@ body {
 
       </div>
 
+
       <div class="progress-track">
 
         <div
@@ -864,11 +873,13 @@ body {
 
       </div>
 
+
       <div
         id="progressLoginPercent"
         class="progress-percent">
         0%
       </div>
+
 
       <div
         id="progressLoginNote"
@@ -881,8 +892,6 @@ body {
   </div>
 
 </div>
-
-
 <!-- =========================================================
      APPLICATION
 ========================================================= -->
