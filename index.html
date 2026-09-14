@@ -5625,7 +5625,7 @@ function simpanPemeriksaan() {
    - TTD langsung diambil dari signatureCanvas
 ========================================================= */
 
-async function tampilkanPreviewHasilAkhir() {
+function tampilkanPreviewHasilAkhir() {
 
   return new Promise(function(resolve, reject) {
 
@@ -5908,85 +5908,41 @@ async function tampilkanPreviewHasilAkhir() {
 ===================================================== */
 
 var logoKAI =
-  document.getElementById(
-    "logoKaiHeader"
-  );
+  new Image();
 
-if (logoKAI) {
+logoKAI.onload =
+  function() {
 
-  try {
-
-    /*
-     * Pastikan gambar sudah dimuat
-     */
-    if (!logoKAI.complete) {
-
-      await new Promise(
-        function(resolve, reject) {
-
-          logoKAI.onload =
-            function() {
-              resolve();
-            };
-
-          logoKAI.onerror =
-            function() {
-              reject(
-                new Error(
-                  "Gagal memuat logo KAI."
-                )
-              );
-            };
-
-        }
-      );
-
-    }
-
-    /*
-     * Pastikan gambar benar-benar valid
-     */
-    if (
-      logoKAI.naturalWidth > 0 &&
-      logoKAI.naturalHeight > 0
-    ) {
-
-      ctx.drawImage(
-        logoKAI,
-        margin,
-        18,
-        58,
-        58
-      );
-
-      console.log(
-        "LOGO KAI BERHASIL DIGAMBAR"
-      );
-
-    } else {
-
-      console.warn(
-        "LOGO KAI ADA, TETAPI UKURAN GAMBAR 0"
-      );
-
-    }
-
-  } catch (errorLogo) {
-
-    console.error(
-      "GAGAL MEMUAT LOGO KAI:",
-      errorLogo
+    ctx.drawImage(
+      logoKAI,
+      margin,
+      18,
+      58,
+      58
     );
 
-  }
+    console.log(
+      "LOGO KAI BERHASIL DIMUAT"
+    );
 
-} else {
+  };
 
-  console.warn(
-    "ELEMENT logoKaiHeader TIDAK DITEMUKAN"
-  );
+logoKAI.onerror =
+  function() {
 
-}
+    console.error(
+      "LOGO KAI GAGAL DIMUAT:",
+      logoKAI.src
+    );
+
+  };
+
+/*
+ * File logo berada di repository GitHub
+ * yang sama dengan index.html
+ */
+logoKAI.src =
+  "logo-kai.png.png";
       /* =====================================================
          FUNGSI TEXT WRAP
       ===================================================== */
