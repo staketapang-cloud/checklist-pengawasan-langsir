@@ -9915,6 +9915,7 @@ console.log(
 </script>
 <script>
 <script>
+<script>
 /* =========================================================
    FIX FINAL DROPDOWN LOGIN
    NAMA -> NIPP + JABATAN OTOMATIS
@@ -9925,24 +9926,14 @@ document.addEventListener(
   function () {
 
     var loginNama =
-      document.getElementById(
-        "loginNama"
-      );
+      document.getElementById("loginNama");
 
     var loginNipp =
-      document.getElementById(
-        "loginNipp"
-      );
+      document.getElementById("loginNipp");
 
     var loginJabatan =
-      document.getElementById(
-        "loginJabatan"
-      );
+      document.getElementById("loginJabatan");
 
-
-    /* =====================================================
-       CEK ELEMENT
-    ===================================================== */
 
     if (
       !loginNama ||
@@ -9958,15 +9949,6 @@ document.addEventListener(
     }
 
 
-    console.log(
-      "FIX DROPDOWN: mulai memuat user..."
-    );
-
-
-    /* =====================================================
-       PASTIKAN loginNama ADALAH SELECT
-    ===================================================== */
-
     if (
       loginNama.tagName.toLowerCase() !==
       "select"
@@ -9979,10 +9961,6 @@ document.addEventListener(
       return;
     }
 
-
-    /* =====================================================
-       REQUEST USER
-    ===================================================== */
 
     if (
       typeof kirimRequestGet !==
@@ -9997,8 +9975,12 @@ document.addEventListener(
     }
 
 
-    kirimRequestGet("user")
+    console.log(
+      "FIX DROPDOWN: mulai memuat user..."
+    );
 
+
+    kirimRequestGet("user")
       .then(
         function (response) {
 
@@ -10008,16 +9990,10 @@ document.addEventListener(
           );
 
 
-          /* =================================================
-             VALIDASI RESPONSE
-          ================================================= */
-
           if (
             !response ||
             response.success !== true ||
-            !Array.isArray(
-              response.data
-            )
+            !Array.isArray(response.data)
           ) {
 
             console.error(
@@ -10029,21 +10005,12 @@ document.addEventListener(
           }
 
 
-          /* =================================================
-             RESET DROPDOWN
-          ================================================= */
-
           loginNama.innerHTML =
             '<option value="">-- Pilih Nama --</option>';
 
 
-          var jumlahUser =
-            0;
+          var jumlahUser = 0;
 
-
-          /* =================================================
-             MASUKKAN USER KE DROPDOWN
-          ================================================= */
 
           for (
             var i = 0;
@@ -10083,10 +10050,6 @@ document.addEventListener(
             }
 
 
-            /* =============================================
-               BUAT OPTION
-            ============================================= */
-
             var option =
               document.createElement(
                 "option"
@@ -10123,44 +10086,28 @@ document.addEventListener(
           }
 
 
-          /* =================================================
-             LOG JUMLAH USER
-          ================================================= */
-
           console.log(
             "FIX DROPDOWN: JUMLAH NAMA =",
             jumlahUser
           );
 
 
-          /* =================================================
-             RESET NIPP & JABATAN
-          ================================================= */
-
-          loginNipp.value =
-            "";
-
-          loginJabatan.value =
-            "";
+          loginNipp.value = "";
+          loginJabatan.value = "";
 
         }
       )
-
       .catch(
         function (error) {
 
           console.error(
-            "FIX DROPDOWN: gagal memuat user:",
+            "FIX DROPDOWN: GAGAL MEMUAT USER:",
             error
           );
 
         }
       );
 
-
-    /* =====================================================
-       EVENT PILIH NAMA
-    ===================================================== */
 
     loginNama.addEventListener(
       "change",
@@ -10172,38 +10119,23 @@ document.addEventListener(
           ];
 
 
-        /* ===============================================
-           BELUM MEMILIH
-        =============================================== */
-
         if (
           !option ||
           !option.value
         ) {
 
-          loginNipp.value =
-            "";
-
-          loginJabatan.value =
-            "";
+          loginNipp.value = "";
+          loginJabatan.value = "";
 
           return;
         }
 
-
-        /* ===============================================
-           AUTO NIPP
-        =============================================== */
 
         loginNipp.value =
           option.getAttribute(
             "data-nipp"
           ) || "";
 
-
-        /* ===============================================
-           AUTO JABATAN
-        =============================================== */
 
         loginJabatan.value =
           option.getAttribute(
@@ -10236,6 +10168,6 @@ document.addEventListener(
 </script>
 
 </body>
-
 </html>
+
 
