@@ -2512,6 +2512,233 @@ function muatDaftarUserLogin() {
 
 }
 
+/* =========================================================
+   LOGIN USER
+   DROPDOWN NAMA + AUTO NIPP + AUTO JABATAN
+========================================================= */
+
+
+/* =========================================================
+   DATA USER LOGIN
+========================================================= */
+
+window.daftarUserLogin = [];
+
+
+/* =========================================================
+   MEMUAT DAFTAR USER AKTIF
+========================================================= */
+
+function muatDaftarUserLogin() {
+
+  var namaSelect =
+    document.getElementById(
+      "loginNama"
+    );
+
+
+  if (!namaSelect) {
+
+    console.error(
+      "ELEMENT loginNama TIDAK DITEMUKAN."
+    );
+
+    return;
+  }
+
+
+  console.log(
+    "MEMUAT DAFTAR USER LOGIN..."
+  );
+
+
+  /* =======================================================
+     RESET DROPDOWN
+  ======================================================= */
+
+  namaSelect.innerHTML =
+    '<option value="">-- Pilih Nama --</option>';
+
+
+  /* =======================================================
+     AMBIL DATA USER DARI APPS SCRIPT
+  ======================================================= */
+
+  kirimRequestGet("user")
+
+    .then(
+      function(response) {
+
+        console.log(
+          "DAFTAR USER LOGIN:",
+          response
+        );
+
+
+        /* =================================================
+           VALIDASI RESPONSE
+        ================================================= */
+
+        if (
+          !response ||
+          response.success !== true ||
+          !Array.isArray(
+            response.data
+          )
+        ) {
+
+          console.error(
+            "DATA USER TIDAK VALID:",
+            response
+          );
+
+          return;
+        }
+
+
+        /* =================================================
+           SIMPAN DATA USER
+        ================================================= */
+
+        window.daftarUserLogin =
+          response.data;
+
+
+        /* =================================================
+           MASUKKAN USER KE DROPDOWN
+        ================================================= */
+
+        response.data.forEach(
+          function(user) {
+
+            if (!user) {
+              return;
+            }
+
+
+            var nama =
+              String(
+                user.NAMA || ""
+              ).trim();
+
+
+            var nipp =
+              String(
+                user.NIPP || ""
+              ).trim();
+
+
+            var jabatan =
+              String(
+                user.JABATAN || ""
+              ).trim();
+
+
+            if (!nama) {
+              return;
+            }
+
+
+            /* =============================================
+               BUAT OPTION
+            ============================================= */
+
+            var option =
+              document.createElement(
+                "option"
+              );
+
+
+            option.value =
+              nama;
+
+
+            option.textContent =
+              nama;
+
+
+            /* =============================================
+               SIMPAN NIPP
+            ============================================= */
+
+            option.dataset.nipp =
+              nipp;
+
+
+            /* =============================================
+               SIMPAN JABATAN
+            ============================================= */
+
+            option.dataset.jabatan =
+              jabatan;
+
+
+            /* =============================================
+               MASUKKAN KE SELECT
+            ============================================= */
+
+            namaSelect.appendChild(
+              option
+            );
+
+          }
+        );
+
+
+        console.log(
+          "JUMLAH USER LOGIN:",
+          response.data.length
+        );
+
+
+        /* =================================================
+           PASTIKAN NIPP & JABATAN KOSONG
+        ================================================= */
+
+        var nippElement =
+          document.getElementById(
+            "loginNipp"
+          );
+
+        var jabatanElement =
+          document.getElementById(
+            "loginJabatan"
+          );
+
+
+        if (nippElement) {
+
+          nippElement.value = "";
+
+        }
+
+
+        if (jabatanElement) {
+
+          jabatanElement.value = "";
+
+        }
+
+      }
+    )
+
+    .catch(
+      function(error) {
+
+        console.error(
+          "GAGAL MEMUAT DAFTAR USER LOGIN:",
+          error
+        );
+
+
+        namaSelect.innerHTML =
+          '<option value="">Gagal memuat user</option>';
+
+      }
+    );
+
+}
+
 
 /* =========================================================
    AUTO ISI NIPP & JABATAN DARI NAMA
