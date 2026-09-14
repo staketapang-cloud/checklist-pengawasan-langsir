@@ -2364,9 +2364,6 @@ function muatDaftarUserLogin() {
     });
 
 }
-===================================================
-   AUTO ISI NIPP & JABATAN
-========================================================= */
 
 function isiDataUserDariNama() {
 
@@ -2451,8 +2448,8 @@ function isiDataUserDariNama() {
 
   }
 );
-      /* =========================================================
-   MUAT DAFTAR USER LOGIN
+/* =========================================================
+   USER LOGIN - DROPDOWN
 ========================================================= */
 
 function muatDaftarUserLogin() {
@@ -2463,6 +2460,7 @@ function muatDaftarUserLogin() {
   if (!namaSelect) {
     return;
   }
+
 
   namaSelect.innerHTML =
     '<option value="">Memuat daftar nama...</option>';
@@ -2560,16 +2558,10 @@ function muatDaftarUserLogin() {
       namaSelect.disabled = false;
 
 
-      if (
-        namaSelect.options.length <= 1
-      ) {
-
-        namaSelect.innerHTML =
-          '<option value="">-- Tidak ada user aktif --</option>';
-
-        namaSelect.disabled = true;
-
-      }
+      console.log(
+        "JUMLAH USER LOGIN:",
+        daftar.length
+      );
 
     })
 
@@ -2586,12 +2578,6 @@ function muatDaftarUserLogin() {
         '<option value="">Gagal memuat daftar nama</option>';
 
       namaSelect.disabled = true;
-
-
-      alert(
-        "Daftar nama login gagal dimuat.\n\n" +
-        error.message
-      );
 
     });
 
@@ -2636,11 +2622,9 @@ function isiDataUserDariNama() {
     !namaSelect.value
   ) {
 
-    nippElement.value =
-      "";
+    nippElement.value = "";
 
-    jabatanElement.value =
-      "";
+    jabatanElement.value = "";
 
     return;
 
@@ -2657,7 +2641,7 @@ function isiDataUserDariNama() {
 
 
 /* =========================================================
-   AKTIFKAN DROPDOWN LOGIN
+   AKTIFKAN USER LOGIN
 ========================================================= */
 
 document.addEventListener(
