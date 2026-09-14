@@ -9913,8 +9913,7 @@ console.log(
 
 })();
 </script>
-<script>
-<script>
+
 <script>
 /* =========================================================
    FIX FINAL DROPDOWN LOGIN
@@ -9935,6 +9934,10 @@ document.addEventListener(
       document.getElementById("loginJabatan");
 
 
+    /* =====================================================
+       CEK ELEMENT LOGIN
+    ===================================================== */
+
     if (
       !loginNama ||
       !loginNipp ||
@@ -9949,6 +9952,10 @@ document.addEventListener(
     }
 
 
+    /* =====================================================
+       PASTIKAN loginNama ADALAH SELECT
+    ===================================================== */
+
     if (
       loginNama.tagName.toLowerCase() !==
       "select"
@@ -9962,25 +9969,34 @@ document.addEventListener(
     }
 
 
+    console.log(
+      "FIX DROPDOWN: mulai memuat user..."
+    );
+
+
+    /* =====================================================
+       CARI FUNGSI API
+    ===================================================== */
+
     if (
       typeof kirimRequestGet !==
       "function"
     ) {
 
       console.error(
-        "FIX DROPDOWN: kirimRequestGet belum tersedia."
+        "FIX DROPDOWN: kirimRequestGet tidak tersedia."
       );
 
       return;
     }
 
 
-    console.log(
-      "FIX DROPDOWN: mulai memuat user..."
-    );
-
+    /* =====================================================
+       AMBIL USER DARI SERVER
+    ===================================================== */
 
     kirimRequestGet("user")
+
       .then(
         function (response) {
 
@@ -9990,10 +10006,16 @@ document.addEventListener(
           );
 
 
+          /* =================================================
+             VALIDASI
+          ================================================= */
+
           if (
             !response ||
             response.success !== true ||
-            !Array.isArray(response.data)
+            !Array.isArray(
+              response.data
+            )
           ) {
 
             console.error(
@@ -10005,12 +10027,21 @@ document.addEventListener(
           }
 
 
+          /* =================================================
+             KOSONGKAN DROPDOWN
+          ================================================= */
+
           loginNama.innerHTML =
             '<option value="">-- Pilih Nama --</option>';
 
 
-          var jumlahUser = 0;
+          var jumlahUser =
+            0;
 
+
+          /* =================================================
+             MASUKKAN 21 USER
+          ================================================= */
 
           for (
             var i = 0;
@@ -10050,6 +10081,10 @@ document.addEventListener(
             }
 
 
+            /* =============================================
+               BUAT OPTION
+            ============================================= */
+
             var option =
               document.createElement(
                 "option"
@@ -10086,17 +10121,34 @@ document.addEventListener(
           }
 
 
+          /* =================================================
+             LOG JUMLAH
+          ================================================= */
+
           console.log(
             "FIX DROPDOWN: JUMLAH NAMA =",
             jumlahUser
           );
 
 
-          loginNipp.value = "";
-          loginJabatan.value = "";
+          /* =================================================
+             RESET NIPP & JABATAN
+          ================================================= */
+
+          loginNipp.value =
+            "";
+
+          loginJabatan.value =
+            "";
 
         }
       )
+
+
+      /* =====================================================
+         JIKA GAGAL
+      ===================================================== */
+
       .catch(
         function (error) {
 
@@ -10109,6 +10161,10 @@ document.addEventListener(
       );
 
 
+    /* =====================================================
+       PILIH NAMA
+    ===================================================== */
+
     loginNama.addEventListener(
       "change",
       function () {
@@ -10119,23 +10175,38 @@ document.addEventListener(
           ];
 
 
+        /* ===============================================
+           BELUM MEMILIH
+        =============================================== */
+
         if (
           !option ||
           !option.value
         ) {
 
-          loginNipp.value = "";
-          loginJabatan.value = "";
+          loginNipp.value =
+            "";
+
+          loginJabatan.value =
+            "";
 
           return;
         }
 
+
+        /* ===============================================
+           AUTO NIPP
+        =============================================== */
 
         loginNipp.value =
           option.getAttribute(
             "data-nipp"
           ) || "";
 
+
+        /* ===============================================
+           AUTO JABATAN
+        =============================================== */
 
         loginJabatan.value =
           option.getAttribute(
@@ -10144,19 +10215,11 @@ document.addEventListener(
 
 
         console.log(
-          "FIX DROPDOWN: NAMA =",
-          option.value
-        );
-
-
-        console.log(
-          "FIX DROPDOWN: NIPP =",
-          loginNipp.value
-        );
-
-
-        console.log(
-          "FIX DROPDOWN: JABATAN =",
+          "FIX DROPDOWN:",
+          option.value,
+          "| NIPP:",
+          loginNipp.value,
+          "| JABATAN:",
           loginJabatan.value
         );
 
@@ -10169,5 +10232,3 @@ document.addEventListener(
 
 </body>
 </html>
-
-
