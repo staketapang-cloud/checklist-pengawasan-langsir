@@ -6759,34 +6759,387 @@ y +=
             rowHeightTetap;
 
 
-          /*
-           * Warna baris selang-seling.
-           */
+      /* =====================================================
+         KELOMPOK CHECKLIST
+
+         FORMAT:
+
+         1     Kelengkapan Dokumen
+
+         2     a.    Kegiatan Langsiran Menggunakan
+                     Perintah Langsir
+
+               b.    Kegiatan Langsiran Menggunakan
+                     Isyarat Langsir
+
+         3     Kepatuhan PLR dan Awak KA...
+      ===================================================== */
+
+
+      /* =====================================================
+         MEMBENTUK KELOMPOK CHECKLIST
+      ===================================================== */
+
+      var kelompokChecklist = [];
+
+      var kelompokAktif = null;
+
+
+      daftarChecklist.forEach(
+        function(item) {
+
+          var kategori =
+            String(
+              item.kategori || ""
+            ).trim();
+
+          var kategoriLower =
+            kategori.toLowerCase();
+
+
+          var tipeKelompok =
+            "";
+
+
+          /* =================================================
+             KELOMPOK 1
+          ================================================= */
 
           if (
-            index % 2 === 1
+            kategoriLower.indexOf(
+              "kelengkapan dokumen"
+            ) !== -1
           ) {
 
-            ctx.fillStyle =
-              "#f7f7f7";
+            tipeKelompok =
+              "1";
+
+          }
 
 
-            ctx.fillRect(
-              tableX,
-              rowY,
-              tableWidth,
-              rowHeight
+          /* =================================================
+             KELOMPOK 2.a
+          ================================================= */
+
+          else if (
+            kategoriLower.indexOf(
+              "kegiatan langsiran menggunakan perintah langsir"
+            ) !== -1
+          ) {
+
+            tipeKelompok =
+              "2a";
+
+          }
+
+
+          /* =================================================
+             KELOMPOK 2.b
+          ================================================= */
+
+          else if (
+            kategoriLower.indexOf(
+              "kegiatan langsiran menggunakan isyarat langsir"
+            ) !== -1
+          ) {
+
+            tipeKelompok =
+              "2b";
+
+          }
+
+
+          /* =================================================
+             KELOMPOK 3
+          ================================================= */
+
+          else if (
+            kategoriLower.indexOf(
+              "kepatuhan plr dan awak ka"
+            ) !== -1
+          ) {
+
+            tipeKelompok =
+              "3";
+
+          }
+
+
+          /* =================================================
+             KELOMPOK BARU
+          ================================================= */
+
+          if (
+            !kelompokAktif ||
+            kelompokAktif.tipe !== tipeKelompok
+          ) {
+
+            kelompokAktif = {
+
+              tipe:
+                tipeKelompok,
+
+              kategori:
+                kategori,
+
+              items:
+                []
+
+            };
+
+
+            kelompokChecklist.push(
+              kelompokAktif
             );
 
           }
 
 
-          /*
-           * Border.
-           */
+          kelompokAktif.items.push(
+            item
+          );
+
+        }
+      );
+
+
+      console.log(
+        "JUMLAH KELOMPOK CHECKLIST:",
+        kelompokChecklist.length
+      );
+
+
+      /* =====================================================
+         HITUNG JUMLAH BARIS
+      ===================================================== */
+
+      var jumlahBarisKelompok =
+        kelompokChecklist.length;
+
+
+      var jumlahBarisItem =
+        daftarChecklist.length;
+
+
+      var jumlahBarisTotal =
+        jumlahBarisKelompok +
+        jumlahBarisItem;
+
+
+      /* =====================================================
+         AREA BAWAH UNTUK CATATAN / TTD
+      ===================================================== */
+
+      var areaBawah =
+        300;
+
+
+      var tinggiTabelTersedia =
+        (
+          canvasHeight -
+          margin -
+          areaBawah
+        ) -
+        y;
+
+
+      var rowHeight =
+        Math.floor(
+          tinggiTabelTersedia /
+          jumlahBarisTotal
+        );
+
+
+      rowHeight =
+        Math.max(
+          27,
+          Math.min(
+            34,
+            rowHeight
+          )
+        );
+
+
+      var rowHeightKelompok =
+        Math.max(
+          34,
+          rowHeight
+        );
+
+
+      console.log(
+        "JUMLAH BARIS TOTAL:",
+        jumlahBarisTotal
+      );
+
+      console.log(
+        "TINGGI BARIS ITEM:",
+        rowHeight
+      );
+
+
+      /* =====================================================
+         FUNGSI GARIS KOLOM
+      ===================================================== */
+
+      function gambarGarisKolom(
+        rowY,
+        tinggi
+      ) {
+
+        [
+          colX2,
+          colX3,
+          colX4,
+          colX5
+        ].forEach(
+          function(x) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+              x,
+              rowY
+            );
+
+            ctx.lineTo(
+              x,
+              rowY +
+              tinggi
+            );
+
+            ctx.stroke();
+
+          }
+        );
+
+      }
+
+
+      /* =====================================================
+         GAMBAR SEMUA KELOMPOK
+      ===================================================== */
+
+      kelompokChecklist.forEach(
+        function(kelompok) {
+
+
+          /* =================================================
+             TENTUKAN JUDUL KELOMPOK
+          ================================================= */
+
+          var nomorUtama =
+            "";
+
+          var subNomor =
+            "";
+
+          var judulKelompok =
+            kelompok.kategori;
+
+
+          /* =================================================
+             KELOMPOK 1
+          ================================================= */
+
+          if (
+            kelompok.tipe === "1"
+          ) {
+
+            nomorUtama =
+              "1";
+
+            subNomor =
+              "";
+
+            judulKelompok =
+              kelompok.kategori;
+
+          }
+
+
+          /* =================================================
+             KELOMPOK 2.a
+          ================================================= */
+
+          else if (
+            kelompok.tipe === "2a"
+          ) {
+
+            nomorUtama =
+              "2";
+
+            subNomor =
+              "a.";
+
+            judulKelompok =
+              kelompok.kategori;
+
+          }
+
+
+          /* =================================================
+             KELOMPOK 2.b
+          ================================================= */
+
+          else if (
+            kelompok.tipe === "2b"
+          ) {
+
+            nomorUtama =
+              "";
+
+            subNomor =
+              "b.";
+
+            judulKelompok =
+              kelompok.kategori;
+
+          }
+
+
+          /* =================================================
+             KELOMPOK 3
+          ================================================= */
+
+          else if (
+            kelompok.tipe === "3"
+          ) {
+
+            nomorUtama =
+              "3";
+
+            subNomor =
+              "";
+
+            judulKelompok =
+              kelompok.kategori;
+
+          }
+
+
+          /* =================================================
+             POSISI BARIS KELOMPOK
+          ================================================= */
+
+          var groupY =
+            y;
+
+
+          ctx.fillStyle =
+            "#eaf2f8";
+
+
+          ctx.fillRect(
+            tableX,
+            groupY,
+            tableWidth,
+            rowHeightKelompok
+          );
+
 
           ctx.strokeStyle =
-            "#aaaaaa";
+            "#888888";
 
 
           ctx.lineWidth =
@@ -6795,48 +7148,20 @@ y +=
 
           ctx.strokeRect(
             tableX,
-            rowY,
+            groupY,
             tableWidth,
-            rowHeight
+            rowHeightKelompok
           );
 
 
-          /*
-           * Garis vertikal.
-           */
-
-          [
-            colX2,
-            colX3,
-            colX4,
-            colX5
-          ].forEach(
-            function(x) {
-
-              ctx.beginPath();
-
-
-              ctx.moveTo(
-                x,
-                rowY
-              );
-
-
-              ctx.lineTo(
-                x,
-                rowY +
-                rowHeight
-              );
-
-
-              ctx.stroke();
-
-            }
+          gambarGarisKolom(
+            groupY,
+            rowHeightKelompok
           );
 
 
           /* =================================================
-             NOMOR
+             NOMOR UTAMA
           ================================================= */
 
           ctx.textAlign =
@@ -6844,29 +7169,64 @@ y +=
 
 
           ctx.font =
-            tableFontBoldSafe();
+            "bold 9px Arial";
 
 
           ctx.fillStyle =
             "#000000";
 
 
-ctx.fillText(
-  String(index + 1),
-            colX1 +
-            (
-              colNo / 2
-            ),
-            rowY +
-            (
-              rowHeight / 2
-            ) +
-            3
-          );
+          if (
+            nomorUtama
+          ) {
+
+            ctx.fillText(
+              nomorUtama,
+              colX1 +
+              (
+                colNo / 2
+              ),
+              groupY +
+              (
+                rowHeightKelompok / 2
+              ) +
+              3
+            );
+
+          }
 
 
           /* =================================================
-             URAIAN
+             SUB NOMOR A / B
+          ================================================= */
+
+          if (
+            subNomor
+          ) {
+
+            ctx.textAlign =
+              "left";
+
+
+            ctx.font =
+              "bold 9px Arial";
+
+
+            ctx.fillText(
+              subNomor,
+              colX1 + 8,
+              groupY +
+              (
+                rowHeightKelompok / 2
+              ) +
+              3
+            );
+
+          }
+
+
+          /* =================================================
+             JUDUL KATEGORI
           ================================================= */
 
           ctx.textAlign =
@@ -6874,106 +7234,56 @@ ctx.fillText(
 
 
           ctx.font =
-            fontTabel;
+            "bold 9px Arial";
 
 
-          var uraian =
-            item.pertanyaan ||
-            "-";
+          var kategoriLines =
+            pecahTeks(
+              judulKelompok ||
+              "-",
+              colUraian - 12,
+              "bold 9px Arial",
+              2
+            );
 
 
           /*
-           * Kategori ditambahkan
-           * hanya jika tersedia.
+           * Untuk kelompok 2.a dan 2.b,
+           * judul dibuat sedikit masuk ke kanan.
            */
 
-          if (
-            item.kategori
-          ) {
-
-            uraian =
-              item.kategori +
-              " - " +
-              uraian;
-
-          }
-
-
-          var uraianLines =
-            pecahTeks(
-              uraian,
-              colUraian - 12,
-              fontTabel,
-              2
-            );
-
-
-          var uraianLineHeight =
-            10;
-
-
-          var uraianStartY =
-            rowY +
+          var kategoriOffsetX =
             (
-              rowHeight -
-              (
-                uraianLines.length *
-                uraianLineHeight
-              )
-            ) / 2 +
-            7;
+              kelompok.tipe === "2a" ||
+              kelompok.tipe === "2b"
+            )
+              ? 30
+              : 6;
 
 
-          uraianLines.forEach(
-            function(line, lineIndex) {
-
-              ctx.fillText(
-                line,
-                colX2 + 6,
-                uraianStartY +
-                (
-                  lineIndex *
-                  uraianLineHeight
-                )
-              );
-
-            }
-          );
-
-
-          /* =================================================
-             STANDAR
-          ================================================= */
-
-          var standarLines =
-            pecahTeks(
-              item.standar ||
-              "-",
-              colStandar - 12,
-              fontTabel,
-              2
-            );
-
-
-          var standarStartY =
-            rowY +
+          var kategoriStartY =
+            groupY +
             (
-              rowHeight -
+              rowHeightKelompok -
               (
-                standarLines.length *
+                kategoriLines.length *
                 10
               )
             ) / 2 +
-            7;
+            8;
 
 
-          standarLines.forEach(
-            function(line, lineIndex) {
+          kategoriLines.forEach(
+            function(
+              line,
+              lineIndex
+            ) {
 
               ctx.fillText(
                 line,
-                colX3 + 6,
-                standarStartY +
+                colX2 +
+                kategoriOffsetX,
+                kategoriStartY +
                 (
                   lineIndex *
                   10
@@ -6984,127 +7294,357 @@ ctx.fillText(
           );
 
 
-          /* =================================================
-             HASIL
-          ================================================= */
-
-          var hasil =
-            String(
-              item.hasil ||
-              "-"
-            ).toUpperCase();
-
-
-          ctx.textAlign =
-            "center";
-
-
-          ctx.font =
-            "bold 8px Arial";
-
-
-          if (
-            hasil === "YA"
-          ) {
-
-            ctx.fillStyle =
-              "#198754";
-
-          }
-
-          else if (
-            hasil === "TIDAK"
-          ) {
-
-            ctx.fillStyle =
-              "#dc3545";
-
-          }
-
-          else {
-
-            ctx.fillStyle =
-              "#555555";
-
-          }
-
-
-          ctx.fillText(
-            hasil,
-            colX4 +
-            (
-              colHasil / 2
-            ),
-            rowY +
-            (
-              rowHeight / 2
-            ) +
-            3
-          );
+          y +=
+            rowHeightKelompok;
 
 
           /* =================================================
-             TEMUAN
+             GAMBAR ITEM CHECKLIST
           ================================================= */
 
-          ctx.textAlign =
-            "left";
+          kelompok.items.forEach(
+            function(
+              item,
+              itemIndex
+            ) {
+
+              var rowY =
+                y;
 
 
-          ctx.font =
-            fontKecil;
+              /* =============================================
+                 WARNA BARIS SELANG-SELING
+              ============================================= */
+
+              if (
+                itemIndex % 2 === 1
+              ) {
+
+                ctx.fillStyle =
+                  "#f7f7f7";
 
 
-          ctx.fillStyle =
-            "#000000";
+                ctx.fillRect(
+                  tableX,
+                  rowY,
+                  tableWidth,
+                  rowHeight
+                );
+
+              }
 
 
-          var temuanLines =
-            pecahTeks(
-              item.temuan ||
-              "-",
-              colTemuan - 12,
-              fontKecil,
-              2
-            );
+              /* =============================================
+                 BORDER
+              ============================================= */
+
+              ctx.strokeStyle =
+                "#aaaaaa";
 
 
-          var temuanStartY =
-            rowY +
-            (
-              rowHeight -
-              (
-                temuanLines.length *
-                9
-              )
-            ) / 2 +
-            6;
+              ctx.lineWidth =
+                1;
 
 
-          temuanLines.forEach(
-            function(line, lineIndex) {
+              ctx.strokeRect(
+                tableX,
+                rowY,
+                tableWidth,
+                rowHeight
+              );
+
+
+              /* =============================================
+                 GARIS VERTIKAL
+              ============================================= */
+
+              gambarGarisKolom(
+                rowY,
+                rowHeight
+              );
+
+
+              /* =============================================
+                 KOLOM NOMOR ITEM
+                 DIKOSONGKAN
+              ============================================= */
+
+              ctx.textAlign =
+                "center";
+
+
+              ctx.font =
+                "9px Arial";
+
+
+              ctx.fillStyle =
+                "#000000";
+
+
+              /* =============================================
+                 URAIAN
+              ============================================= */
+
+              ctx.textAlign =
+                "left";
+
+
+              ctx.font =
+                fontTabel;
+
+
+              var uraian =
+                item.pertanyaan ||
+                "-";
+
+
+              var uraianLines =
+                pecahTeks(
+                  uraian,
+                  colUraian - 12,
+                  fontTabel,
+                  2
+                );
+
+
+              var uraianStartY =
+                rowY +
+                (
+                  rowHeight -
+                  (
+                    uraianLines.length *
+                    10
+                  )
+                ) / 2 +
+                7;
+
+
+              uraianLines.forEach(
+                function(
+                  line,
+                  lineIndex
+                ) {
+
+                  ctx.fillText(
+                    line,
+                    colX2 + 6,
+                    uraianStartY +
+                    (
+                      lineIndex *
+                      10
+                    )
+                  );
+
+                }
+              );
+
+
+              /* =============================================
+                 STANDAR
+              ============================================= */
+
+              ctx.textAlign =
+                "left";
+
+
+              ctx.font =
+                fontKecil;
+
+
+              ctx.fillStyle =
+                "#000000";
+
+
+              var standarLines =
+                pecahTeks(
+                  item.standar ||
+                  "-",
+                  colStandar - 12,
+                  fontKecil,
+                  2
+                );
+
+
+              var standarStartY =
+                rowY +
+                (
+                  rowHeight -
+                  (
+                    standarLines.length *
+                    9
+                  )
+                ) / 2 +
+                6;
+
+
+              standarLines.forEach(
+                function(
+                  line,
+                  lineIndex
+                ) {
+
+                  ctx.fillText(
+                    line,
+                    colX3 + 6,
+                    standarStartY +
+                    (
+                      lineIndex *
+                      9
+                    )
+                  );
+
+                }
+              );
+
+
+              /* =============================================
+                 HASIL / KONDISI
+              ============================================= */
+
+              var hasil =
+                String(
+                  item.hasil ||
+                  "-"
+                ).toUpperCase();
+
+
+              ctx.textAlign =
+                "center";
+
+
+              ctx.font =
+                "bold 8px Arial";
+
+
+              if (
+                hasil === "YA"
+              ) {
+
+                ctx.fillStyle =
+                  "#198754";
+
+              }
+
+              else if (
+                hasil === "TIDAK"
+              ) {
+
+                ctx.fillStyle =
+                  "#dc3545";
+
+              }
+
+              else {
+
+                ctx.fillStyle =
+                  "#555555";
+
+              }
+
 
               ctx.fillText(
-                line,
-                colX5 + 6,
-                temuanStartY +
+                hasil,
+                colX4 +
                 (
-                  lineIndex *
-                  9
-                )
+                  colHasil / 2
+                ),
+                rowY +
+                (
+                  rowHeight / 2
+                ) +
+                3
               );
+
+
+              /* =============================================
+                 TEMUAN
+              ============================================= */
+
+              ctx.textAlign =
+                "left";
+
+
+              ctx.font =
+                fontKecil;
+
+
+              ctx.fillStyle =
+                "#000000";
+
+
+              var temuanLines =
+                pecahTeks(
+                  item.temuan ||
+                  "-",
+                  colTemuan - 12,
+                  fontKecil,
+                  2
+                );
+
+
+              var temuanStartY =
+                rowY +
+                (
+                  rowHeight -
+                  (
+                    temuanLines.length *
+                    9
+                  )
+                ) / 2 +
+                6;
+
+
+              temuanLines.forEach(
+                function(
+                  line,
+                  lineIndex
+                ) {
+
+                  ctx.fillText(
+                    line,
+                    colX5 + 6,
+                    temuanStartY +
+                    (
+                      lineIndex *
+                      9
+                    )
+                  );
+
+                }
+              );
+
+
+              y +=
+                rowHeight;
 
             }
           );
-
-
-          y +=
-            rowHeight;
 
         }
       );
 
 
+      /* =====================================================
+         SELESAI TABEL CHECKLIST
+      ===================================================== */
+
+      ctx.textAlign =
+        "left";
+
+
+      ctx.fillStyle =
+        "#000000";
+
+
+      console.log(
+        "TABEL CHECKLIST BERHASIL DIGAMBAR"
+      );
+
+
+      console.log(
+        "POSISI Y SETELAH TABEL:",
+        y
+      );
       /* =====================================================
          CATATAN
       ===================================================== */
