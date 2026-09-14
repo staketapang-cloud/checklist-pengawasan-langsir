@@ -6111,6 +6111,170 @@ var identitasBold =
 
 
 /* =====================================================
+   FORMAT HARI / TANGGAL UNTUK PREVIEW
+   Format:
+   Nama Hari, DD-MM-YYYY
+===================================================== */
+
+var tanggalPreview =
+  data.TANGGAL || "";
+
+var teksHariTanggal =
+  "-";
+
+
+if (tanggalPreview) {
+
+  var tanggalObj =
+    new Date(
+      tanggalPreview + "T00:00:00"
+    );
+
+
+  if (
+    !isNaN(
+      tanggalObj.getTime()
+    )
+  ) {
+
+    var namaHari = [
+
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu"
+
+    ];
+
+
+    var namaHariTampil =
+      namaHari[
+        tanggalObj.getDay()
+      ];
+
+
+    var tanggal =
+      String(
+        tanggalObj.getDate()
+      ).padStart(
+        2,
+        "0"
+      );
+
+
+    var bulan =
+      String(
+        tanggalObj.getMonth() + 1
+      ).padStart(
+        2,
+        "0"
+      );
+
+
+    var tahun =
+      tanggalObj.getFullYear();
+
+
+    teksHariTanggal =
+      namaHariTampil +
+      ", " +
+      tanggal +
+      "-" +
+      bulan +
+      "-" +
+      tahun;
+
+  }
+
+}
+
+
+/* =====================================================
+   FORMAT HARI / TANGGAL UNTUK PREVIEW
+   Format:
+   Nama Hari, DD-MM-YYYY
+===================================================== */
+
+var tanggalPreview =
+  data.TANGGAL || "";
+
+var teksHariTanggal =
+  "-";
+
+
+if (tanggalPreview) {
+
+  var tanggalObj =
+    new Date(
+      tanggalPreview + "T00:00:00"
+    );
+
+
+  if (
+    !isNaN(
+      tanggalObj.getTime()
+    )
+  ) {
+
+    var namaHari = [
+
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu"
+
+    ];
+
+
+    var namaHariTampil =
+      namaHari[
+        tanggalObj.getDay()
+      ];
+
+
+    var tanggal =
+      String(
+        tanggalObj.getDate()
+      ).padStart(
+        2,
+        "0"
+      );
+
+
+    var bulan =
+      String(
+        tanggalObj.getMonth() + 1
+      ).padStart(
+        2,
+        "0"
+      );
+
+
+    var tahun =
+      tanggalObj.getFullYear();
+
+
+    teksHariTanggal =
+      namaHariTampil +
+      ", " +
+      tanggal +
+      "-" +
+      bulan +
+      "-" +
+      tahun;
+
+  }
+
+}
+
+
+/* =====================================================
    IDENTITAS KIRI
 ===================================================== */
 
@@ -6118,7 +6282,7 @@ var identitasKiri = [
 
   [
     "Hari / Tanggal",
-    data.TANGGAL || "-"
+    teksHariTanggal
   ],
 
   [
@@ -6137,8 +6301,6 @@ var identitasKiri = [
   ]
 
 ];
-
-
 /* =====================================================
    IDENTITAS KANAN
 ===================================================== */
