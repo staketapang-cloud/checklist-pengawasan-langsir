@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -6758,399 +6759,1220 @@ y +=
             rowHeightTetap;
 
 
-/* =====================================================
-   KELOMPOK CHECKLIST
-   VERSI STABIL - TANPA FOREACH BERTINGKAT
-===================================================== */
+          /*
+           * Warna baris selang-seling.
+           */
 
-var kategoriSebelumnya = "";
+          if (
+            index % 2 === 1
+          ) {
 
-for (
-  var indexChecklist = 0;
-  indexChecklist < daftarChecklist.length;
-  indexChecklist++
-) {
+            ctx.fillStyle =
+              "#f7f7f7";
 
-  var item =
-    daftarChecklist[indexChecklist];
 
-  var kategori =
-    String(item.kategori || "");
+            ctx.fillRect(
+              tableX,
+              rowY,
+              tableWidth,
+              rowHeight
+            );
 
-  var nomorKelompok =
-    "";
-
-  var subKelompok =
-    "";
+          }
 
-  /* =================================================
-     TENTUKAN KELOMPOK
-  ================================================= */
-
-  if (
-    kategori.indexOf(
-      "Kelengkapan Dokumen"
-    ) !== -1
-  ) {
-
-    nomorKelompok =
-      "1";
-
-  }
-  else if (
-    kategori.indexOf(
-      "Kegiatan Langsiran Menggunakan Perintah Langsir"
-    ) !== -1
-  ) {
-
-    nomorKelompok =
-      "2";
-
-    subKelompok =
-      "a.";
-
-  }
-  else if (
-    kategori.indexOf(
-      "Kegiatan Langsiran Menggunakan Isyarat Langsir"
-    ) !== -1
-  ) {
-
-    nomorKelompok =
-      "2";
-
-    subKelompok =
-      "b.";
-
-  }
-  else if (
-    kategori.indexOf(
-      "Kepatuhan PLR dan Awak KA"
-    ) !== -1
-  ) {
-
-    nomorKelompok =
-      "3";
-
-  }
 
-  /* =================================================
-     NOMOR YANG DITAMPILKAN
-  ================================================= */
+          /*
+           * Border.
+           */
 
-  var tampilNomor =
-    "";
+          ctx.strokeStyle =
+            "#aaaaaa";
 
-  if (
-    kategori !==
-    kategoriSebelumnya
-  ) {
 
-    if (
-      subKelompok !== ""
-    ) {
+          ctx.lineWidth =
+            1;
 
-      tampilNomor =
-        nomorKelompok +
-        "  " +
-        subKelompok;
 
-    }
-    else {
+          ctx.strokeRect(
+            tableX,
+            rowY,
+            tableWidth,
+            rowHeight
+          );
 
-      tampilNomor =
-        nomorKelompok;
 
-    }
+          /*
+           * Garis vertikal.
+           */
 
-  }
+          [
+            colX2,
+            colX3,
+            colX4,
+            colX5
+          ].forEach(
+            function(x) {
 
-  kategoriSebelumnya =
-    kategori;
+              ctx.beginPath();
 
-  /* =================================================
-     SIAPKAN TEKS
-  ================================================= */
 
-  var teksUraian =
-    pecahTeks(
-      item.pertanyaan || "",
-      colUraian - 12,
-      fontTabel,
-      2
-    );
+              ctx.moveTo(
+                x,
+                rowY
+              );
 
-  var teksStandar =
-    pecahTeks(
-      item.standar || "",
-      colStandar - 12,
-      fontTabel,
-      2
-    );
 
-  var teksTemuan =
-    pecahTeks(
-      item.temuan || "",
-      colTemuan - 12,
-      fontTabel,
-      2
-    );
-
-  /* =================================================
-     TINGGI BARIS
-  ================================================= */
-
-  var jumlahBaris =
-    teksUraian.length;
+              ctx.lineTo(
+                x,
+                rowY +
+                rowHeight
+              );
 
-  if (
-    teksStandar.length >
-    jumlahBaris
-  ) {
-
-    jumlahBaris =
-      teksStandar.length;
-
-  }
-
-  if (
-    teksTemuan.length >
-    jumlahBaris
-  ) {
-
-    jumlahBaris =
-      teksTemuan.length;
-
-  }
-
-  if (
-    jumlahBaris < 1
-  ) {
-
-    jumlahBaris =
-      1;
-
-  }
-
-  var tinggiBaris =
-    jumlahBaris * 13 + 10;
 
-  if (
-    tinggiBaris < 30
-  ) {
+              ctx.stroke();
 
-    tinggiBaris =
-      30;
+            }
+          );
 
-  }
-
-  /* =================================================
-     BACKGROUND BARIS
-  ================================================= */
-
-  ctx.fillStyle =
-    "#ffffff";
 
-  ctx.fillRect(
-    tableX,
-    y,
-    tableWidth,
-    tinggiBaris
-  );
+          /* =================================================
+             NOMOR
+          ================================================= */
 
-  /* =================================================
-     BORDER
-  ================================================= */
+          ctx.textAlign =
+            "center";
 
-  ctx.strokeStyle =
-    "#777777";
 
-  ctx.lineWidth =
-    1;
+          ctx.font =
+            tableFontBoldSafe();
 
-  ctx.strokeRect(
-    tableX,
-    y,
-    tableWidth,
-    tinggiBaris
-  );
 
-  /* =================================================
-     GARIS KOLOM
-  ================================================= */
+          ctx.fillStyle =
+            "#000000";
 
-  ctx.beginPath();
 
-  ctx.moveTo(
-    colX2,
-    y
-  );
+ctx.fillText(
+  String(index + 1),
+            colX1 +
+            (
+              colNo / 2
+            ),
+            rowY +
+            (
+              rowHeight / 2
+            ) +
+            3
+          );
 
-  ctx.lineTo(
-    colX2,
-    y + tinggiBaris
-  );
-
-  ctx.moveTo(
-    colX3,
-    y
-  );
-
-  ctx.lineTo(
-    colX3,
-    y + tinggiBaris
-  );
 
-  ctx.moveTo(
-    colX4,
-    y
-  );
+          /* =================================================
+             URAIAN
+          ================================================= */
 
-  ctx.lineTo(
-    colX4,
-    y + tinggiBaris
-  );
+          ctx.textAlign =
+            "left";
 
-  ctx.moveTo(
-    colX5,
-    y
-  );
-
-  ctx.lineTo(
-    colX5,
-    y + tinggiBaris
-  );
 
-  ctx.stroke();
+          ctx.font =
+            fontTabel;
 
-  /* =================================================
-     NOMOR
-  ================================================= */
 
-  if (
-    tampilNomor !== ""
-  ) {
-
-    ctx.fillStyle =
-      "#000000";
+          var uraian =
+            item.pertanyaan ||
+            "-";
 
-    ctx.font =
-      fontTabelBold;
-
-    ctx.textAlign =
-      "center";
-
-    ctx.fillText(
-      tampilNomor,
-      colX1 + (colNo / 2),
-      y + 18
-    );
 
-  }
+          /*
+           * Kategori ditambahkan
+           * hanya jika tersedia.
+           */
 
-  /* =================================================
-     URAIAN
-  ================================================= */
+          if (
+            item.kategori
+          ) {
 
-  ctx.fillStyle =
-    "#000000";
+            uraian =
+              item.kategori +
+              " - " +
+              uraian;
 
-  ctx.font =
-    fontTabel;
+          }
 
-  ctx.textAlign =
-    "left";
 
-  for (
-    var iUraian = 0;
-    iUraian < teksUraian.length;
-    iUraian++
-  ) {
+          var uraianLines =
+            pecahTeks(
+              uraian,
+              colUraian - 12,
+              fontTabel,
+              2
+            );
 
-    ctx.fillText(
-      teksUraian[iUraian],
-      colX2 + 6,
-      y + 14 + (iUraian * 13)
-    );
 
-  }
+          var uraianLineHeight =
+            10;
 
-  /* =================================================
-     STANDAR
-  ================================================= */
 
-  for (
-    var iStandar = 0;
-    iStandar < teksStandar.length;
-    iStandar++
-  ) {
+          var uraianStartY =
+            rowY +
+            (
+              rowHeight -
+              (
+                uraianLines.length *
+                uraianLineHeight
+              )
+            ) / 2 +
+            7;
 
-    ctx.fillText(
-      teksStandar[iStandar],
-      colX3 + 6,
-      y + 14 + (iStandar * 13)
-    );
 
-  }
+          uraianLines.forEach(
+            function(line, lineIndex) {
 
-  /* =================================================
-     HASIL
-  ================================================= */
+              ctx.fillText(
+                line,
+                colX2 + 6,
+                uraianStartY +
+                (
+                  lineIndex *
+                  uraianLineHeight
+                )
+              );
 
-  ctx.textAlign =
-    "center";
+            }
+          );
 
-  ctx.font =
-    fontTabelBold;
 
-  ctx.fillText(
-    item.hasil || "",
-    colX4 + (colHasil / 2),
-    y + 18
-  );
+          /* =================================================
+             STANDAR
+          ================================================= */
 
-  /* =================================================
-     TEMUAN
-  ================================================= */
+          var standarLines =
+            pecahTeks(
+              item.standar ||
+              "-",
+              colStandar - 12,
+              fontTabel,
+              2
+            );
 
-  ctx.textAlign =
-    "left";
 
-  ctx.font =
-    fontTabel;
+          var standarStartY =
+            rowY +
+            (
+              rowHeight -
+              (
+                standarLines.length *
+                10
+              )
+            ) / 2 +
+            7;
 
-  for (
-    var iTemuan = 0;
-    iTemuan < teksTemuan.length;
-    iTemuan++
-  ) {
 
-    ctx.fillText(
-      teksTemuan[iTemuan],
-      colX5 + 6,
-      y + 14 + (iTemuan * 13)
-    );
+          standarLines.forEach(
+            function(line, lineIndex) {
 
-  }
+              ctx.fillText(
+                line,
+                colX3 + 6,
+                standarStartY +
+                (
+                  lineIndex *
+                  10
+                )
+              );
 
-  /* =================================================
-     PINDAH KE BARIS BERIKUTNYA
-  ================================================= */
+            }
+          );
 
-  y =
-    y +
-    tinggiBaris;
 
-}
+          /* =================================================
+             HASIL
+          ================================================= */
 
+          var hasil =
+            String(
+              item.hasil ||
+              "-"
+            ).toUpperCase();
 
-/* =====================================================
-   JARAK SEBELUM CATATAN
-===================================================== */
 
-y =
-  y +
-  10;
+          ctx.textAlign =
+            "center";
+
+
+          ctx.font =
+            "bold 8px Arial";
+
+
+          if (
+            hasil === "YA"
+          ) {
+
+            ctx.fillStyle =
+              "#198754";
+
+          }
+
+          else if (
+            hasil === "TIDAK"
+          ) {
+
+            ctx.fillStyle =
+              "#dc3545";
+
+          }
+
+          else {
+
+            ctx.fillStyle =
+              "#555555";
+
+          }
+
+
+          ctx.fillText(
+            hasil,
+            colX4 +
+            (
+              colHasil / 2
+            ),
+            rowY +
+            (
+              rowHeight / 2
+            ) +
+            3
+          );
+
+
+          /* =================================================
+             TEMUAN
+          ================================================= */
+
+          ctx.textAlign =
+            "left";
+
+
+          ctx.font =
+            fontKecil;
+
+
+          ctx.fillStyle =
+            "#000000";
+
+
+          var temuanLines =
+            pecahTeks(
+              item.temuan ||
+              "-",
+              colTemuan - 12,
+              fontKecil,
+              2
+            );
+
+
+          var temuanStartY =
+            rowY +
+            (
+              rowHeight -
+              (
+                temuanLines.length *
+                9
+              )
+            ) / 2 +
+            6;
+
+
+          temuanLines.forEach(
+            function(line, lineIndex) {
+
+              ctx.fillText(
+                line,
+                colX5 + 6,
+                temuanStartY +
+                (
+                  lineIndex *
+                  9
+                )
+              );
+
+            }
+          );
+
+
+          y +=
+            rowHeight;
+
+        }
+      );
+
+
+      /* =====================================================
+         CATATAN
+      ===================================================== */
+
+      y +=
+        10;
+
+
+      ctx.textAlign =
+        "left";
+
+
+      ctx.font =
+        "bold 11px Arial";
+
+
+      ctx.fillStyle =
+        "#1f4e78";
+
+
+      ctx.fillText(
+        "CATATAN PEMERIKSAAN",
+        margin,
+        y
+      );
+
+
+      y +=
+        7;
+
+
+      var catatanHeight =
+        65;
+
+
+      ctx.strokeStyle =
+        "#888888";
+
+
+      ctx.lineWidth =
+        1;
+
+
+      ctx.strokeRect(
+        margin,
+        y,
+        contentWidth,
+        catatanHeight
+      );
+
+
+      ctx.font =
+        "9px Arial";
+
+
+      ctx.fillStyle =
+        "#000000";
+
+
+      var catatanLines =
+        pecahTeks(
+          data.CATATAN ||
+          "-",
+          contentWidth - 16,
+          "9px Arial",
+          4
+        );
+
+
+      catatanLines.forEach(
+        function(line, index) {
+
+          ctx.fillText(
+            line,
+            margin + 8,
+            y +
+            14 +
+            (
+              index *
+              12
+            )
+          );
+
+        }
+      );
+
+
+      y +=
+        catatanHeight +
+        10;
+
+
+      /* =====================================================
+         INFORMASI PEMERIKSAAN
+      ===================================================== */
+
+      ctx.font =
+        "8px Arial";
+
+
+      ctx.fillStyle =
+        "#444444";
+
+
+      ctx.textAlign =
+        "left";
+
+
+      var idPemeriksaan =
+        data.ID_PEMERIKSAAN ||
+        idPemeriksaanAktif ||
+        "-";
+
+
+      ctx.fillText(
+        "ID Pemeriksaan : " +
+        idPemeriksaan,
+        margin,
+        y
+      );
+
+
+      y +=
+        12;
+
+
+      ctx.fillText(
+        "Pemeriksa : " +
+        (
+          data.NAMA ||
+          "-"
+        ),
+        margin,
+        y
+      );
+
+
+      y +=
+        12;
+
+
+      ctx.fillText(
+        "NIPP : " +
+        (
+          data.NIPP ||
+          "-"
+        ),
+        margin,
+        y
+      );
+
+
+      y +=
+        12;
+
+
+      ctx.fillText(
+        "Jabatan : " +
+        (
+          data.JABATAN ||
+          "-"
+        ),
+        margin,
+        y
+      );
+
+
+      /* =====================================================
+         TANDA TANGAN KANAN BAWAH
+      ===================================================== */
+
+      var ttdWidth =
+        300;
+
+
+      var ttdHeight =
+        190;
+
+
+      var ttdX =
+        canvasWidth -
+        margin -
+        ttdWidth;
+
+
+      var ttdY =
+        canvasHeight -
+        margin -
+        ttdHeight;
+
+
+      /*
+       * Kotak TTD.
+       */
+
+      ctx.strokeStyle =
+        "#444444";
+
+
+      ctx.lineWidth =
+        1;
+
+
+      ctx.strokeRect(
+        ttdX,
+        ttdY,
+        ttdWidth,
+        ttdHeight
+      );
+
+
+      /* =====================================================
+         JUDUL TTD
+      ===================================================== */
+
+      ctx.textAlign =
+        "center";
+
+
+      ctx.font =
+        "bold 10px Arial";
+
+
+      ctx.fillStyle =
+        "#000000";
+
+
+      ctx.fillText(
+        "MENGETAHUI,",
+        ttdX +
+        (
+          ttdWidth / 2
+        ),
+        ttdY + 16
+      );
+
+
+      ctx.font =
+        "8px Arial";
+
+
+      ctx.fillText(
+        "Pemeriksa",
+        ttdX +
+        (
+          ttdWidth / 2
+        ),
+        ttdY + 29
+      );
+
+
+      /* =====================================================
+         TTD DARI CANVAS ASLI
+         LANGSUNG DRAWIMAGE
+         TIDAK ASYNC
+      ===================================================== */
+
+      var canvasTTD =
+        document.getElementById(
+          "signatureCanvas"
+        );
+
+
+      var ttdBerhasil =
+        false;
+
+
+      if (
+        canvasTTD &&
+        canvasTTD.width > 0 &&
+        canvasTTD.height > 0
+      ) {
+
+        try {
+
+          /*
+           * Karena langsung menggambar
+           * canvas ke canvas,
+           * TTD pasti ikut JPG.
+           */
+
+          var ttdAreaX =
+            ttdX + 25;
+
+
+          var ttdAreaY =
+            ttdY + 38;
+
+
+          var ttdAreaWidth =
+            ttdWidth - 50;
+
+
+          var ttdAreaHeight =
+            90;
+
+
+          /*
+           * Background putih.
+           */
+
+          ctx.fillStyle =
+            "#ffffff";
+
+
+          ctx.fillRect(
+            ttdAreaX,
+            ttdAreaY,
+            ttdAreaWidth,
+            ttdAreaHeight
+          );
+
+
+          /*
+           * Gambar TTD.
+           */
+
+          ctx.drawImage(
+            canvasTTD,
+            ttdAreaX,
+            ttdAreaY,
+            ttdAreaWidth,
+            ttdAreaHeight
+          );
+
+
+          ttdBerhasil =
+            true;
+
+        }
+
+        catch (
+          errorTTD
+        ) {
+
+          console.warn(
+            "TTD tidak dapat digambar:",
+            errorTTD
+          );
+
+        }
+
+      }
+
+
+      /*
+       * Jika belum ada TTD,
+       * tampilkan teks.
+       */
+
+      if (
+        !ttdBerhasil
+      ) {
+
+        ctx.textAlign =
+          "center";
+
+
+        ctx.font =
+          "8px Arial";
+
+
+        ctx.fillStyle =
+          "#777777";
+
+
+        ctx.fillText(
+          "Tanda tangan belum tersedia",
+          ttdX +
+          (
+            ttdWidth / 2
+          ),
+          ttdY + 82
+        );
+
+      }
+
+
+      /* =====================================================
+         NAMA / NIPP / JABATAN
+      ===================================================== */
+
+      ctx.textAlign =
+        "center";
+
+
+      ctx.font =
+        "bold 9px Arial";
+
+
+      ctx.fillStyle =
+        "#000000";
+
+
+      ctx.fillText(
+        data.NAMA ||
+        "-",
+        ttdX +
+        (
+          ttdWidth / 2
+        ),
+        ttdY + 145
+      );
+
+
+      ctx.font =
+        "8px Arial";
+
+
+      ctx.fillText(
+        "NIPP: " +
+        (
+          data.NIPP ||
+          "-"
+        ),
+        ttdX +
+        (
+          ttdWidth / 2
+        ),
+        ttdY + 159
+      );
+
+
+      ctx.fillText(
+        data.JABATAN ||
+        "-",
+        ttdX +
+        (
+          ttdWidth / 2
+        ),
+        ttdY + 173
+      );
+
+
+      /* =====================================================
+         BORDER HALAMAN
+      ===================================================== */
+
+      ctx.strokeStyle =
+        "#1f1f1f";
+
+
+      ctx.lineWidth =
+        2;
+
+
+      ctx.strokeRect(
+        15,
+        15,
+        canvasWidth - 30,
+        canvasHeight - 30
+      );
+
+
+      /* =====================================================
+         BUAT JPG
+      ===================================================== */
+
+      var jpg =
+        canvas.toDataURL(
+          "image/jpeg",
+          0.92
+        );
+
+
+      if (
+        !jpg ||
+        jpg.indexOf(
+          "data:image/jpeg"
+        ) !== 0
+      ) {
+
+        throw new Error(
+          "Gagal membuat file JPG."
+        );
+
+      }
+
+
+      console.log(
+        "JPG A4 COMPACT BERHASIL DIBUAT"
+      );
+
+
+      /* =====================================================
+         HAPUS PREVIEW LAMA
+      ===================================================== */
+
+      var previewLama =
+        document.getElementById(
+          "previewHasilAkhirOverlay"
+        );
+
+
+      if (previewLama) {
+
+        previewLama.remove();
+
+      }
+
+
+      /* =====================================================
+         OVERLAY
+      ===================================================== */
+
+      var overlay =
+        document.createElement(
+          "div"
+        );
+
+
+      overlay.id =
+        "previewHasilAkhirOverlay";
+
+
+      overlay.style.position =
+        "fixed";
+
+
+      overlay.style.left =
+        "0";
+
+
+      overlay.style.top =
+        "0";
+
+
+      overlay.style.width =
+        "100%";
+
+
+      overlay.style.height =
+        "100%";
+
+
+      overlay.style.background =
+        "rgba(0,0,0,0.85)";
+
+
+      overlay.style.zIndex =
+        "99999";
+
+
+      overlay.style.overflow =
+        "auto";
+
+
+      overlay.style.padding =
+        "20px";
+
+
+      overlay.style.boxSizing =
+        "border-box";
+
+
+      /* =====================================================
+         CONTAINER
+      ===================================================== */
+
+      var container =
+        document.createElement(
+          "div"
+        );
+
+
+      container.style.width =
+        "100%";
+
+
+      container.style.maxWidth =
+        "850px";
+
+
+      container.style.margin =
+        "0 auto";
+
+
+      container.style.background =
+        "#ffffff";
+
+
+      container.style.padding =
+        "12px";
+
+
+      container.style.boxSizing =
+        "border-box";
+
+
+      container.style.borderRadius =
+        "8px";
+
+
+      /* =====================================================
+         JUDUL PREVIEW
+      ===================================================== */
+
+      var title =
+        document.createElement(
+          "div"
+        );
+
+
+      title.textContent =
+        "PREVIEW HASIL CHECKLIST — A4";
+
+
+      title.style.fontWeight =
+        "bold";
+
+
+      title.style.fontSize =
+        "18px";
+
+
+      title.style.textAlign =
+        "center";
+
+
+      title.style.marginBottom =
+        "12px";
+
+
+      title.style.color =
+        "#1f4e78";
+
+
+      container.appendChild(
+        title
+      );
+
+
+      /* =====================================================
+         GAMBAR JPG
+      ===================================================== */
+
+      var img =
+        document.createElement(
+          "img"
+        );
+
+
+      img.src =
+        jpg;
+
+
+      img.alt =
+        "Preview Hasil Checklist A4";
+
+
+      img.style.width =
+        "100%";
+
+
+      img.style.height =
+        "auto";
+
+
+      img.style.display =
+        "block";
+
+
+      img.style.border =
+        "1px solid #cccccc";
+
+
+      img.style.boxSizing =
+        "border-box";
+
+
+      container.appendChild(
+        img
+      );
+
+
+      /* =====================================================
+         TOMBOL
+      ===================================================== */
+
+      var tombolArea =
+        document.createElement(
+          "div"
+        );
+
+
+      tombolArea.style.display =
+        "flex";
+
+
+      tombolArea.style.gap =
+        "10px";
+
+
+      tombolArea.style.justifyContent =
+        "center";
+
+
+      tombolArea.style.flexWrap =
+        "wrap";
+
+
+      tombolArea.style.marginTop =
+        "12px";
+
+
+      /* =====================================================
+         DOWNLOAD JPG
+      ===================================================== */
+
+      var btnDownload =
+        document.createElement(
+          "button"
+        );
+
+
+      btnDownload.type =
+        "button";
+
+
+      btnDownload.textContent =
+        "DOWNLOAD JPG";
+
+
+      btnDownload.style.background =
+        "#198754";
+
+
+      btnDownload.style.color =
+        "#ffffff";
+
+
+      btnDownload.style.border =
+        "none";
+
+
+      btnDownload.style.padding =
+        "11px 18px";
+
+
+      btnDownload.style.borderRadius =
+        "6px";
+
+
+      btnDownload.style.cursor =
+        "pointer";
+
+
+      btnDownload.style.fontWeight =
+        "bold";
+
+
+      btnDownload.onclick =
+        function() {
+
+          var link =
+            document.createElement(
+              "a"
+            );
+
+
+          var idFile =
+            data.ID_PEMERIKSAAN ||
+            idPemeriksaanAktif ||
+            Date.now();
+
+
+          link.href =
+            jpg;
+
+
+          link.download =
+            "Checklist_Langsir_A4_" +
+            idFile +
+            ".jpg";
+
+
+          document.body.appendChild(
+            link
+          );
+
+
+          link.click();
+
+
+          link.remove();
+
+        };
+
+
+      tombolArea.appendChild(
+        btnDownload
+      );
+
+
+      /* =====================================================
+         TUTUP
+      ===================================================== */
+
+      var btnTutup =
+        document.createElement(
+          "button"
+        );
+
+
+      btnTutup.type =
+        "button";
+
+
+      btnTutup.textContent =
+        "TUTUP PREVIEW";
+
+
+      btnTutup.style.background =
+        "#6c757d";
+
+
+      btnTutup.style.color =
+        "#ffffff";
+
+
+      btnTutup.style.border =
+        "none";
+
+
+      btnTutup.style.padding =
+        "11px 18px";
+
+
+      btnTutup.style.borderRadius =
+        "6px";
+
+
+      btnTutup.style.cursor =
+        "pointer";
+
+
+      btnTutup.style.fontWeight =
+        "bold";
+
+
+      btnTutup.onclick =
+        function() {
+
+          overlay.remove();
+
+        };
+
+
+      tombolArea.appendChild(
+        btnTutup
+      );
+
+
+      container.appendChild(
+        tombolArea
+      );
+
+
+      overlay.appendChild(
+        container
+      );
+
+
+      document.body.appendChild(
+        overlay
+      );
+
+
       /* =====================================================
          SELESAI
       ===================================================== */
@@ -9533,3 +10355,6 @@ console.log(
 </body>
 
 </html>
+
+
+          
