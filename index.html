@@ -2284,388 +2284,336 @@ function muatDaftarUserLogin() {
       );
 
       /* =========================================
-         AKTIFKAN AUTOCOMPLETE NAMA
-      ========================================= */
-
-      buatAutocompleteNamaLogin();
-
-    })
-
-    .catch(function(error) {
-
-      console.error(
-        "GAGAL MEMUAT USER LOGIN:",
-        error
-      );
-
-      console.warn(
-        "Daftar user login gagal dimuat:",
-        error.message
-      );
-
-    });
-
-}
+     
 /* =========================================================
-   AUTO ISI NIPP & JABATAN DARI NAMA
+   LOGIN USER
+   DROPDOWN NAMA + AUTO NIPP + AUTO JABATAN
 ========================================================= */
 
-function isiDataUserDariNama() {
 
-  var namaElement =
-    document.getElementById("loginNama");
-
-  var nippElement =
-    document.getElementById("loginNipp");
-
-  var jabatanElement =
-    document.getElementById("loginJabatan");
-
-  if (
-    !namaElement ||
-    !nippElement ||
-    !jabatanElement
-  ) {
-    return;
-  }
-
-  var namaKetik =
-    String(
-      namaElement.value || ""
-    ).trim()
-    .toLowerCase();
-
-  if (!namaKetik) {
-
-    nippElement.value = "";
-    jabatanElement.value = "";
-
-    return;
-  }
-
-  var daftar =
-    window.daftarUserLogin || [];
-
-  var userDitemukan = null;
-
-  for (
-    var i = 0;
-    i < daftar.length;
-    i++
-  ) {
-
-    var user =
-      daftar[i];
-
-    if (!user) {
-      continue;
-    }
-
-    var namaUser =
-      String(
-        user.NAMA || ""
-      ).trim()
-      .toLowerCase();
-
-    if (
-      namaUser === namaKetik
-    ) {
-
-      userDitemukan =
-        user;
-
-      break;
-    }
-  }
-
-  if (userDitemukan) {
-
-    nippElement.value =
-      String(
-        userDitemukan.NIPP || ""
-      ).trim();
-
-    jabatanElement.value =
-      String(
-        userDitemukan.JABATAN || ""
-      ).trim();
-
-    console.log(
-      "USER DITEMUKAN:",
-      userDitemukan
-    );
-
-  } else {
-
-    nippElement.value = "";
-    jabatanElement.value = "";
-
-  }
-
-}
-      /* =========================================================
-   AUTOCOMPLETE PILIHAN NAMA LOGIN
+/* =========================================================
+   DATA USER LOGIN
 ========================================================= */
 
-function buatAutocompleteNamaLogin() {
+window.daftarUserLogin = [];
 
-  var namaInput =
+
+/* =========================================================
+   MEMUAT DAFTAR USER AKTIF
+========================================================= */
+
+function muatDaftarUserLogin() {
+
+  var namaSelect =
     document.getElementById(
       "loginNama"
     );
 
-  var suggestionBox =
-    document.getElementById(
-      "suggestionNamaLogin"
-    );
 
-  if (
-    !namaInput ||
-    !suggestionBox
-  ) {
+  if (!namaSelect) {
 
-    console.warn(
-      "Kotak autocomplete nama tidak ditemukan."
+    console.error(
+      "ELEMENT loginNama TIDAK DITEMUKAN."
     );
 
     return;
   }
 
 
-  /* =========================================
-     HINDARI EVENT DIPASANG BERULANG
-  ========================================= */
-
-  if (
-    namaInput.dataset.autocompleteAktif ===
-    "Y"
-  ) {
-    return;
-  }
-
-  namaInput.dataset.autocompleteAktif =
-    "Y";
+  console.log(
+    "MEMUAT DAFTAR USER LOGIN..."
+  );
 
 
-  /* =========================================
-     SAAT USER MENGETIK
-  ========================================= */
+  /* =======================================================
+     RESET DROPDOWN
+  ======================================================= */
 
-  namaInput.addEventListener(
-    "input",
-    function() {
-
-      var keyword =
-        String(
-          namaInput.value || ""
-        )
-        .trim()
-        .toLowerCase();
+  namaSelect.innerHTML =
+    '<option value="">-- Pilih Nama --</option>';
 
 
-      suggestionBox.innerHTML = "";
+  /* =======================================================
+     AMBIL DATA USER DARI APPS SCRIPT
+  ======================================================= */
+
+  kirimRequestGet("user")
+
+    .then(
+      function(response) {
+
+        console.log(
+          "DAFTAR USER LOGIN:",
+          response
+        );
 
 
-      if (!keyword) {
+        /* =================================================
+           VALIDASI RESPONSE
+        ================================================= */
 
-        suggestionBox.style.display =
-          "none";
+        if (
+          !response ||
+          response.success !== true ||
+          !Array.isArray(
+            response.data
+          )
+        ) {
 
-        return;
-      }
+          console.error(
+            "DATA USER TIDAK VALID:",
+            response
+          );
+
+          return;
+        }
 
 
-      var daftar =
-        window.daftarUserLogin || [];
+        /* =================================================
+           SIMPAN DATA USER
+        ================================================= */
+
+        window.daftarUserLogin =
+          response.data;
 
 
-      var hasil =
-        daftar.filter(
+        /* =================================================
+           MASUKKAN USER KE DROPDOWN
+        ================================================= */
+
+        response.data.forEach(
           function(user) {
 
             if (!user) {
-              return false;
+              return;
             }
+
 
             var nama =
               String(
                 user.NAMA || ""
-              )
-              .trim()
-              .toLowerCase();
+              ).trim();
 
-            return nama.includes(
-              keyword
+
+            var nipp =
+              String(
+                user.NIPP || ""
+              ).trim();
+
+
+            var jabatan =
+              String(
+                user.JABATAN || ""
+              ).trim();
+
+
+            if (!nama) {
+              return;
+            }
+
+
+            /* =============================================
+               BUAT OPTION
+            ============================================= */
+
+            var option =
+              document.createElement(
+                "option"
+              );
+
+
+            option.value =
+              nama;
+
+
+            option.textContent =
+              nama;
+
+
+            /* =============================================
+               SIMPAN NIPP
+            ============================================= */
+
+            option.dataset.nipp =
+              nipp;
+
+
+            /* =============================================
+               SIMPAN JABATAN
+            ============================================= */
+
+            option.dataset.jabatan =
+              jabatan;
+
+
+            /* =============================================
+               MASUKKAN KE SELECT
+            ============================================= */
+
+            namaSelect.appendChild(
+              option
             );
 
           }
         );
 
 
-      if (!hasil.length) {
-
-        suggestionBox.style.display =
-          "none";
-
-        return;
-      }
+        console.log(
+          "JUMLAH USER LOGIN:",
+          response.data.length
+        );
 
 
-      /* =====================================
-         TAMPILKAN HASIL NAMA
-      ===================================== */
+        /* =================================================
+           PASTIKAN NIPP & JABATAN KOSONG
+        ================================================= */
 
-      hasil.forEach(
-        function(user) {
+        var nippElement =
+          document.getElementById(
+            "loginNipp"
+          );
 
-          var item =
-            document.createElement(
-              "div"
-            );
-
-
-          item.textContent =
-            user.NAMA;
-
-
-          item.style.padding =
-            "10px 12px";
-
-          item.style.cursor =
-            "pointer";
-
-          item.style.background =
-            "#ffffff";
-
-          item.style.borderBottom =
-            "1px solid #eeeeee";
-
-
-          /* Hover */
-
-          item.addEventListener(
-            "mouseenter",
-            function() {
-
-              item.style.background =
-                "#f1f5f9";
-
-            }
+        var jabatanElement =
+          document.getElementById(
+            "loginJabatan"
           );
 
 
-          item.addEventListener(
-            "mouseleave",
-            function() {
+        if (nippElement) {
 
-              item.style.background =
-                "#ffffff";
-
-            }
-          );
-
-
-          /* =================================
-             PILIH NAMA
-          ================================= */
-
-          item.addEventListener(
-            "mousedown",
-            function(event) {
-
-              event.preventDefault();
-
-
-              namaInput.value =
-                user.NAMA || "";
-
-
-              var nippElement =
-                document.getElementById(
-                  "loginNipp"
-                );
-
-
-              var jabatanElement =
-                document.getElementById(
-                  "loginJabatan"
-                );
-
-
-              if (nippElement) {
-
-                nippElement.value =
-                  user.NIPP || "";
-
-              }
-
-
-              if (jabatanElement) {
-
-                jabatanElement.value =
-                  user.JABATAN || "";
-
-              }
-
-
-              suggestionBox.style.display =
-                "none";
-
-
-              console.log(
-                "NAMA DIPILIH:",
-                user.NAMA,
-                "NIPP:",
-                user.NIPP,
-                "JABATAN:",
-                user.JABATAN
-              );
-
-            }
-          );
-
-
-          suggestionBox.appendChild(
-            item
-          );
+          nippElement.value = "";
 
         }
-      );
 
 
-      suggestionBox.style.display =
-        "block";
+        if (jabatanElement) {
 
-    }
+          jabatanElement.value = "";
+
+        }
+
+      }
+    )
+
+    .catch(
+      function(error) {
+
+        console.error(
+          "GAGAL MEMUAT DAFTAR USER LOGIN:",
+          error
+        );
+
+
+        namaSelect.innerHTML =
+          '<option value="">Gagal memuat user</option>';
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   AUTO ISI NIPP & JABATAN DARI NAMA
+========================================================= */
+
+function isiDataUserDariNama() {
+
+  var namaSelect =
+    document.getElementById(
+      "loginNama"
+    );
+
+
+  var nippElement =
+    document.getElementById(
+      "loginNipp"
+    );
+
+
+  var jabatanElement =
+    document.getElementById(
+      "loginJabatan"
+    );
+
+
+  if (
+    !namaSelect ||
+    !nippElement ||
+    !jabatanElement
+  ) {
+
+    return;
+  }
+
+
+  /* =======================================================
+     AMBIL OPTION YANG DIPILIH
+  ======================================================= */
+
+  var index =
+    namaSelect.selectedIndex;
+
+
+  var option =
+    namaSelect.options[index];
+
+
+  /* =======================================================
+     BELUM MEMILIH NAMA
+  ======================================================= */
+
+  if (
+    !option ||
+    !option.value
+  ) {
+
+    nippElement.value = "";
+
+    jabatanElement.value = "";
+
+    return;
+  }
+
+
+  /* =======================================================
+     AUTO ISI NIPP
+  ======================================================= */
+
+  nippElement.value =
+    option.dataset.nipp || "";
+
+
+  /* =======================================================
+     AUTO ISI JABATAN
+  ======================================================= */
+
+  jabatanElement.value =
+    option.dataset.jabatan || "";
+
+
+  console.log(
+    "NAMA DIPILIH:",
+    option.value
   );
 
 
-  /* =========================================
-     KLIK DI LUAR KOTAK
-  ========================================= */
+  console.log(
+    "NIPP OTOMATIS:",
+    nippElement.value
+  );
 
-  document.addEventListener(
-    "click",
-    function(event) {
 
-      if (
-        event.target !== namaInput &&
-        !suggestionBox.contains(
-          event.target
-        )
-      ) {
-
-        suggestionBox.style.display =
-          "none";
-
-      }
-
-    }
+  console.log(
+    "JABATAN OTOMATIS:",
+    jabatanElement.value
   );
 
 }
+
+
 /* =========================================================
-   AKTIFKAN USER LOGIN
+   AKTIFKAN DROPDOWN USER LOGIN
 ========================================================= */
 
 document.addEventListener(
@@ -2673,18 +2621,34 @@ document.addEventListener(
   function() {
 
     var namaSelect =
-      document.getElementById("loginNama");
+      document.getElementById(
+        "loginNama"
+      );
 
 
     if (!namaSelect) {
+
+      console.error(
+        "ELEMENT loginNama TIDAK DITEMUKAN."
+      );
+
       return;
     }
 
-namaSelect.addEventListener(
-  "input",
-  isiDataUserDariNama
-);
 
+    /* =====================================================
+       EVENT SELECT
+    ===================================================== */
+
+    namaSelect.addEventListener(
+      "change",
+      isiDataUserDariNama
+    );
+
+
+    /* =====================================================
+       MUAT DAFTAR USER
+    ===================================================== */
 
     muatDaftarUserLogin();
 
