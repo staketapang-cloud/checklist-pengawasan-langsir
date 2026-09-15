@@ -7766,52 +7766,61 @@ function gambarItemChecklist(
   );
 
 
-  /* =================================================
-     STANDAR
-  ================================================= */
+/* =====================================================
+   STANDAR
+   HANYA HILANGKAN LABEL "STANDAR:"
+   ISI STANDAR TETAP DITAMPILKAN
+===================================================== */
 
-  var standarLines =
-    pecahTeks(
-      item.standar ||
-      "-",
-      colStandar - 12,
-      fontTabel,
-      2
-    );
-
-
-  var standarStartY =
-    rowY +
-    (
-      rowHeight -
-      (
-        standarLines.length *
-        10
-      )
-    ) / 2 +
-    7;
+var teksStandar =
+  String(
+    item.standar || ""
+  )
+  .replace(
+    /^STANDAR\s*:\s*/i,
+    ""
+  )
+  .trim();
 
 
-  standarLines.forEach(
-    function(
-      line,
-      lineIndex
-    ) {
-
-      ctx.fillText(
-        line,
-        colX3 + 6,
-        standarStartY +
-        (
-          lineIndex *
-          10
-        )
-      );
-
-    }
+var standarLines =
+  pecahTeks(
+    teksStandar || "-",
+    colStandar - 12,
+    fontTabel,
+    2
   );
 
 
+var standarStartY =
+  rowY +
+  (
+    rowHeight -
+    (
+      standarLines.length *
+      10
+    )
+  ) / 2 +
+  7;
+
+
+standarLines.forEach(
+  function(
+    line,
+    lineIndex
+  ) {
+
+    ctx.fillText(
+      line,
+      colX3 + 6,
+      standarStartY +
+      (
+        lineIndex * 10
+      )
+    );
+
+  }
+);
   /* =================================================
      HASIL
   ================================================= */
