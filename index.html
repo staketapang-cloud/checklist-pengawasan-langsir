@@ -8078,16 +8078,102 @@ btnDownload.style.fontWeight =
 btnDownload.onclick =
   function() {
 
-    var link =
-      document.createElement(
-        "a"
-      );
-
-
     var idFile =
       data.ID_PEMERIKSAAN ||
       idPemeriksaanAktif ||
       Date.now();
+
+
+    /* =====================================================
+       DETEKSI SAFARI iPHONE / iPAD
+    ===================================================== */
+
+    var userAgent =
+      navigator.userAgent ||
+      "";
+
+    var isIOS =
+      /iPad|iPhone|iPod/.test(
+        userAgent
+      ) ||
+      (
+        navigator.platform === "MacIntel" &&
+        navigator.maxTouchPoints > 1
+      );
+
+    var isSafari =
+      /^((?!chrome|android).)*safari/i.test(
+        userAgent
+      );
+
+
+    /* =====================================================
+       SAFARI iOS
+       BUKA JPG DI TAB BARU
+    ===================================================== */
+
+    if (
+      isIOS &&
+      isSafari
+    ) {
+
+      console.log(
+        "SAFARI iOS: membuka JPG..."
+      );
+
+
+      var tabBaru =
+        window.open(
+          "",
+          "_blank"
+        );
+
+
+      if (!tabBaru) {
+
+        alert(
+          "Safari memblokir pembukaan tab baru. Silakan izinkan pop-up."
+        );
+
+        return;
+
+      }
+
+
+      tabBaru.document.open();
+
+      tabBaru.document.write(
+        "<!DOCTYPE html>" +
+        "<html>" +
+        "<head>" +
+        "<meta name='viewport' content='width=device-width,initial-scale=1'>" +
+        "<title>Checklist Langsir</title>" +
+        "</head>" +
+        "<body style='margin:0;background:#222;text-align:center;'>" +
+        "<img src='" +
+        jpg +
+        "' style='width:100%;height:auto;display:block;'>" +
+        "</body>" +
+        "</html>"
+      );
+
+      tabBaru.document.close();
+
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       BROWSER LAIN
+       DOWNLOAD JPG LANGSUNG
+    ===================================================== */
+
+    var link =
+      document.createElement(
+        "a"
+      );
 
 
     link.href =
@@ -8111,8 +8197,6 @@ btnDownload.onclick =
     link.remove();
 
   };
-
-
 tombolArea.appendChild(
   btnDownload
 );
