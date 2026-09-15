@@ -8310,15 +8310,21 @@ for (
 
 
       ctx.font =
-        "bold 10px Arial";
+        "bold 9px Arial";
 
 
       ctx.fillStyle =
         "#000000";
 
 
+      /* =====================================================
+         TEMPAT DAN TANGGAL
+         MENGIKUTI DATA PEMERIKSAAN
+      ===================================================== */
+
       ctx.fillText(
-        "MENGETAHUI,",
+        "KETAPANG, " +
+        teksHariTanggal,
         ttdX +
         (
           ttdWidth / 2
@@ -8327,20 +8333,22 @@ for (
       );
 
 
+      /* =====================================================
+         JABATAN
+      ===================================================== */
+
       ctx.font =
-        "8px Arial";
+        "bold 9px Arial";
 
 
       ctx.fillText(
-        "Pemeriksa",
+        "PETUGAS PENGAWAS LANGSIR",
         ttdX +
         (
           ttdWidth / 2
         ),
-        ttdY + 29
+        ttdY + 30
       );
-
-
       /* =====================================================
          TTD DARI CANVAS ASLI
          LANGSUNG DRAWIMAGE
