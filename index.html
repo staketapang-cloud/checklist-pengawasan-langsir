@@ -5132,7 +5132,121 @@ function simpanTTD() {
       "Silakan tekan OK untuk mengecek kembali ke Form Checklist Pengawasan Langsir jika sudah yakin klik SIMPAN&SELESAI.",
       "form"
     );
+/* =========================================================
+   RAPIAKAN TAMPILAN SETELAH TTD BERHASIL
+   HILANGKAN AREA UPLOAD FOTO
+========================================================= */
 
+var uploadFotoBox =
+  document.getElementById(
+    "uploadFotoBox"
+  );
+
+if (uploadFotoBox) {
+
+  uploadFotoBox.style.display =
+    "none";
+
+}
+
+
+var previewFoto =
+  document.getElementById(
+    "previewFoto"
+  );
+
+if (previewFoto) {
+
+  previewFoto.style.display =
+    "none";
+
+}
+
+
+var uploadFoto =
+  document.getElementById(
+    "uploadFoto"
+  );
+
+if (uploadFoto) {
+
+  uploadFoto.style.display =
+    "none";
+
+}
+
+
+/* =========================================================
+   TAMPILKAN STATUS RINGKAS
+========================================================= */
+
+var statusAkhirTTD =
+  document.getElementById(
+    "statusAkhirTTD"
+  );
+
+
+if (!statusAkhirTTD) {
+
+  statusAkhirTTD =
+    document.createElement(
+      "div"
+    );
+
+  statusAkhirTTD.id =
+    "statusAkhirTTD";
+
+  statusAkhirTTD.style.marginTop =
+    "12px";
+
+  statusAkhirTTD.style.padding =
+    "12px";
+
+  statusAkhirTTD.style.border =
+    "1px solid #198754";
+
+  statusAkhirTTD.style.borderRadius =
+    "6px";
+
+  statusAkhirTTD.style.background =
+    "#e9f7ef";
+
+  statusAkhirTTD.style.color =
+    "#198754";
+
+  statusAkhirTTD.style.fontWeight =
+    "bold";
+
+  statusAkhirTTD.style.lineHeight =
+    "1.6";
+
+  statusAkhirTTD.style.textAlign =
+    "center";
+
+
+  var formPemeriksaan =
+    document.getElementById(
+      "formPemeriksaan"
+    );
+
+  if (formPemeriksaan) {
+
+    formPemeriksaan.appendChild(
+      statusAkhirTTD
+    );
+
+  }
+
+}
+
+
+statusAkhirTTD.innerHTML =
+  "✅ Upload foto selesai<br>" +
+  "✅ TTD berhasil disimpan";
+
+
+statusAkhirTTD.style.display =
+  "block";
 
     /*
      * JANGAN clear signature di sini.
