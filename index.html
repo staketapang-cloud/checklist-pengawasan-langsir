@@ -9490,7 +9490,11 @@ function initSignatureCanvas() {
   signatureCanvas =
     canvas;
 
+signatureCanvas.dataset.cssWidth =
+  "0";
 
+signatureCanvas.dataset.cssHeight =
+  "0";
   signatureContext =
     canvas.getContext("2d");
 
@@ -9523,6 +9527,8 @@ function initSignatureCanvas() {
 
 /* =========================================================
    RESIZE CANVAS
+   AMAN SAAT SCROLL / PERUBAHAN VIEWPORT
+   TTD TIDAK DI-RESET KECUALI UKURAN CANVAS BENAR-BENAR BERUBAH
 ========================================================= */
 
 function resizeSignatureCanvas() {
@@ -9554,6 +9560,63 @@ function resizeSignatureCanvas() {
     );
 
 
+  /* =====================================================
+     CEK UKURAN CANVAS SEBELUMNYA
+     Disimpan dalam CSS pixel.
+  ===================================================== */
+
+  var oldCssWidth =
+    Number(
+      signatureCanvas.dataset.cssWidth ||
+      0
+    );
+
+
+  var oldCssHeight =
+    Number(
+      signatureCanvas.dataset.cssHeight ||
+      0
+    );
+
+
+  var ukuranSama =
+    oldCssWidth === width &&
+    oldCssHeight === height;
+
+
+  /*
+   * Kalau ukuran sebenarnya tidak berubah,
+   * JANGAN sentuh canvas.
+   *
+   * Ini penting saat scroll mobile karena
+   * viewport bisa berubah tetapi canvas
+   * sebenarnya tetap berukuran sama.
+   */
+
+  if (ukuranSama) {
+
+    return;
+
+  }
+
+
+  /* =====================================================
+     SIMPAN UKURAN TERAKHIR
+  ===================================================== */
+
+  signatureCanvas.dataset.cssWidth =
+    String(width);
+
+
+  signatureCanvas.dataset.cssHeight =
+    String(height);
+
+
+  /* =====================================================
+     SIMPAN GAMBAR TTD LAMA
+     HANYA JIKA MEMANG ADA ISINYA
+  ===================================================== */
+
   var oldImage =
     null;
 
@@ -9581,18 +9644,30 @@ function resizeSignatureCanvas() {
 
 
       var oldCtx =
-        oldImage.getContext("2d");
+        oldImage.getContext(
+          "2d"
+        );
 
 
-      oldCtx.drawImage(
-        signatureCanvas,
-        0,
-        0
-      );
+      if (oldCtx) {
+
+        oldCtx.drawImage(
+          signatureCanvas,
+          0,
+          0
+        );
+
+      }
 
     }
 
     catch (error) {
+
+      console.warn(
+        "Gagal menyimpan TTD lama sebelum resize:",
+        error
+      );
+
 
       oldImage =
         null;
@@ -9602,29 +9677,54 @@ function resizeSignatureCanvas() {
   }
 
 
+  /* =====================================================
+     SET UKURAN INTERNAL CANVAS
+  ===================================================== */
+
   signatureCanvas.width =
     Math.round(
-      width * dpr
+      width *
+      dpr
     );
 
 
   signatureCanvas.height =
     Math.round(
-      height * dpr
+      height *
+      dpr
     );
 
 
   signatureCanvas.style.width =
-    width + "px";
+    width +
+    "px";
 
 
   signatureCanvas.style.height =
-    height + "px";
+    height +
+    "px";
 
+
+  /* =====================================================
+     BUAT CONTEXT BARU
+  ===================================================== */
 
   signatureContext =
-    signatureCanvas.getContext("2d");
+    signatureCanvas.getContext(
+      "2d"
+    );
 
+
+  if (!signatureContext) {
+
+    return;
+
+  }
+
+
+  /* =====================================================
+     SKALA DPR
+  ===================================================== */
 
   signatureContext.setTransform(
     dpr,
@@ -9636,21 +9736,33 @@ function resizeSignatureCanvas() {
   );
 
 
+  /* =====================================================
+     SETTING TTD
+  ===================================================== */
+
   signatureContext.lineWidth =
     2.5;
+
 
   signatureContext.lineCap =
     "round";
 
+
   signatureContext.lineJoin =
     "round";
+
 
   signatureContext.strokeStyle =
     "#111";
 
+
   signatureContext.fillStyle =
     "#ffffff";
 
+
+  /* =====================================================
+     LATAR PUTIH
+  ===================================================== */
 
   signatureContext.fillRect(
     0,
@@ -9660,12 +9772,9 @@ function resizeSignatureCanvas() {
   );
 
 
-  signatureContext.strokeStyle =
-    "#111";
-
-  signatureContext.fillStyle =
-    "#111";
-
+  /* =====================================================
+     KEMBALIKAN TTD LAMA
+  ===================================================== */
 
   if (oldImage) {
 
@@ -9688,15 +9797,23 @@ function resizeSignatureCanvas() {
     catch (error) {
 
       console.warn(
-        "Gagal mengembalikan gambar TTD lama."
+        "Gagal mengembalikan gambar TTD lama:",
+        error
       );
 
     }
 
   }
 
-}
 
+  signatureContext.strokeStyle =
+    "#111";
+
+
+  signatureContext.fillStyle =
+    "#111";
+
+}
 
 /* =========================================================
    EVENT CANVAS
