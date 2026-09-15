@@ -7002,14 +7002,99 @@ y +=
       );
 
 
+      /* =====================================================
+         HEADER KONDISI
+         KONDISI
+         ----------
+         YA | TIDAK
+      ===================================================== */
+
+      ctx.textAlign =
+        "center";
+
+
+      ctx.font =
+        "bold 9px Arial";
+
+
+      ctx.fillStyle =
+        "#000000";
+
+
+      /* =========================
+         JUDUL KONDISI
+      ========================= */
+
       ctx.fillText(
         "KONDISI",
         colX4 +
         (
           colHasil / 2
         ),
-        y + 17
+        y + 13
       );
+
+
+      /* =========================
+         GARIS DI BAWAH KONDISI
+      ========================= */
+
+      ctx.strokeStyle =
+        "#000000";
+
+
+      ctx.lineWidth =
+        1;
+
+
+      ctx.beginPath();
+
+
+      ctx.moveTo(
+        colX4 + 5,
+        y + 18
+      );
+
+
+      ctx.lineTo(
+        colX4 +
+        colHasil -
+        5,
+        y + 18
+      );
+
+
+      ctx.stroke();
+
+
+      /* =========================
+         YA | TIDAK
+      ========================= */
+
+      ctx.font =
+        "bold 7px Arial";
+
+
+      ctx.fillText(
+        "YA | TIDAK",
+        colX4 +
+        (
+          colHasil / 2
+        ),
+        y + 28
+      );
+
+
+      ctx.textAlign =
+        "left";
+
+
+      ctx.font =
+        fontTabel;
+
+
+      ctx.fillStyle =
+        "#000000";
 
 
       ctx.fillText(
@@ -7020,8 +7105,6 @@ y +=
         ),
         y + 17
       );
-
-
       y +=
         tableHeaderHeight;
 
