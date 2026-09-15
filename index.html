@@ -8618,7 +8618,6 @@ tombolArea.style.flexWrap =
 tombolArea.style.marginTop =
   "12px";
 
-
 /* =====================================================
    DOWNLOAD JPG
 ===================================================== */
@@ -8681,13 +8680,49 @@ btnDownload.onclick =
 
 
     /* ===================================================
-       SAFARI / iPHONE / iPAD
+       DETEKSI SAFARI iPHONE / iPAD SAJA
+    =================================================== */
+
+    var userAgent =
+      navigator.userAgent ||
+      "";
+
+
+    var isIOS =
+      /iPad|iPhone|iPod/.test(
+        userAgent
+      ) ||
+      (
+        navigator.platform ===
+          "MacIntel" &&
+        navigator.maxTouchPoints >
+          1
+      );
+
+
+    var isSafari =
+      /Safari/i.test(
+        userAgent
+      ) &&
+      !/Chrome|CriOS|Android|EdgiOS|OPiOS|FxiOS/i.test(
+        userAgent
+      );
+
+
+    var gunakanShareSafari =
+      isIOS &&
+      isSafari &&
+      navigator.share &&
+      navigator.canShare;
+
+
+    /* ===================================================
+       SAFARI iPHONE / iPAD
        GUNAKAN SHARE FILE
     =================================================== */
 
     if (
-      navigator.share &&
-      navigator.canShare
+      gunakanShareSafari
     ) {
 
       fetch(jpg)
@@ -8708,7 +8743,8 @@ btnDownload.onclick =
                 [blob],
                 namaFile,
                 {
-                  type: "image/jpeg"
+                  type:
+                    "image/jpeg"
                 }
               );
 
@@ -8757,7 +8793,7 @@ btnDownload.onclick =
             if (
               error &&
               error.name ===
-              "AbortError"
+                "AbortError"
             ) {
 
               console.log(
@@ -8770,13 +8806,13 @@ btnDownload.onclick =
 
 
             console.warn(
-              "Share JPG tidak tersedia, menggunakan download biasa:",
+              "Share JPG Safari gagal, menggunakan download biasa:",
               error
             );
 
 
             /* =========================================
-               FALLBACK DOWNLOAD BIASA
+               FALLBACK DOWNLOAD
             ========================================== */
 
             var link =
@@ -8813,7 +8849,8 @@ btnDownload.onclick =
 
 
     /* ===================================================
-       BROWSER YANG TIDAK MENDUKUNG SHARE FILE
+       CHROME / EDGE / FIREFOX / DESKTOP / ANDROID
+       DOWNLOAD LANGSUNG
     =================================================== */
 
     var link =
@@ -8841,11 +8878,11 @@ btnDownload.onclick =
     link.remove();
 
   };
+
+
 tombolArea.appendChild(
   btnDownload
 );
-
-
 /* =====================================================
    DOWNLOAD PDF
 ===================================================== */
@@ -8928,9 +8965,14 @@ btnPDF.onclick =
 
       var pdf =
         new window.jspdf.jsPDF({
-          orientation: "portrait",
-          unit: "mm",
-          format: "a4"
+          orientation:
+            "portrait",
+
+          unit:
+            "mm",
+
+          format:
+            "a4"
         });
 
 
@@ -8947,13 +8989,49 @@ btnPDF.onclick =
 
 
       /* =================================================
-         SAFARI / iPHONE / iPAD
-         BAGIKAN FILE PDF
+         DETEKSI SAFARI iPHONE / iPAD SAJA
+      ================================================= */
+
+      var userAgent =
+        navigator.userAgent ||
+        "";
+
+
+      var isIOS =
+        /iPad|iPhone|iPod/.test(
+          userAgent
+        ) ||
+        (
+          navigator.platform ===
+            "MacIntel" &&
+          navigator.maxTouchPoints >
+            1
+        );
+
+
+      var isSafari =
+        /Safari/i.test(
+          userAgent
+        ) &&
+        !/Chrome|CriOS|Android|EdgiOS|OPiOS|FxiOS/i.test(
+          userAgent
+        );
+
+
+      var gunakanShareSafari =
+        isIOS &&
+        isSafari &&
+        navigator.share &&
+        navigator.canShare;
+
+
+      /* =================================================
+         SAFARI iPHONE / iPAD
+         SHARE FILE PDF
       ================================================= */
 
       if (
-        navigator.share &&
-        navigator.canShare
+        gunakanShareSafari
       ) {
 
         var pdfBlob =
@@ -8967,7 +9045,8 @@ btnPDF.onclick =
             [pdfBlob],
             namaFile,
             {
-              type: "application/pdf"
+              type:
+                "application/pdf"
             }
           );
 
@@ -9006,7 +9085,7 @@ btnPDF.onclick =
               if (
                 error &&
                 error.name ===
-                "AbortError"
+                  "AbortError"
               ) {
 
                 console.log(
@@ -9019,7 +9098,7 @@ btnPDF.onclick =
 
 
               console.warn(
-                "Share PDF gagal, menggunakan download biasa:",
+                "Share PDF Safari gagal, menggunakan download biasa:",
                 error
               );
 
@@ -9040,7 +9119,7 @@ btnPDF.onclick =
 
 
       /* =================================================
-         BROWSER BIASA
+         CHROME / EDGE / FIREFOX / DESKTOP / ANDROID
          DOWNLOAD LANGSUNG
       ================================================= */
 
@@ -9050,7 +9129,7 @@ btnPDF.onclick =
 
 
       console.log(
-        "PDF BERHASIL DIBUAT:",
+        "PDF BERHASIL DIDOWNLOAD:",
         namaFile
       );
 
@@ -9077,6 +9156,7 @@ btnPDF.onclick =
     }
 
   };
+
 
 tombolArea.appendChild(
   btnPDF
