@@ -8084,80 +8084,137 @@ btnDownload.onclick =
       Date.now();
 
 
-    /* =====================================================
-       DETEKSI SAFARI iPHONE / iPAD
-    ===================================================== */
-
-    var userAgent =
-      navigator.userAgent ||
-      "";
-
-    var isIOS =
-      /iPad|iPhone|iPod/.test(
-        userAgent
-      ) ||
-      (
-        navigator.platform === "MacIntel" &&
-        navigator.maxTouchPoints > 1
-      );
-
-    var isSafari =
-      /^((?!chrome|android).)*safari/i.test(
-        userAgent
-      );
+    var namaFile =
+      "Checklist_Langsir_A4_" +
+      idFile +
+      ".jpg";
 
 
-    /* =====================================================
-       SAFARI iOS
-       BUKA JPG DI TAB BARU
-    ===================================================== */
+    /* ===================================================
+       SAFARI / iPHONE / iPAD
+       GUNAKAN SHARE FILE
+    =================================================== */
 
     if (
-      isIOS &&
-      isSafari
+      navigator.share &&
+      navigator.canShare
     ) {
 
-      console.log(
-        "SAFARI iOS: membuka JPG..."
-      );
+      fetch(jpg)
+
+        .then(
+          function(response) {
+
+            return response.blob();
+
+          }
+        )
+
+        .then(
+          function(blob) {
+
+            var file =
+              new File(
+                [blob],
+                namaFile,
+                {
+                  type: "image/jpeg"
+                }
+              );
 
 
-      var tabBaru =
-        window.open(
-          "",
-          "_blank"
+            if (
+              navigator.canShare({
+                files: [file]
+              })
+            ) {
+
+              return navigator.share({
+
+                files: [file],
+
+                title:
+                  "Checklist Pengawasan Kegiatan Langsir",
+
+                text:
+                  "Hasil Checklist Pengawasan Kegiatan Langsir"
+
+              });
+
+            }
+
+
+            throw new Error(
+              "Browser tidak mendukung berbagi file."
+            );
+
+          }
+        )
+
+        .then(
+          function() {
+
+            console.log(
+              "JPG berhasil dibagikan."
+            );
+
+          }
+        )
+
+        .catch(
+          function(error) {
+
+            if (
+              error &&
+              error.name ===
+              "AbortError"
+            ) {
+
+              console.log(
+                "Menu Share ditutup oleh pengguna."
+              );
+
+              return;
+
+            }
+
+
+            console.warn(
+              "Share JPG tidak tersedia, menggunakan download biasa:",
+              error
+            );
+
+
+            /* =========================================
+               FALLBACK DOWNLOAD BIASA
+            ========================================== */
+
+            var link =
+              document.createElement(
+                "a"
+              );
+
+
+            link.href =
+              jpg;
+
+
+            link.download =
+              namaFile;
+
+
+            document.body.appendChild(
+              link
+            );
+
+
+            link.click();
+
+
+            link.remove();
+
+          }
         );
-
-
-      if (!tabBaru) {
-
-        alert(
-          "Safari memblokir pembukaan tab baru. Silakan izinkan pop-up."
-        );
-
-        return;
-
-      }
-
-
-      tabBaru.document.open();
-
-      tabBaru.document.write(
-        "<!DOCTYPE html>" +
-        "<html>" +
-        "<head>" +
-        "<meta name='viewport' content='width=device-width,initial-scale=1'>" +
-        "<title>Checklist Langsir</title>" +
-        "</head>" +
-        "<body style='margin:0;background:#222;text-align:center;'>" +
-        "<img src='" +
-        jpg +
-        "' style='width:100%;height:auto;display:block;'>" +
-        "</body>" +
-        "</html>"
-      );
-
-      tabBaru.document.close();
 
 
       return;
@@ -8165,10 +8222,9 @@ btnDownload.onclick =
     }
 
 
-    /* =====================================================
-       BROWSER LAIN
-       DOWNLOAD JPG LANGSUNG
-    ===================================================== */
+    /* ===================================================
+       BROWSER YANG TIDAK MENDUKUNG SHARE FILE
+    =================================================== */
 
     var link =
       document.createElement(
@@ -8181,9 +8237,7 @@ btnDownload.onclick =
 
 
     link.download =
-      "Checklist_Langsir_A4_" +
-      idFile +
-      ".jpg";
+      namaFile;
 
 
     document.body.appendChild(
@@ -8272,9 +8326,15 @@ btnPDF.onclick =
         Date.now();
 
 
-      /*
-       * Buat PDF A4 portrait.
-       */
+      var namaFile =
+        "Checklist_Langsir_A4_" +
+        idFile +
+        ".pdf";
+
+
+      /* =================================================
+         BUAT PDF A4
+      ================================================= */
 
       var pdf =
         new window.jspdf.jsPDF({
@@ -8284,76 +8344,131 @@ btnPDF.onclick =
         });
 
 
-      /*
-       * Ukuran A4.
-       */
-
-      var pageWidth =
-        210;
-
-
-      var pageHeight =
-        297;
-
-
-      /*
-       * Margin PDF.
-       */
-
-      var pdfMargin =
-        0;
-
-
-      var pdfWidth =
-        pageWidth -
-        (
-          pdfMargin * 2
-        );
-
-
-      var pdfHeight =
-        pageHeight -
-        (
-          pdfMargin * 2
-        );
-
-
-      /*
-       * Masukkan JPG preview
-       * ke seluruh halaman A4.
-       */
-
       pdf.addImage(
         jpg,
         "JPEG",
-        pdfMargin,
-        pdfMargin,
-        pdfWidth,
-        pdfHeight,
+        0,
+        0,
+        210,
+        297,
         undefined,
         "FAST"
       );
 
 
-      /*
-       * Download PDF.
-       */
+      /* =================================================
+         SAFARI / iPHONE / iPAD
+         BAGIKAN FILE PDF
+      ================================================= */
+
+      if (
+        navigator.share &&
+        navigator.canShare
+      ) {
+
+        var pdfBlob =
+          pdf.output(
+            "blob"
+          );
+
+
+        var pdfFile =
+          new File(
+            [pdfBlob],
+            namaFile,
+            {
+              type: "application/pdf"
+            }
+          );
+
+
+        if (
+          navigator.canShare({
+            files: [pdfFile]
+          })
+        ) {
+
+          navigator.share({
+
+            files: [pdfFile],
+
+            title:
+              "Checklist Pengawasan Kegiatan Langsir",
+
+            text:
+              "Hasil Checklist Pengawasan Kegiatan Langsir"
+
+          })
+
+          .then(
+            function() {
+
+              console.log(
+                "PDF berhasil dibagikan."
+              );
+
+            }
+          )
+
+          .catch(
+            function(error) {
+
+              if (
+                error &&
+                error.name ===
+                "AbortError"
+              ) {
+
+                console.log(
+                  "Menu Share PDF ditutup oleh pengguna."
+                );
+
+                return;
+
+              }
+
+
+              console.warn(
+                "Share PDF gagal, menggunakan download biasa:",
+                error
+              );
+
+
+              pdf.save(
+                namaFile
+              );
+
+            }
+          );
+
+
+          return;
+
+        }
+
+      }
+
+
+      /* =================================================
+         BROWSER BIASA
+         DOWNLOAD LANGSUNG
+      ================================================= */
 
       pdf.save(
-        "Checklist_Langsir_A4_" +
-        idFile +
-        ".pdf"
+        namaFile
       );
 
 
       console.log(
         "PDF BERHASIL DIBUAT:",
-        idFile
+        namaFile
       );
 
     }
 
-    catch (errorPDF) {
+    catch (
+      errorPDF
+    ) {
 
       console.error(
         "GAGAL MEMBUAT PDF:",
@@ -8372,7 +8487,6 @@ btnPDF.onclick =
     }
 
   };
-
 
 tombolArea.appendChild(
   btnPDF
