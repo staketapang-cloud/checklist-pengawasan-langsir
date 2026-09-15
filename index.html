@@ -2254,273 +2254,150 @@ function kembaliKeLogin() {
 
 }
 /* =========================================================
-   USER LOGIN - DROPDOWN NAMA
-   NIPP DAN JABATAN OTOMATIS
+   LOAD USER LOGIN - RINGAN
 ========================================================= */
 
 function muatDaftarUserLogin() {
 
   var namaSelect =
-    document.getElementById(
-      "loginNama"
-    );
+    document.getElementById("loginNama");
 
   if (!namaSelect) {
-    console.error(
-      "loginNama tidak ditemukan."
-    );
     return;
   }
 
 
+  /* =====================================================
+     TAMPILKAN STATUS AWAL
+  ===================================================== */
+
+  namaSelect.innerHTML =
+    '<option value="">Memuat nama...</option>';
+
+
+  namaSelect.disabled =
+    true;
+
+
   console.log(
-    "MEMUAT USER LOGIN..."
+    "LOGIN: mulai memuat daftar nama..."
   );
 
 
   /* =====================================================
-     RESET DROPDOWN
-  ===================================================== */
-
-  namaSelect.innerHTML =
-    '<option value="">-- Pilih Nama --</option>';
-
-
-  /* =====================================================
-     AMBIL DATA USER
+     REQUEST USER
   ===================================================== */
 
   kirimRequestGet("user")
 
-    .then(
-      function(response) {
+    .then(function(response) {
 
-        console.log(
-          "DATA USER LOGIN:",
-          response
+      if (
+        !response ||
+        response.success !== true ||
+        !Array.isArray(response.data)
+      ) {
+
+        throw new Error(
+          "Data user tidak valid."
         );
+      }
 
 
-        if (
-          !response ||
-          response.success !== true ||
-          !Array.isArray(
-            response.data
-          )
-        ) {
+      window.daftarUserLogin =
+        response.data;
 
-          throw new Error(
-            "Data user tidak valid."
-          );
 
+      /* =================================================
+         ISI DROPDOWN
+      ================================================= */
+
+      namaSelect.innerHTML =
+        '<option value="">-- Pilih Nama --</option>';
+
+
+      for (
+        var i = 0;
+        i < response.data.length;
+        i++
+      ) {
+
+        var user =
+          response.data[i];
+
+
+        if (!user || !user.NAMA) {
+          continue;
         }
 
 
-        /* =================================================
-           SIMPAN DATA USER
-        ================================================= */
-
-        window.daftarUserLogin =
-          response.data;
+        var option =
+          document.createElement(
+            "option"
+          );
 
 
-        /* =================================================
-           MASUKKAN NAMA KE DROPDOWN
-        ================================================= */
-
-        response.data.forEach(
-          function(user) {
-
-            if (!user) {
-              return;
-            }
+        option.value =
+          String(
+            user.NAMA
+          ).trim();
 
 
-            var nama =
-              String(
-                user.NAMA || ""
-              ).trim();
+        option.textContent =
+          String(
+            user.NAMA
+          ).trim();
 
 
-            var nipp =
-              String(
-                user.NIPP || ""
-              ).trim();
+        option.dataset.nipp =
+          String(
+            user.NIPP || ""
+          ).trim();
 
 
-            var jabatan =
-              String(
-                user.JABATAN || ""
-              ).trim();
+        option.dataset.jabatan =
+          String(
+            user.JABATAN || ""
+          ).trim();
 
 
-            if (!nama) {
-              return;
-            }
-
-
-            var option =
-              document.createElement(
-                "option"
-              );
-
-
-            option.value =
-              nama;
-
-
-            option.textContent =
-              nama;
-
-
-            option.dataset.nipp =
-              nipp;
-
-
-            option.dataset.jabatan =
-              jabatan;
-
-
-            namaSelect.appendChild(
-              option
-            );
-
-          }
-        );
-
-
-        console.log(
-          "JUMLAH NAMA DROPDOWN:",
-          namaSelect.options.length - 1
+        namaSelect.appendChild(
+          option
         );
 
       }
-    )
-
-    .catch(
-      function(error) {
-
-        console.error(
-          "GAGAL MEMUAT USER LOGIN:",
-          error
-        );
-
-      }
-    );
-
-}
 
 
-/* =========================================================
-   AUTO ISI NIPP + JABATAN
-========================================================= */
-
-function isiDataUserDariNama() {
-
-  var namaSelect =
-    document.getElementById(
-      "loginNama"
-    );
-
-  var nippElement =
-    document.getElementById(
-      "loginNipp"
-    );
-
-  var jabatanElement =
-    document.getElementById(
-      "loginJabatan"
-    );
+      namaSelect.disabled =
+        false;
 
 
-  if (
-    !namaSelect ||
-    !nippElement ||
-    !jabatanElement
-  ) {
+      console.log(
+        "LOGIN: dropdown siap, jumlah nama =",
+        namaSelect.options.length - 1
+      );
 
-    return;
-  }
+    })
 
 
-  var option =
-    namaSelect.options[
-      namaSelect.selectedIndex
-    ];
+    .catch(function(error) {
 
-
-  if (
-    !option ||
-    !option.value
-  ) {
-
-    nippElement.value =
-      "";
-
-    jabatanElement.value =
-      "";
-
-    return;
-  }
-
-
-  nippElement.value =
-    option.dataset.nipp || "";
-
-
-  jabatanElement.value =
-    option.dataset.jabatan || "";
-
-
-  console.log(
-    "NAMA DIPILIH:",
-    option.value
-  );
-
-
-  console.log(
-    "NIPP:",
-    nippElement.value
-  );
-
-
-  console.log(
-    "JABATAN:",
-    jabatanElement.value
-  );
-
-}
-
-
-/* =========================================================
-   AKTIFKAN DROPDOWN
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
-
-    var namaSelect =
-      document.getElementById(
-        "loginNama"
+      console.error(
+        "LOGIN: gagal memuat nama:",
+        error
       );
 
 
-    if (!namaSelect) {
-      return;
-    }
+      namaSelect.innerHTML =
+        '<option value="">Gagal memuat nama</option>';
 
 
-    namaSelect.addEventListener(
-      "change",
-      isiDataUserDariNama
-    );
+      namaSelect.disabled =
+        false;
 
+    });
 
-    muatDaftarUserLogin();
-
-  }
-);
+}
 /* =========================================================
    LOGIN MANUAL
 ========================================================= */
@@ -2856,9 +2733,9 @@ function loginPengguna() {
 window.loginPengguna =
   loginPengguna;
 
-
 /* =========================================================
    BUKA APLIKASI
+   MASTER DATA DIMUAT SETELAH LOGIN
 ========================================================= */
 
 function bukaAplikasi() {
@@ -2879,34 +2756,76 @@ function bukaAplikasi() {
     );
 
 
+  /* =====================================================
+     SEMBUNYIKAN LOGIN
+  ===================================================== */
+
   if (login) {
-    login.style.display = "none";
+
+    login.style.display =
+      "none";
+
   }
+
+
+  /* =====================================================
+     TAMPILKAN APLIKASI
+  ===================================================== */
 
   if (app) {
-    app.style.display = "block";
+
+    app.style.display =
+      "block";
+
   }
+
 
   if (form) {
-    form.style.display = "block";
+
+    form.style.display =
+      "block";
+
   }
 
 
+  /* =====================================================
+     TAMPILKAN USER
+  ===================================================== */
+
   tampilkanInfoUser(
-    sessionStorage.getItem("userNama") || "",
-    sessionStorage.getItem("userNipp") || "",
-    sessionStorage.getItem("userJabatan") || ""
+    sessionStorage.getItem(
+      "userNama"
+    ) || "",
+
+    sessionStorage.getItem(
+      "userNipp"
+    ) || "",
+
+    sessionStorage.getItem(
+      "userJabatan"
+    ) || ""
   );
 
 
+  /* =====================================================
+     TANGGAL
+  ===================================================== */
+
   setTanggalHariIni();
+
+
+  /* =====================================================
+     BARU SEKARANG LOAD MASTER
+  ===================================================== */
+
+  console.log(
+    "LOGIN BERHASIL - MULAI MEMUAT MASTER DATA..."
+  );
 
 
   muatSemuaData();
 
 }
-
-
 /* =========================================================
    INFO USER
 ========================================================= */
