@@ -724,6 +724,10 @@ body {
   font-size: 14px;
 }
 </style>
+      <!-- =========================================================
+     LIBRARY PDF
+========================================================= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 
@@ -7778,125 +7782,300 @@ ctx.fillText(
       );
 
 
-      /* =====================================================
-         TOMBOL
-      ===================================================== */
+/* =====================================================
+   TOMBOL PREVIEW
+===================================================== */
 
-      var tombolArea =
-        document.createElement(
-          "div"
-        );
-
-
-      tombolArea.style.display =
-        "flex";
+var tombolArea =
+  document.createElement(
+    "div"
+  );
 
 
-      tombolArea.style.gap =
-        "10px";
+tombolArea.style.display =
+  "flex";
 
 
-      tombolArea.style.justifyContent =
-        "center";
+tombolArea.style.gap =
+  "10px";
 
 
-      tombolArea.style.flexWrap =
-        "wrap";
+tombolArea.style.justifyContent =
+  "center";
 
 
-      tombolArea.style.marginTop =
-        "12px";
+tombolArea.style.flexWrap =
+  "wrap";
 
 
-      /* =====================================================
-         DOWNLOAD JPG
-      ===================================================== */
-
-      var btnDownload =
-        document.createElement(
-          "button"
-        );
+tombolArea.style.marginTop =
+  "12px";
 
 
-      btnDownload.type =
-        "button";
+/* =====================================================
+   DOWNLOAD JPG
+===================================================== */
+
+var btnDownload =
+  document.createElement(
+    "button"
+  );
 
 
-      btnDownload.textContent =
-        "DOWNLOAD JPG";
+btnDownload.type =
+  "button";
 
 
-      btnDownload.style.background =
-        "#198754";
+btnDownload.textContent =
+  "DOWNLOAD JPG";
 
 
-      btnDownload.style.color =
-        "#ffffff";
+btnDownload.style.background =
+  "#198754";
 
 
-      btnDownload.style.border =
-        "none";
+btnDownload.style.color =
+  "#ffffff";
 
 
-      btnDownload.style.padding =
-        "11px 18px";
+btnDownload.style.border =
+  "none";
 
 
-      btnDownload.style.borderRadius =
-        "6px";
+btnDownload.style.padding =
+  "11px 18px";
 
 
-      btnDownload.style.cursor =
-        "pointer";
+btnDownload.style.borderRadius =
+  "6px";
 
 
-      btnDownload.style.fontWeight =
-        "bold";
+btnDownload.style.cursor =
+  "pointer";
 
 
-      btnDownload.onclick =
-        function() {
-
-          var link =
-            document.createElement(
-              "a"
-            );
+btnDownload.style.fontWeight =
+  "bold";
 
 
-          var idFile =
-            data.ID_PEMERIKSAAN ||
-            idPemeriksaanAktif ||
-            Date.now();
+btnDownload.onclick =
+  function() {
 
-
-          link.href =
-            jpg;
-
-
-          link.download =
-            "Checklist_Langsir_A4_" +
-            idFile +
-            ".jpg";
-
-
-          document.body.appendChild(
-            link
-          );
-
-
-          link.click();
-
-
-          link.remove();
-
-        };
-
-
-      tombolArea.appendChild(
-        btnDownload
+    var link =
+      document.createElement(
+        "a"
       );
 
 
+    var idFile =
+      data.ID_PEMERIKSAAN ||
+      idPemeriksaanAktif ||
+      Date.now();
+
+
+    link.href =
+      jpg;
+
+
+    link.download =
+      "Checklist_Langsir_A4_" +
+      idFile +
+      ".jpg";
+
+
+    document.body.appendChild(
+      link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+  };
+
+
+tombolArea.appendChild(
+  btnDownload
+);
+
+
+/* =====================================================
+   DOWNLOAD PDF
+===================================================== */
+
+var btnPDF =
+  document.createElement(
+    "button"
+  );
+
+
+btnPDF.type =
+  "button";
+
+
+btnPDF.textContent =
+  "DOWNLOAD PDF";
+
+
+btnPDF.style.background =
+  "#dc3545";
+
+
+btnPDF.style.color =
+  "#ffffff";
+
+
+btnPDF.style.border =
+  "none";
+
+
+btnPDF.style.padding =
+  "11px 18px";
+
+
+btnPDF.style.borderRadius =
+  "6px";
+
+
+btnPDF.style.cursor =
+  "pointer";
+
+
+btnPDF.style.fontWeight =
+  "bold";
+
+
+btnPDF.onclick =
+  function() {
+
+    try {
+
+      if (
+        !window.jspdf ||
+        !window.jspdf.jsPDF
+      ) {
+
+        alert(
+          "Library PDF belum siap. Silakan coba lagi."
+        );
+
+        return;
+      }
+
+
+      var idFile =
+        data.ID_PEMERIKSAAN ||
+        idPemeriksaanAktif ||
+        Date.now();
+
+
+      /*
+       * Buat PDF A4 portrait.
+       */
+
+      var pdf =
+        new window.jspdf.jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: "a4"
+        });
+
+
+      /*
+       * Ukuran A4.
+       */
+
+      var pageWidth =
+        210;
+
+
+      var pageHeight =
+        297;
+
+
+      /*
+       * Margin PDF.
+       */
+
+      var pdfMargin =
+        0;
+
+
+      var pdfWidth =
+        pageWidth -
+        (
+          pdfMargin * 2
+        );
+
+
+      var pdfHeight =
+        pageHeight -
+        (
+          pdfMargin * 2
+        );
+
+
+      /*
+       * Masukkan JPG preview
+       * ke seluruh halaman A4.
+       */
+
+      pdf.addImage(
+        jpg,
+        "JPEG",
+        pdfMargin,
+        pdfMargin,
+        pdfWidth,
+        pdfHeight,
+        undefined,
+        "FAST"
+      );
+
+
+      /*
+       * Download PDF.
+       */
+
+      pdf.save(
+        "Checklist_Langsir_A4_" +
+        idFile +
+        ".pdf"
+      );
+
+
+      console.log(
+        "PDF BERHASIL DIBUAT:",
+        idFile
+      );
+
+    }
+
+    catch (errorPDF) {
+
+      console.error(
+        "GAGAL MEMBUAT PDF:",
+        errorPDF
+      );
+
+
+      alert(
+        "PDF gagal dibuat.\n\n" +
+        (
+          errorPDF.message ||
+          errorPDF
+        )
+      );
+
+    }
+
+  };
+
+
+tombolArea.appendChild(
+  btnPDF
+);
       /* =====================================================
          TUTUP
       ===================================================== */
