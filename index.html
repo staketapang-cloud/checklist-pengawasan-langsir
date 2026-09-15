@@ -9700,6 +9700,8 @@ function resizeSignatureCanvas() {
 
 /* =========================================================
    EVENT CANVAS
+   AMAN UNTUK TOUCH / MOUSE / PEN
+   MENCEGAH SCROLL SAAT MENULIS TTD
 ========================================================= */
 
 function pasangEventTTD() {
@@ -9709,38 +9711,106 @@ function pasangEventTTD() {
   }
 
 
+  /* =====================================================
+     PASTIKAN CANVAS TIDAK DIJADIKAN GESTURE SCROLL
+  ===================================================== */
+
+  signatureCanvas.style.touchAction =
+    "none";
+
+
+  signatureCanvas.style.userSelect =
+    "none";
+
+
+  signatureCanvas.style.webkitUserSelect =
+    "none";
+
+
+  /* =====================================================
+     POINTER DOWN
+  ===================================================== */
+
   signatureCanvas.addEventListener(
     "pointerdown",
-    mulaiGambarTTD
+    function(event) {
+
+      event.preventDefault();
+
+      mulaiGambarTTD(event);
+
+    },
+    {
+      passive: false
+    }
   );
 
+
+  /* =====================================================
+     POINTER MOVE
+  ===================================================== */
 
   signatureCanvas.addEventListener(
     "pointermove",
-    gambarTTD
+    function(event) {
+
+      if (!sedangMenggambar) {
+        return;
+      }
+
+      event.preventDefault();
+
+      gambarTTD(event);
+
+    },
+    {
+      passive: false
+    }
   );
 
+
+  /* =====================================================
+     POINTER UP
+  ===================================================== */
 
   signatureCanvas.addEventListener(
     "pointerup",
-    selesaiGambarTTD
+    function(event) {
+
+      event.preventDefault();
+
+      selesaiGambarTTD(event);
+
+    },
+    {
+      passive: false
+    }
   );
 
+
+  /* =====================================================
+     POINTER CANCEL
+  ===================================================== */
 
   signatureCanvas.addEventListener(
     "pointercancel",
-    selesaiGambarTTD
+    function(event) {
+
+      selesaiGambarTTD(event);
+
+    }
   );
 
 
-  signatureCanvas.addEventListener(
-    "pointerleave",
-    selesaiGambarTTD
-  );
+  /* =====================================================
+     POINTER LEAVE
+     
+     JANGAN mengakhiri TTD di sini.
+     Pointer capture akan menjaga proses
+     gambar tetap aktif.
+  ===================================================== */
 
 }
-
-
 /* =========================================================
    KOORDINAT TTD
 ========================================================= */
