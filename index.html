@@ -5850,62 +5850,76 @@ function tampilkanPreviewHasilAkhir() {
         }
       );
 
+/* =====================================================
+   KONFIGURASI A4
+   FONT DIPERBESAR - TETAP 1 HALAMAN
+===================================================== */
 
-      /* =====================================================
-         KONFIGURASI A4
-      ===================================================== */
-
-      var canvasWidth =
-        1240;
-
-
-      var canvasHeight =
-        1754;
+var canvasWidth =
+  1240;
 
 
-      var margin =
-        38;
+var canvasHeight =
+  1754;
 
 
-      var contentWidth =
-        canvasWidth -
-        (
-          margin * 2
-        );
+var margin =
+  38;
 
 
-      /*
-       * Font sengaja dibuat kecil
-       * supaya 24 checklist masuk.
-       */
-
-      var fontJudul =
-        "bold 22px Arial";
+var contentWidth =
+  canvasWidth -
+  (
+    margin * 2
+  );
 
 
-      var fontSubJudul =
-        "bold 16px Arial";
+/* =====================================================
+   FONT PREVIEW
+===================================================== */
+
+var fontJudul =
+  "bold 24px Arial";
 
 
-      var fontNormal =
-        "10px Arial";
+var fontSubJudul =
+  "bold 18px Arial";
 
 
-      var fontBold =
-        "bold 10px Arial";
+var fontNormal =
+  "11px Arial";
 
 
-      var fontTabel =
-        "9px Arial";
+var fontBold =
+  "bold 11px Arial";
 
 
-      var fontTabelBold =
-        "bold 9px Arial";
+/*
+ * Font tabel diperbesar dari 9px menjadi 10px.
+ */
+
+var fontTabel =
+  "10px Arial";
 
 
-      var fontKecil =
-        "8px Arial";
+var fontTabelBold =
+  "bold 10px Arial";
 
+
+var fontKecil =
+  "9px Arial";
+
+
+/*
+ * Font identitas.
+ */
+
+var identitasFont =
+  "10px Arial";
+
+
+var identitasBold =
+  "bold 10px Arial";
 
       /* =====================================================
          CANVAS
@@ -6931,25 +6945,37 @@ y +=
        * 50 px per baris.
        */
 
-      var rowHeightTetap =
-        Math.floor(
-          tinggiTabelTersedia /
-          daftarChecklist.length
-        );
+/* =====================================================
+   TINGGI BARIS CHECKLIST
+   DISESUAIKAN UNTUK FONT 10px
+===================================================== */
+
+var rowHeightTetap =
+  Math.floor(
+    tinggiTabelTersedia /
+    daftarChecklist.length
+  );
 
 
-      /*
-       * Batas agar tetap compact.
-       */
+/*
+ * Dengan 24 checklist:
+ * target sekitar 36–42 px per baris.
+ */
 
-      rowHeightTetap =
-        Math.max(
-          31,
-          Math.min(
-            48,
-            rowHeightTetap
-          )
-        );
+rowHeightTetap =
+  Math.max(
+    36,
+    Math.min(
+      42,
+      rowHeightTetap
+    )
+  );
+
+
+console.log(
+  "TINGGI BARIS CHECKLIST:",
+  rowHeightTetap
+);
 
 
       console.log(
