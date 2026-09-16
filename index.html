@@ -16535,49 +16535,19 @@ console.log(
 );
     
 /* =========================================================
-   FINAL FIX
+   FINAL FIX PREVIEW BUTTON
    TTD SUKSES
-   -> NOTIFIKASI SUKSES TETAP MUNCUL
+   -> NOTIFIKASI SUKSES
    -> OK
-   -> KEMBALI FORM CHECKLIST
-   -> BUTTON PREVIEW DIBUAT ULANG
-   -> BUTTON TIDAK BERADA DI ttdBox
-========================================================= */
-
-(function () {
-
-  console.log("=================================");
-  console.log("FINAL FIX PREVIEW BUTTON AKTIF");
-  console.log("=================================");
-
-
-  /* =======================================================
-     FUNGSI MEMBUAT BUTTON PREVIEW
-  ======================================================= */
-
-  function buatDanTampilkanButtonPreview() {
-
-    var form =
-      document.getElementById(
-        "formPemeriksaan"
-      );
-
-    if (!form) {
-
-      console.warn(
-        "formPemeriksaan tidak ditemukan."
-      );
-
-      return;
-
-    }
-
-/* =========================================================
-   FINAL FIX TOMBOL PREVIEW
-   TTD SUKSES -> NOTIF -> OK -> FORM -> BUTTON PREVIEW
+   -> KEMBALI KE FORM
+   -> BUTTON PREVIEW MUNCUL
 ========================================================= */
 
 window.tampilkanButtonPreviewFinal = function () {
+
+  console.log(
+    "MEMBUAT / MENAMPILKAN BUTTON PREVIEW"
+  );
 
   var form =
     document.getElementById(
@@ -16591,6 +16561,7 @@ window.tampilkanButtonPreviewFinal = function () {
     );
 
     return;
+
   }
 
 
@@ -16605,7 +16576,7 @@ window.tampilkanButtonPreviewFinal = function () {
 
 
   /* =======================================================
-     JIKA BUTTON BELUM ADA -> BUAT
+     BUAT BUTTON JIKA BELUM ADA
   ======================================================= */
 
   if (!tombol) {
@@ -16646,7 +16617,7 @@ window.tampilkanButtonPreviewFinal = function () {
         } else {
 
           console.error(
-            "tampilkanPreviewHasilAkhir tidak ditemukan."
+            "Fungsi tampilkanPreviewHasilAkhir tidak ditemukan."
           );
 
           alert(
@@ -16659,8 +16630,8 @@ window.tampilkanButtonPreviewFinal = function () {
 
 
     /* =====================================================
-       MASUKKAN KE FORM UTAMA
-       BUKAN KE ttdBox
+       LETAK BUTTON
+       SETELAH .button-group
     ===================================================== */
 
     var buttonGroup =
@@ -16760,7 +16731,6 @@ window.tampilkanButtonPreviewFinal = function () {
 
 /* =========================================================
    OVERRIDE TUTUP NOTIFIKASI
-   KHUSUS TTD BERHASIL
 ========================================================= */
 
 window.tutupNotifFoto =
@@ -16773,7 +16743,9 @@ window.tutupNotifFoto =
 
 
     if (!overlay) {
+
       return;
+
     }
 
 
@@ -16800,16 +16772,12 @@ window.tutupNotifFoto =
 
 
     /* =====================================================
-       SETELAH TTD BERHASIL
+       KEMBALI KE FORM
     ===================================================== */
 
     if (
       aksi === "form"
     ) {
-
-      /* ---------------------------------------------------
-         TAMPILKAN FORM
-      --------------------------------------------------- */
 
       var login =
         document.getElementById(
@@ -16864,15 +16832,21 @@ window.tutupNotifFoto =
       }
 
 
-      /* ---------------------------------------------------
-         BUAT / TAMPILKAN BUTTON PREVIEW
-      --------------------------------------------------- */
+      /* =================================================
+         TAMPILKAN BUTTON PREVIEW
+      ================================================= */
 
       setTimeout(
         function () {
 
-          window.tampilkanButtonPreviewFinal();
+          if (
+            typeof window.tampilkanButtonPreviewFinal ===
+            "function"
+          ) {
 
+            window.tampilkanButtonPreviewFinal();
+
+          }
 
           console.log(
             "Kembali ke Form Checklist."
@@ -16884,11 +16858,12 @@ window.tutupNotifFoto =
 
 
       return;
+
     }
 
 
     /* =====================================================
-       TTD
+       KEMBALI KE TTD
     ===================================================== */
 
     if (
@@ -16905,11 +16880,12 @@ window.tutupNotifFoto =
       }
 
       return;
+
     }
 
 
     /* =====================================================
-       LOGIN
+       KEMBALI KE LOGIN
     ===================================================== */
 
     if (
@@ -16926,6 +16902,7 @@ window.tutupNotifFoto =
       }
 
       return;
+
     }
 
   };
