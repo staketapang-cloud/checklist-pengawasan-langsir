@@ -13250,8 +13250,8 @@ window.initTTD =
   initTTD;
 
 /* =========================================================
-   PENGAMAN TTD LAMA
-   MENCEGAH "ID PEMERIKSAAN BELUM TERSEDIA"
+   FINAL TTD
+   SATU JALUR SAJA
 ========================================================= */
 
 window.prosesSimpanTTD = async function(idAktif) {
@@ -13259,45 +13259,46 @@ window.prosesSimpanTTD = async function(idAktif) {
   try {
 
     /* -----------------------------------------------------
-       1. Ambil ID yang sudah ada
+       Ambil ID yang sudah ada
     ----------------------------------------------------- */
+
     idAktif =
-      idAktif ||
-      idPemeriksaanAktif ||
-      sessionStorage.getItem(
-        "idPemeriksaanAktif"
-      ) ||
-      "";
+      String(
+        idAktif ||
+        idPemeriksaanAktif ||
+        sessionStorage.getItem(
+          "idPemeriksaanAktif"
+        ) ||
+        ""
+      ).trim();
 
 
     /* -----------------------------------------------------
-       2. Kalau belum ada, buat ID terlebih dahulu
+       Kalau ID belum ada, buat pemeriksaan
     ----------------------------------------------------- */
-    if (
-      !String(idAktif).trim()
-    ) {
 
-      if (
-        typeof pastikanIdPemeriksaan ===
-        "function"
-      ) {
+    if (!idAktif) {
 
-        idAktif =
-          await pastikanIdPemeriksaan();
+      console.log(
+        "TTD: ID belum ada, membuat pemeriksaan..."
+      );
 
-      }
+
+      idAktif =
+        await pastikanIdPemeriksaan();
+
+
+      idAktif =
+        String(
+          idAktif || ""
+        ).trim();
 
     }
 
 
     /* -----------------------------------------------------
-       3. Cek ulang ID
+       ID wajib ada
     ----------------------------------------------------- */
-    idAktif =
-      String(
-        idAktif || ""
-      ).trim();
-
 
     if (!idAktif) {
 
@@ -13309,8 +13310,9 @@ window.prosesSimpanTTD = async function(idAktif) {
 
 
     /* -----------------------------------------------------
-       4. Simpan ID ke variabel aktif
+       Simpan ID
     ----------------------------------------------------- */
+
     idPemeriksaanAktif =
       idAktif;
 
@@ -13322,30 +13324,37 @@ window.prosesSimpanTTD = async function(idAktif) {
 
 
     console.log(
-      "TTD: ID PEMERIKSAAN SIAP =",
+      "TTD: ID SIAP =",
       idAktif
     );
 
 
     /* -----------------------------------------------------
-       5. Gunakan sistem simpan TTD yang baru
+       Langsung gunakan fungsi simpan TTD utama
     ----------------------------------------------------- */
-    return await window.simpanTTD();
+
+    return await simpanTTD();
 
   }
 
   catch (error) {
 
     console.error(
-      "prosesSimpanTTD lama dialihkan:",
+      "PROSES TTD GAGAL:",
       error
     );
 
 
-    selesaiGagalTTD(
-      error
-    );
+    if (
+      typeof selesaiGagalTTD ===
+      "function"
+    ) {
 
+      selesaiGagalTTD(
+        error
+      );
+
+    }
 
     throw error;
 
@@ -13355,166 +13364,150 @@ window.prosesSimpanTTD = async function(idAktif) {
 
 
 /* =========================================================
-   PENGAMAN TAMPIL TTD
-   PASTIKAN ID SUDAH ADA SEBELUM KOTAK TTD DIBUKA
+   FINAL TAMPILKAN TTD
 ========================================================= */
 
-window.tampilkanTTD =
-  async function() {
+window.tampilkanTTD = async function() {
 
-    try {
+  try {
 
-      /* ---------------------------------------------------
-         1. Validasi identitas
-      --------------------------------------------------- */
+    /* -----------------------------------------------------
+       Validasi identitas
+    ----------------------------------------------------- */
+
+    if (
+      typeof validasiIdentitas ===
+      "function"
+    ) {
+
       if (
-        typeof validasiIdentitas ===
-        "function"
+        !validasiIdentitas()
       ) {
 
-        if (
-          !validasiIdentitas()
-        ) {
-
-          return;
-
-        }
+        return;
 
       }
 
+    }
 
-      /* ---------------------------------------------------
-         2. Ambil ID dari session / variabel
-      --------------------------------------------------- */
-      var idAktif =
+
+    /* -----------------------------------------------------
+       Ambil ID
+    ----------------------------------------------------- */
+
+    var idAktif =
+      String(
         idPemeriksaanAktif ||
         sessionStorage.getItem(
           "idPemeriksaanAktif"
         ) ||
-        "";
+        ""
+      ).trim();
 
 
-      idAktif =
-        String(
-          idAktif || ""
-        ).trim();
+    /* -----------------------------------------------------
+       Kalau belum ada, buat
+    ----------------------------------------------------- */
 
+    if (!idAktif) {
 
-      /* ---------------------------------------------------
-         3. Kalau ID belum ada, buat dulu
-      --------------------------------------------------- */
-      if (!idAktif) {
-
-        if (
-          typeof pastikanIdPemeriksaan ===
-          "function"
-        ) {
-
-          if (
-            typeof tampilkanStatus ===
-            "function"
-          ) {
-
-            tampilkanStatus(
-              "Menyiapkan ID Pemeriksaan..."
-            );
-
-          }
-
-
-          idAktif =
-            await pastikanIdPemeriksaan();
-
-        }
-
-      }
-
-
-      /* ---------------------------------------------------
-         4. Cek hasil ID
-      --------------------------------------------------- */
-      idAktif =
-        String(
-          idAktif || ""
-        ).trim();
-
-
-      if (!idAktif) {
-
-        throw new Error(
-          "ID Pemeriksaan gagal dibuat."
-        );
-
-      }
-
-
-      /* ---------------------------------------------------
-         5. Simpan ID
-      --------------------------------------------------- */
-      idPemeriksaanAktif =
-        idAktif;
-
-
-      sessionStorage.setItem(
-        "idPemeriksaanAktif",
-        idAktif
-      );
-
-
-      console.log(
-        "TTD: siap dibuka dengan ID =",
-        idAktif
-      );
-
-
-      /* ---------------------------------------------------
-         6. Buka kotak TTD
-      --------------------------------------------------- */
       if (
-        typeof bukaKotakTTD ===
+        typeof tampilkanStatus ===
         "function"
       ) {
 
-        bukaKotakTTD();
+        tampilkanStatus(
+          "Menyiapkan ID Pemeriksaan..."
+        );
 
       }
 
 
+      idAktif =
+        await pastikanIdPemeriksaan();
+
+
+      idAktif =
+        String(
+          idAktif || ""
+        ).trim();
+
     }
 
-    catch (error) {
 
-      console.error(
-        "Tampilkan TTD gagal:",
-        error
+    /* -----------------------------------------------------
+       Pastikan ID benar-benar ada
+    ----------------------------------------------------- */
+
+    if (!idAktif) {
+
+      throw new Error(
+        "ID Pemeriksaan gagal dibuat."
+      );
+
+    }
+
+
+    /* -----------------------------------------------------
+       Simpan ID
+    ----------------------------------------------------- */
+
+    idPemeriksaanAktif =
+      idAktif;
+
+
+    sessionStorage.setItem(
+      "idPemeriksaanAktif",
+      idAktif
+    );
+
+
+    console.log(
+      "TTD: SIAP DIBUKA DENGAN ID =",
+      idAktif
+    );
+
+
+    /* -----------------------------------------------------
+       Buka kotak TTD
+    ----------------------------------------------------- */
+
+    bukaKotakTTD();
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "TAMPILKAN TTD GAGAL:",
+      error
+    );
+
+
+    var status =
+      document.getElementById(
+        "ttdStatus"
       );
 
 
-      var status =
-        document.getElementById(
-          "ttdStatus"
-        );
+    if (status) {
 
+      status.style.display =
+        "block";
 
-      if (status) {
-
-        status.style.display =
-          "block";
-
-        status.textContent =
-          error && error.message
-            ? error.message
-            : "TTD gagal dibuka.";
-
-      }
+      status.textContent =
+        error.message ||
+        "TTD gagal dibuka.";
 
     }
 
-  };
+  }
+
+};
 
 
 /* =========================================================
-   GLOBAL TTD TERBARU
+   GLOBAL FUNCTION TTD
 ========================================================= */
 
 window.simpanTTD =
@@ -13526,10 +13519,16 @@ window.prosesSimpanTTD =
 window.tampilkanTTD =
   window.tampilkanTTD;
 
+window.clearSignature =
+  clearSignature;
 
-/* =========================================================
-   SELESAI SISTEM TTD
-========================================================= */
+window.bukaKotakTTD =
+  bukaKotakTTD;
+
+window.initTTD =
+  initTTD;
+
+
 /* =========================================================
    SELESAI SISTEM TTD
 ========================================================= */
