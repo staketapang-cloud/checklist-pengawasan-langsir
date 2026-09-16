@@ -6710,7 +6710,28 @@ tampilkanNotifFoto(
 function tampilkanPreviewHasilAkhir() {
 
   return new Promise(function(resolve, reject) {
+    /* =====================================================
+       SEMBUNYIKAN BUTTON SIMPAN & TAMPILKAN PREVIEW
+       SAAT PREVIEW SUDAH DIBUKA
+    ===================================================== */
 
+    var areaPreviewButton =
+      document.getElementById(
+        "previewButtonAreaFinal"
+      );
+
+    if (areaPreviewButton) {
+      areaPreviewButton.style.display = "none";
+    }
+
+    var tombolPreview =
+      document.getElementById(
+        "btnSimpanLihatPreview"
+      );
+
+    if (tombolPreview) {
+      tombolPreview.style.display = "none";
+    }
     try {
 
       console.log(
@@ -10301,10 +10322,49 @@ tombolArea.appendChild(
         "bold";
 
 
-      btnTutup.onclick =
+    btnTutup.onclick =
   function() {
 
- 
+    console.log(
+      "TOMBOL TUTUP PREVIEW DIKLIK"
+    );
+
+    /* =====================================================
+       HAPUS PREVIEW DARI HALAMAN
+    ===================================================== */
+
+    if (overlay) {
+      overlay.remove();
+    }
+
+    /* =====================================================
+       TAMPILKAN KEMBALI TOMBOL PREVIEW
+    ===================================================== */
+
+    var areaPreviewButton =
+      document.getElementById(
+        "previewButtonAreaFinal"
+      );
+
+    if (areaPreviewButton) {
+      areaPreviewButton.style.display =
+        "block";
+    }
+
+    var tombolPreview =
+      document.getElementById(
+        "btnSimpanLihatPreview"
+      );
+
+    if (tombolPreview) {
+      tombolPreview.style.display =
+        "block";
+    }
+
+    console.log(
+      "PREVIEW DITUTUP - KEMBALI KE FORM CHECKLIST"
+    );
+
   };
 
 
