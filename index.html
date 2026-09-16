@@ -1933,6 +1933,8 @@ function tutupNotifFoto() {
 
 /* =========================================================
    KEMBALI FORM
+   - menutup TTD
+   - tetap menampilkan tombol SIMPAN & TAMPILKAN PREVIEW
 ========================================================= */
 
 function kembaliKeFormPemeriksaan() {
@@ -1957,27 +1959,82 @@ function kembaliKeFormPemeriksaan() {
       "ttdBox"
     );
 
+  var previewButton =
+    document.getElementById(
+      "btnSimpanLihatPreview"
+    );
+
+
+  /* =====================================================
+     TAMPILKAN FORM
+  ===================================================== */
 
   if (login) {
-    login.style.display = "none";
+
+    login.style.display =
+      "none";
+
   }
+
 
   if (app) {
-    app.style.display = "block";
+
+    app.style.display =
+      "block";
+
   }
+
 
   if (form) {
-    form.style.display = "block";
+
+    form.style.display =
+      "block";
+
   }
+
+
+  /* =====================================================
+     TUTUP KOTAK TTD
+  ===================================================== */
 
   if (ttd) {
-    ttd.style.display = "none";
+
+    ttd.style.display =
+      "none";
+
   }
 
 
+  /* =====================================================
+     JANGAN SEMBUNYIKAN BUTTON PREVIEW
+     
+     TTD SUDAH TERSIMPAN,
+     MAKA BUTTON TETAP TERSEDIA
+  ===================================================== */
+
+  if (previewButton) {
+
+    previewButton.style.display =
+      "block";
+
+    previewButton.style.visibility =
+      "visible";
+
+    previewButton.disabled =
+      false;
+
+    console.log(
+      "BUTTON SIMPAN & TAMPILKAN PREVIEW: TETAP TAMPIL"
+    );
+
+  }
+
+
+  console.log(
+    "Kembali ke Form Checklist."
+  );
+
 }
-
-
 /* =========================================================
    KEMBALI LOGIN
 ========================================================= */
