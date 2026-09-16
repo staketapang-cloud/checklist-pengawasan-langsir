@@ -10336,25 +10336,61 @@ function clearSignature() {
 
 }
 
+/* =========================================================
+   TTD - SISTEM BARU
+   SATU SISTEM CANVAS SAJA
+========================================================= */
 
 /* =========================================================
    TAMPILKAN TTD
-   TIDAK MEMVALIDASI FORM
-   TIDAK MEMBUAT ID
 ========================================================= */
 
 function tampilkanTTD() {
 
-  var ttdBox =
-    document.getElementById(
-      "ttdBox"
-    );
+  console.log("=================================");
+  console.log("TOMBOL TTD DIKLIK");
+  console.log("ID PEMERIKSAAN:", idPemeriksaanAktif);
+  console.log("=================================");
 
 
-  if (!ttdBox) {
+  /*
+   * Validasi identitas pemeriksaan.
+   * TTD tidak akan dibuka jika data wajib belum lengkap.
+   */
+  if (typeof validasiIdentitas === "function") {
 
-    console.error(
-      "Kotak TTD tidak ditemukan."
+    if (!validasiIdentitas()) {
+      return;
+    }
+
+  }
+
+
+  /*
+   * Jika ID pemeriksaan sudah tersedia,
+   * langsung buka canvas.
+   */
+  if (
+    idPemeriksaanAktif &&
+    String(idPemeriksaanAktif).trim() !== ""
+  ) {
+
+    bukaKotakTTD();
+    return;
+
+  }
+
+
+  /*
+   * Jika ID belum tersedia,
+   * buat terlebih dahulu.
+   */
+  if (
+    typeof pastikanIdPemeriksaan !== "function"
+  ) {
+
+    alert(
+      "Fungsi penyedia ID Pemeriksaan tidak ditemukan."
     );
 
     return;
@@ -10362,51 +10398,62 @@ function tampilkanTTD() {
   }
 
 
-  ttdBox.style.display =
-    "block";
-
-
-  setTimeout(
-    function() {
-
-      if (!signatureInitialized) {
-
-        initSignatureCanvas();
-
-      }
-
-      else {
-
-        if (!signatureCanvas) {
-
-          signatureCanvas =
-            document.getElementById(
-              "signatureCanvas"
-            );
-
-        }
-
-
-        if (
-          signatureCanvas &&
-          !signatureContext
-        ) {
-
-          signatureContext =
-            signatureCanvas.getContext(
-              "2d"
-            );
-
-        }
-
-
-        pasangEventTTD();
-
-      }
-
-    },
-    100
+  tampilkanStatus(
+    "Menyiapkan ID Pemeriksaan..."
   );
+
+
+  pastikanIdPemeriksaan()
+
+    .then(function(id) {
+
+      idPemeriksaanAktif =
+        String(id || "").trim();
+
+
+      if (!idPemeriksaanAktif) {
+
+        throw new Error(
+          "ID Pemeriksaan tidak berhasil dibuat."
+        );
+
+      }
+
+
+      sessionStorage.setItem(
+        "idPemeriksaanAktif",
+        idPemeriksaanAktif
+      );
+
+
+      console.log(
+        "ID PEMERIKSAAN BERHASIL DISIAPKAN:",
+        idPemeriksaanAktif
+      );
+
+
+      bukaKotakTTD();
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "GAGAL MENYIAPKAN ID PEMERIKSAAN:",
+        error
+      );
+
+
+      alert(
+        "Gagal menyiapkan ID Pemeriksaan.\n\n" +
+        (
+          error && error.message
+            ? error.message
+            : error
+        )
+      );
+
+    });
 
 }
 
@@ -10416,11 +10463,6 @@ function tampilkanTTD() {
 ========================================================= */
 
 function bukaKotakTTD() {
-
-  var form =
-    document.getElementById(
-      "formPemeriksaan"
-    );
 
   var ttdBox =
     document.getElementById(
@@ -10435,118 +10477,770 @@ function bukaKotakTTD() {
     );
 
     return;
-  }
-
-
-  /*
-   * Pastikan form terlihat.
-   */
-  if (form) {
-
-    form.style.display =
-      "block";
 
   }
 
 
-  /*
-   * Tampilkan kotak TTD.
-   */
   ttdBox.style.display =
     "block";
 
 
   /*
-   * Tunggu browser menyelesaikan
-   * layout sebelum inisialisasi canvas.
+   * Tunggu browser menyelesaikan layout.
+   * Setelah itu canvas diinisialisasi.
    */
-  setTimeout(
-    function() {
+  setTimeout(function() {
 
-      console.log(
-        "TTD: mulai inisialisasi canvas..."
-      );
+    initTTDCanvas();
 
+    ttdBox.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
 
-      var berhasil =
-        initSignatureCanvas();
-
-
-      if (!berhasil) {
-
-        console.error(
-          "TTD: initSignatureCanvas gagal."
-        );
-
-        return;
-
-      }
-
-
-      console.log(
-        "TTD: canvas siap ditulis."
-      );
-
-
-      /*
-       * Fokuskan tampilan ke canvas.
-       */
-      ttdBox.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-
-    },
-    300
-  );
+  }, 300);
 
 }
+
+
 /* =========================================================
-   STATUS TTD
+   INISIALISASI CANVAS TTD
 ========================================================= */
 
-function tampilkanStatusTTD(
-  pesan
-) {
+function initTTDCanvas() {
 
-  var box =
+  var canvas =
     document.getElementById(
-      "ttdStatus"
+      "signatureCanvas"
     );
 
 
-  if (!box) {
-    return;
+  if (!canvas) {
+
+    console.error(
+      "TTD: signatureCanvas tidak ditemukan."
+    );
+
+    return false;
+
   }
 
 
-  box.textContent =
-    pesan || "";
+  signatureCanvas =
+    canvas;
 
 
-  box.style.display =
-    pesan
-      ? "block"
-      : "none";
+  /*
+   * Ambil ukuran tampilan canvas.
+   */
+  var rect =
+    canvas.getBoundingClientRect();
 
-}
+
+  var width =
+    Math.round(
+      rect.width
+    );
 
 
-/* =========================================================
-   SIMPAN TTD
-   ID PEMERIKSAAN DIBUAT DI SINI
-========================================================= */
+  var height =
+    Math.round(
+      rect.height
+    );
 
-function simpanTTD() {
 
-  if (sedangSimpanTTD) {
-    return;
+  /*
+   * Jika browser belum selesai merender,
+   * coba sekali lagi.
+   */
+  if (
+    width <= 0 ||
+    height <= 0
+  ) {
+
+    console.warn(
+      "TTD: ukuran canvas masih 0."
+    );
+
+    setTimeout(
+      initTTDCanvas,
+      300
+    );
+
+    return false;
+
+  }
+
+
+  var dpr =
+    Math.max(
+      window.devicePixelRatio || 1,
+      1
+    );
+
+
+  /*
+   * Ukuran pixel internal canvas.
+   */
+  var targetWidth =
+    Math.round(
+      width * dpr
+    );
+
+
+  var targetHeight =
+    Math.round(
+      height * dpr
+    );
+
+
+  /*
+   * Hanya ubah ukuran jika memang berbeda.
+   * Ini mencegah gambar hilang.
+   */
+  var perluResize =
+    canvas.width !== targetWidth ||
+    canvas.height !== targetHeight;
+
+
+  if (perluResize) {
+
+    /*
+     * Simpan gambar lama jika ada.
+     */
+    var oldData = null;
+
+
+    if (
+      canvas.width > 0 &&
+      canvas.height > 0 &&
+      signatureHasInk
+    ) {
+
+      try {
+
+        oldData =
+          canvas.toDataURL(
+            "image/png"
+          );
+
+      }
+
+      catch (error) {
+
+        console.warn(
+          "TTD: gagal menyimpan gambar lama.",
+          error
+        );
+
+        oldData =
+          null;
+
+      }
+
+    }
+
+
+    canvas.width =
+      targetWidth;
+
+    canvas.height =
+      targetHeight;
+
+
+    canvas.style.width =
+      width + "px";
+
+    canvas.style.height =
+      height + "px";
+
+
+    signatureContext =
+      canvas.getContext(
+        "2d"
+      );
+
+
+    if (!signatureContext) {
+
+      console.error(
+        "TTD: context 2D tidak tersedia."
+      );
+
+      return false;
+
+    }
+
+
+    signatureContext.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+
+    signatureContext.lineWidth =
+      2.5;
+
+    signatureContext.lineCap =
+      "round";
+
+    signatureContext.lineJoin =
+      "round";
+
+    signatureContext.strokeStyle =
+      "#111";
+
+    signatureContext.fillStyle =
+      "#ffffff";
+
+
+    /*
+     * Latar putih.
+     */
+    signatureContext.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    signatureContext.strokeStyle =
+      "#111";
+
+
+    /*
+     * Pulihkan gambar lama.
+     */
+    if (oldData) {
+
+      var oldImage =
+        new Image();
+
+
+      oldImage.onload =
+        function() {
+
+          try {
+
+            signatureContext.drawImage(
+              oldImage,
+              0,
+              0,
+              width,
+              height
+            );
+
+          }
+
+          catch (error) {
+
+            console.warn(
+              "TTD: gagal memulihkan gambar lama.",
+              error
+            );
+
+          }
+
+        };
+
+
+      oldImage.src =
+        oldData;
+
+    }
+
+  }
+
+  else {
+
+    /*
+     * Ukuran tidak berubah.
+     * Jangan reset isi canvas.
+     */
+    signatureContext =
+      canvas.getContext(
+        "2d"
+      );
+
+
+    if (!signatureContext) {
+
+      console.error(
+        "TTD: context 2D tidak tersedia."
+      );
+
+      return false;
+
+    }
+
+
+    signatureContext.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+
+    signatureContext.lineWidth =
+      2.5;
+
+    signatureContext.lineCap =
+      "round";
+
+    signatureContext.lineJoin =
+      "round";
+
+    signatureContext.strokeStyle =
+      "#111";
+
   }
 
 
   /*
-   * Pastikan canvas tersedia.
+   * Pasang event dengan property handler.
+   * Tidak ada addEventListener ganda.
    */
+  pasangEventTTDBaru();
+
+
+  signatureInitialized =
+    true;
+
+
+  console.log(
+    "TTD: CANVAS SIAP DIGAMBAR.",
+    {
+      width: width,
+      height: height,
+      dpr: dpr
+    }
+  );
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   EVENT CANVAS TTD
+========================================================= */
+
+function pasangEventTTDBaru() {
+
+  if (!signatureCanvas) {
+    return;
+  }
+
+
+  signatureCanvas.style.touchAction =
+    "none";
+
+  signatureCanvas.style.userSelect =
+    "none";
+
+  signatureCanvas.style.webkitUserSelect =
+    "none";
+
+  signatureCanvas.style.cursor =
+    "crosshair";
+
+
+  /*
+   * HAPUS HANDLER LAMA
+   */
+  signatureCanvas.onpointerdown =
+    null;
+
+  signatureCanvas.onpointermove =
+    null;
+
+  signatureCanvas.onpointerup =
+    null;
+
+  signatureCanvas.onpointercancel =
+    null;
+
+  signatureCanvas.onpointerleave =
+    null;
+
+
+  /*
+   * POINTER DOWN
+   */
+  signatureCanvas.onpointerdown =
+    function(event) {
+
+      event.preventDefault();
+
+      mulaiTTDBaru(
+        event
+      );
+
+    };
+
+
+  /*
+   * POINTER MOVE
+   */
+  signatureCanvas.onpointermove =
+    function(event) {
+
+      if (!sedangMenggambar) {
+        return;
+      }
+
+      event.preventDefault();
+
+      gambarTTDBaru(
+        event
+      );
+
+    };
+
+
+  /*
+   * POINTER UP
+   */
+  signatureCanvas.onpointerup =
+    function(event) {
+
+      event.preventDefault();
+
+      selesaiTTDBaru(
+        event
+      );
+
+    };
+
+
+  /*
+   * POINTER CANCEL
+   */
+  signatureCanvas.onpointercancel =
+    function(event) {
+
+      selesaiTTDBaru(
+        event
+      );
+
+    };
+
+
+  /*
+   * POINTER LEAVE
+   */
+  signatureCanvas.onpointerleave =
+    function(event) {
+
+      selesaiTTDBaru(
+        event
+      );
+
+    };
+
+}
+
+
+/* =========================================================
+   POSISI POINTER
+========================================================= */
+
+function posisiTTDBaru(event) {
+
+  if (!signatureCanvas) {
+
+    return {
+      x: 0,
+      y: 0
+    };
+
+  }
+
+
+  var rect =
+    signatureCanvas.getBoundingClientRect();
+
+
+  return {
+
+    x:
+      event.clientX -
+      rect.left,
+
+    y:
+      event.clientY -
+      rect.top
+
+  };
+
+}
+
+
+/* =========================================================
+   MULAI MENGGAMBAR
+========================================================= */
+
+function mulaiTTDBaru(event) {
+
+  if (
+    !signatureCanvas ||
+    !signatureContext
+  ) {
+
+    console.error(
+      "TTD: canvas/context belum siap."
+    );
+
+    return;
+
+  }
+
+
+  event.preventDefault();
+
+
+  try {
+
+    signatureCanvas.setPointerCapture(
+      event.pointerId
+    );
+
+  }
+
+  catch (error) {
+
+    console.warn(
+      "TTD: pointer capture tidak tersedia."
+    );
+
+  }
+
+
+  var pos =
+    posisiTTDBaru(
+      event
+    );
+
+
+  sedangMenggambar =
+    true;
+
+  signatureHasInk =
+    true;
+
+
+  /*
+   * TTD baru = status server lama
+   * tidak dianggap sebagai gambar yang sama.
+   */
+  signatureServerSaved =
+    false;
+
+  signatureServerData =
+    "";
+
+
+  signatureContext.beginPath();
+
+
+  signatureContext.moveTo(
+    pos.x,
+    pos.y
+  );
+
+
+  /*
+   * Buat titik kecil agar satu klik
+   * juga dihitung sebagai tinta.
+   */
+  signatureContext.lineTo(
+    pos.x + 0.01,
+    pos.y + 0.01
+  );
+
+
+  signatureContext.stroke();
+
+}
+
+
+/* =========================================================
+   MELANJUTKAN GAMBAR
+========================================================= */
+
+function gambarTTDBaru(event) {
+
+  if (
+    !sedangMenggambar ||
+    !signatureCanvas ||
+    !signatureContext
+  ) {
+
+    return;
+
+  }
+
+
+  event.preventDefault();
+
+
+  var pos =
+    posisiTTDBaru(
+      event
+    );
+
+
+  signatureContext.lineTo(
+    pos.x,
+    pos.y
+  );
+
+
+  signatureContext.stroke();
+
+}
+
+
+/* =========================================================
+   SELESAI MENGGAMBAR
+========================================================= */
+
+function selesaiTTDBaru(event) {
+
+  sedangMenggambar =
+    false;
+
+
+  if (
+    event &&
+    signatureCanvas
+  ) {
+
+    try {
+
+      signatureCanvas.releasePointerCapture(
+        event.pointerId
+      );
+
+    }
+
+    catch (error) {}
+
+  }
+
+}
+
+
+/* =========================================================
+   CEK APAKAH CANVAS BERISI TTD
+========================================================= */
+
+function canvasTTDHasInk(
+  canvas
+) {
+
+  if (!canvas) {
+    return false;
+  }
+
+
+  if (
+    !canvas.width ||
+    !canvas.height
+  ) {
+
+    return false;
+
+  }
+
+
+  try {
+
+    var ctx =
+      canvas.getContext(
+        "2d"
+      );
+
+
+    if (!ctx) {
+      return false;
+    }
+
+
+    var data =
+      ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      ).data;
+
+
+    for (
+      var i = 0;
+      i < data.length;
+      i += 4
+    ) {
+
+      var r =
+        data[i];
+
+      var g =
+        data[i + 1];
+
+      var b =
+        data[i + 2];
+
+      var a =
+        data[i + 3];
+
+
+      if (
+        a > 0 &&
+        (
+          r < 235 ||
+          g < 235 ||
+          b < 235
+        )
+      ) {
+
+        return true;
+
+      }
+
+    }
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "TTD: gagal memeriksa tinta.",
+      error
+    );
+
+  }
+
+
+  return false;
+
+}
+
+
+/* =========================================================
+   AMBIL DATA TTD
+========================================================= */
+
+function ambilSignatureCanvas() {
 
   if (!signatureCanvas) {
 
@@ -10560,24 +11254,77 @@ function simpanTTD() {
 
   if (!signatureCanvas) {
 
-    tampilkanNotifFoto(
-      "TTD gagal disimpan",
-      "Canvas tanda tangan tidak ditemukan.",
-      "none"
+    throw new Error(
+      "Canvas tanda tangan tidak ditemukan."
     );
-
-    return;
 
   }
 
 
   /*
-   * Pastikan canvas sudah diinisialisasi.
+   * Gunakan fungsi baru.
    */
+  if (
+    !canvasTTDHasInk(
+      signatureCanvas
+    )
+  ) {
+
+    throw new Error(
+      "Tanda tangan belum dibuat.\n\n" +
+      "Silakan tanda tangan terlebih dahulu."
+    );
+
+  }
+
+
+  var signature =
+    signatureCanvas.toDataURL(
+      "image/png"
+    );
+
 
   if (
-    !signatureContext
+    !signature ||
+    !signature.startsWith(
+      "data:image/png;base64,"
+    )
   ) {
+
+    throw new Error(
+      "Data tanda tangan tidak valid."
+    );
+
+  }
+
+
+  return signature;
+
+}
+
+
+/* =========================================================
+   HAPUS TTD
+========================================================= */
+
+function clearSignature() {
+
+  if (!signatureCanvas) {
+
+    signatureCanvas =
+      document.getElementById(
+        "signatureCanvas"
+      );
+
+  }
+
+
+  if (!signatureCanvas) {
+    return;
+  }
+
+
+  if (!signatureContext) {
 
     signatureContext =
       signatureCanvas.getContext(
@@ -10587,90 +11334,409 @@ function simpanTTD() {
   }
 
 
-  /*
-   * Ambil TTD.
-   */
+  if (!signatureContext) {
+    return;
+  }
 
-  var signature =
+
+  var rect =
+    signatureCanvas.getBoundingClientRect();
+
+
+  var width =
+    rect.width ||
+    1;
+
+
+  var height =
+    rect.height ||
+    1;
+
+
+  /*
+   * Bersihkan tanpa resize.
+   */
+  signatureContext.save();
+
+  signatureContext.setTransform(
+    1,
+    0,
+    0,
+    1,
+    0,
+    0
+  );
+
+
+  signatureContext.clearRect(
+    0,
+    0,
+    signatureCanvas.width,
+    signatureCanvas.height
+  );
+
+
+  signatureContext.restore();
+
+
+  /*
+   * Kembalikan transform.
+   */
+  var dpr =
+    Math.max(
+      window.devicePixelRatio || 1,
+      1
+    );
+
+
+  signatureContext.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+
+  signatureContext.fillStyle =
+    "#ffffff";
+
+
+  signatureContext.fillRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  signatureContext.strokeStyle =
+    "#111";
+
+  signatureContext.lineWidth =
+    2.5;
+
+  signatureContext.lineCap =
+    "round";
+
+  signatureContext.lineJoin =
+    "round";
+
+
+  signatureHasInk =
+    false;
+
+  sedangMenggambar =
+    false;
+
+  signatureServerSaved =
+    false;
+
+  signatureServerData =
     "";
 
 
-  try {
-
-    signature =
-      ambilSignatureCanvas();
-
-  }
-
-  catch (error) {
-
-    tampilkanNotifFoto(
-      "TTD belum tersedia",
-      error.message,
-      "none"
+  var status =
+    document.getElementById(
+      "ttdStatus"
     );
 
-    return;
+
+  if (status) {
+
+    status.style.display =
+      "none";
+
+    status.textContent =
+      "";
 
   }
 
 
-  /*
-   * PENTING:
-   * Kalau ID belum ada, buat sekarang.
-   */
-
-  var prosesID =
-    Promise.resolve();
+  var progress =
+    document.getElementById(
+      "progressTTD"
+    );
 
 
-  if (
-    !idPemeriksaanAktif ||
+  if (progress) {
+
+    progress.style.display =
+      "none";
+
+  }
+
+
+  console.log(
+    "TTD: CANVAS DIHAPUS."
+  );
+
+}
+
+
+/* =========================================================
+   RESIZE
+   HANYA JIKA UKURAN VIEWPORT BENAR-BENAR BERUBAH
+========================================================= */
+
+window.addEventListener(
+  "resize",
+  function() {
+
+    if (
+      !signatureCanvas ||
+      !signatureInitialized
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+     * Jangan resize ketika sedang menulis.
+     */
+    if (sedangMenggambar) {
+      return;
+    }
+
+
+    /*
+     * Beri waktu layout selesai.
+     */
+    setTimeout(
+      function() {
+
+        initTTDCanvas();
+
+      },
+      200
+    );
+
+  }
+);
+
+
+/* =========================================================
+   DATA TTD
+========================================================= */
+
+function buatDataTTD(
+  signature
+) {
+
+  var idAktif =
     String(
-      idPemeriksaanAktif
-    ).trim() === ""
-  ) {
+      idPemeriksaanAktif ||
+      sessionStorage.getItem(
+        "idPemeriksaanAktif"
+      ) ||
+      ""
+    ).trim();
 
-    tampilkanStatusTTD(
-      "Menyiapkan ID Pemeriksaan..."
+
+  if (!idAktif) {
+
+    throw new Error(
+      "ID Pemeriksaan belum tersedia."
+    );
+
+  }
+
+
+  var waktu =
+    typeof buatTimestamp === "function"
+      ? buatTimestamp()
+      : new Date().toISOString();
+
+
+  return {
+
+    ID_PEMERIKSAAN:
+      idAktif,
+
+    ID_PEMERIKSA:
+      idAktif,
+
+    TTD:
+      signature,
+
+    NAMA:
+      sessionStorage.getItem(
+        "userNama"
+      ) || "",
+
+    NIPP:
+      sessionStorage.getItem(
+        "userNipp"
+      ) || "",
+
+    JABATAN:
+      sessionStorage.getItem(
+        "userJabatan"
+      ) || "",
+
+    EMAIL:
+      sessionStorage.getItem(
+        "userEmail"
+      ) || "",
+
+    WAKTU_TTD:
+      waktu,
+
+    TANGGAL_TTD:
+      waktu,
+
+    TANGGAL_SIMPAN:
+      waktu
+
+  };
+
+}
+
+
+/* =========================================================
+   KIRIM TTD KE SERVER
+========================================================= */
+
+function kirimTTDKeServer(
+  signature,
+  mode
+) {
+
+  var data =
+    buatDataTTD(
+      signature
     );
 
 
-    prosesID =
-      pastikanIdPemeriksaan()
-
-      .then(function(id) {
-
-        idPemeriksaanAktif =
-          String(
-            id || ""
-          ).trim();
+  console.log(
+    "TTD: mengirim ke server..."
+  );
 
 
-        if (
-          !idPemeriksaanAktif
-        ) {
+  return kirimRequestPost(
+    "simpan_ttd",
+    data
+  )
 
-          throw new Error(
-            "ID Pemeriksaan tidak berhasil dibuat."
-          );
+  .then(function(result) {
 
-        }
-
-
-        sessionStorage.setItem(
-          "idPemeriksaanAktif",
-          idPemeriksaanAktif
-        );
+    console.log(
+      "HASIL SIMPAN TTD:",
+      result
+    );
 
 
-        console.log(
-          "ID PEMERIKSAAN:",
-          idPemeriksaanAktif
-        );
+    if (
+      !result ||
+      result.success !== true
+    ) {
 
-      });
+      throw new Error(
+        result && result.message
+          ? result.message
+          : "Server menolak penyimpanan TTD."
+      );
 
+    }
+
+
+    signatureServerSaved =
+      true;
+
+    signatureServerData =
+      signature;
+
+
+    idPemeriksaanAktif =
+      String(
+        result.id_pemeriksaan ||
+        data.ID_PEMERIKSAAN ||
+        idPemeriksaanAktif ||
+        ""
+      ).trim();
+
+
+    sessionStorage.setItem(
+      "idPemeriksaanAktif",
+      idPemeriksaanAktif
+    );
+
+
+    return result;
+
+  });
+
+}
+
+
+/* =========================================================
+   VERIFIKASI TTD
+========================================================= */
+
+function verifikasiTTDServer() {
+
+  if (!idPemeriksaanAktif) {
+
+    return Promise.resolve({
+      success: false,
+      data: []
+    });
+
+  }
+
+
+  return kirimRequestGet(
+    "transaksi?id_pemeriksaan=" +
+    encodeURIComponent(
+      idPemeriksaanAktif
+    )
+  )
+
+  .then(function(result) {
+
+    console.log(
+      "VERIFIKASI DATA TRANSAKSI:",
+      result
+    );
+
+
+    return result;
+
+  })
+
+  .catch(function(error) {
+
+    console.warn(
+      "Verifikasi TTD gagal:",
+      error
+    );
+
+
+    /*
+     * Verifikasi tidak membatalkan
+     * penyimpanan yang sudah berhasil.
+     */
+    return {
+      success: false,
+      data: []
+    };
+
+  });
+
+}
+
+
+/* =========================================================
+   SIMPAN TTD
+========================================================= */
+
+function simpanTTD() {
+
+  if (sedangSimpanTTD) {
+    return;
   }
 
 
@@ -10684,102 +11750,221 @@ function simpanTTD() {
     );
 
 
-  var tombolClear =
-    document.getElementById(
-      "btnClearTTD"
-    );
-
-
   if (tombol) {
 
     tombol.disabled =
       true;
 
-
     tombol.textContent =
-      "MENYIMPAN TTD...";
+      "MENYIMPAN...";
 
   }
 
 
-  if (tombolClear) {
-
-    tombolClear.disabled =
-      true;
-
-  }
-
-
-  /*
-   * 10%
-   */
-
-  setProgressTTD(
-    10,
-    "Menyiapkan tanda tangan",
-    "1 / 5",
-    "Menyiapkan data tanda tangan..."
-  );
-
-
-  tampilkanStatusTTD(
-    "Menyiapkan tanda tangan..."
-  );
-
-
-  prosesID
-
-
-  .then(function() {
+  try {
 
     /*
-     * 35%
+     * 1. Pastikan canvas ada.
      */
+    if (
+      !signatureCanvas
+    ) {
 
-    setProgressTTD(
-      35,
-      "Menyiapkan tanda tangan ke server",
-      "2 / 5",
-      "ID Pemeriksaan sudah tersedia."
-    );
-
-
-    tampilkanStatusTTD(
-      "ID Pemeriksaan siap. Menyiapkan pengiriman TTD..."
-    );
-
-
-    return new Promise(
-      function(resolve) {
-
-        setTimeout(
-          resolve,
-          150
+      signatureCanvas =
+        document.getElementById(
+          "signatureCanvas"
         );
 
-      }
+    }
+
+
+    if (!signatureCanvas) {
+
+      throw new Error(
+        "Canvas tanda tangan tidak ditemukan."
+      );
+
+    }
+
+
+    /*
+     * 2. Pastikan context tersedia.
+     */
+    if (
+      !signatureContext
+    ) {
+
+      signatureContext =
+        signatureCanvas.getContext(
+          "2d"
+        );
+
+    }
+
+
+    if (!signatureContext) {
+
+      throw new Error(
+        "Canvas belum siap digunakan."
+      );
+
+    }
+
+
+    /*
+     * 3. Ambil gambar TTD.
+     */
+    var signature =
+      ambilSignatureCanvas();
+
+
+    /*
+     * 4. Jika ID belum ada,
+     *    buat terlebih dahulu.
+     */
+    if (
+      !idPemeriksaanAktif
+    ) {
+
+      return pastikanIdPemeriksaan()
+
+        .then(function(id) {
+
+          idPemeriksaanAktif =
+            String(id || "").trim();
+
+
+          if (
+            !idPemeriksaanAktif
+          ) {
+
+            throw new Error(
+              "ID Pemeriksaan belum berhasil dibuat."
+            );
+
+          }
+
+
+          sessionStorage.setItem(
+            "idPemeriksaanAktif",
+            idPemeriksaanAktif
+          );
+
+
+          return prosesSimpanTTDBaru(
+            signature
+          );
+
+        });
+
+    }
+
+
+    /*
+     * 5. ID sudah tersedia.
+     */
+    return prosesSimpanTTDBaru(
+      signature
+    );
+
+  }
+
+  catch (error) {
+
+    selesaiSimpanTTDGagal(
+      error
+    );
+
+    return Promise.reject(
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   PROSES SIMPAN TTD
+========================================================= */
+
+function prosesSimpanTTDBaru(
+  signature
+) {
+
+  /*
+   * Progress 10%
+   */
+  if (
+    typeof setProgressTTD === "function"
+  ) {
+
+    setProgressTTD(
+      10,
+      "Menyiapkan tanda tangan",
+      "1 / 5",
+      "Menyiapkan data tanda tangan..."
+    );
+
+  }
+
+
+  return new Promise(function(resolve) {
+
+    setTimeout(
+      resolve,
+      150
     );
 
   })
 
+  .then(function() {
+
+    /*
+     * Progress 35%
+     */
+    if (
+      typeof setProgressTTD === "function"
+    ) {
+
+      setProgressTTD(
+        35,
+        "Menyiapkan tanda tangan ke server",
+        "2 / 5",
+        "Data TTD sudah dibuat dan siap dikirim..."
+      );
+
+    }
+
+
+    return new Promise(function(resolve) {
+
+      setTimeout(
+        resolve,
+        150
+      );
+
+    });
+
+  })
 
   .then(function() {
 
     /*
-     * 65%
+     * Progress 65%
      */
+    if (
+      typeof setProgressTTD === "function"
+    ) {
 
-    setProgressTTD(
-      65,
-      "Mengirim tanda tangan ke server",
-      "3 / 5",
-      "Sedang mengirim gambar tanda tangan..."
-    );
+      setProgressTTD(
+        65,
+        "Mengirim tanda tangan ke server",
+        "3 / 5",
+        "Sedang mengirim gambar tanda tangan..."
+      );
 
-
-    tampilkanStatusTTD(
-      "Menyimpan tanda tangan ke server..."
-    );
+    }
 
 
     return kirimTTDKeServer(
@@ -10789,70 +11974,89 @@ function simpanTTD() {
 
   })
 
-
   .then(function(result) {
 
+    /*
+     * Progress 85%
+     */
     if (
-      !result ||
-      result.success !== true
+      typeof setProgressTTD === "function"
     ) {
 
-      throw new Error(
-        result &&
-        result.message
-          ? result.message
-          : "Server belum mengonfirmasi penyimpanan TTD."
+      setProgressTTD(
+        85,
+        "Memastikan tanda tangan tersimpan",
+        "4 / 5",
+        "Memeriksa kembali data pemeriksaan..."
+      );
+
+    }
+
+
+    return verifikasiTTDServer()
+      .then(function(verifikasi) {
+
+        return {
+          hasilSimpan:
+            result,
+
+          hasilVerifikasi:
+            verifikasi
+
+        };
+
+      });
+
+  })
+
+  .then(function(finalResult) {
+
+    /*
+     * Progress 100%
+     */
+    if (
+      typeof setProgressTTD === "function"
+    ) {
+
+      setProgressTTD(
+        100,
+        "Tanda tangan berhasil disimpan",
+        "5 / 5",
+        "Tanda tangan digital berhasil direkam ke sistem."
       );
 
     }
 
 
     /*
-     * 85%
+     * Status TTD.
      */
-
-    setProgressTTD(
-      85,
-      "Memastikan tanda tangan tersimpan",
-      "4 / 5",
-      "Memeriksa kembali data pemeriksaan..."
-    );
+    var status =
+      document.getElementById(
+        "ttdStatus"
+      );
 
 
-    tampilkanStatusTTD(
-      "Tanda tangan diterima server..."
-    );
+    if (status) {
 
+      status.style.display =
+        "block";
 
-    return verifikasiTTDServer();
+      status.textContent =
+        "Tanda tangan berhasil disimpan.";
 
-  })
-
-
-  .then(function() {
-
-    /*
-     * 100%
-     */
-
-    setProgressTTD(
-      100,
-      "Tanda tangan berhasil disimpan",
-      "5 / 5",
-      "Tanda tangan digital berhasil direkam ke sistem."
-    );
-
-
-    tampilkanStatusTTD(
-      "Tanda tangan berhasil disimpan ke server.\n" +
-      "ID Pemeriksaan: " +
-      idPemeriksaanAktif
-    );
+    }
 
 
     /*
-     * Tampilkan tombol SIMPAN & LIHAT PREVIEW.
+     * Jangan menutup ttdBox.
+     * Jangan memanggil tampilkanTTD().
      */
+    console.log(
+      "TTD: SELESAI.",
+      finalResult
+    );
+
 
     var tombolPreview =
       document.getElementById(
@@ -10865,96 +12069,144 @@ function simpanTTD() {
       tombolPreview.style.display =
         "block";
 
-
-      tombolPreview.disabled =
-        false;
-
-
-      tombolPreview.textContent =
-        "SIMPAN & LIHAT PREVIEW";
-
     }
 
 
-    /*
-     * Notifikasi.
-     * Setelah OK TTD tetap terlihat.
-     */
-
-    tampilkanNotifFoto(
-      "Tanda tangan berhasil disimpan",
-      "Tanda tangan digital telah berhasil direkam ke server.\n\n" +
-      "ID Pemeriksaan: " +
-      idPemeriksaanAktif +
-      "\n\n" +
-      "Silakan tekan OK, kemudian klik SIMPAN & LIHAT PREVIEW.",
-      "none"
-    );
+    return finalResult;
 
   })
 
-
-  .catch(function(error) {
-
-    console.error(
-      "GAGAL SIMPAN TTD:",
-      error
-    );
-
-
-    setProgressTTD(
-      0,
-      "Penyimpanan TTD gagal",
-      "-",
-      error.message
-    );
-
-
-    tampilkanStatusTTD(
-      "TTD gagal disimpan.\n" +
-      error.message
-    );
-
-
-    tampilkanNotifFoto(
-      "TTD gagal disimpan",
-      error.message,
-      "none"
-    );
-
-  })
-
-
-  .finally(function() {
+  .then(function(result) {
 
     sedangSimpanTTD =
       false;
 
 
-    if (tombol) {
-
-      tombol.disabled =
-        false;
-
-
-      tombol.textContent =
-        "Simpan TTD";
-
+    if (tombolTTDGlobal()) {
+      tombolTTDGlobal().disabled = false;
     }
 
 
-    if (tombolClear) {
+    return result;
 
-      tombolClear.disabled =
-        false;
+  })
 
-    }
+  .catch(function(error) {
+
+    selesaiSimpanTTDGagal(
+      error
+    );
+
+
+    throw error;
 
   });
 
 }
 
 
+/* =========================================================
+   BANTUAN TOMBOL TTD
+========================================================= */
+
+function tombolTTDGlobal() {
+
+  return document.getElementById(
+    "btnSaveTTD"
+  );
+
+}
+
+
+/* =========================================================
+   GAGAL SIMPAN TTD
+========================================================= */
+
+function selesaiSimpanTTDGagal(
+  error
+) {
+
+  sedangSimpanTTD =
+    false;
+
+
+  var tombol =
+    document.getElementById(
+      "btnSaveTTD"
+    );
+
+
+  if (tombol) {
+
+    tombol.disabled =
+      false;
+
+    tombol.textContent =
+      "Simpan TTD";
+
+  }
+
+
+  console.error(
+    "TTD GAGAL DISIMPAN:",
+    error
+  );
+
+
+  if (
+    typeof setProgressTTD === "function"
+  ) {
+
+    setProgressTTD(
+      0,
+      "Penyimpanan TTD gagal",
+      "0 / 5",
+      error && error.message
+        ? error.message
+        : "Tanda tangan gagal disimpan."
+    );
+
+  }
+
+
+  var status =
+    document.getElementById(
+      "ttdStatus"
+    );
+
+
+  if (status) {
+
+    status.style.display =
+      "block";
+
+    status.textContent =
+      error && error.message
+        ? error.message
+        : "Tanda tangan gagal disimpan.";
+
+  }
+
+}
+
+
+/* =========================================================
+   PASTIKAN GLOBAL FUNCTION
+========================================================= */
+
+window.tampilkanTTD =
+  tampilkanTTD;
+
+window.simpanTTD =
+  simpanTTD;
+
+window.clearSignature =
+  clearSignature;
+
+
+/* =========================================================
+   SELESAI SISTEM TTD BARU
+========================================================= */
 /* =========================================================
    FOTO
 ========================================================= */
