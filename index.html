@@ -9716,143 +9716,94 @@ function resizeSignatureCanvas() {
 
 
 /* =========================================================
-   EVENT CANVAS
-   HANYA DIPASANG SEKALI
+   EVENT CANVAS TTD
+   DIPASANG SEKALI
 ========================================================= */
 
 function pasangEventTTD() {
 
   if (!signatureCanvas) {
+    console.error("TTD: canvas tidak tersedia.");
     return;
   }
 
+  /*
+   * Reset handler supaya tidak dobel.
+   */
+  signatureCanvas.onpointerdown = null;
+  signatureCanvas.onpointermove = null;
+  signatureCanvas.onpointerup = null;
+  signatureCanvas.onpointercancel = null;
+  signatureCanvas.onpointerleave = null;
 
   /*
-   * Jangan memasang event dua kali.
+   * Mencegah sentuhan dianggap sebagai scroll.
    */
-
-  if (
-    signatureCanvas.dataset.eventsReady ===
-    "1"
-  ) {
-
-    return;
-
-  }
-
-
-  signatureCanvas.dataset.eventsReady =
-    "1";
-
+  signatureCanvas.style.touchAction = "none";
+  signatureCanvas.style.userSelect = "none";
+  signatureCanvas.style.webkitUserSelect = "none";
+  signatureCanvas.style.cursor = "crosshair";
 
   /*
-   * Jangan biarkan touch menjadi scroll
-   * saat user sedang menulis.
+   * MULAI TTD
    */
+  signatureCanvas.onpointerdown = function(event) {
 
-  signatureCanvas.style.touchAction =
-    "none";
+    event.preventDefault();
 
+    mulaiGambarTTD(event);
 
-  signatureCanvas.style.userSelect =
-    "none";
-
-
-  signatureCanvas.style.webkitUserSelect =
-    "none";
-
+  };
 
   /*
-   * POINTER DOWN
+   * GAMBAR TTD
    */
+  signatureCanvas.onpointermove = function(event) {
 
-  signatureCanvas.addEventListener(
-    "pointerdown",
-    function(event) {
-
-      event.preventDefault();
-
-      mulaiGambarTTD(
-        event
-      );
-
-    },
-    {
-      passive: false
+    if (!sedangMenggambar) {
+      return;
     }
-  );
 
+    event.preventDefault();
 
-  /*
-   * POINTER MOVE
-   */
+    gambarTTD(event);
 
-  signatureCanvas.addEventListener(
-    "pointermove",
-    function(event) {
-
-      if (!sedangMenggambar) {
-        return;
-      }
-
-
-      event.preventDefault();
-
-
-      gambarTTD(
-        event
-      );
-
-    },
-    {
-      passive: false
-    }
-  );
-
+  };
 
   /*
-   * POINTER UP
+   * SELESAI TTD
    */
+  signatureCanvas.onpointerup = function(event) {
 
-  signatureCanvas.addEventListener(
-    "pointerup",
-    function(event) {
+    event.preventDefault();
 
-      event.preventDefault();
+    selesaiGambarTTD(event);
 
-
-      selesaiGambarTTD(
-        event
-      );
-
-    },
-    {
-      passive: false
-    }
-  );
-
+  };
 
   /*
-   * POINTER CANCEL
+   * BATAL TTD
    */
+  signatureCanvas.onpointercancel = function(event) {
 
-  signatureCanvas.addEventListener(
-    "pointercancel",
-    function(event) {
+    selesaiGambarTTD(event);
 
-      selesaiGambarTTD(
-        event
-      );
+  };
 
-    }
+  /*
+   * JARI / MOUSE KELUAR DARI CANVAS
+   */
+  signatureCanvas.onpointerleave = function(event) {
+
+    selesaiGambarTTD(event);
+
+  };
+
+  console.log(
+    "TTD: EVENT CANVAS BERHASIL DIPASANG."
   );
 
 }
-
-
-/* =========================================================
-   KOORDINAT CANVAS
-========================================================= */
 
 function ambilPosisiCanvas(
   event
