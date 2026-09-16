@@ -16536,7 +16536,7 @@ console.log(
     
 /* =========================================================
    FINAL BUTTON PREVIEW
-   BUTTON DI BODY AGAR TIDAK IKUT TERHAPUS FORM
+   TTD -> OK -> FORM -> BUTTON PREVIEW
 ========================================================= */
 
 window.tampilkanButtonPreviewFinal = function () {
@@ -16545,16 +16545,55 @@ window.tampilkanButtonPreviewFinal = function () {
     "MEMBUAT / MENAMPILKAN BUTTON PREVIEW"
   );
 
+  var form =
+    document.getElementById(
+      "formPemeriksaan"
+    );
+
+
+  if (!form) {
+
+    console.error(
+      "FORM PEMERIKSAAN TIDAK DITEMUKAN"
+    );
+
+    return;
+
+  }
+
+
+  /* =======================================================
+     CARI / BUAT AREA PREVIEW
+  ======================================================= */
+
+  var area =
+    document.getElementById(
+      "previewButtonAreaFinal"
+    );
+
+
+  if (!area) {
+
+    area =
+      document.createElement(
+        "div"
+      );
+
+    area.id =
+      "previewButtonAreaFinal";
+
+  }
+
+
+  /* =======================================================
+     CARI / BUAT BUTTON PREVIEW
+  ======================================================= */
 
   var tombol =
     document.getElementById(
       "btnSimpanLihatPreview"
     );
 
-
-  /* =======================================================
-     BUAT BUTTON JIKA BELUM ADA
-  ======================================================= */
 
   if (!tombol) {
 
@@ -16569,113 +16608,126 @@ window.tampilkanButtonPreviewFinal = function () {
     tombol.id =
       "btnSimpanLihatPreview";
 
-    tombol.textContent =
-      "SIMPAN & TAMPILKAN PREVIEW";
-
-    tombol.className =
-      "btn btn-simpan";
+  }
 
 
-    tombol.onclick =
-      function () {
+  /* =======================================================
+     TEKS BUTTON
+  ======================================================= */
 
-        console.log(
-          "BUTTON SIMPAN & TAMPILKAN PREVIEW DIKLIK"
-        );
-
-        if (
-          typeof window.tampilkanPreviewHasilAkhir ===
-          "function"
-        ) {
-
-          window.tampilkanPreviewHasilAkhir();
-
-        } else {
-
-          alert(
-            "Fungsi Preview Hasil Akhir belum tersedia."
-          );
-
-        }
-
-      };
+  tombol.textContent =
+    "SIMPAN & TAMPILKAN PREVIEW";
 
 
-    /* =====================================================
-       PEMBUNGKUS BUTTON
-    ===================================================== */
+  tombol.className =
+    "btn btn-simpan";
 
-    var wrapper =
-      document.createElement(
-        "div"
+
+  /* =======================================================
+     AKSI BUTTON
+  ======================================================= */
+
+  tombol.onclick =
+    function () {
+
+      console.log(
+        "BUTTON SIMPAN & TAMPILKAN PREVIEW DIKLIK"
       );
 
-    wrapper.id =
-      "previewButtonAreaFinal";
 
-    wrapper.style.display =
-      "block";
+      if (
+        typeof window.tampilkanPreviewHasilAkhir ===
+        "function"
+      ) {
 
-    wrapper.style.width =
-      "100%";
+        window.tampilkanPreviewHasilAkhir();
 
-    wrapper.style.margin =
-      "15px 0";
+      }
 
-    wrapper.style.padding =
-      "0";
+      else {
 
+        console.error(
+          "tampilkanPreviewHasilAkhir tidak ditemukan."
+        );
 
-    wrapper.appendChild(
-      tombol
-    );
+        alert(
+          "Fungsi Preview Hasil Akhir belum tersedia."
+        );
 
+      }
 
-    /* =====================================================
-       MASUKKAN KE BODY
-    ===================================================== */
-
-    document.body.appendChild(
-      wrapper
-    );
+    };
 
 
-    console.log(
-      "BUTTON PREVIEW BERHASIL DIBUAT DI BODY"
+  /* =======================================================
+     PENTING:
+     SELALU PINDAHKAN BUTTON KE AREA
+  ======================================================= */
+
+  area.appendChild(
+    tombol
+  );
+
+
+  /* =======================================================
+     LETAK AREA
+     SETELAH FORM PEMERIKSAAN
+  ======================================================= */
+
+  if (
+    area.parentNode !==
+    form.parentNode
+  ) {
+
+    form.parentNode.insertBefore(
+      area,
+      form.nextSibling
     );
 
   }
 
 
   /* =======================================================
-     TAMPILKAN
+     TAMPILKAN AREA
   ======================================================= */
 
-  var area =
-    document.getElementById(
-      "previewButtonAreaFinal"
-    );
+  area.hidden =
+    false;
+
+  area.style.display =
+    "block";
+
+  area.style.visibility =
+    "visible";
+
+  area.style.opacity =
+    "1";
+
+  area.style.width =
+    "100%";
+
+  area.style.marginTop =
+    "20px";
+
+  area.style.marginBottom =
+    "20px";
+
+  area.style.position =
+    "relative";
+
+  area.style.zIndex =
+    "999999";
 
 
-  if (area) {
+  /* =======================================================
+     TAMPILKAN BUTTON
+  ======================================================= */
 
-    area.style.display =
-      "block";
+  tombol.hidden =
+    false;
 
-    area.style.visibility =
-      "visible";
-
-    area.style.opacity =
-      "1";
-
-    area.style.position =
-      "relative";
-
-    area.style.zIndex =
-      "99999";
-
-  }
-
+  tombol.disabled =
+    false;
 
   tombol.style.display =
     "block";
@@ -16689,14 +16741,14 @@ window.tampilkanButtonPreviewFinal = function () {
   tombol.style.width =
     "100%";
 
-  tombol.style.maxWidth =
-    "600px";
+  tombol.style.minHeight =
+    "50px";
 
   tombol.style.margin =
-    "15px auto";
+    "0";
 
   tombol.style.padding =
-    "13px 16px";
+    "14px 16px";
 
   tombol.style.border =
     "none";
@@ -16704,7 +16756,7 @@ window.tampilkanButtonPreviewFinal = function () {
   tombol.style.borderRadius =
     "8px";
 
-  tombol.style.background =
+  tombol.style.backgroundColor =
     "#198754";
 
   tombol.style.color =
@@ -16723,14 +16775,77 @@ window.tampilkanButtonPreviewFinal = function () {
     "relative";
 
   tombol.style.zIndex =
-    "99999";
+    "1000000";
 
+
+  /* =======================================================
+     PASTIKAN FORM TERBUKA
+  ======================================================= */
+
+  form.style.display =
+    "block";
+
+  form.style.visibility =
+    "visible";
+
+  form.style.opacity =
+    "1";
+
+
+  var app =
+    document.getElementById(
+      "app"
+    );
+
+
+  if (app) {
+
+    app.style.display =
+      "block";
+
+  }
+
+
+  /* =======================================================
+     DEBUG
+  ======================================================= */
+
+  console.log(
+    "BUTTON PREVIEW PARENT:",
+    tombol.parentNode
+  );
+
+  console.log(
+    "BUTTON PREVIEW AREA:",
+    area
+  );
 
   console.log(
     "BUTTON SIMPAN & TAMPILKAN PREVIEW: TAMPIL"
   );
 
+
+  /* =======================================================
+     SCROLL KE BUTTON
+  ======================================================= */
+
+  setTimeout(
+    function () {
+
+      tombol.scrollIntoView({
+        behavior:
+          "smooth",
+        block:
+          "center"
+      });
+
+    },
+    300
+  );
+
 };
+
+
 /* =========================================================
    OVERRIDE TUTUP NOTIFIKASI
 ========================================================= */
@@ -16841,14 +16956,8 @@ window.tutupNotifFoto =
       setTimeout(
         function () {
 
-          if (
-            typeof window.tampilkanButtonPreviewFinal ===
-            "function"
-          ) {
+          window.tampilkanButtonPreviewFinal();
 
-            window.tampilkanButtonPreviewFinal();
-
-          }
 
           console.log(
             "Kembali ke Form Checklist."
