@@ -10330,7 +10330,7 @@ btnTutup.onclick =
     );
 
     /* =====================================================
-       HAPUS PREVIEW DARI HALAMAN
+       HAPUS PREVIEW
     ===================================================== */
 
     if (overlay) {
@@ -10338,74 +10338,137 @@ btnTutup.onclick =
     }
 
     /* =====================================================
-       TAMPILKAN KEMBALI TOMBOL PREVIEW
+       RESET SESSION
     ===================================================== */
 
-    var areaPreviewButton =
-      document.getElementById(
-        "previewButtonAreaFinal"
+    try {
+
+      sessionStorage.removeItem(
+        "userNama"
       );
 
-    if (areaPreviewButton) {
-      areaPreviewButton.style.display =
-        "block";
-    }
-
-    var tombolPreview =
-      document.getElementById(
-        "btnSimpanLihatPreview"
+      sessionStorage.removeItem(
+        "userNipp"
       );
 
-    if (tombolPreview) {
-      tombolPreview.style.display =
-        "block";
-    }
+      sessionStorage.removeItem(
+        "userJabatan"
+      );
 
-    console.log(
-      "PREVIEW DITUTUP - KEMBALI KE FORM CHECKLIST"
-    );
+      sessionStorage.removeItem(
+        "userEmail"
+      );
 
-  };btnTutup.onclick =
-  function() {
+      sessionStorage.removeItem(
+        "idPemeriksaanAktif"
+      );
 
-    console.log(
-      "TOMBOL TUTUP PREVIEW DIKLIK"
-    );
+    } catch (errorSession) {
 
-    /* =====================================================
-       HAPUS PREVIEW DARI HALAMAN
-    ===================================================== */
+      console.warn(
+        "Gagal membersihkan sessionStorage:",
+        errorSession
+      );
 
-    if (overlay) {
-      overlay.remove();
     }
 
     /* =====================================================
-       TAMPILKAN KEMBALI TOMBOL PREVIEW
+       KOSONGKAN VARIABEL SESSION
     ===================================================== */
 
-    var areaPreviewButton =
-      document.getElementById(
-        "previewButtonAreaFinal"
+    try {
+
+      userNama = "";
+      userNipp = "";
+      userJabatan = "";
+      userEmail = "";
+      idPemeriksaanAktif = "";
+
+    } catch (errorVariable) {
+
+      console.warn(
+        "Variabel session tidak semuanya tersedia."
       );
 
-    if (areaPreviewButton) {
-      areaPreviewButton.style.display =
+    }
+
+    /* =====================================================
+       TAMPILKAN HALAMAN LOGIN
+    ===================================================== */
+
+    var loginBox =
+      document.getElementById(
+        "googleLogin"
+      );
+
+    var appBox =
+      document.getElementById(
+        "app"
+      );
+
+    var formBox =
+      document.getElementById(
+        "formPemeriksaan"
+      );
+
+    var infoUser =
+      document.getElementById(
+        "infoUser"
+      );
+
+    if (loginBox) {
+      loginBox.style.display =
         "block";
     }
 
-    var tombolPreview =
+    if (appBox) {
+      appBox.style.display =
+        "none";
+    }
+
+    if (formBox) {
+      formBox.style.display =
+        "none";
+    }
+
+    if (infoUser) {
+      infoUser.style.display =
+        "none";
+    }
+
+    /* =====================================================
+       KOSONGKAN FIELD LOGIN
+    ===================================================== */
+
+    var loginNama =
       document.getElementById(
-        "btnSimpanLihatPreview"
+        "loginNama"
       );
 
-    if (tombolPreview) {
-      tombolPreview.style.display =
-        "block";
+    var loginNipp =
+      document.getElementById(
+        "loginNipp"
+      );
+
+    var loginJabatan =
+      document.getElementById(
+        "loginJabatan"
+      );
+
+    if (loginNama) {
+      loginNama.value = "";
+    }
+
+    if (loginNipp) {
+      loginNipp.value = "";
+    }
+
+    if (loginJabatan) {
+      loginJabatan.value = "";
     }
 
     console.log(
-      "PREVIEW DITUTUP - KEMBALI KE FORM CHECKLIST"
+      "PREVIEW DITUTUP - KEMBALI KE HALAMAN LOGIN"
     );
 
   };
