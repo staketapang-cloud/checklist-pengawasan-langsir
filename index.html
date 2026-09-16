@@ -1872,7 +1872,6 @@ function tampilkanNotifFoto(
 
 }
 
-
 /* =========================================================
    TUTUP NOTIFIKASI
    OK -> KEMBALI KE FORM
@@ -1897,23 +1896,28 @@ function tutupNotifFoto() {
     "none";
 
 
+  /* =====================================================
+     TUTUP NOTIFIKASI
+  ===================================================== */
+
   overlay.style.display =
     "none";
-
 
   overlay.dataset.afterOk =
     "none";
 
 
+  /* =====================================================
+     KHUSUS KEMBALI KE FORM
+  ===================================================== */
 
+  if (aksi === "form") {
 
+    kembaliKeFormPemeriksaan();
 
-    /* ===================================================
-       PAKSA BUTTON PREVIEW TETAP TAMPIL
-    =================================================== */
 
     setTimeout(
-      function() {
+      function () {
 
         var previewButton =
           document.getElementById(
@@ -1928,7 +1932,6 @@ function tutupNotifFoto() {
           );
 
           return;
-
         }
 
 
@@ -1953,15 +1956,38 @@ function tutupNotifFoto() {
         );
 
       },
-      150
+      300
     );
 
 
     return;
-
   }
 
 
+  /* =====================================================
+     KHUSUS TTD
+  ===================================================== */
+
+  if (aksi === "ttd") {
+
+    tampilkanTTD();
+
+    return;
+  }
+
+
+  /* =====================================================
+     KHUSUS LOGIN
+  ===================================================== */
+
+  if (aksi === "login") {
+
+    kembaliKeLogin();
+
+    return;
+  }
+
+}
   /* =====================================================
      TTD
   ===================================================== */
