@@ -10322,7 +10322,50 @@ tombolArea.appendChild(
         "bold";
 
 
-    btnTutup.onclick =
+btnTutup.onclick =
+  function() {
+
+    console.log(
+      "TOMBOL TUTUP PREVIEW DIKLIK"
+    );
+
+    /* =====================================================
+       HAPUS PREVIEW DARI HALAMAN
+    ===================================================== */
+
+    if (overlay) {
+      overlay.remove();
+    }
+
+    /* =====================================================
+       TAMPILKAN KEMBALI TOMBOL PREVIEW
+    ===================================================== */
+
+    var areaPreviewButton =
+      document.getElementById(
+        "previewButtonAreaFinal"
+      );
+
+    if (areaPreviewButton) {
+      areaPreviewButton.style.display =
+        "block";
+    }
+
+    var tombolPreview =
+      document.getElementById(
+        "btnSimpanLihatPreview"
+      );
+
+    if (tombolPreview) {
+      tombolPreview.style.display =
+        "block";
+    }
+
+    console.log(
+      "PREVIEW DITUTUP - KEMBALI KE FORM CHECKLIST"
+    );
+
+  };btnTutup.onclick =
   function() {
 
     console.log(
@@ -10366,7 +10409,6 @@ tombolArea.appendChild(
     );
 
   };
-
 
       tombolArea.appendChild(
         btnTutup
