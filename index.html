@@ -2966,6 +2966,18 @@ function bukaAplikasi() {
 
   muatSemuaData();
 
+
+  /* =====================================================
+     TAMPILKAN TTD OTOMATIS
+     Setelah form pemeriksaan dibuka
+  ===================================================== */
+
+  setTimeout(function() {
+
+    tampilkanTTD();
+
+  }, 500);
+
 }
 /* =========================================================
    INFO USER
@@ -10192,50 +10204,95 @@ function clearSignature() {
 
 }
 
-
 /* =========================================================
    TAMPILKAN TTD
+   OTOMATIS SIAPKAN ID PEMERIKSAAN
 ========================================================= */
 
 function tampilkanTTD() {
 
-  if (!idPemeriksaanAktif) {
+  console.log("=================================");
+  console.log("MENAMPILKAN TTD");
+  console.log("ID SAAT INI:", idPemeriksaanAktif);
+  console.log("=================================");
 
-    pastikanIdPemeriksaan()
+  /*
+   * Validasi identitas terlebih dahulu.
+   */
+  if (!validasiIdentitas()) {
+    return;
+  }
+
+  /*
+   * Kalau ID sudah ada, langsung buka canvas.
+   */
+  if (
+    idPemeriksaanAktif &&
+    String(idPemeriksaanAktif).trim() !== ""
+  ) {
+
+    bukaKotakTTD();
+    return;
+
+  }
+
+  /*
+   * Kalau ID belum ada,
+   * buat terlebih dahulu.
+   */
+  tampilkanStatus(
+    "Menyiapkan ID Pemeriksaan..."
+  );
+
+  pastikanIdPemeriksaan()
 
     .then(function(id) {
 
       idPemeriksaanAktif =
-        String(id).trim();
+        String(id || "").trim();
 
+      if (!idPemeriksaanAktif) {
 
+        throw new Error(
+          "ID Pemeriksaan tidak berhasil dibuat."
+        );
+
+      }
+
+      sessionStorage.setItem(
+        "idPemeriksaanAktif",
+        idPemeriksaanAktif
+      );
+
+      console.log(
+        "ID PEMERIKSAAN SIAP:",
+        idPemeriksaanAktif
+      );
+
+      /*
+       * Sekarang canvas boleh dibuka.
+       */
       bukaKotakTTD();
 
     })
 
-
     .catch(function(error) {
+
+      console.error(
+        "GAGAL MENYIAPKAN ID PEMERIKSAAN:",
+        error
+      );
 
       tampilkanNotifFoto(
         "TTD belum dapat dibuka",
         error.message ||
         "ID Pemeriksaan belum tersedia.",
-        "form"
+        "none"
       );
 
     });
 
-
-    return;
-
-  }
-
-
-  bukaKotakTTD();
-
 }
-
-
 /* =========================================================
    BUKA KOTAK TTD
 ========================================================= */
