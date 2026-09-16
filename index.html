@@ -1211,48 +1211,14 @@ body {
     </div>
 
 
-    <!-- BUTTON -->
-
-    <div class="button-group">
-
-      <button
-        type="button"
-        class="btn btn-foto"
-        onclick="window.uploadFoto()"
-      >
-        UPLOAD FOTO
-      </button>
-
-
-      <button
-        type="button"
-        id="btnTTD"
-        class="btn btn-ttd"
-        onclick="window.tampilkanTTD()"
-      >
-        TTD
-      </button>
-
-
-      <button
-        type="button"
-        id="btnSimpanPemeriksaan"
-        class="btn btn-simpan"
-        onclick="window.simpanPemeriksaan()"
-      >
-        SIMPAN & SELESAI
-      </button>
-
-
-       </div>
-
 
 
     <!-- TTD -->
 
-    <div
-      id="ttdBox"
-      class="ttd-box">
+<div
+  id="ttdBox"
+  class="ttd-box"
+  style="display:block;">
 
       <h3>
         Tanda Tangan Digital
@@ -1322,29 +1288,56 @@ body {
 
       </div>
 
+<div class="ttd-buttons">
 
-      <div class="ttd-buttons">
-
-        <button
-          type="button"
-          id="btnClearTTD"
-          class="btn-clear"
-          onclick="window.clearSignature()"
-        >
-          Hapus
-        </button>
+  <button
+    type="button"
+    id="btnClearTTD"
+    class="btn-clear"
+    onclick="window.clearSignature()"
+  >
+    Hapus
+  </button>
 
 
-        <button
-          type="button"
-          id="btnSaveTTD"
-          class="btn-save-ttd"
-          onclick="window.simpanTTD()"
-        >
-          Simpan TTD
-        </button>
+  <button
+    type="button"
+    id="btnSaveTTD"
+    class="btn-save-ttd"
+    onclick="window.simpanTTD()"
+  >
+    Simpan TTD
+  </button>
 
-      </div>
+</div>
+
+
+<!-- =====================================================
+     TOMBOL SIMPAN & LIHAT PREVIEW
+     MUNCUL SETELAH TTD BERHASIL DISIMPAN
+===================================================== -->
+
+<div
+  style="
+    margin-top:12px;
+    text-align:center;
+  "
+>
+
+  <button
+    type="button"
+    id="btnSimpanLihatPreview"
+    class="btn btn-simpan"
+    style="
+      display:none;
+      width:100%;
+    "
+    onclick="simpanPemeriksaan()"
+  >
+    SIMPAN & LIHAT PREVIEW
+  </button>
+
+</div>
 
     </div>
 
@@ -4987,6 +4980,23 @@ function simpanTTD() {
       "Silakan tekan OK untuk mengecek kembali ke Form Checklist Pengawasan Langsir jika sudah yakin klik SIMPAN&SELESAI.",
       "form"
     );
+        /* =====================================================
+   TAMPILKAN TOMBOL SIMPAN & LIHAT PREVIEW
+   HANYA SETELAH TTD BERHASIL DISIMPAN
+===================================================== */
+
+var tombolPreview =
+  document.getElementById(
+    "btnSimpanLihatPreview"
+  );
+
+
+if (tombolPreview) {
+
+  tombolPreview.style.display =
+    "block";
+
+}
 /* =========================================================
    RAPIAKAN TAMPILAN SETELAH TTD BERHASIL
    HILANGKAN AREA UPLOAD FOTO
@@ -5560,16 +5570,16 @@ function simpanPemeriksaan() {
        NOTIFIKASI
     ================================================= */
 
-    tampilkanNotifFoto(
-      "Pemeriksaan berhasil disimpan",
-      "Form Checklist Pengawasan Langsir telah berhasil disimpan.\n\n" +
-      "ID Pemeriksaan: " +
-      idPemeriksaanAktif +
-      "\n\n" +
-      "Tanda tangan juga telah diproses ke server.\n\n" +
-      "Silakan tekan OK.",
-      "login"
-    );
+tampilkanNotifFoto(
+  "Tanda tangan berhasil disimpan",
+  "Tanda tangan digital berhasil direkam ke server.\n\n" +
+  "ID Pemeriksaan: " +
+  idPemeriksaanAktif +
+  "\n\n" +
+  "Silakan tekan OK.\n" +
+  "Selanjutnya klik SIMPAN & LIHAT PREVIEW.",
+  "none"
+);
 
   })
 
