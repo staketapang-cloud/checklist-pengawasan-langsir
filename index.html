@@ -1905,13 +1905,7 @@ function tutupNotifFoto() {
     "none";
 
 
-  /* =====================================================
-     KEMBALI KE FORM
-  ===================================================== */
 
-  if (aksi === "form") {
-
-    kembaliKeFormPemeriksaan();
 
 
     /* ===================================================
@@ -16606,7 +16600,581 @@ console.log(
   "window.simpanTTD =",
   typeof window.simpanTTD
 );
-     
+    
+/* =========================================================
+   FINAL FIX
+   TTD SUKSES
+   -> NOTIFIKASI SUKSES TETAP MUNCUL
+   -> OK
+   -> KEMBALI FORM CHECKLIST
+   -> BUTTON PREVIEW DIBUAT ULANG
+   -> BUTTON TIDAK BERADA DI ttdBox
+========================================================= */
+
+(function () {
+
+  console.log("=================================");
+  console.log("FINAL FIX PREVIEW BUTTON AKTIF");
+  console.log("=================================");
+
+
+  /* =======================================================
+     FUNGSI MEMBUAT BUTTON PREVIEW
+  ======================================================= */
+
+  function buatDanTampilkanButtonPreview() {
+
+    var form =
+      document.getElementById(
+        "formPemeriksaan"
+      );
+
+    if (!form) {
+
+      console.warn(
+        "formPemeriksaan tidak ditemukan."
+      );
+
+      return;
+
+    }
+
+
+    /* -------------------------------------------------------
+       CARI BUTTON LAMA
+    ------------------------------------------------------- */
+
+    var tombol =
+      document.getElementById(
+        "btnSimpanLihatPreview"
+      );
+
+
+    /* =======================================================
+       JIKA BELUM ADA -> BUAT BARU
+    ======================================================= */
+
+    if (!tombol) {
+
+      tombol =
+        document.createElement(
+          "button"
+        );
+
+      tombol.type =
+        "button";
+
+      tombol.id =
+        "btnSimpanLihatPreview";
+
+      tombol.textContent =
+        "SIMPAN & TAMPILKAN PREVIEW";
+
+      tombol.style.display =
+        "block";
+
+      tombol.style.visibility =
+        "visible";
+
+      tombol.style.opacity =
+        "1";
+
+      tombol.style.width =
+        "100%";
+
+      tombol.style.marginTop =
+        "15px";
+
+      tombol.style.marginBottom =
+        "15px";
+
+      tombol.style.padding =
+        "13px 16px";
+
+      tombol.style.border =
+        "none";
+
+      tombol.style.borderRadius =
+        "8px";
+
+      tombol.style.background =
+        "#198754";
+
+      tombol.style.color =
+        "#ffffff";
+
+      tombol.style.fontSize =
+        "15px";
+
+      tombol.style.fontWeight =
+        "bold";
+
+      tombol.style.cursor =
+        "pointer";
+
+      tombol.style.position =
+        "relative";
+
+      tombol.style.zIndex =
+        "999";
+
+      tombol.style.boxSizing =
+        "border-box";
+
+
+      /* -----------------------------------------------------
+         BUTTON DIKLIK
+      ----------------------------------------------------- */
+
+      tombol.onclick =
+        function () {
+
+          console.log(
+            "================================="
+          );
+
+          console.log(
+            "BUTTON PREVIEW DIKLIK"
+          );
+
+          console.log(
+            "ID PEMERIKSAAN:",
+            window.idPemeriksaanAktif ||
+            idPemeriksaanAktif
+          );
+
+          console.log(
+            "================================="
+          );
+
+
+          /* -------------------------------------------------
+             PANGGIL FUNGSI PREVIEW YANG SUDAH ADA
+          ------------------------------------------------- */
+
+          if (
+            typeof window.tampilkanPreviewHasilAkhir ===
+            "function"
+          ) {
+
+            window.tampilkanPreviewHasilAkhir();
+
+            return;
+
+          }
+
+
+          /* -------------------------------------------------
+             JIKA FUNGSI BELUM ADA
+          ------------------------------------------------- */
+
+          console.error(
+            "tampilkanPreviewHasilAkhir tidak ditemukan."
+          );
+
+          alert(
+            "Fungsi Preview Hasil Akhir belum tersedia."
+          );
+
+        };
+
+
+      /* =====================================================
+         TEMPATKAN BUTTON DI FORM UTAMA
+         BUKAN DI ttdBox
+      ===================================================== */
+
+      var uploadBox =
+        document.getElementById(
+          "uploadFotoBox"
+        );
+
+
+      if (
+        uploadBox &&
+        uploadBox.parentNode === form
+      ) {
+
+        form.insertBefore(
+          tombol,
+          uploadBox
+        );
+
+      } else {
+
+        var buttonGroup =
+          form.querySelector(
+            ".button-group"
+          );
+
+
+        if (buttonGroup) {
+
+          buttonGroup.parentNode.insertBefore(
+            tombol,
+            buttonGroup.nextSibling
+          );
+
+        } else {
+
+          form.appendChild(
+            tombol
+          );
+
+        }
+
+      }
+
+
+      console.log(
+        "BUTTON PREVIEW BARU DIBUAT"
+      );
+
+    }
+
+
+    /* =====================================================
+       PAKSA TAMPIL
+    ===================================================== */
+
+    tombol.hidden =
+      false;
+
+    tombol.disabled =
+      false;
+
+    tombol.style.display =
+      "block";
+
+    tombol.style.visibility =
+      "visible";
+
+    tombol.style.opacity =
+      "1";
+
+    tombol.style.position =
+      "relative";
+
+    tombol.style.zIndex =
+      "999";
+
+
+    /* -----------------------------------------------------
+       PASTIKAN PARENT JUGA TIDAK TERSEMBUNYI
+    ----------------------------------------------------- */
+
+    if (
+      tombol.parentElement
+    ) {
+
+      tombol.parentElement.hidden =
+        false;
+
+      tombol.parentElement.style.display =
+        "";
+
+      tombol.parentElement.style.visibility =
+        "visible";
+
+      tombol.parentElement.style.opacity =
+        "1";
+
+    }
+
+
+    console.log(
+      "================================="
+    );
+
+    console.log(
+      "BUTTON PREVIEW DIPASTIKAN TAMPIL"
+    );
+
+    console.log(
+      "ELEMENT:",
+      tombol
+    );
+
+    console.log(
+      "DISPLAY:",
+      tombol.style.display
+    );
+
+    console.log(
+      "VISIBILITY:",
+      tombol.style.visibility
+    );
+
+    console.log(
+      "================================="
+    );
+
+  }
+
+
+  /* =======================================================
+     GLOBAL
+  ======================================================= */
+
+  window.tampilkanButtonPreviewFinal =
+    buatDanTampilkanButtonPreview;
+
+
+  /* =======================================================
+     SIMPAN FUNGSI LAMA
+  ======================================================= */
+
+  var tutupNotifLama =
+    window.tutupNotifFoto;
+
+
+  /* =======================================================
+     OVERRIDE TUTUP NOTIFIKASI
+  ======================================================= */
+
+  window.tutupNotifFoto =
+    function () {
+
+      console.log(
+        "================================="
+      );
+
+      console.log(
+        "FINAL TUTUP NOTIFIKASI"
+      );
+
+      console.log(
+        "================================="
+      );
+
+
+      var overlay =
+        document.getElementById(
+          "notifFoto"
+        );
+
+
+      var aksi =
+        overlay &&
+        overlay.dataset
+        ? (
+            overlay.dataset.afterOk ||
+            "none"
+          )
+        : "none";
+
+
+      console.log(
+        "AKSI NOTIFIKASI:",
+        aksi
+      );
+
+
+      /* -----------------------------------------------------
+         JALANKAN FUNGSI LAMA UNTUK MENUTUP NOTIF
+      ----------------------------------------------------- */
+
+      if (
+        typeof tutupNotifLama ===
+        "function"
+      ) {
+
+        try {
+
+          tutupNotifLama();
+
+        } catch (errorLama) {
+
+          console.error(
+            "Error fungsi tutupNotif lama:",
+            errorLama
+          );
+
+        }
+
+      } else {
+
+        if (overlay) {
+
+          overlay.style.display =
+            "none";
+
+          overlay.dataset.afterOk =
+            "none";
+
+        }
+
+      }
+
+
+      /* =====================================================
+         KHUSUS SETELAH NOTIF TTD SUKSES
+      ===================================================== */
+
+      if (
+        aksi === "form"
+      ) {
+
+        setTimeout(
+          function () {
+
+            /* ---------------------------------------------
+               PASTIKAN FORM TERBUKA
+            --------------------------------------------- */
+
+            var app =
+              document.getElementById(
+                "app"
+              );
+
+            var form =
+              document.getElementById(
+                "formPemeriksaan"
+              );
+
+            var ttd =
+              document.getElementById(
+                "ttdBox"
+              );
+
+
+            if (app) {
+
+              app.style.display =
+                "block";
+
+            }
+
+
+            if (form) {
+
+              form.style.display =
+                "block";
+
+            }
+
+
+            if (ttd) {
+
+              ttd.style.display =
+                "none";
+
+            }
+
+
+            /* ---------------------------------------------
+               BUAT BUTTON PREVIEW
+            --------------------------------------------- */
+
+            buatDanTampilkanButtonPreview();
+
+
+            console.log(
+              "Kembali ke Form Checklist."
+            );
+
+
+            /* ---------------------------------------------
+               SCROLL KE BUTTON
+            --------------------------------------------- */
+
+            var tombol =
+              document.getElementById(
+                "btnSimpanLihatPreview"
+              );
+
+
+            if (tombol) {
+
+              setTimeout(
+                function () {
+
+                  tombol.scrollIntoView({
+                    behavior:
+                      "smooth",
+                    block:
+                      "center"
+                  });
+
+                },
+                150
+              );
+
+            }
+
+          },
+          300
+        );
+
+      }
+
+    };
+
+
+  /* =======================================================
+     JIKA FUNGSI KEMBALI FORM DIPANGGIL DARI TEMPAT LAIN
+     BUTTON JUGA DIPASTIKAN MUNCUL
+  ======================================================= */
+
+  var kembaliFormLama =
+    window.kembaliKeFormPemeriksaan;
+
+
+  window.kembaliKeFormPemeriksaan =
+    function () {
+
+      if (
+        typeof kembaliFormLama ===
+        "function"
+      ) {
+
+        try {
+
+          kembaliFormLama();
+
+        } catch (errorForm) {
+
+          console.error(
+            "Error kembaliKeForm lama:",
+            errorForm
+          );
+
+        }
+
+      }
+
+
+      setTimeout(
+        function () {
+
+          buatDanTampilkanButtonPreview();
+
+        },
+        300
+      );
+
+    };
+
+
+  /* =======================================================
+     SAAT HALAMAN SELESAI DIMUAT
+     JANGAN TAMPILKAN BUTTON DULU
+  ======================================================= */
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+      console.log(
+        "FINAL FIX PREVIEW SIAP."
+      );
+
+    }
+  );
+
+
+})();
+
 </script>
 
 </body>
