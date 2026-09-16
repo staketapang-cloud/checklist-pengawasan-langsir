@@ -10422,7 +10422,6 @@ function bukaKotakTTD() {
       "formPemeriksaan"
     );
 
-
   var ttdBox =
     document.getElementById(
       "ttdBox"
@@ -10431,15 +10430,17 @@ function bukaKotakTTD() {
 
   if (!ttdBox) {
 
-    console.error(
+    alert(
       "Kotak TTD tidak ditemukan."
     );
 
     return;
-
   }
 
 
+  /*
+   * Pastikan form terlihat.
+   */
   if (form) {
 
     form.style.display =
@@ -10448,32 +10449,58 @@ function bukaKotakTTD() {
   }
 
 
+  /*
+   * Tampilkan kotak TTD.
+   */
   ttdBox.style.display =
     "block";
 
 
+  /*
+   * Tunggu browser menyelesaikan
+   * layout sebelum inisialisasi canvas.
+   */
   setTimeout(
     function() {
 
-      if (!signatureInitialized) {
+      console.log(
+        "TTD: mulai inisialisasi canvas..."
+      );
 
+
+      var berhasil =
         initSignatureCanvas();
 
+
+      if (!berhasil) {
+
+        console.error(
+          "TTD: initSignatureCanvas gagal."
+        );
+
+        return;
+
       }
 
-      else {
 
-        pasangEventTTD();
+      console.log(
+        "TTD: canvas siap ditulis."
+      );
 
-      }
+
+      /*
+       * Fokuskan tampilan ke canvas.
+       */
+      ttdBox.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
 
     },
-    100
+    300
   );
 
 }
-
-
 /* =========================================================
    STATUS TTD
 ========================================================= */
