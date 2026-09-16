@@ -1874,8 +1874,7 @@ function tampilkanNotifFoto(
 
 /* =========================================================
    TUTUP NOTIFIKASI
-   OK -> KEMBALI KE FORM
-   -> BUTTON PREVIEW TETAP TAMPIL
+   VERSI BERSIH - TANPA ILLEGAL RETURN
 ========================================================= */
 
 function tutupNotifFoto() {
@@ -1908,76 +1907,31 @@ function tutupNotifFoto() {
 
 
   /* =====================================================
-     KHUSUS KEMBALI KE FORM
+     KEMBALI KE TTD
+  ===================================================== */
+
+  if (aksi === "ttd") {
+
+    tampilkanTTD();
+
+    return;
+  }
+
+
+  /* =====================================================
+     KEMBALI KE FORM
   ===================================================== */
 
   if (aksi === "form") {
 
     kembaliKeFormPemeriksaan();
 
-
-    setTimeout(
-      function () {
-
-        var previewButton =
-          document.getElementById(
-            "btnSimpanLihatPreview"
-          );
-
-
-        if (!previewButton) {
-
-          console.warn(
-            "BUTTON btnSimpanLihatPreview TIDAK DITEMUKAN"
-          );
-
-          return;
-        }
-
-
-        previewButton.style.display =
-          "block";
-
-        previewButton.style.visibility =
-          "visible";
-
-        previewButton.style.opacity =
-          "1";
-
-        previewButton.hidden =
-          false;
-
-        previewButton.disabled =
-          false;
-
-
-        console.log(
-          "BUTTON SIMPAN & TAMPILKAN PREVIEW: TETAP TAMPIL"
-        );
-
-      },
-      300
-    );
-
-
     return;
   }
 
 
   /* =====================================================
-     KHUSUS TTD
-  ===================================================== */
-
-  if (aksi === "ttd") {
-
-    tampilkanTTD();
-
-    return;
-  }
-
-
-  /* =====================================================
-     KHUSUS LOGIN
+     KEMBALI KE LOGIN
   ===================================================== */
 
   if (aksi === "login") {
@@ -1985,32 +1939,6 @@ function tutupNotifFoto() {
     kembaliKeLogin();
 
     return;
-  }
-
-}
-  /* =====================================================
-     TTD
-  ===================================================== */
-
-  if (aksi === "ttd") {
-
-    tampilkanTTD();
-
-    return;
-
-  }
-
-
-  /* =====================================================
-     LOGIN
-  ===================================================== */
-
-  if (aksi === "login") {
-
-    kembaliKeLogin();
-
-    return;
-
   }
 
 }
