@@ -10396,11 +10396,28 @@ tombolArea.appendChild(
 
 
       btnTutup.onclick =
-        function() {
+  function() {
 
-          overlay.remove();
+    /* =================================================
+       TUTUP PREVIEW
+    ================================================= */
 
-        };
+    overlay.remove();
+
+
+    /* =================================================
+       TAMPILKAN NOTIFIKASI
+       SETELAH OK → KEMBALI KE LOGIN
+    ================================================= */
+
+    tampilkanNotifFoto(
+      "Preview selesai",
+      "Pemeriksaan telah selesai dan preview sudah ditutup.\n\n" +
+      "Klik OK untuk kembali ke halaman login.",
+      "login"
+    );
+
+  };
 
 
       tombolArea.appendChild(
