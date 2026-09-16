@@ -10330,146 +10330,31 @@ btnTutup.onclick =
     );
 
     /* =====================================================
-       HAPUS PREVIEW
-    ===================================================== */
-
-    if (overlay) {
-      overlay.remove();
-    }
-
-    /* =====================================================
-       RESET SESSION
+       BERSIHKAN SESSION LOGIN
     ===================================================== */
 
     try {
 
-      sessionStorage.removeItem(
-        "userNama"
-      );
-
-      sessionStorage.removeItem(
-        "userNipp"
-      );
-
-      sessionStorage.removeItem(
-        "userJabatan"
-      );
-
-      sessionStorage.removeItem(
-        "userEmail"
-      );
-
-      sessionStorage.removeItem(
-        "idPemeriksaanAktif"
-      );
+      sessionStorage.removeItem("userNama");
+      sessionStorage.removeItem("userNipp");
+      sessionStorage.removeItem("userJabatan");
+      sessionStorage.removeItem("userEmail");
+      sessionStorage.removeItem("idPemeriksaanAktif");
 
     } catch (errorSession) {
 
       console.warn(
-        "Gagal membersihkan sessionStorage:",
+        "Gagal membersihkan session:",
         errorSession
       );
 
     }
 
     /* =====================================================
-       KOSONGKAN VARIABEL SESSION
+       KEMBALI KE HALAMAN LOGIN AWAL
     ===================================================== */
 
-    try {
-
-      userNama = "";
-      userNipp = "";
-      userJabatan = "";
-      userEmail = "";
-      idPemeriksaanAktif = "";
-
-    } catch (errorVariable) {
-
-      console.warn(
-        "Variabel session tidak semuanya tersedia."
-      );
-
-    }
-
-    /* =====================================================
-       TAMPILKAN HALAMAN LOGIN
-    ===================================================== */
-
-    var loginBox =
-      document.getElementById(
-        "googleLogin"
-      );
-
-    var appBox =
-      document.getElementById(
-        "app"
-      );
-
-    var formBox =
-      document.getElementById(
-        "formPemeriksaan"
-      );
-
-    var infoUser =
-      document.getElementById(
-        "infoUser"
-      );
-
-    if (loginBox) {
-      loginBox.style.display =
-        "block";
-    }
-
-    if (appBox) {
-      appBox.style.display =
-        "none";
-    }
-
-    if (formBox) {
-      formBox.style.display =
-        "none";
-    }
-
-    if (infoUser) {
-      infoUser.style.display =
-        "none";
-    }
-
-    /* =====================================================
-       KOSONGKAN FIELD LOGIN
-    ===================================================== */
-
-    var loginNama =
-      document.getElementById(
-        "loginNama"
-      );
-
-    var loginNipp =
-      document.getElementById(
-        "loginNipp"
-      );
-
-    var loginJabatan =
-      document.getElementById(
-        "loginJabatan"
-      );
-
-    if (loginNama) {
-      loginNama.value = "";
-    }
-
-    if (loginNipp) {
-      loginNipp.value = "";
-    }
-
-    if (loginJabatan) {
-      loginJabatan.value = "";
-    }
-
-    console.log(
-      "PREVIEW DITUTUP - KEMBALI KE HALAMAN LOGIN"
-    );
+    window.location.reload();
 
   };
 
