@@ -13613,6 +13613,1020 @@ console.log(
   );
 
 })();
+      /* =========================================================
+   TTD FINAL LOCK
+   MEMAKSA CANVAS MOUSE + TOUCH
+   MENGHAPUS EVENT TTD LAMA
+========================================================= */
+
+(function () {
+
+  console.log(
+    "TTD FINAL LOCK AKTIF"
+  );
+
+
+  /* =======================================================
+     PASANG CANVAS FINAL
+  ======================================================= */
+
+  function pasangCanvasFinal() {
+
+    var canvas =
+      document.getElementById(
+        "signatureCanvas"
+      );
+
+
+    if (!canvas) {
+
+      console.warn(
+        "TTD FINAL: canvas belum ditemukan."
+      );
+
+      return false;
+
+    }
+
+
+    /*
+     * Clone canvas.
+     *
+     * Tujuannya:
+     * semua addEventListener dari
+     * kode TTD lama ikut hilang.
+     */
+    var canvasBaru =
+      canvas.cloneNode(
+        true
+      );
+
+
+    canvas.parentNode.replaceChild(
+      canvasBaru,
+      canvas
+    );
+
+
+    canvas =
+      canvasBaru;
+
+
+    /*
+     * Simpan ke variabel global
+     * yang dipakai fungsi simpan TTD lama.
+     */
+    signatureCanvas =
+      canvas;
+
+
+    /*
+     * Ukuran visual.
+     */
+    var rect =
+      canvas.getBoundingClientRect();
+
+
+    var width =
+      Math.round(
+        rect.width ||
+        canvas.parentElement.clientWidth ||
+        300
+      );
+
+
+    var height =
+      Math.round(
+        rect.height ||
+        220
+      );
+
+
+    /*
+     * Pastikan ukuran minimum.
+     */
+    if (width < 300) {
+      width = 300;
+    }
+
+
+    if (height < 180) {
+      height = 180;
+    }
+
+
+    var dpr =
+      Math.max(
+        window.devicePixelRatio || 1,
+        1
+      );
+
+
+    canvas.width =
+      Math.round(
+        width * dpr
+      );
+
+
+    canvas.height =
+      Math.round(
+        height * dpr
+      );
+
+
+    canvas.style.width =
+      width + "px";
+
+
+    canvas.style.height =
+      height + "px";
+
+
+    canvas.style.display =
+      "block";
+
+
+    canvas.style.background =
+      "#ffffff";
+
+
+    canvas.style.touchAction =
+      "none";
+
+
+    canvas.style.userSelect =
+      "none";
+
+
+    canvas.style.webkitUserSelect =
+      "none";
+
+
+    canvas.style.webkitTouchCallout =
+      "none";
+
+
+    canvas.style.cursor =
+      "crosshair";
+
+
+    /*
+     * Context.
+     */
+    signatureContext =
+      canvas.getContext(
+        "2d"
+      );
+
+
+    if (!signatureContext) {
+
+      console.error(
+        "TTD FINAL: context 2D gagal."
+      );
+
+      return false;
+
+    }
+
+
+    /*
+     * Transform berdasarkan DPR.
+     */
+    signatureContext.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+
+    signatureContext.lineWidth =
+      3;
+
+
+    signatureContext.lineCap =
+      "round";
+
+
+    signatureContext.lineJoin =
+      "round";
+
+
+    signatureContext.strokeStyle =
+      "#000000";
+
+
+    /*
+     * Background putih.
+     */
+    signatureContext.fillStyle =
+      "#ffffff";
+
+
+    signatureContext.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    signatureContext.strokeStyle =
+      "#000000";
+
+
+    /*
+     * STATUS.
+     */
+    var menggambar =
+      false;
+
+
+    /*
+     * =====================================================
+     * MOUSE
+     * =====================================================
+     */
+
+    canvas.onmousedown =
+      function (event) {
+
+        event.preventDefault();
+
+
+        menggambar =
+          true;
+
+
+        signatureHasInk =
+          true;
+
+
+        var r =
+          canvas.getBoundingClientRect();
+
+
+        var x =
+          event.clientX -
+          r.left;
+
+
+        var y =
+          event.clientY -
+          r.top;
+
+
+        signatureContext.beginPath();
+
+
+        signatureContext.moveTo(
+          x,
+          y
+        );
+
+
+        /*
+         * Titik kecil.
+         */
+        signatureContext.lineTo(
+          x + 0.1,
+          y + 0.1
+        );
+
+
+        signatureContext.stroke();
+
+
+        console.log(
+          "TTD FINAL: MOUSE DOWN"
+        );
+
+      };
+
+
+    canvas.onmousemove =
+      function (event) {
+
+        if (!menggambar) {
+          return;
+        }
+
+
+        event.preventDefault();
+
+
+        var r =
+          canvas.getBoundingClientRect();
+
+
+        var x =
+          event.clientX -
+          r.left;
+
+
+        var y =
+          event.clientY -
+          r.top;
+
+
+        signatureContext.lineTo(
+          x,
+          y
+        );
+
+
+        signatureContext.stroke();
+
+      };
+
+
+    canvas.onmouseup =
+      function (event) {
+
+        event.preventDefault();
+
+
+        menggambar =
+          false;
+
+
+        try {
+
+          signatureContext.closePath();
+
+        }
+
+        catch (error) {}
+
+      };
+
+
+    canvas.onmouseleave =
+      function () {
+
+        menggambar =
+          false;
+
+      };
+
+
+    /*
+     * =====================================================
+     * TOUCH HP
+     * =====================================================
+     */
+
+    canvas.ontouchstart =
+      function (event) {
+
+        event.preventDefault();
+
+
+        if (
+          !event.touches ||
+          !event.touches.length
+        ) {
+
+          return;
+
+        }
+
+
+        menggambar =
+          true;
+
+
+        signatureHasInk =
+          true;
+
+
+        var touch =
+          event.touches[0];
+
+
+        var r =
+          canvas.getBoundingClientRect();
+
+
+        var x =
+          touch.clientX -
+          r.left;
+
+
+        var y =
+          touch.clientY -
+          r.top;
+
+
+        signatureContext.beginPath();
+
+
+        signatureContext.moveTo(
+          x,
+          y
+        );
+
+
+        signatureContext.lineTo(
+          x + 0.1,
+          y + 0.1
+        );
+
+
+        signatureContext.stroke();
+
+
+        console.log(
+          "TTD FINAL: TOUCH START"
+        );
+
+      };
+
+
+    canvas.ontouchmove =
+      function (event) {
+
+        if (!menggambar) {
+          return;
+        }
+
+
+        event.preventDefault();
+
+
+        if (
+          !event.touches ||
+          !event.touches.length
+        ) {
+
+          return;
+
+        }
+
+
+        var touch =
+          event.touches[0];
+
+
+        var r =
+          canvas.getBoundingClientRect();
+
+
+        var x =
+          touch.clientX -
+          r.left;
+
+
+        var y =
+          touch.clientY -
+          r.top;
+
+
+        signatureContext.lineTo(
+          x,
+          y
+        );
+
+
+        signatureContext.stroke();
+
+      };
+
+
+    canvas.ontouchend =
+      function (event) {
+
+        event.preventDefault();
+
+
+        menggambar =
+          false;
+
+
+        try {
+
+          signatureContext.closePath();
+
+        }
+
+        catch (error) {}
+
+      };
+
+
+    canvas.ontouchcancel =
+      function (event) {
+
+        if (event) {
+          event.preventDefault();
+        }
+
+
+        menggambar =
+          false;
+
+      };
+
+
+    /*
+     * Status global.
+     */
+    signatureInitialized =
+      true;
+
+
+    /*
+     * Jangan pakai status server
+     * dari canvas lama.
+     */
+    signatureServerSaved =
+      false;
+
+
+    signatureServerData =
+      "";
+
+
+    /*
+     * Jika global sedangMenggambar
+     * masih dipakai fungsi lain,
+     * sinkronkan juga.
+     */
+    Object.defineProperty(
+      window,
+      "__ttdFinalState",
+      {
+        configurable: true,
+        get: function () {
+          return menggambar;
+        },
+        set: function (value) {
+          menggambar = !!value;
+        }
+      }
+    );
+
+
+    /*
+     * Simpan referensi canvas.
+     */
+    window.__canvasTTDFinal =
+      canvas;
+
+
+    console.log(
+      "TTD FINAL: CANVAS SIAP DIGAMBAR.",
+      {
+        width: width,
+        height: height,
+        dpr: dpr
+      }
+    );
+
+
+    return true;
+
+  }
+
+
+  /* =======================================================
+     BUKA CANVAS
+  ======================================================= */
+
+  function bukaCanvasFinal() {
+
+    var box =
+      document.getElementById(
+        "ttdBox"
+      );
+
+
+    if (!box) {
+
+      alert(
+        "Kotak TTD tidak ditemukan."
+      );
+
+      return;
+
+    }
+
+
+    box.style.display =
+      "block";
+
+
+    /*
+     * Tunggu layout browser.
+     */
+    setTimeout(
+      function () {
+
+        var berhasil =
+          pasangCanvasFinal();
+
+
+        if (!berhasil) {
+
+          console.error(
+            "TTD FINAL: gagal menyiapkan canvas."
+          );
+
+          return;
+
+        }
+
+
+        try {
+
+          box.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+        }
+
+        catch (error) {}
+
+      },
+      300
+    );
+
+  }
+
+
+  /* =======================================================
+     TAMPILKAN TTD FINAL
+  ======================================================= */
+
+  window.tampilkanTTD =
+    function () {
+
+      console.log(
+        "TTD FINAL: tombol TTD ditekan."
+      );
+
+
+      /*
+       * Validasi identitas hanya saat tombol TTD
+       * digunakan.
+       */
+      if (
+        typeof validasiIdentitas ===
+        "function"
+      ) {
+
+        if (
+          !validasiIdentitas()
+        ) {
+
+          return;
+
+        }
+
+      }
+
+
+      /*
+       * Gunakan ID yang sudah ada.
+       */
+      if (
+        idPemeriksaanAktif &&
+        String(
+          idPemeriksaanAktif
+        ).trim() !== ""
+      ) {
+
+        bukaCanvasFinal();
+
+        return;
+
+      }
+
+
+      /*
+       * Buat ID pemeriksaan jika belum ada.
+       */
+      if (
+        typeof pastikanIdPemeriksaan !==
+        "function"
+      ) {
+
+        alert(
+          "Fungsi ID Pemeriksaan tidak ditemukan."
+        );
+
+        return;
+
+      }
+
+
+      pastikanIdPemeriksaan()
+
+        .then(
+          function (id) {
+
+            idPemeriksaanAktif =
+              String(
+                id || ""
+              ).trim();
+
+
+            if (
+              !idPemeriksaanAktif
+            ) {
+
+              throw new Error(
+                "ID Pemeriksaan gagal dibuat."
+              );
+
+            }
+
+
+            sessionStorage.setItem(
+              "idPemeriksaanAktif",
+              idPemeriksaanAktif
+            );
+
+
+            bukaCanvasFinal();
+
+          }
+        )
+
+        .catch(
+          function (error) {
+
+            console.error(
+              "TTD FINAL: gagal menyiapkan ID.",
+              error
+            );
+
+
+            alert(
+              "Gagal menyiapkan ID Pemeriksaan.\n\n" +
+              (
+                error.message ||
+                error
+              )
+            );
+
+          }
+        );
+
+    };
+
+
+  /* =======================================================
+     HAPUS TTD FINAL
+  ======================================================= */
+
+  window.clearSignature =
+    function () {
+
+      var canvas =
+        window.__canvasTTDFinal ||
+        document.getElementById(
+          "signatureCanvas"
+        );
+
+
+      if (!canvas) {
+        return;
+      }
+
+
+      var ctx =
+        canvas.getContext(
+          "2d"
+        );
+
+
+      if (!ctx) {
+        return;
+      }
+
+
+      var rect =
+        canvas.getBoundingClientRect();
+
+
+      var width =
+        rect.width ||
+        300;
+
+
+      var height =
+        rect.height ||
+        220;
+
+
+      var dpr =
+        Math.max(
+          window.devicePixelRatio || 1,
+          1
+        );
+
+
+      ctx.setTransform(
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      );
+
+
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+
+      ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+      );
+
+
+      ctx.fillStyle =
+        "#ffffff";
+
+
+      ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+      );
+
+
+      ctx.strokeStyle =
+        "#000000";
+
+
+      ctx.lineWidth =
+        3;
+
+
+      ctx.lineCap =
+        "round";
+
+
+      ctx.lineJoin =
+        "round";
+
+
+      signatureCanvas =
+        canvas;
+
+
+      signatureContext =
+        ctx;
+
+
+      signatureHasInk =
+        false;
+
+
+      signatureServerSaved =
+        false;
+
+
+      signatureServerData =
+        "";
+
+
+      var status =
+        document.getElementById(
+          "ttdStatus"
+        );
+
+
+      if (status) {
+
+        status.style.display =
+          "none";
+
+        status.textContent =
+          "";
+
+      }
+
+
+      var progress =
+        document.getElementById(
+          "progressTTD"
+        );
+
+
+      if (progress) {
+
+        progress.style.display =
+          "none";
+
+      }
+
+
+      console.log(
+        "TTD FINAL: TTD DIHAPUS."
+      );
+
+    };
+
+
+  /* =======================================================
+     AUTO CEK SAAT HALAMAN SUDAH SIAP
+  ======================================================= */
+
+  function cekCanvasFinal() {
+
+    var canvas =
+      document.getElementById(
+        "signatureCanvas"
+      );
+
+
+    if (!canvas) {
+      return;
+    }
+
+
+    /*
+     * Canvas jangan diinisialisasi
+     * jika kotak masih tersembunyi.
+     */
+    var box =
+      document.getElementById(
+        "ttdBox"
+      );
+
+
+    if (
+      box &&
+      getComputedStyle(box).display !==
+      "none"
+    ) {
+
+      pasangCanvasFinal();
+
+    }
+
+  }
+
+
+  /*
+   * Jangan menambahkan DOMContentLoaded
+   * baru kalau halaman sudah selesai.
+   */
+  if (
+    document.readyState ===
+    "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        setTimeout(
+          cekCanvasFinal,
+          300
+        );
+
+      },
+      {
+        once: true
+      }
+    );
+
+  }
+
+
+  /*
+   * Saat script dijalankan setelah
+   * DOM siap.
+   */
+  else {
+
+    setTimeout(
+      cekCanvasFinal,
+      300
+    );
+
+  }
+
+
+})();
 </script>
 
 </body>
