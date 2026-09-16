@@ -1732,116 +1732,20 @@ function setProgressUpload(
   note
 ) {
 
-  var box =
-    document.getElementById(
-      "progressUploadFoto"
-    );
+  var box = document.getElementById("progressUploadFoto");
+  var bar = document.getElementById("progressUploadBar");
+  var percentEl = document.getElementById("progressUploadPercent");
+  var labelEl = document.getElementById("progressUploadLabel");
+  var countEl = document.getElementById("progressUploadCount");
+  var noteEl = document.getElementById("progressUploadNote");
 
-  var bar =
-    document.getElementById(
-      "progressUploadBar"
-    );
-
-  var percentEl =
-    document.getElementById(
-      "progressUploadPercent"
-    );
-
-  var labelEl =
-    document.getElementById(
-      "progressUploadLabel"
-    );
-
-  var countEl =
-    document.getElementById(
-      "progressUploadCount"
-    );
-
-  var noteEl =
-    document.getElementById(
-      "progressUploadNote"
-    );
-
-  if (box) {
-
-    box.style.display =
-      "block";
-
-  }
-
-  if (bar) {
-
-    bar.style.width =
-      Math.max(
-        0,
-        Math.min(
-          100,
-          Number(percent) || 0
-        )
-      ) + "%";
-
-  }
-
-  if (percentEl) {
-
-    percentEl.textContent =
-      Math.round(
-        Number(percent) || 0
-      ) + "%";
-
-  }
-
-  if (labelEl) {
-
-    labelEl.textContent =
-      label || "";
-
-  }
-
-  if (countEl) {
-
-    countEl.textContent =
-      countText || "";
-
-  }
-
-  if (noteEl) {
-
-    noteEl.textContent =
-      note || "";
-
-  }
-
-  console.log(
-    "PROGRESS UPLOAD FOTO:",
-    Math.round(Number(percent) || 0) + "%",
-    label,
-    countText,
-    note
+  var nilai = Math.max(
+    0,
+    Math.min(
+      100,
+      Number(percent) || 0
+    )
   );
-
-}
-
-  var countEl =
-    document.getElementById(
-      "progressUploadCount"
-    );
-
-  var noteEl =
-    document.getElementById(
-      "progressUploadNote"
-    );
-
-
-  var nilai =
-    Math.max(
-      0,
-      Math.min(
-        100,
-        Number(percent) || 0
-      )
-    );
-
 
   if (box) {
     box.style.display = "block";
@@ -1852,28 +1756,34 @@ function setProgressUpload(
   }
 
   if (percentEl) {
-    percentEl.textContent =
-      Math.round(nilai) + "%";
+    percentEl.textContent = Math.round(nilai) + "%";
   }
 
   if (labelEl) {
-    labelEl.textContent =
-      label || "Upload foto";
+    labelEl.textContent = label || "";
   }
 
   if (countEl) {
-    countEl.textContent =
-      countText || "";
+    countEl.textContent = countText || "";
   }
 
   if (noteEl) {
-    noteEl.textContent =
-      note || "";
+    noteEl.textContent = note || "";
   }
 
+  console.log(
+    "PROGRESS UPLOAD FOTO:",
+    Math.round(nilai) + "%",
+    label || "",
+    countText || "",
+    note || ""
+  );
 }
 
 
+/* =========================================================
+   NOTIFIKASI
+========================================================= */
 /* =========================================================
    NOTIFIKASI
 ========================================================= */
