@@ -5626,24 +5626,118 @@ window.simpanTTD =
     }
 
 
-    /* ===================================================
-       CEK ID
-    =================================================== */
+/* ===================================================
+   CEK / SIAPKAN ID PEMERIKSAAN
+=================================================== */
+
+var idAktifTTD =
+  String(
+    idPemeriksaanAktif ||
+    sessionStorage.getItem(
+      "idPemeriksaanAktif"
+    ) ||
+    ""
+  ).trim();
+
+
+/* ===================================================
+   KALAU ID BELUM ADA → BUAT OTOMATIS
+=================================================== */
+
+if (!idAktifTTD) {
+
+  try {
 
     if (
-      !idPemeriksaanAktif
+      typeof tampilkanStatus ===
+      "function"
     ) {
 
-      tampilkanNotifFoto(
-        "TTD gagal disimpan",
-        "ID Pemeriksaan belum tersedia.",
-        "form"
+      tampilkanStatus(
+        "Menyiapkan ID Pemeriksaan..."
       );
-
-      return;
 
     }
 
+
+    if (
+      typeof pastikanIdPemeriksaan !==
+      "function"
+    ) {
+
+      throw new Error(
+        "Fungsi pastikanIdPemeriksaan tidak ditemukan."
+      );
+
+    }
+
+
+    idAktifTTD =
+      await pastikanIdPemeriksaan();
+
+
+    idAktifTTD =
+      String(
+        idAktifTTD || ""
+      ).trim();
+
+
+    if (!idAktifTTD) {
+
+      throw new Error(
+        "ID Pemeriksaan gagal dibuat."
+      );
+
+    }
+
+
+    /* -------------------------------------------------
+       SIMPAN ID
+    ------------------------------------------------- */
+
+    idPemeriksaanAktif =
+      idAktifTTD;
+
+
+    sessionStorage.setItem(
+      "idPemeriksaanAktif",
+      idAktifTTD
+    );
+
+
+    console.log(
+      "TTD: ID PEMERIKSAAN SIAP =",
+      idAktifTTD
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "TTD: GAGAL MENYIAPKAN ID",
+      error
+    );
+
+
+    tampilkanNotifFoto(
+      "TTD gagal disimpan",
+      error.message ||
+      "ID Pemeriksaan gagal dibuat.",
+      "form"
+    );
+
+
+    return;
+
+  }
+
+}
+
+
+/* ===================================================
+   AMBIL SIGNATURE
+=================================================== */
 
     /* ===================================================
        AMBIL SIGNATURE
