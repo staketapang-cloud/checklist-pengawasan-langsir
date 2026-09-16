@@ -1762,6 +1762,76 @@ function setProgressUpload(
       "progressUploadNote"
     );
 
+  if (box) {
+
+    box.style.display =
+      "block";
+
+  }
+
+  if (bar) {
+
+    bar.style.width =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          Number(percent) || 0
+        )
+      ) + "%";
+
+  }
+
+  if (percentEl) {
+
+    percentEl.textContent =
+      Math.round(
+        Number(percent) || 0
+      ) + "%";
+
+  }
+
+  if (labelEl) {
+
+    labelEl.textContent =
+      label || "";
+
+  }
+
+  if (countEl) {
+
+    countEl.textContent =
+      countText || "";
+
+  }
+
+  if (noteEl) {
+
+    noteEl.textContent =
+      note || "";
+
+  }
+
+  console.log(
+    "PROGRESS UPLOAD FOTO:",
+    Math.round(Number(percent) || 0) + "%",
+    label,
+    countText,
+    note
+  );
+
+}
+
+  var countEl =
+    document.getElementById(
+      "progressUploadCount"
+    );
+
+  var noteEl =
+    document.getElementById(
+      "progressUploadNote"
+    );
+
 
   var nilai =
     Math.max(
