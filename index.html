@@ -16611,7 +16611,33 @@ window.simpanTTD = async function () {
     console.log(
       "TTD BERHASIL DISIMPAN"
     );
+/* =====================================================
+   TAMPILKAN BUTTON SIMPAN & TAMPILKAN PREVIEW
+===================================================== */
 
+var previewButton =
+  document.getElementById(
+    "btnSimpanLihatPreview"
+  );
+
+
+if (previewButton) {
+
+  previewButton.style.display =
+    "block";
+
+  previewButton.style.visibility =
+    "visible";
+
+  previewButton.disabled =
+    false;
+
+
+  console.log(
+    "BUTTON SIMPAN & TAMPILKAN PREVIEW: TAMPIL"
+  );
+
+}
     console.log(
       "ID:",
       idPemeriksaanAktif
