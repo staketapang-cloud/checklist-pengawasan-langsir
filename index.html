@@ -16413,38 +16413,69 @@ if (previewButton) {
     );
 
 
-    /* =====================================================
-       8. TAMPILKAN NOTIFIKASI BERHASIL
-    ===================================================== */
+/* =====================================================
+   8. TAMPILKAN BUTTON PREVIEW
+===================================================== */
 
-    if (
-      typeof tampilkanNotifFoto ===
-      "function"
-    ) {
-
-      tampilkanNotifFoto(
-        "Tanda tangan berhasil disimpan",
-        "Tanda tangan digital telah berhasil direkam ke server.\n\n" +
-        "ID Pemeriksaan: " +
-        idPemeriksaanAktif +
-        "\n\n" +
-        "Silakan tekan OK untuk kembali ke Form Checklist.",
-        false
-      );
+var previewButton =
+  document.getElementById(
+    "btnSimpanLihatPreview"
+  );
 
 
-      var overlay =
-        document.getElementById(
-          "notifFoto"
-        );
+if (previewButton) {
+
+  previewButton.style.display =
+    "block";
+
+  previewButton.style.visibility =
+    "visible";
+
+  previewButton.disabled =
+    false;
+
+  console.log(
+    "BUTTON SIMPAN & TAMPILKAN PREVIEW: TERSEDIA"
+  );
+
+}
 
 
-      if (overlay) {
+/* =====================================================
+   9. TAMPILKAN NOTIFIKASI BERHASIL
+===================================================== */
 
-        overlay.dataset.afterOk =
-          "form";
+if (
+  typeof tampilkanNotifFoto ===
+  "function"
+) {
 
-      }
+  tampilkanNotifFoto(
+    "Tanda tangan berhasil disimpan",
+    "Tanda tangan digital telah berhasil direkam ke server.\n\n" +
+    "ID Pemeriksaan: " +
+    idPemeriksaanAktif +
+    "\n\n" +
+    "Silakan tekan OK untuk kembali ke Form Checklist. " +
+    "Setelah kembali ke form, tombol SIMPAN & TAMPILKAN PREVIEW dapat digunakan.",
+    false
+  );
+
+
+  var overlay =
+    document.getElementById(
+      "notifFoto"
+    );
+
+
+  if (overlay) {
+
+    overlay.dataset.afterOk =
+      "form";
+
+  }
+
+}
 
     }
 
