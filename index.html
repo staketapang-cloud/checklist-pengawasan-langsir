@@ -10810,7 +10810,44 @@ for (
         "JPG A4 COMPACT BERHASIL DIBUAT"
       );
 
+/* =====================================================
+   SIMPAN JPG HASIL AKHIR KE SERVER
+===================================================== */
 
+try {
+
+  var idJPG =
+    data.ID_PEMERIKSAAN ||
+    idPemeriksaanAktif;
+
+  if (idJPG) {
+
+    simpanPreviewJPGKeServer(
+      jpg,
+      idJPG
+    );
+
+    console.log(
+      "JPG HASIL AKHIR DIKIRIM KE SERVER:",
+      idJPG
+    );
+
+  } else {
+
+    console.warn(
+      "ID_PEMERIKSAAN tidak ditemukan. JPG tidak dikirim ke server."
+    );
+
+  }
+
+} catch (err) {
+
+  console.error(
+    "Gagal mengirim JPG hasil akhir:",
+    err
+  );
+
+}
       /* =====================================================
          HAPUS PREVIEW LAMA
       ===================================================== */
@@ -11075,7 +11112,142 @@ btnDownload.style.cursor =
 
 btnDownload.style.fontWeight =
   "bold";
+/* =====================================================
+   SIMPAN PREVIEW JPG KE GOOGLE DRIVE + SHEET
+===================================================== */
 
+function simpanPreviewJPGKeServer(
+  jpgData,
+  idPemeriksaan
+) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      if (!jpgData) {
+
+        reject(
+          new Error(
+            "Data JPG preview kosong."
+          )
+        );
+
+        return;
+
+      }
+
+
+      if (!idPemeriksaan) {
+
+        reject(
+          new Error(
+            "ID_PEMERIKSAAN tidak ditemukan."
+          )
+        );
+
+        return;
+
+      }
+
+
+      fetch(
+        API_URL,
+        {
+
+          method:
+            "POST",
+
+          headers: {
+
+            "Content-Type":
+              "text/plain;charset=utf-8"
+
+          },
+
+          body:
+            JSON.stringify({
+
+              action:
+                "upload_preview_jpg",
+
+              data: {
+
+                ID_PEMERIKSAAN:
+                  idPemeriksaan,
+
+                JPG:
+                  jpgData
+
+              }
+
+            })
+
+        }
+      )
+
+      .then(
+        function(response) {
+
+          return response.json();
+
+        }
+      )
+
+      .then(
+        function(result) {
+
+          if (
+            !result ||
+            !result.success
+          ) {
+
+            throw new Error(
+
+              result &&
+              result.message
+
+                ? result.message
+
+                : "Preview JPG gagal disimpan."
+
+            );
+
+          }
+
+
+          console.log(
+            "PREVIEW JPG BERHASIL DISIMPAN:",
+            result
+          );
+
+
+          resolve(
+            result
+          );
+
+        }
+      )
+
+      .catch(
+        function(error) {
+
+          console.error(
+            "GAGAL MENYIMPAN PREVIEW JPG:",
+            error
+          );
+
+
+          reject(
+            error
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
 
 btnDownload.onclick =
   function() {
