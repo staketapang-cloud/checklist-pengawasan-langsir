@@ -60,23 +60,40 @@ body {
 
 /* =========================================================
    LOGIN — KAI DIGITAL RAILWAY 2026
-   PREMIUM RAILWAY COMMAND CENTER
-   BLUE × ORANGE × DIGITAL LOCOMOTIVE
+   SMOOTH • FULLSCREEN • MOBILE FIRST
+   TANPA KOTAK / TANPA BORDER BERAT
    HTML & JAVASCRIPT TIDAK DIUBAH
 ========================================================= */
 
-:root {
-  --rail-navy: #031b31;
-  --rail-deep: #062b4b;
-  --rail-blue: #0068a9;
-  --rail-cyan: #00a9e8;
-  --rail-orange: #f58220;
-  --rail-orange-light: #ffad55;
+:root{
+  --rail-blue:#0756a8;
+  --rail-blue-dark:#032d5c;
+  --rail-blue-deep:#011a35;
+  --rail-blue-soft:#0d73d5;
+  --rail-orange:#f58220;
+  --rail-orange-light:#ffab52;
+  --rail-white:#ffffff;
+  --rail-text:#eaf4ff;
+  --rail-muted:#9db5ce;
+}
 
-  --rail-text: #203b50;
-  --rail-muted: #718496;
 
-  --glass-white: rgba(255,255,255,.96);
+/* =========================================================
+   FULL SCREEN LOGIN
+========================================================= */
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+  margin:0;
+  padding:0;
+
+  overflow-x:hidden;
+}
+
+body{
+  overscroll-behavior:none;
 }
 
 
@@ -84,130 +101,52 @@ body {
    LOGIN STAGE
 ========================================================= */
 
-#googleLogin {
+#googleLogin{
+  position:relative;
 
-  position: relative;
+  width:100%;
+  max-width:none;
 
-  width: 100%;
-  max-width: 620px;
+  min-height:100svh;
+  min-height:100dvh;
+  height:100dvh;
 
-  min-height: 620px;
+  margin:0;
+  padding:
+    max(22px, env(safe-area-inset-top))
+    20px
+    max(22px, env(safe-area-inset-bottom));
 
-  margin: 0 auto;
+  box-sizing:border-box;
 
-  padding: 70px 20px 105px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  box-sizing: border-box;
+  overflow:hidden;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-
-  isolation: isolate;
+  isolation:isolate;
 
   background:
-
     radial-gradient(
-      circle at 50% 47%,
-      rgba(0,145,220,.14),
-      transparent 30%
+      circle at 50% 35%,
+      rgba(18,111,207,.30) 0%,
+      rgba(18,111,207,.08) 25%,
+      transparent 55%
     ),
-
     radial-gradient(
-      ellipse at 50% 100%,
-      rgba(245,130,32,.13),
-      transparent 38%
+      circle at 10% 100%,
+      rgba(245,130,32,.14),
+      transparent 35%
     ),
-
-    radial-gradient(
-      circle at 5% 15%,
-      rgba(0,100,170,.12),
-      transparent 28%
-    ),
-
     linear-gradient(
-      180deg,
-      #f8fbfe 0%,
-      #eef5f9 100%
-    );
-}
-
-
-/* =========================================================
-   DIGITAL RADAR / COMMAND CENTER
-========================================================= */
-
-#googleLogin::before {
-
-  content: "";
-
-  position: absolute;
-
-  width: 680px;
-  height: 680px;
-
-  left: 50%;
-  top: 48%;
-
-  transform: translate(-50%, -50%);
-
-  border-radius: 50%;
-
-  pointer-events: none;
-
-  z-index: -5;
-
-  background:
-
-    radial-gradient(
-      circle,
-      transparent 0 28%,
-      rgba(0,120,195,.045) 28.3%,
-      transparent 28.8%
-    ),
-
-    radial-gradient(
-      circle,
-      transparent 0 45%,
-      rgba(0,120,195,.055) 45.3%,
-      transparent 45.8%
-    ),
-
-    radial-gradient(
-      circle,
-      transparent 0 62%,
-      rgba(0,120,195,.045) 62.3%,
-      transparent 62.8%
-    ),
-
-    radial-gradient(
-      circle,
-      transparent 0 78%,
-      rgba(245,130,32,.035) 78.3%,
-      transparent 78.8%
+      145deg,
+      #01152b 0%,
+      #032c55 42%,
+      #061b34 100%
     );
 
-  animation:
-    railwayRadar 24s linear infinite;
-}
-
-
-@keyframes railwayRadar {
-
-  from {
-    transform:
-      translate(-50%, -50%)
-      rotate(0deg);
-  }
-
-  to {
-    transform:
-      translate(-50%, -50%)
-      rotate(360deg);
-  }
-
+  color:var(--rail-white);
 }
 
 
@@ -215,420 +154,272 @@ body {
    DIGITAL GRID
 ========================================================= */
 
-#googleLogin {
+#googleLogin::before{
+  content:"";
+
+  position:absolute;
+  inset:-20%;
+
+  z-index:-2;
+
+  opacity:.34;
 
   background-image:
-
     linear-gradient(
-      rgba(0,100,165,.025) 1px,
+      rgba(91,169,240,.075) 1px,
       transparent 1px
     ),
-
     linear-gradient(
       90deg,
-      rgba(0,100,165,.025) 1px,
+      rgba(91,169,240,.075) 1px,
       transparent 1px
-    ),
-
-    radial-gradient(
-      circle at 50% 48%,
-      rgba(0,145,220,.13),
-      transparent 31%
-    ),
-
-    radial-gradient(
-      ellipse at 50% 100%,
-      rgba(245,130,32,.13),
-      transparent 38%
-    ),
-
-    linear-gradient(
-      180deg,
-      #f9fcfe,
-      #eef5f9
     );
 
   background-size:
-    30px 30px,
-    30px 30px,
-    auto,
-    auto,
-    auto;
+    48px 48px;
+
+  transform:
+    perspective(700px)
+    rotateX(62deg)
+    translateY(15%);
+
+  transform-origin:center bottom;
+
+  mask-image:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,1),
+      rgba(0,0,0,.7),
+      transparent 78%
+    );
+
+  -webkit-mask-image:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,1),
+      rgba(0,0,0,.7),
+      transparent 78%
+    );
 }
 
 
 /* =========================================================
-   RAILWAY PERSPECTIVE
+   HORIZON / LIGHT
 ========================================================= */
 
-#googleLogin::after {
+#googleLogin::after{
+  content:"";
 
-  content: "";
+  position:absolute;
 
-  position: absolute;
+  left:50%;
+  bottom:-8%;
 
-  left: 50%;
-  bottom: -270px;
+  width:120%;
+  height:45%;
 
-  width: 560px;
-  height: 600px;
+  z-index:-1;
 
   transform:
     translateX(-50%)
-    perspective(900px)
-    rotateX(64deg);
+    perspective(500px)
+    rotateX(62deg);
 
-  transform-origin: center bottom;
-
-  pointer-events: none;
-
-  z-index: -2;
+  transform-origin:center bottom;
 
   background:
-
-    /* REL KIRI */
     linear-gradient(
-      90deg,
-      transparent 14%,
-      rgba(0,73,120,.18) 14.4%,
-      rgba(0,73,120,.18) 15.1%,
-      transparent 15.5%,
-      transparent 84.5%,
-      rgba(0,73,120,.18) 84.9%,
-      rgba(0,73,120,.18) 85.6%,
-      transparent 86%
-    ),
-
-    /* REL DIGITAL */
-    linear-gradient(
-      90deg,
-      transparent 19%,
-      rgba(0,166,225,.55) 19.3%,
-      rgba(0,166,225,.55) 19.8%,
-      transparent 20.2%,
-      transparent 79.8%,
-      rgba(0,166,225,.55) 80.2%,
-      rgba(0,166,225,.55) 80.7%,
-      transparent 81%
-    ),
-
-    /* ORANGE CENTER ENERGY */
-    linear-gradient(
-      90deg,
-      transparent 48.8%,
-      rgba(245,130,32,.35) 49.3%,
-      rgba(255,170,75,.95) 50%,
-      rgba(245,130,32,.35) 50.7%,
-      transparent 51.2%
-    ),
-
-    /* SLEEPERS */
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 13%,
-      rgba(0,65,105,.10) 13.3% 14%,
-      transparent 14.3% 85.7%,
-      rgba(0,65,105,.10) 86% 86.7%,
-      transparent 87%
+      to top,
+      rgba(0,110,255,.18),
+      transparent 70%
     );
 
-  filter:
-    drop-shadow(
-      0 0 10px
-      rgba(0,130,210,.18)
-    );
+  filter:blur(3px);
+
+  pointer-events:none;
 }
 
 
 /* =========================================================
-   LOCOMOTIVE DIGITAL SILHOUETTE
+   LOGIN CONTENT
+   TIDAK LAGI SEPERTI KOTAK
 ========================================================= */
 
-#googleLogin .login-box {
+.login-box{
+  position:relative;
 
-  position: relative;
-
-  z-index: 5;
-
-  width: 100%;
+  width:min(440px, 100%);
 
   padding:
-    42px 40px
-    36px;
+    12px
+    8px
+    10px;
 
-  box-sizing: border-box;
+  box-sizing:border-box;
 
-  border-radius: 26px;
+  background:transparent;
+
+  border:0;
+  border-radius:0;
+
+  box-shadow:none;
+
+  text-align:center;
+
+  z-index:5;
+
+  animation:
+    loginSmooth
+    .8s
+    cubic-bezier(.22,.61,.36,1)
+    both;
+}
+
+
+/* =========================================================
+   TOP ORANGE ENERGY LINE
+========================================================= */
+
+.login-box::before{
+  content:"";
+
+  position:absolute;
+
+  top:-18px;
+  left:50%;
+
+  width:120px;
+  height:3px;
+
+  transform:translateX(-50%);
+
+  border-radius:999px;
 
   background:
-
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.985),
-      rgba(247,251,254,.965)
-    );
-
-  border:
-    1px solid
-    rgba(0,72,118,.13);
-
-  box-shadow:
-
-    0 38px 90px
-    rgba(0,37,67,.20),
-
-    0 15px 35px
-    rgba(0,70,110,.10),
-
-    inset 0 1px 0
-    rgba(255,255,255,.95);
-
-  overflow: hidden;
-
-  animation:
-    railwayLoginEnter
-    .75s
-    cubic-bezier(.2,.8,.2,1);
-}
-
-
-/* =========================================================
-   LOCOMOTIVE VISUAL DI BELAKANG CARD
-========================================================= */
-
-#googleLogin .login-box::after {
-
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-
-  bottom: -58px;
-
-  width: 310px;
-  height: 145px;
-
-  transform:
-    translateX(-50%);
-
-  border-radius:
-    24px
-    24px
-    14px
-    14px;
-
-  background:
-
-    /* KACA KABIN */
-    linear-gradient(
-      135deg,
-      transparent 0 16%,
-      rgba(3,25,48,.97) 17% 31%,
-      transparent 32%
-    ),
-
-    linear-gradient(
-      225deg,
-      transparent 0 16%,
-      rgba(3,25,48,.97) 17% 31%,
-      transparent 32%
-    ),
-
-    /* STRIPE ORANGE */
-    linear-gradient(
-      170deg,
-      transparent 0 48%,
-      var(--rail-orange) 49% 57%,
-      transparent 58%
-    ),
-
-    /* STRIPE CYAN */
-    linear-gradient(
-      170deg,
-      transparent 0 59%,
-      rgba(0,188,240,.75) 60% 63%,
-      transparent 64%
-    ),
-
-    /* BODY */
-    linear-gradient(
-      180deg,
-      #0877b7 0%,
-      #045789 54%,
-      #032f51 100%
-    );
-
-  border:
-    1px solid
-    rgba(0,185,240,.65);
-
-  box-shadow:
-
-    0 0 12px
-    rgba(0,164,230,.55),
-
-    0 0 35px
-    rgba(0,120,200,.24),
-
-    inset 0 1px 0
-    rgba(255,255,255,.35);
-
-  clip-path:
-    polygon(
-      6% 100%,
-      6% 34%,
-      16% 10%,
-      27% 0,
-      73% 0,
-      84% 10%,
-      94% 34%,
-      94% 100%
-    );
-
-  opacity: .9;
-
-  pointer-events: none;
-
-  z-index: 0;
-
-  animation:
-    locomotiveFloat
-    4.5s
-    ease-in-out
-    infinite;
-}
-
-
-/* =========================================================
-   HEADLIGHT LOKOMOTIF
-========================================================= */
-
-#googleLogin .login-box::before {
-
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-
-  bottom: 68px;
-
-  width: 13px;
-  height: 13px;
-
-  transform:
-    translateX(-50%);
-
-  border-radius: 50%;
-
-  background: #ffffff;
-
-  box-shadow:
-
-    0 0 7px #ffffff,
-
-    0 0 15px #00d9ff,
-
-    0 0 30px rgba(0,190,255,.9),
-
-    0 0 55px rgba(0,130,220,.45);
-
-  z-index: 2;
-
-  animation:
-    locomotiveLamp
-    1.8s
-    ease-in-out
-    infinite;
-}
-
-
-/* =========================================================
-   CORPORATE TOP LINE
-========================================================= */
-
-#googleLogin .login-box {
-
-  border-top:
-    4px solid
-    transparent;
-
-  border-image:
     linear-gradient(
       90deg,
-      #001d36,
-      #0068a9,
-      #00a9e8,
-      #f58220,
-      #ffad55
-    ) 1;
+      transparent,
+      var(--rail-orange),
+      #fff,
+      var(--rail-orange),
+      transparent
+    );
+
+  box-shadow:
+    0 0 10px rgba(245,130,32,.75),
+    0 0 30px rgba(245,130,32,.35);
+
+  animation:
+    energyPulse
+    2.4s
+    ease-in-out
+    infinite;
 }
 
 
 /* =========================================================
-   JUDUL
+   DIGITAL LOCOMOTIVE / HEADLIGHT
 ========================================================= */
 
-#googleLogin .login-box h2 {
+.login-box::after{
+  content:"";
 
-  position: relative;
+  position:absolute;
 
-  z-index: 10;
+  top:-66px;
+  left:50%;
+
+  width:10px;
+  height:10px;
+
+  transform:translateX(-50%);
+
+  border-radius:50%;
+
+  background:#fff;
+
+  box-shadow:
+    0 0 5px #fff,
+    0 0 16px #8dccff,
+    0 0 35px rgba(49,156,255,.85),
+    0 0 65px rgba(49,156,255,.45);
+
+  animation:
+    headlightPulse
+    2.8s
+    ease-in-out
+    infinite;
+}
+
+
+/* =========================================================
+   BRAND MARK
+========================================================= */
+
+.login-box h2{
+  position:relative;
 
   margin:
-    5px 0
-    9px;
+    0
+    0
+    12px;
 
-  color:
-    var(--rail-deep);
-
-  text-align:
-    center;
+  padding:0;
 
   font-size:
-    clamp(23px,4vw,29px);
+    clamp(26px, 5vw, 36px);
 
-  font-weight:
-    850;
+  line-height:1.08;
 
-  letter-spacing:
-    -.8px;
+  font-weight:800;
 
-  line-height:
-    1.2;
+  letter-spacing:-.8px;
+
+  color:#fff;
 
   text-shadow:
-    0 1px 0 #ffffff;
-}
-
-
-#googleLogin .login-box h2::after {
-
-  content: "";
-
-  display: block;
-
-  width: 64px;
-  height: 3px;
-
-  margin:
-    13px auto 0;
-
-  border-radius:
-    99px;
+    0 2px 18px rgba(0,0,0,.35);
 
   background:
     linear-gradient(
       90deg,
-      var(--rail-blue),
-      var(--rail-cyan),
-      var(--rail-orange)
+      #ffffff 0%,
+      #dceeff 48%,
+      #ffffff 100%
+    );
+
+  -webkit-background-clip:text;
+  background-clip:text;
+
+  -webkit-text-fill-color:transparent;
+}
+
+
+/* =========================================================
+   ORANGE ACCENT UNDER TITLE
+========================================================= */
+
+.login-box h2::after{
+  content:"";
+
+  display:block;
+
+  width:54px;
+  height:3px;
+
+  margin:12px auto 0;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--rail-orange),
+      #ffb35f
     );
 
   box-shadow:
-    0 0 14px
-    rgba(0,145,220,.25);
+    0 0 12px rgba(245,130,32,.45);
 }
 
 
@@ -636,167 +427,130 @@ body {
    SUBTITLE
 ========================================================= */
 
-#googleLogin .login-box > p {
+.login-box p{
+  margin:
+    0
+    auto
+    28px;
 
-  position: relative;
+  max-width:390px;
 
-  z-index: 10;
+  font-size:13px;
 
-  max-width:
-    430px;
+  line-height:1.55;
+
+  letter-spacing:.25px;
+
+  color:
+    rgba(220,235,249,.72);
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.login-box .form-group{
+  position:relative;
+
+  margin-bottom:14px;
+
+  text-align:left;
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.login-box label{
+  display:block;
 
   margin:
-    0 auto 30px;
+    0
+    0
+    6px
+    4px;
+
+  font-size:11px;
+
+  font-weight:700;
+
+  letter-spacing:.7px;
+
+  text-transform:uppercase;
 
   color:
-    var(--rail-muted);
-
-  text-align:
-    center;
-
-  font-size:
-    13px;
-
-  line-height:
-    1.65;
+    rgba(184,211,235,.72);
 }
 
 
 /* =========================================================
-   FORM
+   INPUT — GLASS / NO BOX HEAVY
 ========================================================= */
 
-#googleLogin .login-box .form-group {
+.login-box input,
+.login-box select{
+  width:100%;
 
-  position:
-    relative;
+  min-height:48px;
 
-  z-index:
-    10;
-
-  margin-bottom:
-    18px;
-}
-
-
-#googleLogin .login-box .form-group label {
-
-  display:
-    block;
-
-  margin-bottom:
-    8px;
-
-  color:
-    #2d4a60;
-
-  font-size:
-    13px;
-
-  font-weight:
-    750;
-}
-
-
-/* =========================================================
-   INPUT PREMIUM
-========================================================= */
-
-#googleLogin .login-box #loginNama,
-#googleLogin .login-box #loginNipp,
-#googleLogin .login-box #loginJabatan {
-
-  width:
-    100%;
-
-  min-height:
-    51px;
+  box-sizing:border-box;
 
   padding:
-    12px 15px;
+    0
+    15px;
 
-  box-sizing:
-    border-box;
+  border:1px solid
+    rgba(255,255,255,.13);
 
-  border:
-    1px solid
-    #d3e0e9;
+  border-radius:13px;
 
-  border-radius:
-    12px;
+  outline:none;
+
+  color:#fff;
 
   background:
-    linear-gradient(
-      135deg,
-      #f9fbfd,
-      #f2f7fa
-    );
-
-  color:
-    #243d50;
-
-  font-size:
-    14px;
+    rgba(255,255,255,.065);
 
   box-shadow:
-    inset 0 1px 2px
-    rgba(0,40,70,.025);
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 8px 25px rgba(0,0,0,.12);
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
 
   transition:
-    .22s ease;
+    border-color .25s ease,
+    background .25s ease,
+    box-shadow .25s ease,
+    transform .25s ease;
 }
 
 
-#googleLogin .login-box #loginNama:hover,
-#googleLogin .login-box #loginNipp:hover,
-#googleLogin .login-box #loginJabatan:hover {
-
-  background:
-    #ffffff;
-
-  border-color:
-    #a8bccb;
+.login-box input::placeholder{
+  color:
+    rgba(202,220,238,.40);
 }
 
 
-#googleLogin .login-box #loginNama:focus,
-#googleLogin .login-box #loginNipp:focus,
-#googleLogin .login-box #loginJabatan:focus {
-
-  outline:
-    none;
+.login-box input:focus,
+.login-box select:focus{
+  border-color:
+    rgba(70,166,255,.75);
 
   background:
-    #ffffff;
-
-  border-color:
-    var(--rail-cyan);
+    rgba(255,255,255,.095);
 
   box-shadow:
-
-    0 0 0 4px
-    rgba(0,169,232,.09),
-
-    0 8px 24px
-    rgba(0,65,110,.09);
+    0 0 0 3px rgba(28,130,220,.10),
+    0 10px 30px rgba(0,0,0,.16);
 
   transform:
     translateY(-1px);
-}
-
-
-#googleLogin .login-box #loginNipp[readonly],
-#googleLogin .login-box #loginJabatan[readonly] {
-
-  background:
-    linear-gradient(
-      135deg,
-      #edf3f7,
-      #e6eef4
-    );
-
-  color:
-    #587083;
 }
 
 
@@ -804,147 +558,96 @@ body {
    LOGIN BUTTON
 ========================================================= */
 
-#googleLogin .login-box #btnLogin {
+#btnLogin{
+  position:relative;
 
-  position:
-    relative;
+  width:100%;
 
-  z-index:
-    11;
+  min-height:51px;
 
-  width:
-    100% !important;
+  margin-top:8px;
 
-  min-height:
-    54px;
+  border:0;
 
-  margin-top:
-    7px;
+  border-radius:15px;
 
-  border:
-    0;
+  cursor:pointer;
 
-  border-radius:
-    12px;
+  overflow:hidden;
+
+  color:#fff;
+
+  font-size:14px;
+
+  font-weight:800;
+
+  letter-spacing:.45px;
 
   background:
-
     linear-gradient(
       105deg,
-      #011d35 0%,
-      #034e80 38%,
-      #007dbd 72%,
-      #0063a0 100%
+      #064f9d 0%,
+      #0872cf 48%,
+      #f58220 100%
     );
 
-  color:
-    #ffffff;
-
-  font-size:
-    14px;
-
-  font-weight:
-    800;
-
-  letter-spacing:
-    .8px;
-
-  cursor:
-    pointer;
-
   box-shadow:
-
-    0 13px 30px
-    rgba(0,64,105,.28),
-
-    inset 0 1px 0
-    rgba(255,255,255,.18);
-
-  overflow:
-    hidden;
+    0 10px 28px rgba(0,67,145,.28),
+    0 4px 12px rgba(245,130,32,.12);
 
   transition:
-    .22s ease;
+    transform .2s ease,
+    box-shadow .2s ease,
+    filter .2s ease;
 }
 
 
-#googleLogin .login-box #btnLogin::before {
+#btnLogin::before{
+  content:"";
 
-  content: "";
+  position:absolute;
 
-  position:
-    absolute;
-
-  left:
-    -120%;
-
-  top:
-    0;
-
-  width:
-    55%;
-
-  height:
-    100%;
+  inset:0;
 
   background:
     linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.34),
-      transparent
+      110deg,
+      transparent 20%,
+      rgba(255,255,255,.20) 48%,
+      transparent 72%
     );
 
   transform:
-    skewX(-20deg);
+    translateX(-110%);
 
   transition:
-    left .7s ease;
+    transform .65s ease;
 }
 
 
-#googleLogin .login-box #btnLogin:hover::before {
-  left:
-    145%;
-}
-
-
-#googleLogin .login-box #btnLogin:hover {
-
+#btnLogin:hover{
   transform:
     translateY(-2px);
 
   box-shadow:
+    0 15px 35px rgba(0,67,145,.34),
+    0 6px 18px rgba(245,130,32,.18);
 
-    0 18px 38px
-    rgba(0,67,110,.34),
-
-    0 0 24px
-    rgba(0,150,225,.14);
+  filter:
+    brightness(1.05);
 }
 
 
-#googleLogin .login-box #btnLogin:active {
-
+#btnLogin:hover::before{
   transform:
-    translateY(0);
-
-  box-shadow:
-    0 7px 15px
-    rgba(0,60,100,.20);
+    translateX(110%);
 }
 
 
-#googleLogin .login-box #btnLogin:disabled {
-
-  opacity:
-    .55;
-
-  cursor:
-    not-allowed;
-
+#btnLogin:active{
   transform:
-    none;
+    translateY(0)
+    scale(.985);
 }
 
 
@@ -952,551 +655,399 @@ body {
    STATUS
 ========================================================= */
 
-#googleLogin .login-box #statusLogin {
+#statusLogin{
+  margin-top:14px;
 
-  position:
-    relative;
+  min-height:18px;
 
-  z-index:
-    10;
-
-  margin-top:
-    18px;
-
-  padding:
-    13px 15px;
-
-  border-radius:
-    11px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #f3f8fc,
-      #edf4f9
-    );
-
-  border-left:
-    4px solid
-    var(--rail-blue);
+  font-size:12px;
 
   color:
-    #455e72;
-
-  font-size:
-    13px;
-
-  line-height:
-    1.5;
-
-  box-shadow:
-    inset 0 1px 0
-    rgba(255,255,255,.8);
-}
-
-
-/* =========================================================
-   PROGRESS PANEL
-========================================================= */
-
-#googleLogin .login-box #progressLogin {
-
-  position:
-    relative;
-
-  z-index:
-    10;
-
-  margin-top:
-    17px;
-
-  padding:
-    15px;
-
-  border:
-    1px solid
-    #d9e5ec;
-
-  border-radius:
-    13px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fbfdfe,
-      #f2f7fa
-    );
-
-  box-shadow:
-    inset 0 1px 0
-    rgba(255,255,255,.9);
-}
-
-
-#googleLogin .login-box #progressLogin .progress-label {
-
-  display:
-    flex;
-
-  justify-content:
-    space-between;
-
-  align-items:
-    center;
-
-  margin-bottom:
-    9px;
-
-  color:
-    #405a6e;
-
-  font-size:
-    12px;
-
-  font-weight:
-    750;
-}
-
-
-#googleLogin .login-box #progressLogin .progress-track {
-
-  position:
-    relative;
-
-  width:
-    100%;
-
-  height:
-    8px;
-
-  background:
-    #dce7ee;
-
-  border-radius:
-    99px;
-
-  overflow:
-    hidden;
-}
-
-
-#googleLogin .login-box #progressLogin .progress-bar {
-
-  position:
-    relative;
-
-  height:
-    100%;
-
-  border-radius:
-    99px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #00365f,
-      #006eb0,
-      #00a8e5,
-      #f58220
-    );
-
-  box-shadow:
-    0 0 16px
-    rgba(0,145,220,.35);
+    rgba(210,228,245,.72);
 
   transition:
-    width .4s ease;
-}
-
-
-#googleLogin .login-box #progressLogin .progress-bar::after {
-
-  content: "";
-
-  position:
-    absolute;
-
-  top:
-    0;
-
-  left:
-    -40%;
-
-  width:
-    40%;
-
-  height:
-    100%;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.7),
-      transparent
-    );
-
-  animation:
-    progressTrainLight
-    1.5s linear infinite;
-}
-
-
-@keyframes progressTrainLight {
-
-  from {
-    left:
-      -40%;
-  }
-
-  to {
-    left:
-      120%;
-  }
-}
-
-
-#googleLogin .login-box #progressLogin .progress-percent {
-
-  margin-top:
-    9px;
-
-  text-align:
-    center;
-
-  color:
-    var(--rail-deep);
-
-  font-size:
-    20px;
-
-  font-weight:
-    850;
-}
-
-
-#googleLogin .login-box #progressLogin .progress-note {
-
-  margin-top:
-    4px;
-
-  text-align:
-    center;
-
-  color:
-    #718293;
-
-  font-size:
-    11px;
+    opacity .25s ease;
 }
 
 
 /* =========================================================
-   CARD ENTRY
+   PROGRESS
 ========================================================= */
 
-@keyframes railwayLoginEnter {
+#progressLogin{
+  margin-top:16px;
+}
 
-  0% {
 
-    opacity:
-      0;
+/* =========================================================
+   FOOTER FEEL
+========================================================= */
 
+.login-box::marker{
+  display:none;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes loginSmooth{
+
+  from{
+    opacity:0;
     transform:
-      translateY(30px)
-      scale(.965);
+      translateY(16px)
+      scale(.985);
   }
 
-  60% {
-
-    opacity:
-      1;
-
-    transform:
-      translateY(-3px)
-      scale(1.005);
-  }
-
-  100% {
-
-    opacity:
-      1;
-
+  to{
+    opacity:1;
     transform:
       translateY(0)
       scale(1);
   }
+
 }
 
 
-/* =========================================================
-   LOCOMOTIVE MOTION
-========================================================= */
-
-@keyframes locomotiveFloat {
+@keyframes energyPulse{
 
   0%,
-  100% {
-
+  100%{
+    opacity:.55;
     transform:
       translateX(-50%)
-      translateY(0);
+      scaleX(.75);
   }
 
-  50% {
-
+  50%{
+    opacity:1;
     transform:
       translateX(-50%)
-      translateY(-5px);
+      scaleX(1.25);
   }
+
 }
 
 
-@keyframes locomotiveLamp {
+@keyframes headlightPulse{
 
   0%,
-  100% {
-
-    opacity:
-      .65;
-
+  100%{
+    opacity:.55;
     box-shadow:
-      0 0 7px #ffffff,
-      0 0 15px #00d9ff,
-      0 0 28px rgba(0,190,255,.65);
+      0 0 5px #fff,
+      0 0 12px #8dccff,
+      0 0 28px rgba(49,156,255,.65);
   }
 
-  50% {
-
-    opacity:
-      1;
-
+  50%{
+    opacity:1;
     box-shadow:
-      0 0 8px #ffffff,
-      0 0 20px #00d9ff,
-      0 0 42px rgba(0,190,255,1);
+      0 0 7px #fff,
+      0 0 20px #8dccff,
+      0 0 45px rgba(49,156,255,.95);
   }
+
 }
 
 
 /* =========================================================
-   TABLET
+   MOBILE — FULLSCREEN
 ========================================================= */
 
-@media (max-width: 768px) {
+@media (max-width:600px){
 
-  #googleLogin {
+  html,
+  body{
+    width:100%;
+    height:100%;
 
-    max-width:
-      580px;
+    overflow:hidden !important;
 
-    min-height:
-      580px;
+    overscroll-behavior:none;
+  }
+
+
+  #googleLogin{
+
+    width:100%;
+
+    min-height:100svh;
+    min-height:100dvh;
+
+    height:100dvh;
 
     padding:
-      55px 15px
-      80px;
+      max(18px, env(safe-area-inset-top))
+      18px
+      max(18px, env(safe-area-inset-bottom));
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
   }
 
 
-  #googleLogin .login-box {
+  #googleLogin::before{
+
+    background-size:
+      32px 32px;
+
+    opacity:.24;
+
+    transform:
+      perspective(500px)
+      rotateX(65deg)
+      translateY(16%);
+  }
+
+
+  #googleLogin::after{
+
+    width:180%;
+
+    bottom:-5%;
+
+    height:36%;
+  }
+
+
+  .login-box{
+
+    width:100%;
+
+    max-width:370px;
 
     padding:
-      36px 30px
-      31px;
+      4px
+      2px
+      4px;
   }
 
 
-  #googleLogin .login-box::after {
+  .login-box::before{
 
-    width:
-      275px;
+    top:-12px;
 
-    height:
-      128px;
+    width:85px;
+
+    height:2px;
   }
+
+
+  .login-box::after{
+
+    top:-48px;
+
+    width:7px;
+    height:7px;
+  }
+
+
+  .login-box h2{
+
+    margin-bottom:9px;
+
+    font-size:
+      clamp(24px, 7vw, 30px);
+
+    letter-spacing:-.6px;
+  }
+
+
+  .login-box h2::after{
+
+    width:42px;
+
+    height:2px;
+
+    margin-top:9px;
+  }
+
+
+  .login-box p{
+
+    max-width:320px;
+
+    margin-bottom:19px;
+
+    font-size:11px;
+
+    line-height:1.45;
+  }
+
+
+  .login-box .form-group{
+
+    margin-bottom:10px;
+  }
+
+
+  .login-box label{
+
+    margin-bottom:4px;
+
+    font-size:9px;
+
+    letter-spacing:.55px;
+  }
+
+
+  .login-box input,
+  .login-box select{
+
+    min-height:43px;
+
+    padding:
+      0
+      13px;
+
+    font-size:13px;
+
+    border-radius:11px;
+  }
+
+
+  #btnLogin{
+
+    min-height:46px;
+
+    margin-top:5px;
+
+    border-radius:12px;
+
+    font-size:13px;
+  }
+
+
+  #statusLogin{
+
+    margin-top:9px;
+
+    font-size:10px;
+  }
+
+
+  #progressLogin{
+
+    margin-top:10px;
+  }
+
 }
 
 
 /* =========================================================
-   HP
+   HP KECIL — 360px
 ========================================================= */
 
-@media (max-width: 600px) {
+@media (max-width:380px){
 
-  #googleLogin {
+  #googleLogin{
 
-    min-height:
-      515px;
-
-    padding:
-      35px 9px
-      65px;
+    padding-left:15px;
+    padding-right:15px;
   }
 
 
-  #googleLogin::before {
+  .login-box{
 
-    width:
-      500px;
-
-    height:
-      500px;
+    max-width:340px;
   }
 
 
-  #googleLogin::after {
+  .login-box h2{
 
-    width:
-      410px;
-
-    height:
-      560px;
-
-    opacity:
-      .55;
+    font-size:23px;
   }
 
 
-  #googleLogin .login-box {
+  .login-box p{
 
-    padding:
-      32px 21px
-      26px;
+    margin-bottom:15px;
 
-    border-radius:
-      19px;
-
-    box-shadow:
-      0 23px 50px
-      rgba(0,35,65,.18);
+    font-size:10px;
   }
 
 
-  #googleLogin .login-box h2 {
+  .login-box .form-group{
 
-    font-size:
-      22px;
+    margin-bottom:8px;
   }
 
 
-  #googleLogin .login-box > p {
+  .login-box input,
+  .login-box select{
 
-    font-size:
-      12px;
+    min-height:40px;
 
-    margin-bottom:
-      24px;
+    font-size:12px;
   }
 
 
-  #googleLogin .login-box .form-group {
+  #btnLogin{
 
-    margin-bottom:
-      15px;
+    min-height:43px;
   }
 
-
-  #googleLogin .login-box #loginNama,
-  #googleLogin .login-box #loginNipp,
-  #googleLogin .login-box #loginJabatan {
-
-    min-height:
-      47px;
-
-    font-size:
-      14px;
-  }
-
-
-  #googleLogin .login-box #btnLogin {
-
-    min-height:
-      50px;
-  }
-
-
-  #googleLogin .login-box::after {
-
-    width:
-      220px;
-
-    height:
-      100px;
-
-    bottom:
-      -45px;
-  }
 }
 
 
 /* =========================================================
-   HP KECIL
+   LANDSCAPE HP
 ========================================================= */
 
-@media (max-width: 400px) {
+@media (max-height:520px) and (orientation:landscape){
 
-  #googleLogin {
+  #googleLogin{
 
-    padding:
-      25px 6px
-      50px;
+    align-items:flex-start;
+
+    padding-top:
+      max(12px, env(safe-area-inset-top));
+
+    padding-bottom:
+      max(12px, env(safe-area-inset-bottom));
   }
 
 
-  #googleLogin .login-box {
+  .login-box{
 
-    padding:
-      28px 16px
-      22px;
+    transform:
+      scale(.82);
 
-    border-radius:
-      17px;
+    transform-origin:
+      center top;
   }
 
 
-  #googleLogin .login-box h2 {
+  .login-box h2{
 
-    font-size:
-      20px;
+    margin-bottom:6px;
   }
 
 
-  #googleLogin .login-box > p {
+  .login-box p{
 
-    font-size:
-      11px;
+    margin-bottom:10px;
   }
 
 
-  #googleLogin .login-box::after {
+  .login-box .form-group{
 
-    opacity:
-      .55;
-
-    width:
-      190px;
-
-    height:
-      88px;
+    margin-bottom:6px;
   }
 
-
-  #googleLogin .login-box::before {
-
-    bottom:
-      54px;
-
-    width:
-      9px;
-
-    height:
-      9px;
-  }
 }
 
 
-
+/* =========================================================
+   SELESAI LOGIN
+   JANGAN UBAH BAGIAN APP DI BAWAH
+========================================================= */
 /* =========================================================
    APP
 ========================================================= */
