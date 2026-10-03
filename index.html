@@ -8773,7 +8773,7 @@ var identitasKiri = [
   ],
 
   [
-    "Stasiun",
+    "Stasiun / Emplasemen",
     data.STASIUN || "-"
   ],
 
@@ -9033,29 +9033,7 @@ y +=
         12;
 
 
-      /* =====================================================
-         JUDUL TABEL
-      ===================================================== */
-
-      ctx.fillStyle =
-        "#1f4e78";
-
-
-      ctx.font =
-        "bold 12px Arial";
-
-
-      ctx.fillText(
-        "HASIL CHECKLIST",
-        margin,
-        y
-      );
-
-
-      y +=
-        9;
-
-
+    
       /* =====================================================
          TABEL CHECKLIST
       ===================================================== */
@@ -9627,7 +9605,7 @@ function gambarHeaderKelompok(
 
 
   ctx.fillStyle =
-    "#1f4e78";
+    "#6b7280";
 
 
   ctx.fillText(
@@ -9790,7 +9768,7 @@ function gambarSubHeaderKelompok2(
 
 
   ctx.fillStyle =
-    "#1f4e78";
+    "#6b7280";
 
 
   if (nomor) {
@@ -9889,27 +9867,20 @@ function gambarItemChecklist(
     rowHeightTetap;
 
 
-  /* =================================================
-     WARNA SELANG-SELING
-  ================================================= */
+/* =================================================
+   WARNA BARIS TABEL
+   SEMUA PUTIH
+================================================= */
 
-  if (
-    indexGlobal % 2 === 1
-  ) {
+ctx.fillStyle =
+  "#ffffff";
 
-    ctx.fillStyle =
-      "#f7f7f7";
-
-
-    ctx.fillRect(
-      tableX,
-      rowY,
-      tableWidth,
-      rowHeight
-    );
-
-  }
-
+ctx.fillRect(
+  tableX,
+  rowY,
+  tableWidth,
+  rowHeight
+);
 
   /* =================================================
      BORDER
