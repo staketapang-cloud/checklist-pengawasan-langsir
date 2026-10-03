@@ -61,35 +61,27 @@ body {
 /* =========================================================
    LOGIN — KAI DIGITAL RAILWAY 2026
    PREMIUM RAILWAY COMMAND CENTER
-   BLUE × ORANGE × LOCOMOTIVE × DIGITAL RAIL
+   BLUE × ORANGE × DIGITAL LOCOMOTIVE
    HTML & JAVASCRIPT TIDAK DIUBAH
 ========================================================= */
 
-
-/* =========================================================
-   ROOT WARNA
-========================================================= */
-
 :root {
-
-  --rail-blue-deep: #001d36;
-  --rail-blue-dark: #00345d;
-  --rail-blue: #0066a9;
-  --rail-blue-light: #078bd1;
-
+  --rail-navy: #031b31;
+  --rail-deep: #062b4b;
+  --rail-blue: #0068a9;
+  --rail-cyan: #00a9e8;
   --rail-orange: #f58220;
-  --rail-orange-light: #ff9d3d;
+  --rail-orange-light: #ffad55;
 
-  --rail-white: #ffffff;
+  --rail-text: #203b50;
+  --rail-muted: #718496;
 
-  --rail-text: #263f53;
-  --rail-muted: #718293;
-
+  --glass-white: rgba(255,255,255,.96);
 }
 
 
 /* =========================================================
-   AREA LOGIN
+   LOGIN STAGE
 ========================================================= */
 
 #googleLogin {
@@ -97,52 +89,54 @@ body {
   position: relative;
 
   width: 100%;
-  max-width: 600px;
+  max-width: 620px;
+
+  min-height: 620px;
 
   margin: 0 auto;
 
-  padding:
-    70px 20px
-    90px;
+  padding: 70px 20px 105px;
 
-  min-height: 560px;
+  box-sizing: border-box;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
   overflow: hidden;
 
+  isolation: isolate;
+
   background:
 
-    /* CAHAYA UTAMA */
     radial-gradient(
-      ellipse at 50% 52%,
-      rgba(0,122,194,.14),
-      transparent 42%
-    ),
-
-    /* ORANGE HORIZON */
-    radial-gradient(
-      ellipse at 50% 90%,
-      rgba(245,130,32,.10),
-      transparent 35%
-    ),
-
-    /* BIRU SUDUT */
-    radial-gradient(
-      circle at 10% 15%,
-      rgba(0,102,169,.09),
+      circle at 50% 47%,
+      rgba(0,145,220,.14),
       transparent 30%
-    );
+    ),
 
-  isolation: isolate;
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(245,130,32,.13),
+      transparent 38%
+    ),
+
+    radial-gradient(
+      circle at 5% 15%,
+      rgba(0,100,170,.12),
+      transparent 28%
+    ),
+
+    linear-gradient(
+      180deg,
+      #f8fbfe 0%,
+      #eef5f9 100%
+    );
 }
 
 
 /* =========================================================
-   DIGITAL ATMOSPHERE
+   DIGITAL RADAR / COMMAND CENTER
 ========================================================= */
 
 #googleLogin::before {
@@ -151,47 +145,52 @@ body {
 
   position: absolute;
 
-  width: 620px;
-  height: 620px;
+  width: 680px;
+  height: 680px;
 
   left: 50%;
   top: 48%;
 
-  transform:
-    translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
   border-radius: 50%;
 
+  pointer-events: none;
+
+  z-index: -5;
+
   background:
 
-    /* LINGKARAN LUAR */
     radial-gradient(
       circle,
-      transparent 0 38%,
-      rgba(0,102,169,.035) 38.5%,
-      transparent 39%
+      transparent 0 28%,
+      rgba(0,120,195,.045) 28.3%,
+      transparent 28.8%
     ),
 
     radial-gradient(
       circle,
-      transparent 0 58%,
-      rgba(0,102,169,.035) 58.5%,
-      transparent 59%
+      transparent 0 45%,
+      rgba(0,120,195,.055) 45.3%,
+      transparent 45.8%
+    ),
+
+    radial-gradient(
+      circle,
+      transparent 0 62%,
+      rgba(0,120,195,.045) 62.3%,
+      transparent 62.8%
     ),
 
     radial-gradient(
       circle,
       transparent 0 78%,
-      rgba(245,130,32,.025) 78.5%,
-      transparent 79%
+      rgba(245,130,32,.035) 78.3%,
+      transparent 78.8%
     );
 
-  pointer-events: none;
-
-  z-index: -3;
-
   animation:
-    railwayRadar 12s linear infinite;
+    railwayRadar 24s linear infinite;
 }
 
 
@@ -213,7 +212,53 @@ body {
 
 
 /* =========================================================
-   REL UTAMA — PERSPEKTIF
+   DIGITAL GRID
+========================================================= */
+
+#googleLogin {
+
+  background-image:
+
+    linear-gradient(
+      rgba(0,100,165,.025) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(0,100,165,.025) 1px,
+      transparent 1px
+    ),
+
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(0,145,220,.13),
+      transparent 31%
+    ),
+
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(245,130,32,.13),
+      transparent 38%
+    ),
+
+    linear-gradient(
+      180deg,
+      #f9fcfe,
+      #eef5f9
+    );
+
+  background-size:
+    30px 30px,
+    30px 30px,
+    auto,
+    auto,
+    auto;
+}
+
+
+/* =========================================================
+   RAILWAY PERSPECTIVE
 ========================================================= */
 
 #googleLogin::after {
@@ -222,160 +267,84 @@ body {
 
   position: absolute;
 
-  width: 520px;
-  height: 720px;
-
   left: 50%;
-  bottom: -360px;
+  bottom: -270px;
+
+  width: 560px;
+  height: 600px;
 
   transform:
     translateX(-50%)
-    perspective(700px)
+    perspective(900px)
     rotateX(64deg);
 
-  transform-origin:
-    center center;
-
-  background:
-
-    /* =====================================================
-       REL KIRI
-    ===================================================== */
-
-    linear-gradient(
-      90deg,
-
-      transparent 0%,
-
-      transparent 13%,
-
-      rgba(0,65,108,.16) 13.3%,
-      rgba(0,65,108,.16) 14.2%,
-
-      transparent 14.5%,
-
-      /* ===================================================
-         REL KANAN
-      =================================================== */
-
-      transparent 85.5%,
-
-      rgba(0,65,108,.16) 85.8%,
-      rgba(0,65,108,.16) 86.7%,
-
-      transparent 87%
-    ),
-
-    /* =====================================================
-       REL BIRU DIGITAL
-    ===================================================== */
-
-    linear-gradient(
-      90deg,
-
-      transparent 17%,
-
-      rgba(0,135,210,.45) 17.3%,
-      rgba(0,135,210,.45) 17.8%,
-
-      transparent 18.2%,
-
-      transparent 81.8%,
-
-      rgba(0,135,210,.45) 82.2%,
-      rgba(0,135,210,.45) 82.7%,
-
-      transparent 83%
-    ),
-
-    /* =====================================================
-       BANTALAN REL
-    ===================================================== */
-
-    repeating-linear-gradient(
-      90deg,
-
-      transparent 0,
-
-      transparent 13%,
-
-      rgba(31,78,120,.11) 13.3%,
-      rgba(31,78,120,.11) 14.2%,
-
-      transparent 14.5%,
-
-      transparent 85.5%,
-
-      rgba(31,78,120,.11) 85.8%,
-      rgba(31,78,120,.11) 86.7%,
-
-      transparent 87%
-    ),
-
-    /* =====================================================
-       ORANGE ENERGY LINE
-    ===================================================== */
-
-    linear-gradient(
-      90deg,
-
-      transparent 0%,
-
-      transparent 48.8%,
-
-      rgba(245,130,32,.75) 49.2%,
-
-      rgba(255,157,61,.95) 50%,
-
-      rgba(245,130,32,.75) 50.8%,
-
-      transparent 51.2%,
-
-      transparent 100%
-    );
-
-  opacity: .85;
+  transform-origin: center bottom;
 
   pointer-events: none;
 
   z-index: -2;
 
+  background:
+
+    /* REL KIRI */
+    linear-gradient(
+      90deg,
+      transparent 14%,
+      rgba(0,73,120,.18) 14.4%,
+      rgba(0,73,120,.18) 15.1%,
+      transparent 15.5%,
+      transparent 84.5%,
+      rgba(0,73,120,.18) 84.9%,
+      rgba(0,73,120,.18) 85.6%,
+      transparent 86%
+    ),
+
+    /* REL DIGITAL */
+    linear-gradient(
+      90deg,
+      transparent 19%,
+      rgba(0,166,225,.55) 19.3%,
+      rgba(0,166,225,.55) 19.8%,
+      transparent 20.2%,
+      transparent 79.8%,
+      rgba(0,166,225,.55) 80.2%,
+      rgba(0,166,225,.55) 80.7%,
+      transparent 81%
+    ),
+
+    /* ORANGE CENTER ENERGY */
+    linear-gradient(
+      90deg,
+      transparent 48.8%,
+      rgba(245,130,32,.35) 49.3%,
+      rgba(255,170,75,.95) 50%,
+      rgba(245,130,32,.35) 50.7%,
+      transparent 51.2%
+    ),
+
+    /* SLEEPERS */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 13%,
+      rgba(0,65,105,.10) 13.3% 14%,
+      transparent 14.3% 85.7%,
+      rgba(0,65,105,.10) 86% 86.7%,
+      transparent 87%
+    );
+
   filter:
     drop-shadow(
-      0 0 8px
-      rgba(0,120,200,.18)
+      0 0 10px
+      rgba(0,130,210,.18)
     );
 }
 
 
 /* =========================================================
-   HORIZON DIGITAL
+   LOCOMOTIVE DIGITAL SILHOUETTE
 ========================================================= */
-
-#googleLogin {
-
-  --horizon:
-
-    radial-gradient(
-      ellipse at 50% 67%,
-      rgba(0,151,220,.16),
-      transparent 28%
-    );
-}
-
 
 #googleLogin .login-box {
-
-  /* tetap di atas background */
-
-}
-
-
-/* =========================================================
-   CARD LOGIN
-========================================================= */
-
-.login-box {
 
   position: relative;
 
@@ -387,112 +356,213 @@ body {
     42px 40px
     36px;
 
+  box-sizing: border-box;
+
+  border-radius: 26px;
+
   background:
 
-    /* GLASS */
     linear-gradient(
       145deg,
       rgba(255,255,255,.985),
-      rgba(248,251,254,.965)
+      rgba(247,251,254,.965)
     );
-
-  border-radius: 24px;
 
   border:
     1px solid
-    rgba(0,71,116,.12);
+    rgba(0,72,118,.13);
 
   box-shadow:
 
-    /* BAYANGAN BESAR */
-    0 35px 80px
-    rgba(0,35,65,.20),
+    0 38px 90px
+    rgba(0,37,67,.20),
 
-    /* BAYANGAN BAWAH */
-    0 12px 25px
-    rgba(0,45,75,.09),
+    0 15px 35px
+    rgba(0,70,110,.10),
 
-    /* GLOW */
-    0 0 0 1px
-    rgba(255,255,255,.7)
-    inset;
+    inset 0 1px 0
+    rgba(255,255,255,.95);
 
   overflow: hidden;
 
   animation:
     railwayLoginEnter
-    .7s
+    .75s
     cubic-bezier(.2,.8,.2,1);
 }
 
 
 /* =========================================================
-   GARIS KORPORAT — LEBIH PREMIUM
+   LOCOMOTIVE VISUAL DI BELAKANG CARD
 ========================================================= */
 
-.login-box::before {
+#googleLogin .login-box::after {
 
   content: "";
 
   position: absolute;
 
-  top: 0;
-  left: 0;
+  left: 50%;
 
-  width: 100%;
-  height: 5px;
+  bottom: -58px;
+
+  width: 310px;
+  height: 145px;
+
+  transform:
+    translateX(-50%);
+
+  border-radius:
+    24px
+    24px
+    14px
+    14px;
 
   background:
 
+    /* KACA KABIN */
     linear-gradient(
-      90deg,
+      135deg,
+      transparent 0 16%,
+      rgba(3,25,48,.97) 17% 31%,
+      transparent 32%
+    ),
 
-      #001d36 0%,
+    linear-gradient(
+      225deg,
+      transparent 0 16%,
+      rgba(3,25,48,.97) 17% 31%,
+      transparent 32%
+    ),
 
-      #004c7d 25%,
+    /* STRIPE ORANGE */
+    linear-gradient(
+      170deg,
+      transparent 0 48%,
+      var(--rail-orange) 49% 57%,
+      transparent 58%
+    ),
 
-      #007fc1 58%,
+    /* STRIPE CYAN */
+    linear-gradient(
+      170deg,
+      transparent 0 59%,
+      rgba(0,188,240,.75) 60% 63%,
+      transparent 64%
+    ),
 
-      #f58220 82%,
-
-      #ff9d3d 100%
+    /* BODY */
+    linear-gradient(
+      180deg,
+      #0877b7 0%,
+      #045789 54%,
+      #032f51 100%
     );
+
+  border:
+    1px solid
+    rgba(0,185,240,.65);
 
   box-shadow:
 
-    0 0 15px
-    rgba(0,123,200,.25);
+    0 0 12px
+    rgba(0,164,230,.55),
+
+    0 0 35px
+    rgba(0,120,200,.24),
+
+    inset 0 1px 0
+    rgba(255,255,255,.35);
+
+  clip-path:
+    polygon(
+      6% 100%,
+      6% 34%,
+      16% 10%,
+      27% 0,
+      73% 0,
+      84% 10%,
+      94% 34%,
+      94% 100%
+    );
+
+  opacity: .9;
+
+  pointer-events: none;
+
+  z-index: 0;
+
+  animation:
+    locomotiveFloat
+    4.5s
+    ease-in-out
+    infinite;
 }
 
 
 /* =========================================================
-   LIGHT SOURCE CARD
+   HEADLIGHT LOKOMOTIF
 ========================================================= */
 
-.login-box::after {
+#googleLogin .login-box::before {
 
   content: "";
 
   position: absolute;
 
-  width: 250px;
-  height: 250px;
+  left: 50%;
 
-  right: -125px;
-  top: -125px;
+  bottom: 68px;
+
+  width: 13px;
+  height: 13px;
+
+  transform:
+    translateX(-50%);
 
   border-radius: 50%;
 
-  background:
+  background: #ffffff;
 
-    radial-gradient(
-      circle,
-      rgba(0,126,203,.13),
-      rgba(0,126,203,.045) 38%,
-      transparent 70%
-    );
+  box-shadow:
 
-  pointer-events: none;
+    0 0 7px #ffffff,
+
+    0 0 15px #00d9ff,
+
+    0 0 30px rgba(0,190,255,.9),
+
+    0 0 55px rgba(0,130,220,.45);
+
+  z-index: 2;
+
+  animation:
+    locomotiveLamp
+    1.8s
+    ease-in-out
+    infinite;
+}
+
+
+/* =========================================================
+   CORPORATE TOP LINE
+========================================================= */
+
+#googleLogin .login-box {
+
+  border-top:
+    4px solid
+    transparent;
+
+  border-image:
+    linear-gradient(
+      90deg,
+      #001d36,
+      #0068a9,
+      #00a9e8,
+      #f58220,
+      #ffad55
+    ) 1;
 }
 
 
@@ -500,86 +570,86 @@ body {
    JUDUL
 ========================================================= */
 
-.login-box h2 {
+#googleLogin .login-box h2 {
 
   position: relative;
 
-  z-index: 3;
+  z-index: 10;
 
   margin:
     5px 0
     9px;
 
   color:
-    var(--rail-blue-dark);
+    var(--rail-deep);
 
-  text-align: center;
+  text-align:
+    center;
 
   font-size:
-    clamp(23px, 4vw, 28px);
+    clamp(23px,4vw,29px);
 
-  font-weight: 850;
+  font-weight:
+    850;
 
   letter-spacing:
-    -.7px;
+    -.8px;
 
-  line-height: 1.2;
+  line-height:
+    1.2;
+
+  text-shadow:
+    0 1px 0 #ffffff;
 }
 
 
-/* =========================================================
-   AKSEN DI BAWAH JUDUL
-========================================================= */
-
-.login-box h2::after {
+#googleLogin .login-box h2::after {
 
   content: "";
 
   display: block;
 
-  width: 55px;
+  width: 64px;
   height: 3px;
 
   margin:
-    13px auto
-    0;
+    13px auto 0;
 
-  border-radius: 20px;
+  border-radius:
+    99px;
 
   background:
-
     linear-gradient(
       90deg,
       var(--rail-blue),
+      var(--rail-cyan),
       var(--rail-orange)
     );
 
   box-shadow:
-
-    0 0 12px
-    rgba(0,113,185,.25);
+    0 0 14px
+    rgba(0,145,220,.25);
 }
 
 
 /* =========================================================
-   SUBJUDUL
+   SUBTITLE
 ========================================================= */
 
-.login-box > p {
+#googleLogin .login-box > p {
 
   position: relative;
 
-  z-index: 3;
-
-  margin:
-    0 auto
-    30px;
+  z-index: 10;
 
   max-width:
-    420px;
+    430px;
+
+  margin:
+    0 auto 30px;
 
   color:
-    #66798a;
+    var(--rail-muted);
 
   text-align:
     center;
@@ -593,21 +663,23 @@ body {
 
 
 /* =========================================================
-   FORM GROUP
+   FORM
 ========================================================= */
 
-.login-box .form-group {
+#googleLogin .login-box .form-group {
 
-  position: relative;
+  position:
+    relative;
 
-  z-index: 3;
+  z-index:
+    10;
 
   margin-bottom:
     18px;
 }
 
 
-.login-box .form-group label {
+#googleLogin .login-box .form-group label {
 
   display:
     block;
@@ -616,7 +688,7 @@ body {
     8px;
 
   color:
-    #304d63;
+    #2d4a60;
 
   font-size:
     13px;
@@ -627,14 +699,15 @@ body {
 
 
 /* =========================================================
-   INPUT
+   INPUT PREMIUM
 ========================================================= */
 
-.login-box #loginNama,
-.login-box #loginNipp,
-.login-box #loginJabatan {
+#googleLogin .login-box #loginNama,
+#googleLogin .login-box #loginNipp,
+#googleLogin .login-box #loginJabatan {
 
-  width: 100%;
+  width:
+    100%;
 
   min-height:
     51px;
@@ -647,47 +720,48 @@ body {
 
   border:
     1px solid
-    #d4e0e9;
+    #d3e0e9;
 
   border-radius:
-    11px;
+    12px;
 
   background:
     linear-gradient(
       135deg,
-      #f8fafc,
-      #f4f8fb
+      #f9fbfd,
+      #f2f7fa
     );
 
   color:
-    #263d4f;
+    #243d50;
 
   font-size:
     14px;
 
+  box-shadow:
+    inset 0 1px 2px
+    rgba(0,40,70,.025);
+
   transition:
-    border .2s ease,
-    box-shadow .2s ease,
-    background .2s ease,
-    transform .2s ease;
+    .22s ease;
 }
 
 
-.login-box #loginNama:hover,
-.login-box #loginNipp:hover,
-.login-box #loginJabatan:hover {
-
-  border-color:
-    #9fb5c6;
+#googleLogin .login-box #loginNama:hover,
+#googleLogin .login-box #loginNipp:hover,
+#googleLogin .login-box #loginJabatan:hover {
 
   background:
     #ffffff;
+
+  border-color:
+    #a8bccb;
 }
 
 
-.login-box #loginNama:focus,
-.login-box #loginNipp:focus,
-.login-box #loginJabatan:focus {
+#googleLogin .login-box #loginNama:focus,
+#googleLogin .login-box #loginNipp:focus,
+#googleLogin .login-box #loginJabatan:focus {
 
   outline:
     none;
@@ -696,76 +770,71 @@ body {
     #ffffff;
 
   border-color:
-    var(--rail-blue);
+    var(--rail-cyan);
 
   box-shadow:
 
     0 0 0 4px
-    rgba(0,102,169,.09),
+    rgba(0,169,232,.09),
 
-    0 7px 20px
-    rgba(0,70,110,.08);
+    0 8px 24px
+    rgba(0,65,110,.09);
 
   transform:
     translateY(-1px);
 }
 
 
-/* =========================================================
-   FIELD OTOMATIS
-========================================================= */
-
-.login-box #loginNipp[readonly],
-.login-box #loginJabatan[readonly] {
+#googleLogin .login-box #loginNipp[readonly],
+#googleLogin .login-box #loginJabatan[readonly] {
 
   background:
-
     linear-gradient(
       135deg,
-      #eef3f7,
-      #e9f0f5
+      #edf3f7,
+      #e6eef4
     );
 
   color:
-    #53697a;
+    #587083;
 }
 
 
 /* =========================================================
-   TOMBOL LOGIN
+   LOGIN BUTTON
 ========================================================= */
 
-.login-box #btnLogin {
+#googleLogin .login-box #btnLogin {
 
   position:
     relative;
 
   z-index:
-    4;
+    11;
 
   width:
     100% !important;
 
   min-height:
-    53px;
+    54px;
 
   margin-top:
     7px;
 
   border:
-    none;
+    0;
 
   border-radius:
-    11px;
+    12px;
 
   background:
 
     linear-gradient(
       105deg,
-      #001f3c 0%,
-      #004f82 42%,
-      #007fc2 76%,
-      #0067a7 100%
+      #011d35 0%,
+      #034e80 38%,
+      #007dbd 72%,
+      #0063a0 100%
     );
 
   color:
@@ -785,8 +854,8 @@ body {
 
   box-shadow:
 
-    0 12px 28px
-    rgba(0,65,110,.28),
+    0 13px 30px
+    rgba(0,64,105,.28),
 
     inset 0 1px 0
     rgba(255,255,255,.18);
@@ -795,27 +864,22 @@ body {
     hidden;
 
   transition:
-    transform .2s ease,
-    box-shadow .2s ease;
+    .22s ease;
 }
 
 
-/* =========================================================
-   CAHAYA BERGERAK
-========================================================= */
-
-.login-box #btnLogin::before {
+#googleLogin .login-box #btnLogin::before {
 
   content: "";
 
   position:
     absolute;
 
+  left:
+    -120%;
+
   top:
     0;
-
-  left:
-    -110%;
 
   width:
     55%;
@@ -824,11 +888,10 @@ body {
     100%;
 
   background:
-
     linear-gradient(
       90deg,
       transparent,
-      rgba(255,255,255,.32),
+      rgba(255,255,255,.34),
       transparent
     );
 
@@ -836,33 +899,32 @@ body {
     skewX(-20deg);
 
   transition:
-    left .65s ease;
+    left .7s ease;
 }
 
 
-.login-box #btnLogin:hover::before {
-
+#googleLogin .login-box #btnLogin:hover::before {
   left:
     145%;
 }
 
 
-.login-box #btnLogin:hover {
+#googleLogin .login-box #btnLogin:hover {
 
   transform:
     translateY(-2px);
 
   box-shadow:
 
-    0 17px 34px
-    rgba(0,70,115,.34),
+    0 18px 38px
+    rgba(0,67,110,.34),
 
-    0 0 20px
-    rgba(0,130,205,.12);
+    0 0 24px
+    rgba(0,150,225,.14);
 }
 
 
-.login-box #btnLogin:active {
+#googleLogin .login-box #btnLogin:active {
 
   transform:
     translateY(0);
@@ -873,7 +935,7 @@ body {
 }
 
 
-.login-box #btnLogin:disabled {
+#googleLogin .login-box #btnLogin:disabled {
 
   opacity:
     .55;
@@ -883,9 +945,6 @@ body {
 
   transform:
     none;
-
-  box-shadow:
-    none;
 }
 
 
@@ -893,10 +952,13 @@ body {
    STATUS
 ========================================================= */
 
-.login-box #statusLogin {
+#googleLogin .login-box #statusLogin {
 
   position:
     relative;
+
+  z-index:
+    10;
 
   margin-top:
     18px;
@@ -908,7 +970,6 @@ body {
     11px;
 
   background:
-
     linear-gradient(
       135deg,
       #f3f8fc,
@@ -920,7 +981,7 @@ body {
     var(--rail-blue);
 
   color:
-    #455d70;
+    #455e72;
 
   font-size:
     13px;
@@ -938,7 +999,13 @@ body {
    PROGRESS PANEL
 ========================================================= */
 
-.login-box #progressLogin {
+#googleLogin .login-box #progressLogin {
+
+  position:
+    relative;
+
+  z-index:
+    10;
 
   margin-top:
     17px;
@@ -946,32 +1013,27 @@ body {
   padding:
     15px;
 
-  border-radius:
-    12px;
-
   border:
     1px solid
-    #dbe5ec;
+    #d9e5ec;
+
+  border-radius:
+    13px;
 
   background:
-
     linear-gradient(
       135deg,
-      #f9fbfd,
-      #f3f7fa
+      #fbfdfe,
+      #f2f7fa
     );
 
   box-shadow:
     inset 0 1px 0
-    rgba(255,255,255,.8);
+    rgba(255,255,255,.9);
 }
 
 
-/* =========================================================
-   PROGRESS LABEL
-========================================================= */
-
-.login-box #progressLogin .progress-label {
+#googleLogin .login-box #progressLogin .progress-label {
 
   display:
     flex;
@@ -986,7 +1048,7 @@ body {
     9px;
 
   color:
-    #40586c;
+    #405a6e;
 
   font-size:
     12px;
@@ -996,11 +1058,7 @@ body {
 }
 
 
-/* =========================================================
-   PROGRESS TRACK
-========================================================= */
-
-.login-box #progressLogin .progress-track {
+#googleLogin .login-box #progressLogin .progress-track {
 
   position:
     relative;
@@ -1012,21 +1070,17 @@ body {
     8px;
 
   background:
-    #dfe8ee;
+    #dce7ee;
 
   border-radius:
-    999px;
+    99px;
 
   overflow:
     hidden;
 }
 
 
-/* =========================================================
-   PROGRESS BAR
-========================================================= */
-
-.login-box #progressLogin .progress-bar {
+#googleLogin .login-box #progressLogin .progress-bar {
 
   position:
     relative;
@@ -1035,33 +1089,27 @@ body {
     100%;
 
   border-radius:
-    999px;
+    99px;
 
   background:
-
     linear-gradient(
       90deg,
-      #003b67,
-      #007fc2,
-      #08a0dc,
+      #00365f,
+      #006eb0,
+      #00a8e5,
       #f58220
     );
 
   box-shadow:
-
-    0 0 15px
-    rgba(0,130,205,.35);
+    0 0 16px
+    rgba(0,145,220,.35);
 
   transition:
     width .4s ease;
 }
 
 
-/* =========================================================
-   PROGRESS LIGHT
-========================================================= */
-
-.login-box #progressLogin .progress-bar::after {
+#googleLogin .login-box #progressLogin .progress-bar::after {
 
   content: "";
 
@@ -1081,40 +1129,34 @@ body {
     100%;
 
   background:
-
     linear-gradient(
       90deg,
       transparent,
-      rgba(255,255,255,.65),
+      rgba(255,255,255,.7),
       transparent
     );
 
   animation:
     progressTrainLight
-    1.7s
-    linear
-    infinite;
+    1.5s linear infinite;
 }
 
 
 @keyframes progressTrainLight {
 
   from {
-    left: -40%;
+    left:
+      -40%;
   }
 
   to {
-    left: 120%;
+    left:
+      120%;
   }
-
 }
 
 
-/* =========================================================
-   PROGRESS PERCENT
-========================================================= */
-
-.login-box #progressLogin .progress-percent {
+#googleLogin .login-box #progressLogin .progress-percent {
 
   margin-top:
     9px;
@@ -1123,7 +1165,7 @@ body {
     center;
 
   color:
-    var(--rail-blue-dark);
+    var(--rail-deep);
 
   font-size:
     20px;
@@ -1133,7 +1175,7 @@ body {
 }
 
 
-.login-box #progressLogin .progress-note {
+#googleLogin .login-box #progressLogin .progress-note {
 
   margin-top:
     4px;
@@ -1150,7 +1192,7 @@ body {
 
 
 /* =========================================================
-   ANIMASI CARD
+   CARD ENTRY
 ========================================================= */
 
 @keyframes railwayLoginEnter {
@@ -1184,35 +1226,56 @@ body {
       translateY(0)
       scale(1);
   }
-
 }
 
 
 /* =========================================================
-   ANIMASI CAHAYA HORIZON
+   LOCOMOTIVE MOTION
 ========================================================= */
 
-@keyframes railwayHorizon {
+@keyframes locomotiveFloat {
+
+  0%,
+  100% {
+
+    transform:
+      translateX(-50%)
+      translateY(0);
+  }
+
+  50% {
+
+    transform:
+      translateX(-50%)
+      translateY(-5px);
+  }
+}
+
+
+@keyframes locomotiveLamp {
 
   0%,
   100% {
 
     opacity:
-      .45;
+      .65;
 
-    transform:
-      scaleX(.85);
+    box-shadow:
+      0 0 7px #ffffff,
+      0 0 15px #00d9ff,
+      0 0 28px rgba(0,190,255,.65);
   }
 
   50% {
 
     opacity:
-      .9;
+      1;
 
-    transform:
-      scaleX(1);
+    box-shadow:
+      0 0 8px #ffffff,
+      0 0 20px #00d9ff,
+      0 0 42px rgba(0,190,255,1);
   }
-
 }
 
 
@@ -1225,21 +1288,33 @@ body {
   #googleLogin {
 
     max-width:
-      570px;
+      580px;
+
+    min-height:
+      580px;
 
     padding:
       55px 15px
-      70px;
+      80px;
   }
 
 
-  .login-box {
+  #googleLogin .login-box {
 
     padding:
       36px 30px
       31px;
   }
 
+
+  #googleLogin .login-box::after {
+
+    width:
+      275px;
+
+    height:
+      128px;
+  }
 }
 
 
@@ -1252,11 +1327,11 @@ body {
   #googleLogin {
 
     min-height:
-      500px;
+      515px;
 
     padding:
-      38px 9px
-      55px;
+      35px 9px
+      65px;
   }
 
 
@@ -1273,40 +1348,39 @@ body {
   #googleLogin::after {
 
     width:
-      390px;
+      410px;
 
     height:
-      620px;
+      560px;
 
     opacity:
       .55;
   }
 
 
-  .login-box {
+  #googleLogin .login-box {
 
     padding:
       32px 21px
       26px;
 
     border-radius:
-      18px;
+      19px;
 
     box-shadow:
-
-      0 20px 45px
-      rgba(0,35,65,.17);
+      0 23px 50px
+      rgba(0,35,65,.18);
   }
 
 
-  .login-box h2 {
+  #googleLogin .login-box h2 {
 
     font-size:
       22px;
   }
 
 
-  .login-box > p {
+  #googleLogin .login-box > p {
 
     font-size:
       12px;
@@ -1316,16 +1390,16 @@ body {
   }
 
 
-  .login-box .form-group {
+  #googleLogin .login-box .form-group {
 
     margin-bottom:
       15px;
   }
 
 
-  .login-box #loginNama,
-  .login-box #loginNipp,
-  .login-box #loginJabatan {
+  #googleLogin .login-box #loginNama,
+  #googleLogin .login-box #loginNipp,
+  #googleLogin .login-box #loginJabatan {
 
     min-height:
       47px;
@@ -1335,12 +1409,24 @@ body {
   }
 
 
-  .login-box #btnLogin {
+  #googleLogin .login-box #btnLogin {
 
     min-height:
       50px;
   }
 
+
+  #googleLogin .login-box::after {
+
+    width:
+      220px;
+
+    height:
+      100px;
+
+    bottom:
+      -45px;
+  }
 }
 
 
@@ -1354,42 +1440,63 @@ body {
 
     padding:
       25px 6px
-      45px;
+      50px;
   }
 
 
-  .login-box {
+  #googleLogin .login-box {
 
     padding:
       28px 16px
       22px;
 
     border-radius:
-      16px;
+      17px;
   }
 
 
-  .login-box h2 {
+  #googleLogin .login-box h2 {
 
     font-size:
       20px;
   }
 
 
-  .login-box > p {
+  #googleLogin .login-box > p {
 
     font-size:
       11px;
   }
 
 
-  #googleLogin::after {
+  #googleLogin .login-box::after {
 
     opacity:
-      .35;
+      .55;
+
+    width:
+      190px;
+
+    height:
+      88px;
   }
 
+
+  #googleLogin .login-box::before {
+
+    bottom:
+      54px;
+
+    width:
+      9px;
+
+    height:
+      9px;
+  }
 }
+
+
+
 /* =========================================================
    APP
 ========================================================= */
