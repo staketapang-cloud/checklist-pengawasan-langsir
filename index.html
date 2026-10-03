@@ -59,390 +59,269 @@ body {
 
 
 /* =========================================================
-   LOGIN — KAI DIGITAL RAILWAY 2026
-   SMOOTH • FULLSCREEN • MOBILE FIRST
-   TANPA KOTAK / TANPA BORDER BERAT
+   LOGIN — RAILWAY PREMIUM UI
+   NUANSA PERKERETAAPIAN MODERN
    HTML & JAVASCRIPT TIDAK DIUBAH
 ========================================================= */
 
-:root{
-  --rail-blue:#0756a8;
-  --rail-blue-dark:#032d5c;
-  --rail-blue-deep:#011a35;
-  --rail-blue-soft:#0d73d5;
-  --rail-orange:#f58220;
-  --rail-orange-light:#ffab52;
-  --rail-white:#ffffff;
-  --rail-text:#eaf4ff;
-  --rail-muted:#9db5ce;
-}
-
 
 /* =========================================================
-   FULL SCREEN LOGIN
+   AREA LOGIN
 ========================================================= */
 
-html,
-body{
-  width:100%;
-  min-height:100%;
-  margin:0;
-  padding:0;
+#googleLogin {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 70px 20px 90px;
 
-  overflow-x:hidden;
-}
+  min-height: 560px;
 
-body{
-  overscroll-behavior:none;
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-
-/* =========================================================
-   LOGIN STAGE
-========================================================= */
-
-#googleLogin{
-  position:relative;
-
-  width:100%;
-  max-width:none;
-
-  min-height:100svh;
-  min-height:100dvh;
-  height:100dvh;
-
-  margin:0;
-  padding:
-    max(22px, env(safe-area-inset-top))
-    20px
-    max(22px, env(safe-area-inset-bottom));
-
-  box-sizing:border-box;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  overflow:hidden;
-
-  isolation:isolate;
+  overflow: hidden;
 
   background:
     radial-gradient(
-      circle at 50% 35%,
-      rgba(18,111,207,.30) 0%,
-      rgba(18,111,207,.08) 25%,
-      transparent 55%
-    ),
+      circle at 50% 30%,
+      rgba(31, 95, 145, 0.10),
+      transparent 45%
+    );
+}
+
+
+/* =========================================================
+   CAHAYA DI BELAKANG CARD
+========================================================= */
+
+#googleLogin::before {
+
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
     radial-gradient(
-      circle at 10% 100%,
-      rgba(245,130,32,.14),
-      transparent 35%
-    ),
-    linear-gradient(
-      145deg,
-      #01152b 0%,
-      #032c55 42%,
-      #061b34 100%
+      circle,
+      rgba(31, 95, 145, 0.13) 0%,
+      rgba(31, 95, 145, 0.05) 35%,
+      transparent 70%
     );
 
-  color:var(--rail-white);
+  pointer-events: none;
 }
 
 
 /* =========================================================
-   DIGITAL GRID
+   JALUR REL — GARIS REL KIRI
 ========================================================= */
 
-#googleLogin::before{
-  content:"";
+#googleLogin::after {
 
-  position:absolute;
-  inset:-20%;
+  content: "";
 
-  z-index:-2;
+  position: absolute;
 
-  opacity:.34;
+  width: 460px;
+  height: 700px;
 
-  background-image:
-    linear-gradient(
-      rgba(91,169,240,.075) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(91,169,240,.075) 1px,
-      transparent 1px
-    );
-
-  background-size:
-    48px 48px;
-
-  transform:
-    perspective(700px)
-    rotateX(62deg)
-    translateY(15%);
-
-  transform-origin:center bottom;
-
-  mask-image:
-    linear-gradient(
-      to top,
-      rgba(0,0,0,1),
-      rgba(0,0,0,.7),
-      transparent 78%
-    );
-
-  -webkit-mask-image:
-    linear-gradient(
-      to top,
-      rgba(0,0,0,1),
-      rgba(0,0,0,.7),
-      transparent 78%
-    );
-}
-
-
-/* =========================================================
-   HORIZON / LIGHT
-========================================================= */
-
-#googleLogin::after{
-  content:"";
-
-  position:absolute;
-
-  left:50%;
-  bottom:-8%;
-
-  width:120%;
-  height:45%;
-
-  z-index:-1;
+  left: 50%;
+  top: 35px;
 
   transform:
     translateX(-50%)
     perspective(500px)
     rotateX(62deg);
 
-  transform-origin:center bottom;
+  transform-origin: center top;
+
+  background:
+
+    /* REL KIRI */
+    linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 18%,
+      rgba(31, 78, 120, 0.16) 18.5%,
+      rgba(31, 78, 120, 0.16) 19.5%,
+      transparent 20%,
+      transparent 80%,
+      rgba(31, 78, 120, 0.16) 80.5%,
+      rgba(31, 78, 120, 0.16) 81.5%,
+      transparent 82%
+    ),
+
+    /* BANTALAN REL */
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 19%,
+      rgba(31, 78, 120, 0.10) 19.5%,
+      rgba(31, 78, 120, 0.10) 20.5%,
+      transparent 21%,
+      transparent 79%,
+      rgba(31, 78, 120, 0.10) 79.5%,
+      rgba(31, 78, 120, 0.10) 80.5%,
+      transparent 81%
+    );
+
+  opacity: 0.65;
+
+  pointer-events: none;
+
+  z-index: 0;
+}
+
+
+/* =========================================================
+   CARD LOGIN
+========================================================= */
+
+.login-box {
+
+  position: relative;
+
+  z-index: 5;
+
+  width: 100%;
+
+  padding: 38px 40px 34px;
 
   background:
     linear-gradient(
-      to top,
-      rgba(0,110,255,.18),
+      145deg,
+      rgba(255,255,255,0.99),
+      rgba(248,251,254,0.98)
+    );
+
+  border-radius: 22px;
+
+  border: 1px solid rgba(31,78,120,0.10);
+
+  box-shadow:
+    0 30px 70px rgba(15,45,75,0.18),
+    0 8px 20px rgba(15,45,75,0.08);
+
+  overflow: hidden;
+
+  animation:
+    railwayLoginEnter 0.7s cubic-bezier(.2,.8,.2,1);
+}
+
+
+/* =========================================================
+   GARIS CORPORATE BIRU + ORANYE
+========================================================= */
+
+.login-box::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 6px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #123f68 0%,
+      #1f5f91 65%,
+      #f58220 100%
+    );
+}
+
+
+/* =========================================================
+   EFEK CAHAYA CARD
+========================================================= */
+
+.login-box::after {
+
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  right: -90px;
+  top: -90px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(31,95,145,0.10),
       transparent 70%
     );
 
-  filter:blur(3px);
-
-  pointer-events:none;
+  pointer-events: none;
 }
 
 
 /* =========================================================
-   LOGIN CONTENT
-   TIDAK LAGI SEPERTI KOTAK
+   JUDUL
 ========================================================= */
 
-.login-box{
-  position:relative;
+.login-box h2 {
 
-  width:min(440px, 100%);
+  position: relative;
 
-  padding:
-    12px
-    8px
-    10px;
+  z-index: 3;
 
-  box-sizing:border-box;
+  margin: 5px 0 9px;
 
-  background:transparent;
+  color: #123f68;
 
-  border:0;
-  border-radius:0;
+  text-align: center;
 
-  box-shadow:none;
+  font-size: 27px;
 
-  text-align:center;
+  font-weight: 800;
 
-  z-index:5;
-
-  animation:
-    loginSmooth
-    .8s
-    cubic-bezier(.22,.61,.36,1)
-    both;
+  letter-spacing: -0.5px;
 }
 
 
 /* =========================================================
-   TOP ORANGE ENERGY LINE
+   SUBJUDUL
 ========================================================= */
 
-.login-box::before{
-  content:"";
+.login-box > p {
 
-  position:absolute;
+  position: relative;
 
-  top:-18px;
-  left:50%;
+  z-index: 3;
 
-  width:120px;
-  height:3px;
+  margin: 0 auto 30px;
 
-  transform:translateX(-50%);
+  max-width: 410px;
 
-  border-radius:999px;
+  color: #667788;
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      var(--rail-orange),
-      #fff,
-      var(--rail-orange),
-      transparent
-    );
+  text-align: center;
 
-  box-shadow:
-    0 0 10px rgba(245,130,32,.75),
-    0 0 30px rgba(245,130,32,.35);
+  font-size: 13px;
 
-  animation:
-    energyPulse
-    2.4s
-    ease-in-out
-    infinite;
-}
-
-
-/* =========================================================
-   DIGITAL LOCOMOTIVE / HEADLIGHT
-========================================================= */
-
-.login-box::after{
-  content:"";
-
-  position:absolute;
-
-  top:-66px;
-  left:50%;
-
-  width:10px;
-  height:10px;
-
-  transform:translateX(-50%);
-
-  border-radius:50%;
-
-  background:#fff;
-
-  box-shadow:
-    0 0 5px #fff,
-    0 0 16px #8dccff,
-    0 0 35px rgba(49,156,255,.85),
-    0 0 65px rgba(49,156,255,.45);
-
-  animation:
-    headlightPulse
-    2.8s
-    ease-in-out
-    infinite;
-}
-
-
-/* =========================================================
-   BRAND MARK
-========================================================= */
-
-.login-box h2{
-  position:relative;
-
-  margin:
-    0
-    0
-    12px;
-
-  padding:0;
-
-  font-size:
-    clamp(26px, 5vw, 36px);
-
-  line-height:1.08;
-
-  font-weight:800;
-
-  letter-spacing:-.8px;
-
-  color:#fff;
-
-  text-shadow:
-    0 2px 18px rgba(0,0,0,.35);
-
-  background:
-    linear-gradient(
-      90deg,
-      #ffffff 0%,
-      #dceeff 48%,
-      #ffffff 100%
-    );
-
-  -webkit-background-clip:text;
-  background-clip:text;
-
-  -webkit-text-fill-color:transparent;
-}
-
-
-/* =========================================================
-   ORANGE ACCENT UNDER TITLE
-========================================================= */
-
-.login-box h2::after{
-  content:"";
-
-  display:block;
-
-  width:54px;
-  height:3px;
-
-  margin:12px auto 0;
-
-  border-radius:999px;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--rail-orange),
-      #ffb35f
-    );
-
-  box-shadow:
-    0 0 12px rgba(245,130,32,.45);
-}
-
-
-/* =========================================================
-   SUBTITLE
-========================================================= */
-
-.login-box p{
-  margin:
-    0
-    auto
-    28px;
-
-  max-width:390px;
-
-  font-size:13px;
-
-  line-height:1.55;
-
-  letter-spacing:.25px;
-
-  color:
-    rgba(220,235,249,.72);
+  line-height: 1.6;
 }
 
 
@@ -450,204 +329,210 @@ body{
    FORM GROUP
 ========================================================= */
 
-.login-box .form-group{
-  position:relative;
+.login-box .form-group {
 
-  margin-bottom:14px;
+  position: relative;
 
-  text-align:left;
+  z-index: 3;
+
+  margin-bottom: 18px;
+}
+
+
+.login-box .form-group label {
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #334e63;
+
+  font-size: 13px;
+
+  font-weight: 700;
 }
 
 
 /* =========================================================
-   LABEL
+   INPUT
 ========================================================= */
 
-.login-box label{
-  display:block;
+.login-box #loginNama,
+.login-box #loginNipp,
+.login-box #loginJabatan {
 
-  margin:
-    0
-    0
-    6px
-    4px;
+  width: 100%;
 
-  font-size:11px;
+  min-height: 50px;
 
-  font-weight:700;
+  padding: 12px 15px;
 
-  letter-spacing:.7px;
+  border: 1px solid #d6e0e8;
 
-  text-transform:uppercase;
+  border-radius: 10px;
 
-  color:
-    rgba(184,211,235,.72);
-}
+  background: #f8fafc;
 
+  color: #263b4d;
 
-/* =========================================================
-   INPUT — GLASS / NO BOX HEAVY
-========================================================= */
-
-.login-box input,
-.login-box select{
-  width:100%;
-
-  min-height:48px;
-
-  box-sizing:border-box;
-
-  padding:
-    0
-    15px;
-
-  border:1px solid
-    rgba(255,255,255,.13);
-
-  border-radius:13px;
-
-  outline:none;
-
-  color:#fff;
-
-  background:
-    rgba(255,255,255,.065);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.06),
-    0 8px 25px rgba(0,0,0,.12);
-
-  backdrop-filter:
-    blur(12px);
-
-  -webkit-backdrop-filter:
-    blur(12px);
+  font-size: 14px;
 
   transition:
-    border-color .25s ease,
-    background .25s ease,
-    box-shadow .25s ease,
-    transform .25s ease;
+    all 0.2s ease;
 }
 
 
-.login-box input::placeholder{
-  color:
-    rgba(202,220,238,.40);
+.login-box #loginNama:hover,
+.login-box #loginNipp:hover,
+.login-box #loginJabatan:hover {
+
+  border-color: #aebfcc;
+
 }
 
 
-.login-box input:focus,
-.login-box select:focus{
-  border-color:
-    rgba(70,166,255,.75);
+.login-box #loginNama:focus,
+.login-box #loginNipp:focus,
+.login-box #loginJabatan:focus {
 
-  background:
-    rgba(255,255,255,.095);
+  outline: none;
+
+  background: #ffffff;
+
+  border-color: #1f5f91;
 
   box-shadow:
-    0 0 0 3px rgba(28,130,220,.10),
-    0 10px 30px rgba(0,0,0,.16);
+    0 0 0 4px rgba(31,95,145,0.09);
 
-  transform:
-    translateY(-1px);
 }
 
 
 /* =========================================================
-   LOGIN BUTTON
+   FIELD OTOMATIS
 ========================================================= */
 
-#btnLogin{
-  position:relative;
+.login-box #loginNipp[readonly],
+.login-box #loginJabatan[readonly] {
 
-  width:100%;
+  background: #eef3f7;
 
-  min-height:51px;
+  color: #526576;
+}
 
-  margin-top:8px;
 
-  border:0;
+/* =========================================================
+   TOMBOL MASUK
+========================================================= */
 
-  border-radius:15px;
+.login-box #btnLogin {
 
-  cursor:pointer;
+  position: relative;
 
-  overflow:hidden;
+  z-index: 4;
 
-  color:#fff;
+  width: 100% !important;
 
-  font-size:14px;
+  min-height: 52px;
 
-  font-weight:800;
+  margin-top: 7px;
 
-  letter-spacing:.45px;
+  border: none;
+
+  border-radius: 10px;
 
   background:
     linear-gradient(
-      105deg,
-      #064f9d 0%,
-      #0872cf 48%,
-      #f58220 100%
+      100deg,
+      #123f68 0%,
+      #1f5f91 70%,
+      #236b9f 100%
     );
 
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.8px;
+
+  cursor: pointer;
+
   box-shadow:
-    0 10px 28px rgba(0,67,145,.28),
-    0 4px 12px rgba(245,130,32,.12);
+    0 10px 24px rgba(18,63,104,0.24);
+
+  overflow: hidden;
 
   transition:
-    transform .2s ease,
-    box-shadow .2s ease,
-    filter .2s ease;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 
-#btnLogin::before{
-  content:"";
+/* =========================================================
+   CAHAYA BERGERAK DI TOMBOL
+========================================================= */
 
-  position:absolute;
+.login-box #btnLogin::before {
 
-  inset:0;
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  width: 60%;
+  height: 100%;
 
   background:
     linear-gradient(
-      110deg,
-      transparent 20%,
-      rgba(255,255,255,.20) 48%,
-      transparent 72%
+      90deg,
+      transparent,
+      rgba(255,255,255,0.20),
+      transparent
     );
 
-  transform:
-    translateX(-110%);
+  transform: skewX(-20deg);
 
   transition:
-    transform .65s ease;
+    left 0.6s ease;
 }
 
 
-#btnLogin:hover{
-  transform:
-    translateY(-2px);
+.login-box #btnLogin:hover::before {
+
+  left: 140%;
+}
+
+
+.login-box #btnLogin:hover {
+
+  transform: translateY(-2px);
 
   box-shadow:
-    0 15px 35px rgba(0,67,145,.34),
-    0 6px 18px rgba(245,130,32,.18);
-
-  filter:
-    brightness(1.05);
+    0 14px 30px rgba(18,63,104,0.30);
 }
 
 
-#btnLogin:hover::before{
-  transform:
-    translateX(110%);
+.login-box #btnLogin:active {
+
+  transform: translateY(0);
+
+  box-shadow:
+    0 6px 15px rgba(18,63,104,0.20);
 }
 
 
-#btnLogin:active{
-  transform:
-    translateY(0)
-    scale(.985);
+.login-box #btnLogin:disabled {
+
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
 }
 
 
@@ -655,18 +540,23 @@ body{
    STATUS
 ========================================================= */
 
-#statusLogin{
-  margin-top:14px;
+.login-box #statusLogin {
 
-  min-height:18px;
+  margin-top: 18px;
 
-  font-size:12px;
+  padding: 13px 15px;
 
-  color:
-    rgba(210,228,245,.72);
+  border-radius: 10px;
 
-  transition:
-    opacity .25s ease;
+  background: #f2f7fb;
+
+  border-left: 4px solid #1f5f91;
+
+  color: #455d70;
+
+  font-size: 13px;
+
+  line-height: 1.5;
 }
 
 
@@ -674,380 +564,248 @@ body{
    PROGRESS
 ========================================================= */
 
-#progressLogin{
-  margin-top:16px;
+.login-box #progressLogin {
+
+  margin-top: 17px;
+
+  padding: 15px;
+
+  border-radius: 11px;
+
+  border: 1px solid #dce5ec;
+
+  background: #f8fafc;
+}
+
+
+.login-box #progressLogin .progress-label {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-bottom: 9px;
+
+  color: #40586c;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+
+.login-box #progressLogin .progress-track {
+
+  width: 100%;
+
+  height: 8px;
+
+  background: #e3e9ee;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+
+.login-box #progressLogin .progress-bar {
+
+  height: 100%;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #123f68,
+      #1f5f91,
+      #f58220
+    );
+
+  transition:
+    width 0.4s ease;
+}
+
+
+.login-box #progressLogin .progress-percent {
+
+  margin-top: 9px;
+
+  text-align: center;
+
+  color: #123f68;
+
+  font-size: 20px;
+
+  font-weight: 800;
+}
+
+
+.login-box #progressLogin .progress-note {
+
+  margin-top: 4px;
+
+  text-align: center;
+
+  color: #718293;
+
+  font-size: 11px;
 }
 
 
 /* =========================================================
-   FOOTER FEEL
+   ANIMASI MASUK
 ========================================================= */
 
-.login-box::marker{
-  display:none;
-}
+@keyframes railwayLoginEnter {
 
+  0% {
 
-/* =========================================================
-   ANIMATIONS
-========================================================= */
+    opacity: 0;
 
-@keyframes loginSmooth{
-
-  from{
-    opacity:0;
     transform:
-      translateY(16px)
-      scale(.985);
+      translateY(25px)
+      scale(0.97);
   }
 
-  to{
-    opacity:1;
+  100% {
+
+    opacity: 1;
+
     transform:
       translateY(0)
       scale(1);
   }
-
 }
 
 
-@keyframes energyPulse{
+/* =========================================================
+   TABLET
+========================================================= */
 
-  0%,
-  100%{
-    opacity:.55;
-    transform:
-      translateX(-50%)
-      scaleX(.75);
+@media (max-width: 768px) {
+
+  #googleLogin {
+
+    max-width: 570px;
+
+    padding:
+      55px 15px
+      70px;
   }
 
-  50%{
-    opacity:1;
-    transform:
-      translateX(-50%)
-      scaleX(1.25);
-  }
+  .login-box {
 
+    padding:
+      34px 30px
+      30px;
+  }
 }
 
 
-@keyframes headlightPulse{
+/* =========================================================
+   HP
+========================================================= */
 
-  0%,
-  100%{
-    opacity:.55;
+@media (max-width: 600px) {
+
+  #googleLogin {
+
+    min-height: 500px;
+
+    margin: 0 auto;
+
+    padding:
+      38px 9px
+      55px;
+  }
+
+  #googleLogin::after {
+
+    width: 380px;
+
+    opacity: 0.45;
+  }
+
+  .login-box {
+
+    padding:
+      31px 21px
+      25px;
+
+    border-radius: 17px;
+
     box-shadow:
-      0 0 5px #fff,
-      0 0 12px #8dccff,
-      0 0 28px rgba(49,156,255,.65);
+      0 18px 42px rgba(15,45,75,0.15);
   }
 
-  50%{
-    opacity:1;
-    box-shadow:
-      0 0 7px #fff,
-      0 0 20px #8dccff,
-      0 0 45px rgba(49,156,255,.95);
+  .login-box h2 {
+
+    font-size: 22px;
   }
 
+  .login-box > p {
+
+    font-size: 12px;
+
+    margin-bottom: 24px;
+  }
+
+  .login-box .form-group {
+
+    margin-bottom: 15px;
+  }
+
+  .login-box #loginNama,
+  .login-box #loginNipp,
+  .login-box #loginJabatan {
+
+    min-height: 47px;
+
+    font-size: 14px;
+  }
+
+  .login-box #btnLogin {
+
+    min-height: 50px;
+  }
 }
 
 
 /* =========================================================
-   MOBILE — FULLSCREEN
+   HP KECIL
 ========================================================= */
 
-@media (max-width:600px){
+@media (max-width: 400px) {
 
-  html,
-  body{
-    width:100%;
-    height:100%;
-
-    overflow:hidden !important;
-
-    overscroll-behavior:none;
-  }
-
-
-  #googleLogin{
-
-    width:100%;
-
-    min-height:100svh;
-    min-height:100dvh;
-
-    height:100dvh;
+  #googleLogin {
 
     padding:
-      max(18px, env(safe-area-inset-top))
-      18px
-      max(18px, env(safe-area-inset-bottom));
-
-    align-items:center;
-
-    justify-content:center;
-
-    overflow:hidden;
+      25px 6px
+      45px;
   }
 
-
-  #googleLogin::before{
-
-    background-size:
-      32px 32px;
-
-    opacity:.24;
-
-    transform:
-      perspective(500px)
-      rotateX(65deg)
-      translateY(16%);
-  }
-
-
-  #googleLogin::after{
-
-    width:180%;
-
-    bottom:-5%;
-
-    height:36%;
-  }
-
-
-  .login-box{
-
-    width:100%;
-
-    max-width:370px;
+  .login-box {
 
     padding:
-      4px
-      2px
-      4px;
+      27px 16px
+      22px;
+
+    border-radius: 15px;
   }
 
+  .login-box h2 {
 
-  .login-box::before{
-
-    top:-12px;
-
-    width:85px;
-
-    height:2px;
+    font-size: 20px;
   }
 
+  .login-box > p {
 
-  .login-box::after{
-
-    top:-48px;
-
-    width:7px;
-    height:7px;
+    font-size: 11px;
   }
-
-
-  .login-box h2{
-
-    margin-bottom:9px;
-
-    font-size:
-      clamp(24px, 7vw, 30px);
-
-    letter-spacing:-.6px;
-  }
-
-
-  .login-box h2::after{
-
-    width:42px;
-
-    height:2px;
-
-    margin-top:9px;
-  }
-
-
-  .login-box p{
-
-    max-width:320px;
-
-    margin-bottom:19px;
-
-    font-size:11px;
-
-    line-height:1.45;
-  }
-
-
-  .login-box .form-group{
-
-    margin-bottom:10px;
-  }
-
-
-  .login-box label{
-
-    margin-bottom:4px;
-
-    font-size:9px;
-
-    letter-spacing:.55px;
-  }
-
-
-  .login-box input,
-  .login-box select{
-
-    min-height:43px;
-
-    padding:
-      0
-      13px;
-
-    font-size:13px;
-
-    border-radius:11px;
-  }
-
-
-  #btnLogin{
-
-    min-height:46px;
-
-    margin-top:5px;
-
-    border-radius:12px;
-
-    font-size:13px;
-  }
-
-
-  #statusLogin{
-
-    margin-top:9px;
-
-    font-size:10px;
-  }
-
-
-  #progressLogin{
-
-    margin-top:10px;
-  }
-
 }
 
 
-/* =========================================================
-   HP KECIL — 360px
-========================================================= */
-
-@media (max-width:380px){
-
-  #googleLogin{
-
-    padding-left:15px;
-    padding-right:15px;
-  }
-
-
-  .login-box{
-
-    max-width:340px;
-  }
-
-
-  .login-box h2{
-
-    font-size:23px;
-  }
-
-
-  .login-box p{
-
-    margin-bottom:15px;
-
-    font-size:10px;
-  }
-
-
-  .login-box .form-group{
-
-    margin-bottom:8px;
-  }
-
-
-  .login-box input,
-  .login-box select{
-
-    min-height:40px;
-
-    font-size:12px;
-  }
-
-
-  #btnLogin{
-
-    min-height:43px;
-  }
-
-}
-
-
-/* =========================================================
-   LANDSCAPE HP
-========================================================= */
-
-@media (max-height:520px) and (orientation:landscape){
-
-  #googleLogin{
-
-    align-items:flex-start;
-
-    padding-top:
-      max(12px, env(safe-area-inset-top));
-
-    padding-bottom:
-      max(12px, env(safe-area-inset-bottom));
-  }
-
-
-  .login-box{
-
-    transform:
-      scale(.82);
-
-    transform-origin:
-      center top;
-  }
-
-
-  .login-box h2{
-
-    margin-bottom:6px;
-  }
-
-
-  .login-box p{
-
-    margin-bottom:10px;
-  }
-
-
-  .login-box .form-group{
-
-    margin-bottom:6px;
-  }
-
-}
-
-
-/* =========================================================
-   SELESAI LOGIN
-   JANGAN UBAH BAGIAN APP DI BAWAH
-========================================================= */
 /* =========================================================
    APP
 ========================================================= */
