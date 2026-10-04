@@ -11842,7 +11842,23 @@ resolve({
 
 });
 
-}
+    }
+
+    catch (error) {
+
+      console.error(
+        "GAGAL MEMBUAT PREVIEW JPG A4 COMPACT:",
+        error
+      );
+
+      reject(
+        error
+      );
+
+    }
+
+  }
+);
 
 /* =====================================================
    HELPER FONT CHECKLIST
