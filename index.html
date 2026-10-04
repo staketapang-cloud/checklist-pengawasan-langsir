@@ -9080,6 +9080,7 @@ y +=
 
 
 
+
 /* =====================================================
    HEADER TABEL
 ===================================================== */
@@ -9171,19 +9172,15 @@ ctx.fillText(
 ctx.strokeStyle =
   "#ffffff";
 
-
 ctx.lineWidth =
   1;
 
-
 ctx.beginPath();
-
 
 ctx.moveTo(
   colX4 + 5,
   y + 18
 );
-
 
 ctx.lineTo(
   colX4 +
@@ -9191,7 +9188,6 @@ ctx.lineTo(
   5,
   y + 18
 );
-
 
 ctx.stroke();
 
@@ -9201,12 +9197,10 @@ ctx.stroke();
 ===================================================== */
 
 ctx.font =
-  "bold 16px Arial";
-
+  "bold 12px Arial";
 
 ctx.fillStyle =
   "#ffffff";
-
 
 ctx.fillText(
   "YA | TIDAK",
@@ -9225,10 +9219,8 @@ ctx.fillText(
 ctx.font =
   "bold 16px Arial";
 
-
 ctx.fillStyle =
   "#ffffff";
-
 
 ctx.fillText(
   "KETERANGAN / TEMUAN",
@@ -9241,8 +9233,94 @@ ctx.fillText(
 
 
 /* =====================================================
+   PEMBATAS VERTIKAL ANTAR KOLOM
+   MENGIKUTI GARIS KOLOM
+===================================================== */
+
+ctx.strokeStyle =
+  "#ffffff";
+
+ctx.lineWidth =
+  1;
+
+
+/* NO | URAIAN */
+
+ctx.beginPath();
+
+ctx.moveTo(
+  colX2,
+  y
+);
+
+ctx.lineTo(
+  colX2,
+  y +
+  tableHeaderHeight
+);
+
+ctx.stroke();
+
+
+/* URAIAN | STANDAR */
+
+ctx.beginPath();
+
+ctx.moveTo(
+  colX3,
+  y
+);
+
+ctx.lineTo(
+  colX3,
+  y +
+  tableHeaderHeight
+);
+
+ctx.stroke();
+
+
+/* STANDAR | KONDISI */
+
+ctx.beginPath();
+
+ctx.moveTo(
+  colX4,
+  y
+);
+
+ctx.lineTo(
+  colX4,
+  y +
+  tableHeaderHeight
+);
+
+ctx.stroke();
+
+
+/* KONDISI | KETERANGAN */
+
+ctx.beginPath();
+
+ctx.moveTo(
+  colX5,
+  y
+);
+
+ctx.lineTo(
+  colX5,
+  y +
+  tableHeaderHeight
+);
+
+ctx.stroke();
+
+
+/* =====================================================
    SELESAI HEADER
 ===================================================== */
+
+
 
 
       y +=
