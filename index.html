@@ -10026,37 +10026,23 @@ ctx.fillRect(
     );
 
 
-  var uraianStartY =
-    rowY +
-    (
-      rowHeight -
-      (
-        uraianLines.length *
-        10
-      )
-    ) / 2 +
-    7;
+var uraianStartY =
+  rowY +
+  (
+    (rowHeight -
+    (uraianLines.length * 15))
+    / 2
+  ) +
+  10;
 
-
-  uraianLines.forEach(
-    function(
-      line,
-      lineIndex
-    ) {
-
-      ctx.fillText(
-        line,
-        colX2 + 6,
-        uraianStartY +
-        (
-          lineIndex *
-          10
-        )
-      );
-
-    }
+uraianLines.forEach(function(line,lineIndex){
+  ctx.fillText(
+    line,
+    colX2 + 6,
+    uraianStartY +
+    (lineIndex * 15)
   );
-
+});
 
 /* =====================================================
    STANDAR
