@@ -11585,113 +11585,107 @@ btnPDF.onclick =
         navigator.canShare;
 
 
-      /* =================================================
-         SAFARI iPHONE / iPAD
-         SHARE FILE PDF
-      ================================================= */
+/* =================================================
+   SAFARI iPHONE / iPAD
+   SHARE FILE PDF
+================================================= */
 
-      if (
-        gunakanShareSafari
-      ) {
+if (
+  gunakanShareSafari
+) {
 
-        var pdfBlob =
-          pdf.output(
-            "blob"
-          );
+  var pdfBlob =
+    pdf.output(
+      "blob"
+    );
 
+  var pdfFile =
+    new File(
+      [pdfBlob],
+      namaFile,
+      {
+        type:
+          "application/pdf"
+      }
+    );
 
-        var pdfFile =
-          new File(
-            [pdfBlob],
-            namaFile,
-            {
-              type:
-                "application/pdf"
-            }
-          );
+  if (
+    navigator.canShare({
+      files: [pdfFile]
+    })
+  ) {
 
+    navigator.share({
+
+      files: [pdfFile],
+
+      title:
+        "Checklist Pengawasan Kegiatan Langsir",
+
+      text:
+        "Hasil Checklist Pengawasan Kegiatan Langsir"
+
+    })
+
+    .then(
+      function() {
+
+        console.log(
+          "PDF berhasil dibagikan."
+        );
+
+      }
+    )
+
+    .catch(
+      function(error) {
 
         if (
-          navigator.canShare({
-            files: [pdfFile]
-          })
+          error &&
+          error.name ===
+            "AbortError"
         ) {
 
-          navigator.share({
-
-            files: [pdfFile],
-
-            title:
-              "Checklist Pengawasan Kegiatan Langsir",
-
-            text:
-              "Hasil Checklist Pengawasan Kegiatan Langsir"
-
-          })
-
-          .then(
-            function() {
-
-              console.log(
-                "PDF berhasil dibagikan."
-              );
-
-            }
-          )
-
-          .catch(
-            function(error) {
-
-              if (
-                error &&
-                error.name ===
-                  "AbortError"
-              ) {
-
-                console.log(
-                  "Menu Share PDF ditutup oleh pengguna."
-                );
-
-                return;
-
-              }
-
-
-              console.warn(
-                "Share PDF Safari gagal, menggunakan download biasa:",
-                error
-              );
-
-
-              pdf.save(
-                namaFile
-              );
-
-            }
+          console.log(
+            "Menu Share PDF ditutup oleh pengguna."
           );
-
 
           return;
 
         }
 
+        console.warn(
+          "Share PDF Safari gagal, menggunakan download biasa:",
+          error
+        );
+
+        pdf.save(
+          namaFile
+        );
+
       }
+    );
+
+    return;
+
+  }
+
+}
 
 
-      /* =================================================
-         CHROME / EDGE / FIREFOX / DESKTOP / ANDROID
-         DOWNLOAD LANGSUNG
-      ================================================= */
+/* =================================================
+   CHROME / EDGE / FIREFOX / DESKTOP / ANDROID
+   DOWNLOAD LANGSUNG
+================================================= */
 
-      pdf.save(
-        namaFile
-      );
+pdf.save(
+  namaFile
+);
 
-
-      console.log(
-        "PDF BERHASIL DIDOWNLOAD:",
-        namaFile
-      );
+console.log(
+  "PDF BERHASIL DIDOWNLOAD:",
+  namaFile
+);
 
     }
 
@@ -11703,7 +11697,6 @@ btnPDF.onclick =
         "GAGAL MEMBUAT PDF:",
         errorPDF
       );
-
 
       alert(
         "PDF gagal dibuat.\n\n" +
@@ -11721,50 +11714,43 @@ btnPDF.onclick =
 tombolArea.appendChild(
   btnPDF
 );
-      /* =====================================================
-         TUTUP
-      ===================================================== */
-
-      var btnTutup =
-        document.createElement(
-          "button"
-        );
 
 
-      btnTutup.type =
-        "button";
+/* =====================================================
+   TUTUP
+===================================================== */
 
+var btnTutup =
+  document.createElement(
+    "button"
+  );
 
-      btnTutup.textContent =
-        "TUTUP PREVIEW";
+btnTutup.type =
+  "button";
 
+btnTutup.textContent =
+  "TUTUP PREVIEW";
 
-      btnTutup.style.background =
-        "#6c757d";
+btnTutup.style.background =
+  "#6c757d";
 
+btnTutup.style.color =
+  "#ffffff";
 
-      btnTutup.style.color =
-        "#ffffff";
+btnTutup.style.border =
+  "none";
 
+btnTutup.style.padding =
+  "11px 18px";
 
-      btnTutup.style.border =
-        "none";
+btnTutup.style.borderRadius =
+  "6px";
 
+btnTutup.style.cursor =
+  "pointer";
 
-      btnTutup.style.padding =
-        "11px 18px";
-
-
-      btnTutup.style.borderRadius =
-        "6px";
-
-
-      btnTutup.style.cursor =
-        "pointer";
-
-
-      btnTutup.style.fontWeight =
-        "bold";
+btnTutup.style.fontWeight =
+  "bold";
 
 
 btnTutup.onclick =
@@ -11780,13 +11766,31 @@ btnTutup.onclick =
 
     try {
 
-      sessionStorage.removeItem("userNama");
-      sessionStorage.removeItem("userNipp");
-      sessionStorage.removeItem("userJabatan");
-      sessionStorage.removeItem("userEmail");
-      sessionStorage.removeItem("idPemeriksaanAktif");
+      sessionStorage.removeItem(
+        "userNama"
+      );
 
-    } catch (errorSession) {
+      sessionStorage.removeItem(
+        "userNipp"
+      );
+
+      sessionStorage.removeItem(
+        "userJabatan"
+      );
+
+      sessionStorage.removeItem(
+        "userEmail"
+      );
+
+      sessionStorage.removeItem(
+        "idPemeriksaanAktif"
+      );
+
+    }
+
+    catch (
+      errorSession
+    ) {
 
       console.warn(
         "Gagal membersihkan session:",
@@ -11794,6 +11798,7 @@ btnTutup.onclick =
       );
 
     }
+
 
     /* =====================================================
        KEMBALI KE HALAMAN LOGIN AWAL
@@ -11803,24 +11808,26 @@ btnTutup.onclick =
 
   };
 
-      tombolArea.appendChild(
-        btnTutup
-      );
+
+tombolArea.appendChild(
+  btnTutup
+);
 
 
-      container.appendChild(
-        tombolArea
-      );
+container.appendChild(
+  tombolArea
+);
 
 
-      overlay.appendChild(
-        container
-      );
+overlay.appendChild(
+  container
+);
 
 
-      document.body.appendChild(
-        overlay
-      );
+document.body.appendChild(
+  overlay
+);
+
 
 /* =====================================================
    SELESAI PEMBUATAN PREVIEW JPG
