@@ -11087,6 +11087,7 @@ btnDownload.style.cursor =
 
 btnDownload.style.fontWeight =
   "bold";
+
 /* =====================================================
    SIMPAN PREVIEW JPG KE GOOGLE DRIVE + SHEET
 ===================================================== */
@@ -11108,7 +11109,6 @@ function simpanPreviewJPGKeServer(
         );
 
         return;
-
       }
 
 
@@ -11121,50 +11121,39 @@ function simpanPreviewJPGKeServer(
         );
 
         return;
-
       }
 
 
       fetch(
         API_URL,
         {
-
           method:
             "POST",
 
           headers: {
-
             "Content-Type":
               "text/plain;charset=utf-8"
-
           },
 
           body:
             JSON.stringify({
-
               action:
                 "upload_preview_jpg",
 
               data: {
-
                 ID_PEMERIKSAAN:
                   idPemeriksaan,
 
                 JPG:
                   jpgData
-
               }
-
             })
-
         }
       )
 
       .then(
         function(response) {
-
           return response.json();
-
         }
       )
 
@@ -11177,16 +11166,11 @@ function simpanPreviewJPGKeServer(
           ) {
 
             throw new Error(
-
               result &&
               result.message
-
                 ? result.message
-
                 : "Preview JPG gagal disimpan."
-
             );
-
           }
 
 
@@ -11224,6 +11208,11 @@ function simpanPreviewJPGKeServer(
 
 }
 
+
+/* =====================================================
+   DOWNLOAD JPG
+===================================================== */
+
 btnDownload.onclick =
   function() {
 
@@ -11240,7 +11229,7 @@ btnDownload.onclick =
 
 
     /* ===================================================
-       DETEKSI SAFARI iPHONE / iPAD SAJA
+       DETEKSI SAFARI iPHONE / iPAD
     =================================================== */
 
     var userAgent =
@@ -11278,129 +11267,128 @@ btnDownload.onclick =
 
     /* ===================================================
        SAFARI iPHONE / iPAD
-       GUNAKAN SHARE FILE
+       SHARE FILE JPG
     =================================================== */
 
     if (
       gunakanShareSafari
     ) {
 
-      fetch(jpg)
+      fetch(
+        jpg
+      )
 
-        .then(
-          function(response) {
+      .then(
+        function(response) {
 
-            return response.blob();
+          return response.blob();
 
-          }
-        )
+        }
+      )
 
-        .then(
-          function(blob) {
+      .then(
+        function(blob) {
 
-            var file =
-              new File(
-                [blob],
-                namaFile,
-                {
-                  type:
-                    "image/jpeg"
-                }
-              );
-
-
-            if (
-              navigator.canShare({
-                files: [file]
-              })
-            ) {
-
-              return navigator.share({
-
-                files: [file],
-
-                title:
-                  "Checklist Pengawasan Kegiatan Langsir",
-
-                text:
-                  "Hasil Checklist Pengawasan Kegiatan Langsir"
-
-              });
-
-            }
-
-
-            throw new Error(
-              "Browser tidak mendukung berbagi file."
+          var file =
+            new File(
+              [blob],
+              namaFile,
+              {
+                type:
+                  "image/jpeg"
+              }
             );
 
-          }
-        )
 
-        .then(
-          function() {
+          if (
+            navigator.canShare({
+              files: [file]
+            })
+          ) {
+
+            return navigator.share({
+
+              files:
+                [file],
+
+              title:
+                "Checklist Pengawasan Kegiatan Langsir",
+
+              text:
+                "Hasil Checklist Pengawasan Kegiatan Langsir"
+
+            });
+
+          }
+
+
+          throw new Error(
+            "Browser tidak mendukung berbagi file."
+          );
+
+        }
+      )
+
+      .then(
+        function() {
+
+          console.log(
+            "JPG berhasil dibagikan."
+          );
+
+        }
+      )
+
+      .catch(
+        function(error) {
+
+          if (
+            error &&
+            error.name ===
+              "AbortError"
+          ) {
 
             console.log(
-              "JPG berhasil dibagikan."
+              "Menu Share ditutup oleh pengguna."
             );
+
+            return;
 
           }
-        )
-
-        .catch(
-          function(error) {
-
-            if (
-              error &&
-              error.name ===
-                "AbortError"
-            ) {
-
-              console.log(
-                "Menu Share ditutup oleh pengguna."
-              );
-
-              return;
-
-            }
 
 
-            console.warn(
-              "Share JPG Safari gagal, menggunakan download biasa:",
-              error
+          console.warn(
+            "Share JPG Safari gagal, menggunakan download biasa:",
+            error
+          );
+
+
+          var link =
+            document.createElement(
+              "a"
             );
 
 
-            /* =========================================
-               FALLBACK DOWNLOAD
-            ========================================== */
-
-            var link =
-              document.createElement(
-                "a"
-              );
+          link.href =
+            jpg;
 
 
-            link.href =
-              jpg;
+          link.download =
+            namaFile;
 
 
-            link.download =
-              namaFile;
+          document.body.appendChild(
+            link
+          );
 
 
-            document.body.appendChild(
-              link
-            );
+          link.click();
 
 
-            link.click();
+          link.remove();
 
-
-            link.remove();
-
-          }
-        );
+        }
+      );
 
 
       return;
@@ -11443,6 +11431,8 @@ btnDownload.onclick =
 tombolArea.appendChild(
   btnDownload
 );
+
+
 /* =====================================================
    DOWNLOAD PDF
 ===================================================== */
@@ -11549,7 +11539,7 @@ btnPDF.onclick =
 
 
       /* =================================================
-         DETEKSI SAFARI iPHONE / iPAD SAJA
+         DETEKSI SAFARI iPHONE / iPAD
       ================================================= */
 
       var userAgent =
@@ -11585,107 +11575,114 @@ btnPDF.onclick =
         navigator.canShare;
 
 
-/* =================================================
-   SAFARI iPHONE / iPAD
-   SHARE FILE PDF
-================================================= */
+      /* =================================================
+         SAFARI iPHONE / iPAD
+         SHARE FILE PDF
+      ================================================= */
 
-if (
-  gunakanShareSafari
-) {
+      if (
+        gunakanShareSafari
+      ) {
 
-  var pdfBlob =
-    pdf.output(
-      "blob"
-    );
+        var pdfBlob =
+          pdf.output(
+            "blob"
+          );
 
-  var pdfFile =
-    new File(
-      [pdfBlob],
-      namaFile,
-      {
-        type:
-          "application/pdf"
-      }
-    );
 
-  if (
-    navigator.canShare({
-      files: [pdfFile]
-    })
-  ) {
+        var pdfFile =
+          new File(
+            [pdfBlob],
+            namaFile,
+            {
+              type:
+                "application/pdf"
+            }
+          );
 
-    navigator.share({
-
-      files: [pdfFile],
-
-      title:
-        "Checklist Pengawasan Kegiatan Langsir",
-
-      text:
-        "Hasil Checklist Pengawasan Kegiatan Langsir"
-
-    })
-
-    .then(
-      function() {
-
-        console.log(
-          "PDF berhasil dibagikan."
-        );
-
-      }
-    )
-
-    .catch(
-      function(error) {
 
         if (
-          error &&
-          error.name ===
-            "AbortError"
+          navigator.canShare({
+            files:
+              [pdfFile]
+          })
         ) {
 
-          console.log(
-            "Menu Share PDF ditutup oleh pengguna."
+          navigator.share({
+
+            files:
+              [pdfFile],
+
+            title:
+              "Checklist Pengawasan Kegiatan Langsir",
+
+            text:
+              "Hasil Checklist Pengawasan Kegiatan Langsir"
+
+          })
+
+          .then(
+            function() {
+
+              console.log(
+                "PDF berhasil dibagikan."
+              );
+
+            }
+          )
+
+          .catch(
+            function(error) {
+
+              if (
+                error &&
+                error.name ===
+                  "AbortError"
+              ) {
+
+                console.log(
+                  "Menu Share PDF ditutup oleh pengguna."
+                );
+
+                return;
+              }
+
+
+              console.warn(
+                "Share PDF Safari gagal, menggunakan download biasa:",
+                error
+              );
+
+
+              pdf.save(
+                namaFile
+              );
+
+            }
           );
+
 
           return;
 
         }
 
-        console.warn(
-          "Share PDF Safari gagal, menggunakan download biasa:",
-          error
-        );
-
-        pdf.save(
-          namaFile
-        );
-
       }
-    );
-
-    return;
-
-  }
-
-}
 
 
-/* =================================================
-   CHROME / EDGE / FIREFOX / DESKTOP / ANDROID
-   DOWNLOAD LANGSUNG
-================================================= */
+      /* =================================================
+         CHROME / EDGE / FIREFOX / DESKTOP / ANDROID
+         DOWNLOAD LANGSUNG
+      ================================================= */
 
-pdf.save(
-  namaFile
-);
+      pdf.save(
+        namaFile
+      );
 
-console.log(
-  "PDF BERHASIL DIDOWNLOAD:",
-  namaFile
-);
+
+      console.log(
+        "PDF BERHASIL DIDOWNLOAD:",
+        namaFile
+      );
 
     }
 
@@ -11697,6 +11694,7 @@ console.log(
         "GAGAL MEMBUAT PDF:",
         errorPDF
       );
+
 
       alert(
         "PDF gagal dibuat.\n\n" +
@@ -11725,29 +11723,38 @@ var btnTutup =
     "button"
   );
 
+
 btnTutup.type =
   "button";
+
 
 btnTutup.textContent =
   "TUTUP PREVIEW";
 
+
 btnTutup.style.background =
   "#6c757d";
+
 
 btnTutup.style.color =
   "#ffffff";
 
+
 btnTutup.style.border =
   "none";
+
 
 btnTutup.style.padding =
   "11px 18px";
 
+
 btnTutup.style.borderRadius =
   "6px";
 
+
 btnTutup.style.cursor =
   "pointer";
+
 
 btnTutup.style.fontWeight =
   "bold";
@@ -11759,6 +11766,7 @@ btnTutup.onclick =
     console.log(
       "TOMBOL TUTUP PREVIEW DIKLIK"
     );
+
 
     /* =====================================================
        BERSIHKAN SESSION LOGIN
@@ -11830,44 +11838,6 @@ document.body.appendChild(
 
 
 /* =====================================================
-   SELESAI PEMBUATAN PREVIEW JPG
-===================================================== */
-
-resolve({
-
-  success:
-    true,
-
-  jpg:
-    jpg,
-
-  jumlahChecklist:
-    daftarChecklist.length,
-
-  data:
-    data
-
-});
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "GAGAL MEMBUAT PREVIEW JPG A4 COMPACT:",
-        error
-      );
-
-      reject(
-        error
-      );
-
-    }
-
-  }
-);
-
-/* =====================================================
    HELPER FONT CHECKLIST
 ===================================================== */
 
@@ -11876,102 +11846,6 @@ function tableFontBoldSafe() {
   return "bold 9px Arial";
 
 }
-
-}
-/* =========================================================
-   INISIALISASI CANVAS TTD
-========================================================= */
-
-function initSignatureCanvas() {
-
-  var canvas =
-    document.getElementById(
-      "signatureCanvas"
-    );
-
-
-  if (!canvas) {
-
-    console.error(
-      "Canvas TTD tidak ditemukan."
-    );
-
-    return false;
-
-  }
-
-
-  signatureCanvas =
-    canvas;
-
-
-  /*
-   * Simpan ukuran CSS awal hanya
-   * jika memang belum ada.
-   */
-
-  if (
-    !signatureCanvas.dataset.cssWidth
-  ) {
-
-    signatureCanvas.dataset.cssWidth =
-      "0";
-
-  }
-
-
-  if (
-    !signatureCanvas.dataset.cssHeight
-  ) {
-
-    signatureCanvas.dataset.cssHeight =
-      "0";
-
-  }
-
-
-  signatureContext =
-    canvas.getContext(
-      "2d"
-    );
-
-
-  if (!signatureContext) {
-
-    console.error(
-      "Context canvas tidak tersedia."
-    );
-
-    return false;
-
-  }
-
-
-  resizeSignatureCanvas();
-
-
-  pasangEventTTD();
-
-
-  signatureInitialized =
-    true;
-
-
-  console.log(
-    "CANVAS TTD SIAP."
-  );
-
-
-  return true;
-
-}
-
-
-/* =========================================================
-   RESIZE CANVAS
-   AMAN SAAT SCROLL / VIEWPORT BERUBAH
-   TTD TIDAK DIHAPUS JIKA UKURAN TETAP
-========================================================= */
 
 function resizeSignatureCanvas() {
 
