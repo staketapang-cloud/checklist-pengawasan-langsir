@@ -11823,45 +11823,42 @@ btnTutup.onclick =
       );
 
 
-      /* =====================================================
-         SELESAI
-      ===================================================== */
+  /* =====================================================
+     SELESAI
+  ===================================================== */
 
-      resolve({
+  resolve({
 
-        success:
-          true,
+    success:
+      true,
 
-        jpg:
-          jpg,
+    jpg:
+      jpg,
 
-        jumlahChecklist:
-          daftarChecklist.length,
+    jumlahChecklist:
+      daftarChecklist.length,
 
-        data:
-          data
-
-      });
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "GAGAL MEMBUAT PREVIEW JPG A4 COMPACT:",
-        error
-      );
-
-
-      reject(
-        error
-      );
-
-    }
+    data:
+      data
 
   });
 
+}
 
+catch (error) {
+
+  console.error(
+    "GAGAL MEMBUAT PREVIEW JPG A4 COMPACT:",
+    error
+  );
+
+  reject(
+    error
+  );
+
+}
+
+});
   /* =====================================================
      HELPER FONT CHECKLIST
      ===================================================== */
