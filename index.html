@@ -8247,11 +8247,11 @@ var fontBold =
  */
 
 var fontTabel =
-  "10px Arial";
+  "24px Arial";
 
 
 var fontTabelBold =
-  "bold 10px Arial";
+  "bold 24px Arial";
 
 
 var fontKecil =
@@ -8657,11 +8657,11 @@ var leftX =
 var rightX =
   canvasWidth -
   margin -
-  330;
+  360;
 
 
 var labelOffset =
-  92;
+  210;
 
 
 var identitasFont =
@@ -8874,92 +8874,97 @@ for (
     );
 
 
-  /* ===================================================
-     DATA KIRI
-  =================================================== */
+ /* ===================================================
+   DATA KIRI
+=================================================== */
 
-  if (
-    identitasKiri[i]
-  ) {
+if (
+  identitasKiri[i]
+) {
 
-    ctx.font =
-      identitasBold;
+  ctx.fillStyle =
+    "#000000";
 
-
-    ctx.fillStyle =
-      "#000000";
-
-
-    ctx.textAlign =
-      "left";
+  ctx.textAlign =
+    "left";
 
 
-    ctx.fillText(
-      identitasKiri[i][0] +
-      " :",
-      leftX,
-      yy
-    );
+  /* LABEL */
+  ctx.font =
+    identitasBold;
+
+  ctx.fillText(
+    identitasKiri[i][0],
+    leftX,
+    yy
+  );
 
 
-    ctx.font =
-      identitasFont;
+  /* TITIK DUA - POSISI TETAP */
+  ctx.fillText(
+    ":",
+    leftX + 190,
+    yy
+  );
 
 
-    ctx.fillText(
-      identitasKiri[i][1],
-      leftX +
-      labelOffset,
-      yy
-    );
+  /* HASIL */
+  ctx.font =
+    identitasFont;
 
-  }
-
-
-  /* ===================================================
-     DATA KANAN
-  =================================================== */
-
-  if (
-    identitasKanan[i]
-  ) {
-
-    ctx.font =
-      identitasBold;
-
-
-    ctx.fillStyle =
-      "#000000";
-
-
-    ctx.textAlign =
-      "left";
-
-
-    ctx.fillText(
-      identitasKanan[i][0] +
-      " :",
-      rightX,
-      yy
-    );
-
-
-    ctx.font =
-      identitasFont;
-
-
-    ctx.fillText(
-      identitasKanan[i][1],
-      rightX +
-      105,
-      yy
-    );
-
-  }
+  ctx.fillText(
+    identitasKiri[i][1],
+    leftX + 210,
+    yy
+  );
 
 }
 
+/* ===================================================
+   DATA KANAN
+=================================================== */
 
+if (
+  identitasKanan[i]
+) {
+
+  ctx.fillStyle =
+    "#000000";
+
+  ctx.textAlign =
+    "left";
+
+
+  /* LABEL */
+  ctx.font =
+    identitasBold;
+
+  ctx.fillText(
+    identitasKanan[i][0],
+    rightX,
+    yy
+  );
+
+
+  /* TITIK DUA - POSISI TETAP */
+  ctx.fillText(
+    ":",
+    rightX + 145,
+    yy
+  );
+
+
+  /* HASIL / NAMA */
+  ctx.font =
+    identitasFont;
+
+  ctx.fillText(
+    identitasKanan[i][1],
+    rightX + 165,
+    yy
+  );
+
+}
 /* =====================================================
    LANJUT KE BAGIAN BAWAH IDENTITAS
 ===================================================== */
@@ -9265,7 +9270,7 @@ y +=
 
 
       ctx.fillText(
-        "KETERANGAN / TEMUAN",
+        "KETERANGAN",
         colX5 +
         (
           colTemuan / 2
