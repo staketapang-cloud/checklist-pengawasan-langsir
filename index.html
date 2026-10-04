@@ -8227,7 +8227,7 @@ var contentWidth =
 ===================================================== */
 
 var fontJudul =
-  "bold 28px Arial";
+  "bold 24px Arial";
 
 
 var fontSubJudul =
@@ -9193,7 +9193,7 @@ ctx.stroke();
 ===================================================== */
 
 ctx.font =
-  "bold 14px Arial";
+  "bold 12px Arial";
 
 ctx.fillStyle =
   "#ffffff";
@@ -9209,7 +9209,7 @@ ctx.fillText(
 
 
 /* =====================================================
-   KETERANGAN 
+   KETERANGAN / TEMUAN
 ===================================================== */
 
 ctx.font =
@@ -9642,7 +9642,7 @@ function gambarHeaderKelompok(
 
 
   ctx.font =
-    "bold 15px Arial";
+    "bold 10px Arial";
 
 
   ctx.fillStyle =
@@ -9796,7 +9796,6 @@ function gambarSubHeaderKelompok2(
   );
 
 
-
   /* =================================================
      NOMOR / SUB NOMOR
   ================================================= */
@@ -9804,11 +9803,14 @@ function gambarSubHeaderKelompok2(
   ctx.textAlign =
     "center";
 
+
   ctx.font =
-    "bold 15px Arial";
+    "bold 10px Arial";
+
 
   ctx.fillStyle =
     "#000000";
+
 
   if (nomor) {
 
@@ -9822,7 +9824,7 @@ function gambarSubHeaderKelompok2(
       (
         tinggi / 2
       ) +
-      5
+      3
     );
 
   }
@@ -9830,17 +9832,14 @@ function gambarSubHeaderKelompok2(
 
   /* =================================================
      JUDUL
-     FONT 15px
   ================================================= */
 
   ctx.textAlign =
     "left";
 
-  ctx.font =
-    "bold 15px Arial";
 
-  ctx.fillStyle =
-    "#000000";
+  ctx.font =
+    "bold 9px Arial";
 
 
   var lines =
@@ -9849,13 +9848,9 @@ function gambarSubHeaderKelompok2(
       tableWidth -
       colNo -
       12,
-      "bold 15px Arial",
+      "bold 9px Arial",
       2
     );
-
-
-  var jarakBarisJudul =
-    17;
 
 
   var startY =
@@ -9864,10 +9859,10 @@ function gambarSubHeaderKelompok2(
       tinggi -
       (
         lines.length *
-        jarakBarisJudul
+        10
       )
     ) / 2 +
-    11;
+    7;
 
 
   lines.forEach(
@@ -9882,7 +9877,7 @@ function gambarSubHeaderKelompok2(
         startY +
         (
           lineIndex *
-          jarakBarisJudul
+          10
         )
       );
 
@@ -9892,6 +9887,25 @@ function gambarSubHeaderKelompok2(
 
   y +=
     tinggi;
+
+}
+
+
+/* =====================================================
+   FUNGSI GAMBAR ITEM
+===================================================== */
+
+function gambarItemChecklist(
+  item,
+  indexGlobal
+) {
+
+  var rowY =
+    y;
+
+
+  var rowHeight =
+    rowHeightTetap;
 
 
 /* =================================================
@@ -10012,23 +10026,37 @@ ctx.fillRect(
     );
 
 
-var uraianStartY =
-  rowY +
-  (
-    (rowHeight -
-    (uraianLines.length * 15))
-    / 2
-  ) +
-  12;
+  var uraianStartY =
+    rowY +
+    (
+      rowHeight -
+      (
+        uraianLines.length *
+        10
+      )
+    ) / 2 +
+    7;
 
-uraianLines.forEach(function(line,lineIndex){
-  ctx.fillText(
-    line,
-    colX2 + 6,
-    uraianStartY +
-    (lineIndex * 15)
+
+  uraianLines.forEach(
+    function(
+      line,
+      lineIndex
+    ) {
+
+      ctx.fillText(
+        line,
+        colX2 + 6,
+        uraianStartY +
+        (
+          lineIndex *
+          10
+        )
+      );
+
+    }
   );
-});
+
 
 /* =====================================================
    STANDAR
@@ -10062,10 +10090,10 @@ var standarStartY =
     rowHeight -
     (
       standarLines.length *
-      17
+      10
     )
   ) / 2 +
-  11;
+  7;
 
 
 standarLines.forEach(
@@ -10079,7 +10107,7 @@ standarLines.forEach(
       colX3 + 6,
       standarStartY +
       (
-        lineIndex * 17
+        lineIndex * 10
       )
     );
 
