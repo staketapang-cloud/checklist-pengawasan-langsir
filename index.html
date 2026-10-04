@@ -8247,11 +8247,11 @@ var fontBold =
  */
 
 var fontTabel =
-  "24px Arial";
+  "10px Arial";
 
 
 var fontTabelBold =
-  "bold 24px Arial";
+  "bold 10px Arial";
 
 
 var fontKecil =
@@ -8657,11 +8657,11 @@ var leftX =
 var rightX =
   canvasWidth -
   margin -
-  360;
+  390;
 
 
 var labelOffset =
-  210;
+  92;
 
 
 var identitasFont =
@@ -8870,101 +8870,96 @@ for (
     y +
     (
       i *
-      22
+      16
     );
 
 
- /* ===================================================
-   DATA KIRI
-=================================================== */
+  /* ===================================================
+     DATA KIRI
+  =================================================== */
 
-if (
-  identitasKiri[i]
-) {
+  if (
+    identitasKiri[i]
+  ) {
 
-  ctx.fillStyle =
-    "#000000";
-
-  ctx.textAlign =
-    "left";
+    ctx.font =
+      identitasBold;
 
 
-  /* LABEL */
-  ctx.font =
-    identitasBold;
-
-  ctx.fillText(
-    identitasKiri[i][0],
-    leftX,
-    yy
-  );
+    ctx.fillStyle =
+      "#000000";
 
 
-  /* TITIK DUA - POSISI TETAP */
-  ctx.fillText(
-    ":",
-    leftX + 190,
-    yy
-  );
+    ctx.textAlign =
+      "left";
 
 
-  /* HASIL */
-  ctx.font =
-    identitasFont;
-
-  ctx.fillText(
-    identitasKiri[i][1],
-    leftX + 210,
-    yy
-  );
-
-}
-
-/* ===================================================
-   DATA KANAN
-=================================================== */
-
-if (
-  identitasKanan[i]
-) {
-
-  ctx.fillStyle =
-    "#000000";
-
-  ctx.textAlign =
-    "left";
+    ctx.fillText(
+      identitasKiri[i][0] +
+      " :",
+      leftX,
+      yy
+    );
 
 
-  /* LABEL */
-  ctx.font =
-    identitasBold;
-
-  ctx.fillText(
-    identitasKanan[i][0],
-    rightX,
-    yy
-  );
+    ctx.font =
+      identitasFont;
 
 
-  /* TITIK DUA - POSISI TETAP */
-  ctx.fillText(
-    ":",
-    rightX + 145,
-    yy
-  );
+    ctx.fillText(
+      identitasKiri[i][1],
+      leftX +
+      labelOffset,
+      yy
+    );
+
+  }
 
 
-  /* HASIL / NAMA */
-  ctx.font =
-    identitasFont;
+  /* ===================================================
+     DATA KANAN
+  =================================================== */
 
-  ctx.fillText(
-    identitasKanan[i][1],
-    rightX + 165,
-    yy
-  );
+  if (
+    identitasKanan[i]
+  ) {
+
+    ctx.font =
+      identitasBold;
+
+
+    ctx.fillStyle =
+      "#000000";
+
+
+    ctx.textAlign =
+      "left";
+
+
+    ctx.fillText(
+      identitasKanan[i][0] +
+      " :",
+      rightX,
+      yy
+    );
+
+
+    ctx.font =
+      identitasFont;
+
+
+    ctx.fillText(
+      identitasKanan[i][1],
+      rightX +
+      105,
+      yy
+    );
+
+  }
 
 }
+
+
 /* =====================================================
    LANJUT KE BAGIAN BAWAH IDENTITAS
 ===================================================== */
@@ -8972,7 +8967,7 @@ if (
 y +=
   (
     6 *
-    22
+    16
   ) +
   10;
 
@@ -9112,7 +9107,7 @@ y +=
        */
 
       var tableHeaderHeight =
-        50;
+        38;
 
 
       ctx.fillStyle =
@@ -9136,7 +9131,7 @@ y +=
 
 
       ctx.font =
-        "bold 16px Arial";
+        "bold 8px Arial";
 
 
       ctx.textAlign =
@@ -9190,7 +9185,7 @@ y +=
       ===================================================== */
 
       ctx.font =
-        "bold 16px Arial";
+        "bold 9px Arial";
 
 
       ctx.fillText(
@@ -9240,7 +9235,7 @@ y +=
       ===================================================== */
 
       ctx.font =
-        "bold 16px Arial";
+        "bold 7px Arial";
 
 
       ctx.fillStyle =
@@ -9262,7 +9257,7 @@ y +=
       ===================================================== */
 
       ctx.font =
-        "bold 16px Arial";
+        "bold 8px Arial";
 
 
       ctx.fillStyle =
@@ -9270,7 +9265,7 @@ y +=
 
 
       ctx.fillText(
-        "KETERANGAN",
+        "KETERANGAN / TEMUAN",
         colX5 +
         (
           colTemuan / 2
@@ -11087,7 +11082,6 @@ btnDownload.style.cursor =
 
 btnDownload.style.fontWeight =
   "bold";
-
 /* =====================================================
    SIMPAN PREVIEW JPG KE GOOGLE DRIVE + SHEET
 ===================================================== */
@@ -11109,6 +11103,7 @@ function simpanPreviewJPGKeServer(
         );
 
         return;
+
       }
 
 
@@ -11121,39 +11116,50 @@ function simpanPreviewJPGKeServer(
         );
 
         return;
+
       }
 
 
       fetch(
         API_URL,
         {
+
           method:
             "POST",
 
           headers: {
+
             "Content-Type":
               "text/plain;charset=utf-8"
+
           },
 
           body:
             JSON.stringify({
+
               action:
                 "upload_preview_jpg",
 
               data: {
+
                 ID_PEMERIKSAAN:
                   idPemeriksaan,
 
                 JPG:
                   jpgData
+
               }
+
             })
+
         }
       )
 
       .then(
         function(response) {
+
           return response.json();
+
         }
       )
 
@@ -11166,11 +11172,16 @@ function simpanPreviewJPGKeServer(
           ) {
 
             throw new Error(
+
               result &&
               result.message
+
                 ? result.message
+
                 : "Preview JPG gagal disimpan."
+
             );
+
           }
 
 
@@ -11208,11 +11219,6 @@ function simpanPreviewJPGKeServer(
 
 }
 
-
-/* =====================================================
-   DOWNLOAD JPG
-===================================================== */
-
 btnDownload.onclick =
   function() {
 
@@ -11229,7 +11235,7 @@ btnDownload.onclick =
 
 
     /* ===================================================
-       DETEKSI SAFARI iPHONE / iPAD
+       DETEKSI SAFARI iPHONE / iPAD SAJA
     =================================================== */
 
     var userAgent =
@@ -11267,128 +11273,129 @@ btnDownload.onclick =
 
     /* ===================================================
        SAFARI iPHONE / iPAD
-       SHARE FILE JPG
+       GUNAKAN SHARE FILE
     =================================================== */
 
     if (
       gunakanShareSafari
     ) {
 
-      fetch(
-        jpg
-      )
+      fetch(jpg)
 
-      .then(
-        function(response) {
+        .then(
+          function(response) {
 
-          return response.blob();
-
-        }
-      )
-
-      .then(
-        function(blob) {
-
-          var file =
-            new File(
-              [blob],
-              namaFile,
-              {
-                type:
-                  "image/jpeg"
-              }
-            );
-
-
-          if (
-            navigator.canShare({
-              files: [file]
-            })
-          ) {
-
-            return navigator.share({
-
-              files:
-                [file],
-
-              title:
-                "Checklist Pengawasan Kegiatan Langsir",
-
-              text:
-                "Hasil Checklist Pengawasan Kegiatan Langsir"
-
-            });
+            return response.blob();
 
           }
+        )
+
+        .then(
+          function(blob) {
+
+            var file =
+              new File(
+                [blob],
+                namaFile,
+                {
+                  type:
+                    "image/jpeg"
+                }
+              );
 
 
-          throw new Error(
-            "Browser tidak mendukung berbagi file."
-          );
+            if (
+              navigator.canShare({
+                files: [file]
+              })
+            ) {
 
-        }
-      )
+              return navigator.share({
 
-      .then(
-        function() {
+                files: [file],
 
-          console.log(
-            "JPG berhasil dibagikan."
-          );
+                title:
+                  "Checklist Pengawasan Kegiatan Langsir",
 
-        }
-      )
+                text:
+                  "Hasil Checklist Pengawasan Kegiatan Langsir"
 
-      .catch(
-        function(error) {
+              });
 
-          if (
-            error &&
-            error.name ===
-              "AbortError"
-          ) {
+            }
+
+
+            throw new Error(
+              "Browser tidak mendukung berbagi file."
+            );
+
+          }
+        )
+
+        .then(
+          function() {
 
             console.log(
-              "Menu Share ditutup oleh pengguna."
+              "JPG berhasil dibagikan."
             );
-
-            return;
 
           }
+        )
+
+        .catch(
+          function(error) {
+
+            if (
+              error &&
+              error.name ===
+                "AbortError"
+            ) {
+
+              console.log(
+                "Menu Share ditutup oleh pengguna."
+              );
+
+              return;
+
+            }
 
 
-          console.warn(
-            "Share JPG Safari gagal, menggunakan download biasa:",
-            error
-          );
-
-
-          var link =
-            document.createElement(
-              "a"
+            console.warn(
+              "Share JPG Safari gagal, menggunakan download biasa:",
+              error
             );
 
 
-          link.href =
-            jpg;
+            /* =========================================
+               FALLBACK DOWNLOAD
+            ========================================== */
+
+            var link =
+              document.createElement(
+                "a"
+              );
 
 
-          link.download =
-            namaFile;
+            link.href =
+              jpg;
 
 
-          document.body.appendChild(
-            link
-          );
+            link.download =
+              namaFile;
 
 
-          link.click();
+            document.body.appendChild(
+              link
+            );
 
 
-          link.remove();
+            link.click();
 
-        }
-      );
+
+            link.remove();
+
+          }
+        );
 
 
       return;
@@ -11431,8 +11438,6 @@ btnDownload.onclick =
 tombolArea.appendChild(
   btnDownload
 );
-
-
 /* =====================================================
    DOWNLOAD PDF
 ===================================================== */
@@ -11539,7 +11544,7 @@ btnPDF.onclick =
 
 
       /* =================================================
-         DETEKSI SAFARI iPHONE / iPAD
+         DETEKSI SAFARI iPHONE / iPAD SAJA
       ================================================= */
 
       var userAgent =
@@ -11603,15 +11608,13 @@ btnPDF.onclick =
 
         if (
           navigator.canShare({
-            files:
-              [pdfFile]
+            files: [pdfFile]
           })
         ) {
 
           navigator.share({
 
-            files:
-              [pdfFile],
+            files: [pdfFile],
 
             title:
               "Checklist Pengawasan Kegiatan Langsir",
@@ -11645,6 +11648,7 @@ btnPDF.onclick =
                 );
 
                 return;
+
               }
 
 
@@ -11712,52 +11716,50 @@ btnPDF.onclick =
 tombolArea.appendChild(
   btnPDF
 );
+      /* =====================================================
+         TUTUP
+      ===================================================== */
+
+      var btnTutup =
+        document.createElement(
+          "button"
+        );
 
 
-/* =====================================================
-   TUTUP
-===================================================== */
-
-var btnTutup =
-  document.createElement(
-    "button"
-  );
+      btnTutup.type =
+        "button";
 
 
-btnTutup.type =
-  "button";
+      btnTutup.textContent =
+        "TUTUP PREVIEW";
 
 
-btnTutup.textContent =
-  "TUTUP PREVIEW";
+      btnTutup.style.background =
+        "#6c757d";
 
 
-btnTutup.style.background =
-  "#6c757d";
+      btnTutup.style.color =
+        "#ffffff";
 
 
-btnTutup.style.color =
-  "#ffffff";
+      btnTutup.style.border =
+        "none";
 
 
-btnTutup.style.border =
-  "none";
+      btnTutup.style.padding =
+        "11px 18px";
 
 
-btnTutup.style.padding =
-  "11px 18px";
+      btnTutup.style.borderRadius =
+        "6px";
 
 
-btnTutup.style.borderRadius =
-  "6px";
+      btnTutup.style.cursor =
+        "pointer";
 
 
-btnTutup.style.cursor =
-  "pointer";
-
-
-btnTutup.style.fontWeight =
-  "bold";
+      btnTutup.style.fontWeight =
+        "bold";
 
 
 btnTutup.onclick =
@@ -11767,38 +11769,19 @@ btnTutup.onclick =
       "TOMBOL TUTUP PREVIEW DIKLIK"
     );
 
-
     /* =====================================================
        BERSIHKAN SESSION LOGIN
     ===================================================== */
 
     try {
 
-      sessionStorage.removeItem(
-        "userNama"
-      );
+      sessionStorage.removeItem("userNama");
+      sessionStorage.removeItem("userNipp");
+      sessionStorage.removeItem("userJabatan");
+      sessionStorage.removeItem("userEmail");
+      sessionStorage.removeItem("idPemeriksaanAktif");
 
-      sessionStorage.removeItem(
-        "userNipp"
-      );
-
-      sessionStorage.removeItem(
-        "userJabatan"
-      );
-
-      sessionStorage.removeItem(
-        "userEmail"
-      );
-
-      sessionStorage.removeItem(
-        "idPemeriksaanAktif"
-      );
-
-    }
-
-    catch (
-      errorSession
-    ) {
+    } catch (errorSession) {
 
       console.warn(
         "Gagal membersihkan session:",
@@ -11806,7 +11789,6 @@ btnTutup.onclick =
       );
 
     }
-
 
     /* =====================================================
        KEMBALI KE HALAMAN LOGIN AWAL
@@ -11816,36 +11798,170 @@ btnTutup.onclick =
 
   };
 
-
-tombolArea.appendChild(
-  btnTutup
-);
-
-
-container.appendChild(
-  tombolArea
-);
+      tombolArea.appendChild(
+        btnTutup
+      );
 
 
-overlay.appendChild(
-  container
-);
+      container.appendChild(
+        tombolArea
+      );
 
 
-document.body.appendChild(
-  overlay
-);
+      overlay.appendChild(
+        container
+      );
 
 
-/* =====================================================
-   HELPER FONT CHECKLIST
-===================================================== */
+      document.body.appendChild(
+        overlay
+      );
 
-function tableFontBoldSafe() {
 
-  return "bold 9px Arial";
+      /* =====================================================
+         SELESAI
+      ===================================================== */
+
+      resolve({
+
+        success:
+          true,
+
+        jpg:
+          jpg,
+
+        jumlahChecklist:
+          daftarChecklist.length,
+
+        data:
+          data
+
+      });
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "GAGAL MEMBUAT PREVIEW JPG A4 COMPACT:",
+        error
+      );
+
+
+      reject(
+        error
+      );
+
+    }
+
+  });
+
+
+  /* =====================================================
+     HELPER FONT CHECKLIST
+     ===================================================== */
+
+  function tableFontBoldSafe() {
+
+    return "bold 9px Arial";
+
+  }
 
 }
+/* =========================================================
+   INISIALISASI CANVAS TTD
+========================================================= */
+
+function initSignatureCanvas() {
+
+  var canvas =
+    document.getElementById(
+      "signatureCanvas"
+    );
+
+
+  if (!canvas) {
+
+    console.error(
+      "Canvas TTD tidak ditemukan."
+    );
+
+    return false;
+
+  }
+
+
+  signatureCanvas =
+    canvas;
+
+
+  /*
+   * Simpan ukuran CSS awal hanya
+   * jika memang belum ada.
+   */
+
+  if (
+    !signatureCanvas.dataset.cssWidth
+  ) {
+
+    signatureCanvas.dataset.cssWidth =
+      "0";
+
+  }
+
+
+  if (
+    !signatureCanvas.dataset.cssHeight
+  ) {
+
+    signatureCanvas.dataset.cssHeight =
+      "0";
+
+  }
+
+
+  signatureContext =
+    canvas.getContext(
+      "2d"
+    );
+
+
+  if (!signatureContext) {
+
+    console.error(
+      "Context canvas tidak tersedia."
+    );
+
+    return false;
+
+  }
+
+
+  resizeSignatureCanvas();
+
+
+  pasangEventTTD();
+
+
+  signatureInitialized =
+    true;
+
+
+  console.log(
+    "CANVAS TTD SIAP."
+  );
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   RESIZE CANVAS
+   AMAN SAAT SCROLL / VIEWPORT BERUBAH
+   TTD TIDAK DIHAPUS JIKA UKURAN TETAP
+========================================================= */
 
 function resizeSignatureCanvas() {
 
