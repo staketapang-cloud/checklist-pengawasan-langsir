@@ -9796,6 +9796,7 @@ function gambarSubHeaderKelompok2(
   );
 
 
+
   /* =================================================
      NOMOR / SUB NOMOR
   ================================================= */
@@ -9803,14 +9804,11 @@ function gambarSubHeaderKelompok2(
   ctx.textAlign =
     "center";
 
-
   ctx.font =
     "bold 15px Arial";
 
-
   ctx.fillStyle =
     "#000000";
-
 
   if (nomor) {
 
@@ -9824,7 +9822,7 @@ function gambarSubHeaderKelompok2(
       (
         tinggi / 2
       ) +
-      3
+      5
     );
 
   }
@@ -9832,14 +9830,17 @@ function gambarSubHeaderKelompok2(
 
   /* =================================================
      JUDUL
+     FONT 15px
   ================================================= */
 
   ctx.textAlign =
     "left";
 
-
   ctx.font =
-    "bold 9px Arial";
+    "bold 15px Arial";
+
+  ctx.fillStyle =
+    "#000000";
 
 
   var lines =
@@ -9848,9 +9849,13 @@ function gambarSubHeaderKelompok2(
       tableWidth -
       colNo -
       12,
-      "bold 9px Arial",
+      "bold 15px Arial",
       2
     );
+
+
+  var jarakBarisJudul =
+    17;
 
 
   var startY =
@@ -9859,10 +9864,10 @@ function gambarSubHeaderKelompok2(
       tinggi -
       (
         lines.length *
-        10
+        jarakBarisJudul
       )
     ) / 2 +
-    7;
+    11;
 
 
   lines.forEach(
@@ -9877,7 +9882,7 @@ function gambarSubHeaderKelompok2(
         startY +
         (
           lineIndex *
-          10
+          jarakBarisJudul
         )
       );
 
@@ -9887,25 +9892,6 @@ function gambarSubHeaderKelompok2(
 
   y +=
     tinggi;
-
-}
-
-
-/* =====================================================
-   FUNGSI GAMBAR ITEM
-===================================================== */
-
-function gambarItemChecklist(
-  item,
-  indexGlobal
-) {
-
-  var rowY =
-    y;
-
-
-  var rowHeight =
-    rowHeightTetap;
 
 
 /* =================================================
