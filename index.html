@@ -10085,16 +10085,20 @@ var standarLines =
   );
 
 
+var jarakBarisStandar =
+  17;
+
+
 var standarStartY =
   rowY +
   (
     rowHeight -
     (
       standarLines.length *
-      10
+      jarakBarisStandar
     )
   ) / 2 +
-  7;
+  11;
 
 
 standarLines.forEach(
@@ -10108,7 +10112,8 @@ standarLines.forEach(
       colX3 + 6,
       standarStartY +
       (
-        lineIndex * 10
+        lineIndex *
+        jarakBarisStandar
       )
     );
 
