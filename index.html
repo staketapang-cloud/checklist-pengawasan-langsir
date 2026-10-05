@@ -9018,7 +9018,7 @@ y +=
 
 
       var colUraian =
-        450;
+        445;
 
 
       var colStandar =
@@ -10367,7 +10367,7 @@ y +=
   7;
 
 var catatanHeight =
-  65;
+  90;
 
 ctx.strokeStyle =
   "#888888";
@@ -10497,329 +10497,332 @@ y +=
       );
 
 
-      /* =====================================================
-         TANDA TANGAN KANAN BAWAH
-      ===================================================== */
+/* =====================================================
+   TANDA TANGAN KANAN BAWAH
+===================================================== */
 
-      var ttdWidth =
-        300;
+var ttdWidth =
+  300;
 
 
-      var ttdHeight =
-        190;
+var ttdHeight =
+  190;
 
 
-      var ttdX =
-        canvasWidth -
-        margin -
-        ttdWidth;
+var ttdX =
+  canvasWidth -
+  margin -
+  ttdWidth;
 
 
-      var ttdY =
-        canvasHeight -
-        margin -
-        ttdHeight;
+var ttdY =
+  canvasHeight -
+  margin -
+  ttdHeight;
 
 
-      /*
-       * Kotak TTD.
-       */
+/*
+ * Kotak TTD.
+ */
 
-      ctx.strokeStyle =
-        "#444444";
+ctx.strokeStyle =
+  "#444444";
 
 
-      ctx.lineWidth =
-        1;
+ctx.lineWidth =
+  1;
 
 
-      ctx.strokeRect(
-        ttdX,
-        ttdY,
-        ttdWidth,
-        ttdHeight
-      );
+ctx.strokeRect(
+  ttdX,
+  ttdY,
+  ttdWidth,
+  ttdHeight
+);
 
 
-      /* =====================================================
-         JUDUL TTD
-      ===================================================== */
+/* =====================================================
+   JUDUL TTD
+===================================================== */
 
-      ctx.textAlign =
-        "center";
+ctx.textAlign =
+  "center";
 
 
-      ctx.font =
-        "bold 9px Arial";
+ctx.font =
+  "bold 15px Arial";
 
 
-      ctx.fillStyle =
-        "#000000";
+ctx.fillStyle =
+  "#000000";
 
 
-      /* =====================================================
-         TEMPAT DAN TANGGAL
-         MENGIKUTI DATA PEMERIKSAAN
-      ===================================================== */
+/* =====================================================
+   TEMPAT DAN TANGGAL
+   MENGIKUTI DATA PEMERIKSAAN
+===================================================== */
 
-      ctx.fillText(
-        "KETAPANG, " +
-        teksHariTanggal,
-        ttdX +
-        (
-          ttdWidth / 2
-        ),
-        ttdY + 16
-      );
+ctx.fillText(
+  "KETAPANG, " +
+  teksHariTanggal,
+  ttdX +
+  (
+    ttdWidth / 2
+  ),
+  ttdY + 16
+);
 
 
-      /* =====================================================
-         JABATAN
-      ===================================================== */
+/* =====================================================
+   JABATAN
+===================================================== */
 
-      ctx.font =
-        "bold 9px Arial";
+ctx.font =
+  "bold 15px Arial";
 
 
-      ctx.fillText(
-        "PETUGAS PENGAWAS LANGSIR",
-        ttdX +
-        (
-          ttdWidth / 2
-        ),
-        ttdY + 30
-      );
-      /* =====================================================
-         TTD DARI CANVAS ASLI
-         LANGSUNG DRAWIMAGE
-         TIDAK ASYNC
-      ===================================================== */
+ctx.fillText(
+  "PETUGAS PENGAWAS LANGSIR",
+  ttdX +
+  (
+    ttdWidth / 2
+  ),
+  ttdY + 30
+);
 
-      var canvasTTD =
-        document.getElementById(
-          "signatureCanvas"
-        );
 
+/* =====================================================
+   TTD DARI CANVAS ASLI
+   LANGSUNG DRAWIMAGE
+   TIDAK ASYNC
+===================================================== */
 
-      var ttdBerhasil =
-        false;
+var canvasTTD =
+  document.getElementById(
+    "signatureCanvas"
+  );
 
 
-      if (
-        canvasTTD &&
-        canvasTTD.width > 0 &&
-        canvasTTD.height > 0
-      ) {
+var ttdBerhasil =
+  false;
 
-        try {
 
-          /*
-           * Karena langsung menggambar
-           * canvas ke canvas,
-           * TTD pasti ikut JPG.
-           */
+if (
+  canvasTTD &&
+  canvasTTD.width > 0 &&
+  canvasTTD.height > 0
+) {
 
-          var ttdAreaX =
-            ttdX + 25;
+  try {
 
+    /*
+     * Karena langsung menggambar
+     * canvas ke canvas,
+     * TTD pasti ikut JPG.
+     */
 
-          var ttdAreaY =
-            ttdY + 38;
+    var ttdAreaX =
+      ttdX + 25;
 
 
-          var ttdAreaWidth =
-            ttdWidth - 50;
+    var ttdAreaY =
+      ttdY + 38;
 
 
-          var ttdAreaHeight =
-            90;
+    var ttdAreaWidth =
+      ttdWidth - 50;
 
 
-          /*
-           * Background putih.
-           */
+    var ttdAreaHeight =
+      90;
 
-          ctx.fillStyle =
-            "#ffffff";
 
+    /*
+     * Background putih.
+     */
 
-          ctx.fillRect(
-            ttdAreaX,
-            ttdAreaY,
-            ttdAreaWidth,
-            ttdAreaHeight
-          );
+    ctx.fillStyle =
+      "#ffffff";
 
 
-          /*
-           * Gambar TTD.
-           */
+    ctx.fillRect(
+      ttdAreaX,
+      ttdAreaY,
+      ttdAreaWidth,
+      ttdAreaHeight
+    );
 
-          ctx.drawImage(
-            canvasTTD,
-            ttdAreaX,
-            ttdAreaY,
-            ttdAreaWidth,
-            ttdAreaHeight
-          );
 
+    /*
+     * Gambar TTD.
+     */
 
-          ttdBerhasil =
-            true;
+    ctx.drawImage(
+      canvasTTD,
+      ttdAreaX,
+      ttdAreaY,
+      ttdAreaWidth,
+      ttdAreaHeight
+    );
 
-        }
 
-        catch (
-          errorTTD
-        ) {
+    ttdBerhasil =
+      true;
 
-          console.warn(
-            "TTD tidak dapat digambar:",
-            errorTTD
-          );
+  }
 
-        }
+  catch (
+    errorTTD
+  ) {
 
-      }
+    console.warn(
+      "TTD tidak dapat digambar:",
+      errorTTD
+    );
 
+  }
 
-      /*
-       * Jika belum ada TTD,
-       * tampilkan teks.
-       */
+}
 
-      if (
-        !ttdBerhasil
-      ) {
 
-        ctx.textAlign =
-          "center";
+/*
+ * Jika belum ada TTD,
+ * tampilkan teks.
+ */
 
+if (
+  !ttdBerhasil
+) {
 
-        ctx.font =
-          "8px Arial";
+  ctx.textAlign =
+    "center";
 
 
-        ctx.fillStyle =
-          "#777777";
+  ctx.font =
+    "15px Arial";
 
 
-        ctx.fillText(
-          "Tanda tangan belum tersedia",
-          ttdX +
-          (
-            ttdWidth / 2
-          ),
-          ttdY + 82
-        );
+  ctx.fillStyle =
+    "#777777";
 
-      }
 
+  ctx.fillText(
+    "Tanda tangan belum tersedia",
+    ttdX +
+    (
+      ttdWidth / 2
+    ),
+    ttdY + 82
+  );
 
-      /* =====================================================
-         NAMA / NIPP / JABATAN
-      ===================================================== */
+}
 
-      ctx.textAlign =
-        "center";
 
+/* =====================================================
+   NAMA / NIPP / JABATAN
+===================================================== */
 
-      ctx.font =
-        "bold 9px Arial";
+ctx.textAlign =
+  "center";
 
 
-      ctx.fillStyle =
-        "#000000";
+ctx.font =
+  "bold 15px Arial";
 
 
-      ctx.fillText(
-        data.NAMA ||
-        "-",
-        ttdX +
-        (
-          ttdWidth / 2
-        ),
-        ttdY + 145
-      );
+ctx.fillStyle =
+  "#000000";
 
 
-      ctx.font =
-        "8px Arial";
+ctx.fillText(
+  data.NAMA ||
+  "-",
+  ttdX +
+  (
+    ttdWidth / 2
+  ),
+  ttdY + 145
+);
 
 
-      ctx.fillText(
-        "NIPP: " +
-        (
-          data.NIPP ||
-          "-"
-        ),
-        ttdX +
-        (
-          ttdWidth / 2
-        ),
-        ttdY + 159
-      );
+ctx.font =
+  "15px Arial";
 
 
-      ctx.fillText(
-        data.JABATAN ||
-        "-",
-        ttdX +
-        (
-          ttdWidth / 2
-        ),
-        ttdY + 173
-      );
+ctx.fillText(
+  "NIPP: " +
+  (
+    data.NIPP ||
+    "-"
+  ),
+  ttdX +
+  (
+    ttdWidth / 2
+  ),
+  ttdY + 159
+);
 
 
-      /* =====================================================
-         BORDER HALAMAN
-      ===================================================== */
+ctx.fillText(
+  data.JABATAN ||
+  "-",
+  ttdX +
+  (
+    ttdWidth / 2
+  ),
+  ttdY + 173
+);
 
-      ctx.strokeStyle =
-        "#1f1f1f";
 
+/* =====================================================
+   BORDER HALAMAN
+===================================================== */
 
-      ctx.lineWidth =
-        2;
+ctx.strokeStyle =
+  "#1f1f1f";
 
 
-      ctx.strokeRect(
-        15,
-        15,
-        canvasWidth - 30,
-        canvasHeight - 30
-      );
+ctx.lineWidth =
+  2;
 
 
-      /* =====================================================
-         BUAT JPG
-      ===================================================== */
+ctx.strokeRect(
+  15,
+  15,
+  canvasWidth - 30,
+  canvasHeight - 30
+);
 
-      var jpg =
-        canvas.toDataURL(
-          "image/jpeg",
-          0.92
-        );
 
+/* =====================================================
+   BUAT JPG
+===================================================== */
 
-      if (
-        !jpg ||
-        jpg.indexOf(
-          "data:image/jpeg"
-        ) !== 0
-      ) {
+var jpg =
+  canvas.toDataURL(
+    "image/jpeg",
+    0.92
+  );
 
-        throw new Error(
-          "Gagal membuat file JPG."
-        );
 
-      }
+if (
+  !jpg ||
+  jpg.indexOf(
+    "data:image/jpeg"
+  ) !== 0
+) {
 
+  throw new Error(
+    "Gagal membuat file JPG."
+  );
 
-      console.log(
-        "JPG A4 COMPACT BERHASIL DIBUAT"
-      );
+}
+
+
+console.log(
+  "JPG A4 COMPACT BERHASIL DIBUAT"
+);
+
 
 /* =====================================================
    SIMPAN JPG HASIL AKHIR KE SERVER
@@ -10859,9 +10862,11 @@ try {
   );
 
 }
-      /* =====================================================
-         HAPUS PREVIEW LAMA
-      ===================================================== */
+
+
+/* =====================================================
+   HAPUS PREVIEW LAMA
+===================================================== */
 
       var previewLama =
         document.getElementById(
