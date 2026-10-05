@@ -10000,62 +10000,63 @@ ctx.fillRect(
    */
 
 
-  /* =================================================
-     URAIAN
-  ================================================= */
+/* =================================================
+   URAIAN
+================================================= */
 
-  ctx.textAlign =
-    "left";
+ctx.textAlign =
+  "left";
+
+ctx.font =
+  fontTabel;
+
+var uraian =
+  item.pertanyaan ||
+  "-";
+
+var uraianLines =
+  pecahTeks(
+    uraian,
+    colUraian - 12,
+    fontTabel,
+    3
+  );
 
 
-  ctx.font =
-    fontTabel;
+var jarakBaris =
+  15;
 
 
-  var uraian =
-    item.pertanyaan ||
-    "-";
+var uraianStartY =
+  rowY +
+  (
+    rowHeight -
+    (
+      uraianLines.length *
+      jarakBaris
+    )
+  ) / 2 +
+  11;
 
 
-  var uraianLines =
-    pecahTeks(
-      uraian,
-      colUraian - 12,
-      fontTabel,
-      3
+uraianLines.forEach(
+  function(
+    line,
+    lineIndex
+  ) {
+
+    ctx.fillText(
+      line,
+      colX2 + 6,
+      uraianStartY +
+      (
+        lineIndex *
+        jarakBaris
+      )
     );
 
-
-  var uraianStartY =
-    rowY +
-    (
-      rowHeight -
-      (
-        uraianLines.length *
-        10
-      )
-    ) / 2 +
-    7;
-
-
-  uraianLines.forEach(
-    function(
-      line,
-      lineIndex
-    ) {
-
-      ctx.fillText(
-        line,
-        colX2 + 6,
-        uraianStartY +
-        (
-          lineIndex *
-          10
-        )
-      );
-
-    }
-  );
+  }
+);
 
 
 /* =====================================================
