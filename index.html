@@ -10017,7 +10017,7 @@ var uraian =
 var uraianLines =
   pecahTeks(
     uraian,
-    colUraian - 24,
+    colUraian - 16,
     fontTabel,
     3
   );
@@ -10047,7 +10047,7 @@ uraianLines.forEach(
 
     ctx.fillText(
       line,
-      colX2 + 12,
+      colX2 + 8,
       uraianStartY +
       (
         lineIndex *
@@ -10336,98 +10336,92 @@ for (
   );
 
 }
-      /* =====================================================
-         CATATAN
-      ===================================================== */
+     /* =====================================================
+   CATATAN
+===================================================== */
 
-      y +=
-        10;
+y +=
+  10;
 
+ctx.textAlign =
+  "left";
 
-      ctx.textAlign =
-        "left";
+/* =====================================================
+   JUDUL CATATAN
+   FONT 16px
+===================================================== */
 
+ctx.font =
+  "bold 16px Arial";
 
-      ctx.font =
-        "bold 11px Arial";
+ctx.fillStyle =
+  "#1f4e78";
 
+ctx.fillText(
+  "CATATAN",
+  margin,
+  y
+);
 
-      ctx.fillStyle =
-        "#1f4e78";
+y +=
+  7;
 
+var catatanHeight =
+  65;
 
-      ctx.fillText(
-        "CATATAN",
-        margin,
-        y
-      );
+ctx.strokeStyle =
+  "#888888";
 
+ctx.lineWidth =
+  1;
 
-      y +=
-        7;
+ctx.strokeRect(
+  margin,
+  y,
+  contentWidth,
+  catatanHeight
+);
 
+/* =====================================================
+   ISI CATATAN
+   FONT 14px
+===================================================== */
 
-      var catatanHeight =
-        65;
+ctx.font =
+  "14px Arial";
 
+ctx.fillStyle =
+  "#000000";
 
-      ctx.strokeStyle =
-        "#888888";
+var catatanLines =
+  pecahTeks(
+    data.CATATAN ||
+    "-",
+    contentWidth - 16,
+    "14px Arial",
+    4
+  );
 
+catatanLines.forEach(
+  function(line, index) {
 
-      ctx.lineWidth =
-        1;
+    ctx.fillText(
+      line,
+      margin + 8,
+      y +
+      17 +
+      (
+        index *
+        17
+      )
+    );
 
+  }
+);
 
-      ctx.strokeRect(
-        margin,
-        y,
-        contentWidth,
-        catatanHeight
-      );
-
-
-      ctx.font =
-        "9px Arial";
-
-
-      ctx.fillStyle =
-        "#000000";
-
-
-      var catatanLines =
-        pecahTeks(
-          data.CATATAN ||
-          "-",
-          contentWidth - 16,
-          "9px Arial",
-          4
-        );
-
-
-      catatanLines.forEach(
-        function(line, index) {
-
-          ctx.fillText(
-            line,
-            margin + 8,
-            y +
-            14 +
-            (
-              index *
-              12
-            )
-          );
-
-        }
-      );
-
-
-      y +=
-        catatanHeight +
-        10;
-
-
+y +=
+  catatanHeight +
+  10;
       /* =====================================================
          INFORMASI PEMERIKSAAN
       ===================================================== */
