@@ -17696,28 +17696,24 @@ console.log(
 
 
 })();
-      /* =========================================================
+
+/* =========================================================
    FINAL FIX SIMPAN TTD
    SATU JALUR
    - ID otomatis
-   - Progress 10 / 35 / 65 / 100
+   - Progress otomatis 1% -> 95%
+   - 100% hanya setelah server sukses
    - Tanpa verifikasi GET 85%
    - Tidak menggunakan prosesSimpanTTD lama
    - Tetap menggunakan backend yang sudah ada
 ========================================================= */
 
-/* =========================================================
-   FINAL SIMPAN TTD
-   - otomatis menyiapkan ID pemeriksaan
-   - progress 10 -> 35 -> 65 -> 85 -> 100
-   - canvas terkunci selama proses
-   - setelah berhasil TTD tetap terkunci
-   - tombol SIMPAN & TAMPILKAN PREVIEW muncul
-========================================================= */
-
 window.simpanTTD = async function () {
 
-  if (typeof sedangSimpanTTD !== "undefined" && sedangSimpanTTD) {
+  if (
+    typeof sedangSimpanTTD !== "undefined" &&
+    sedangSimpanTTD
+  ) {
     return;
   }
 
@@ -17732,6 +17728,9 @@ window.simpanTTD = async function () {
   var canvas =
     document.getElementById("signatureCanvas");
 
+  var progressTimer = null;
+  var progressPersen = 1;
+
 
   try {
 
@@ -17741,51 +17740,36 @@ window.simpanTTD = async function () {
 
 
     /* =====================================================
-       KUNCI TOMBOL SEGERA
+       KUNCI TOMBOL
     ===================================================== */
 
     if (tombol) {
-
       tombol.disabled = true;
-
-      tombol.textContent =
-        "Menyimpan TTD...";
-
+      tombol.textContent = "Menyimpan TTD...";
     }
-
 
     if (tombolClear) {
-
-      tombolClear.disabled =
-        true;
-
+      tombolClear.disabled = true;
     }
 
-
     if (canvas) {
-
-      canvas.style.pointerEvents =
-        "none";
-
-      canvas.style.cursor =
-        "not-allowed";
-
+      canvas.style.pointerEvents = "none";
+      canvas.style.cursor = "not-allowed";
     }
 
 
     /* =====================================================
-       PROGRESS 10%
+       PROGRESS AWAL
     ===================================================== */
 
     if (
-      typeof setProgressTTD ===
-      "function"
+      typeof setProgressTTD === "function"
     ) {
 
       setProgressTTD(
-        10,
+        1,
         "Menyiapkan tanda tangan...",
-        "10%",
+        "1%",
         "Menyiapkan data pemeriksaan."
       );
 
@@ -17849,18 +17833,19 @@ window.simpanTTD = async function () {
 
 
     /* =====================================================
-       PROGRESS 35%
+       PROGRESS 5%
     ===================================================== */
 
+    progressPersen = 5;
+
     if (
-      typeof setProgressTTD ===
-      "function"
+      typeof setProgressTTD === "function"
     ) {
 
       setProgressTTD(
-        35,
+        5,
         "Membaca tanda tangan...",
-        "35%",
+        "5%",
         "Data tanda tangan siap dikirim."
       );
 
@@ -17868,27 +17853,128 @@ window.simpanTTD = async function () {
 
 
     /* =====================================================
-       PROGRESS 65%
+       PROGRESS OTOMATIS
+       5% -> 95%
+
+       100% HANYA DARI HASIL SERVER
+    ===================================================== */
+
+    progressTimer =
+      setInterval(
+        function () {
+
+          if (progressPersen >= 95) {
+
+            progressPersen = 95;
+
+            return;
+
+          }
+
+
+          if (progressPersen < 50) {
+
+            progressPersen += 2;
+
+          }
+
+          else {
+
+            progressPersen += 1;
+
+          }
+
+
+          if (progressPersen > 95) {
+
+            progressPersen = 95;
+
+          }
+
+
+          var teks =
+            "Menyimpan tanda tangan...";
+
+          var note =
+            "Mengirim TTD ke server.";
+
+
+          if (progressPersen >= 85) {
+
+            teks =
+              "Memproses penyimpanan TTD...";
+
+            note =
+              "Menunggu konfirmasi server.";
+
+          }
+
+
+          if (progressPersen >= 93) {
+
+            teks =
+              "Menunggu konfirmasi server...";
+
+            note =
+              "TTD sedang dipastikan tersimpan.";
+
+          }
+
+
+          if (
+            typeof setProgressTTD === "function"
+          ) {
+
+            setProgressTTD(
+              progressPersen,
+              teks,
+              progressPersen + "%",
+              note
+            );
+
+          }
+
+        },
+        180
+      );
+
+
+    /* =====================================================
+       BERIKAN WAKTU UNTUK PROGRESS TAMPIL
     ===================================================== */
 
     if (
-      typeof setProgressTTD ===
-      "function"
+      typeof tungguRenderTTD === "function"
     ) {
 
-      setProgressTTD(
-        65,
-        "Menyimpan tanda tangan...",
-        "65%",
-        "Mengirim TTD ke server."
+      await tungguRenderTTD();
+
+    }
+
+    else {
+
+      await new Promise(
+        function(resolve) {
+
+          setTimeout(
+            resolve,
+            50
+          );
+
+        }
       );
 
     }
 
 
     /* =====================================================
-       KIRIM KE SERVER
+       KIRIM TTD KE SERVER
     ===================================================== */
+
+    console.log(
+      "Mengirim TTD ke server..."
+    );
+
 
     var hasil =
       await kirimTTDKeServer(
@@ -17896,6 +17982,25 @@ window.simpanTTD = async function () {
         "manual"
       );
 
+
+    /* =====================================================
+       HENTIKAN PROGRESS OTOMATIS
+    ===================================================== */
+
+    if (progressTimer) {
+
+      clearInterval(
+        progressTimer
+      );
+
+      progressTimer = null;
+
+    }
+
+
+    /* =====================================================
+       CEK HASIL SERVER
+    ===================================================== */
 
     if (
       !hasil ||
@@ -17921,11 +18026,9 @@ window.simpanTTD = async function () {
        SIMPAN STATUS TTD
     ===================================================== */
 
-    signatureServerSaved =
-      true;
+    signatureServerSaved = true;
 
-    signatureServerData =
-      signature;
+    signatureServerData = signature;
 
 
     try {
@@ -17940,7 +18043,9 @@ window.simpanTTD = async function () {
         signature
       );
 
-    } catch (storageError) {
+    }
+
+    catch (storageError) {
 
       console.warn(
         "SessionStorage TTD tidak dapat diperbarui:",
@@ -17951,31 +18056,12 @@ window.simpanTTD = async function () {
 
 
     /* =====================================================
-       PROGRESS 85%
-    ===================================================== */
-
-    if (
-      typeof setProgressTTD ===
-      "function"
-    ) {
-
-      setProgressTTD(
-        85,
-        "Memastikan tanda tangan tersimpan...",
-        "85%",
-        "Penyimpanan berhasil."
-      );
-
-    }
-
-
-    /* =====================================================
        PROGRESS 100%
+       HANYA SETELAH SERVER SUKSES
     ===================================================== */
 
     if (
-      typeof setProgressTTD ===
-      "function"
+      typeof setProgressTTD === "function"
     ) {
 
       setProgressTTD(
@@ -17990,7 +18076,7 @@ window.simpanTTD = async function () {
 
     /* =====================================================
        TAMPILKAN BUTTON
-       SIMPAN & TAMPILKAN PREVIEW
+       SIMPAN & LIHAT PREVIEW
     ===================================================== */
 
     var previewButton =
@@ -18010,6 +18096,24 @@ window.simpanTTD = async function () {
       previewButton.disabled =
         false;
 
+
+      /* =================================================
+         AUTO SCROLL KE BUTTON
+      ================================================= */
+
+      setTimeout(
+        function() {
+
+          previewButton.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+        },
+        250
+      );
+
+
       console.log(
         "BUTTON SIMPAN & TAMPILKAN PREVIEW: TAMPIL"
       );
@@ -18017,28 +18121,21 @@ window.simpanTTD = async function () {
     }
 
 
-
-
     /* =====================================================
        TTD TETAP TERKUNCI
-       JANGAN BUKA CANVAS
     ===================================================== */
 
     if (tombol) {
 
-      tombol.disabled =
-        true;
-
-      tombol.textContent =
-        "TTD TERSIMPAN";
+      tombol.disabled = true;
+      tombol.textContent = "TTD TERSIMPAN";
 
     }
 
 
     if (tombolClear) {
 
-      tombolClear.disabled =
-        true;
+      tombolClear.disabled = true;
 
     }
 
@@ -18063,44 +18160,39 @@ window.simpanTTD = async function () {
     }
 
 
-    console.log(
-      "================================="
-    );
-
-    console.log(
-      "FINAL SIMPAN TTD SELESAI"
-    );
-
-    console.log(
-      "ID:",
-      idPemeriksaanAktif
-    );
-
-    console.log(
-      "================================="
-    );
+    console.log("=================================");
+    console.log("FINAL SIMPAN TTD SELESAI");
+    console.log("ID:", idPemeriksaanAktif);
+    console.log("=================================");
 
 
     return hasil;
 
 
-  } catch (error) {
+  }
 
-    console.error(
-      "================================="
-    );
 
-    console.error(
-      "TTD GAGAL DISIMPAN"
-    );
+  /* =======================================================
+     JIKA GAGAL
+  ======================================================= */
 
-    console.error(
-      error
-    );
+  catch (error) {
 
-    console.error(
-      "================================="
-    );
+    if (progressTimer) {
+
+      clearInterval(
+        progressTimer
+      );
+
+      progressTimer = null;
+
+    }
+
+
+    console.error("=================================");
+    console.error("TTD GAGAL DISIMPAN");
+    console.error(error);
+    console.error("=================================");
 
 
     /* =====================================================
@@ -18108,8 +18200,7 @@ window.simpanTTD = async function () {
     ===================================================== */
 
     if (
-      typeof setProgressTTD ===
-      "function"
+      typeof setProgressTTD === "function"
     ) {
 
       setProgressTTD(
@@ -18125,8 +18216,7 @@ window.simpanTTD = async function () {
 
 
     if (
-      typeof tampilkanStatusTTD ===
-      "function"
+      typeof tampilkanStatusTTD === "function"
     ) {
 
       tampilkanStatusTTD(
@@ -18142,8 +18232,7 @@ window.simpanTTD = async function () {
 
 
     if (
-      typeof tampilkanNotifFoto ===
-      "function"
+      typeof tampilkanNotifFoto === "function"
     ) {
 
       tampilkanNotifFoto(
@@ -18172,24 +18261,20 @@ window.simpanTTD = async function () {
 
 
     /* =====================================================
-       BUKA KEMBALI KONTROL KARENA GAGAL
+       BUKA KEMBALI KONTROL JIKA GAGAL
     ===================================================== */
 
     if (tombol) {
 
-      tombol.disabled =
-        false;
-
-      tombol.textContent =
-        "Simpan TTD";
+      tombol.disabled = false;
+      tombol.textContent = "Simpan TTD";
 
     }
 
 
     if (tombolClear) {
 
-      tombolClear.disabled =
-        false;
+      tombolClear.disabled = false;
 
     }
 
@@ -18216,14 +18301,32 @@ window.simpanTTD = async function () {
 
     return null;
 
-  } finally {
+  }
 
-    sedangSimpanTTD =
-      false;
+
+  /* =======================================================
+     FINAL
+  ======================================================= */
+
+  finally {
+
+    if (progressTimer) {
+
+      clearInterval(
+        progressTimer
+      );
+
+      progressTimer = null;
+
+    }
+
+
+    sedangSimpanTTD = false;
 
   }
 
 };
+
 
 /* =========================================================
    PAKSA GLOBAL MENGGUNAKAN FUNGSI FINAL
@@ -18237,137 +18340,247 @@ console.log(
   "window.simpanTTD =",
   typeof window.simpanTTD
 );
-    
+
+
 /* =========================================================
    FINAL BUTTON PREVIEW
-   TTD -> OK -> FORM -> BUTTON PREVIEW
+   TTD -> BERHASIL -> BUTTON PREVIEW
 ========================================================= */
 
-window.tampilkanButtonPreviewFinal = function () {
+window.tampilkanButtonPreviewFinal =
+  function () {
 
-  console.log(
-    "MEMBUAT / MENAMPILKAN BUTTON PREVIEW"
-  );
-
-  var form =
-    document.getElementById(
-      "formPemeriksaan"
+    console.log(
+      "MEMBUAT / MENAMPILKAN BUTTON PREVIEW"
     );
 
 
-  if (!form) {
+    /* =====================================================
+       CARI BUTTON YANG SUDAH ADA
+    ===================================================== */
 
-    console.error(
-      "FORM PEMERIKSAAN TIDAK DITEMUKAN"
-    );
-
-    return;
-
-  }
-
-
-  /* =======================================================
-     CARI / BUAT AREA PREVIEW
-  ======================================================= */
-
-  var area =
-    document.getElementById(
-      "previewButtonAreaFinal"
-    );
-
-
-  if (!area) {
-
-    area =
-      document.createElement(
-        "div"
+    var tombol =
+      document.getElementById(
+        "btnSimpanLihatPreview"
       );
 
-    area.id =
-      "previewButtonAreaFinal";
 
-  }
+    /*
+     * Kalau button sudah ada di HTML,
+     * gunakan button tersebut.
+     */
+
+    if (tombol) {
+
+      tombol.style.display =
+        "block";
+
+      tombol.style.visibility =
+        "visible";
+
+      tombol.disabled =
+        false;
 
 
-  /* =======================================================
-     CARI / BUAT BUTTON PREVIEW
-  ======================================================= */
+      /*
+       * Pastikan aksi tombol tetap
+       * menuju preview hasil akhir.
+       */
 
-  var tombol =
-    document.getElementById(
-      "btnSimpanLihatPreview"
-    );
+      tombol.onclick =
+        function () {
+
+          console.log(
+            "BUTTON SIMPAN & TAMPILKAN PREVIEW DIKLIK"
+          );
 
 
-  if (!tombol) {
+          if (
+            typeof window.tampilkanPreviewHasilAkhir ===
+            "function"
+          ) {
+
+            window.tampilkanPreviewHasilAkhir();
+
+          }
+
+          else {
+
+            console.error(
+              "tampilkanPreviewHasilAkhir tidak ditemukan."
+            );
+
+            alert(
+              "Fungsi Preview Hasil Akhir belum tersedia."
+            );
+
+          }
+
+        };
+
+
+      /*
+       * Scroll ke button.
+       */
+
+      setTimeout(
+        function () {
+
+          tombol.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+        },
+        250
+      );
+
+
+      console.log(
+        "BUTTON PREVIEW BERHASIL DITAMPILKAN"
+      );
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       JIKA BUTTON BELUM ADA
+       CARI AREA BUTTON
+    ===================================================== */
+
+    var area =
+      document.getElementById(
+        "areaSimpanLihatPreview"
+      );
+
+
+    if (!area) {
+
+      console.warn(
+        "AREA PREVIEW TIDAK DITEMUKAN."
+      );
+
+      return;
+
+    }
+
+
+    /* =====================================================
+       BUAT BUTTON BARU
+    ===================================================== */
 
     tombol =
       document.createElement(
         "button"
       );
 
+
     tombol.type =
       "button";
+
 
     tombol.id =
       "btnSimpanLihatPreview";
 
-  }
+
+    tombol.className =
+      "btn btn-simpan btn-preview-glow";
 
 
-  /* =======================================================
-     TEKS BUTTON
-  ======================================================= */
-
-  tombol.textContent =
-    "SIMPAN & TAMPILKAN PREVIEW";
+    tombol.style.display =
+      "block";
 
 
-  tombol.className =
-    "btn btn-simpan";
+    tombol.style.visibility =
+      "visible";
 
 
-  /* =======================================================
-     AKSI BUTTON
-  ======================================================= */
-
-  tombol.onclick =
-    function () {
-
-      console.log(
-        "BUTTON SIMPAN & TAMPILKAN PREVIEW DIKLIK"
-      );
+    tombol.style.width =
+      "100%";
 
 
-      if (
-        typeof window.tampilkanPreviewHasilAkhir ===
-        "function"
-      ) {
+    tombol.textContent =
+      "✨ SIMPAN & LIHAT PREVIEW";
 
-        window.tampilkanPreviewHasilAkhir();
 
-      }
+    /* =====================================================
+       AKSI BUTTON
+    ===================================================== */
 
-      else {
+    tombol.onclick =
+      function () {
 
-        console.error(
-          "tampilkanPreviewHasilAkhir tidak ditemukan."
+        console.log(
+          "BUTTON SIMPAN & TAMPILKAN PREVIEW DIKLIK"
         );
 
-        alert(
-          "Fungsi Preview Hasil Akhir belum tersedia."
-        );
 
-      }
+        if (
+          typeof window.tampilkanPreviewHasilAkhir ===
+          "function"
+        ) {
 
-    };
+          window.tampilkanPreviewHasilAkhir();
+
+        }
+
+        else {
+
+          console.error(
+            "tampilkanPreviewHasilAkhir tidak ditemukan."
+          );
+
+          alert(
+            "Fungsi Preview Hasil Akhir belum tersedia."
+          );
+
+        }
+
+      };
 
 
-  /* =======================================================
-     PENTING:
-     SELALU PINDAHKAN BUTTON KE AREA
-  ======================================================= */
+    /* =====================================================
+       MASUKKAN BUTTON KE AREA
+    ===================================================== */
 
+    area.appendChild(
+      tombol
+    );
+
+
+    /* =====================================================
+       SCROLL KE BUTTON
+    ===================================================== */
+
+    setTimeout(
+      function () {
+
+        tombol.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+      },
+      250
+    );
+
+
+    console.log(
+      "BUTTON PREVIEW BERHASIL DIBUAT"
+    );
+
+  };
+
+
+/* =========================================================
+   SISTEM TTD FINAL SELESAI
+========================================================= */
+
+console.log(
+  "FINAL BUTTON PREVIEW SYSTEM AKTIF"
+);
   area.appendChild(
     tombol
   );
