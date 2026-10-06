@@ -7347,7 +7347,36 @@ if (!idAktifTTD) {
       }
 
 
-     
+      /* =================================================
+         NOTIFIKASI BERHASIL
+      ================================================= */
+
+      tampilkanNotifFoto(
+        "Tanda tangan berhasil disimpan",
+        "Tanda tangan digital telah berhasil direkam ke server.\n\n" +
+        "ID Pemeriksaan: " +
+        idPemeriksaanAktif +
+        "\n\n" +
+        "Silakan tekan OK untuk kembali ke Form Checklist Pengawasan Langsir. " +
+        "Jika sudah yakin, klik SIMPAN & SELESAI.",
+        "form"
+      );
+
+
+    }
+
+    catch (errorTTD) {
+
+      console.error(
+        "GAGAL SIMPAN TTD:",
+        errorTTD
+      );
+
+
+      signatureServerSaved =
+        false;
+
+
       /* =================================================
          PROGRESS GAGAL
       ================================================= */
@@ -9351,7 +9380,7 @@ rowHeightTetap =
   Math.max(
     38,
     Math.min(
-      65,
+      58,
       rowHeightTetap
     )
   );
@@ -9862,8 +9891,27 @@ function gambarSubHeaderKelompok2(
 }
 
 
+/* =====================================================
+   FUNGSI GAMBAR ITEM
+===================================================== */
+
+function gambarItemChecklist(
+  item,
+  indexGlobal
+) {
+
+  var rowY =
+    y;
 
 
+  var rowHeight =
+    rowHeightTetap;
+
+
+/* =================================================
+   WARNA BARIS TABEL
+   SEMUA PUTIH
+================================================= */
 
 ctx.fillStyle =
   "#ffffff";
