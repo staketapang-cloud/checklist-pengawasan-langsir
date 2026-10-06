@@ -9907,7 +9907,43 @@ function gambarItemChecklist(
   var rowHeight =
     rowHeightTetap;
 
+var rowHeight =
+  rowHeightTetap;
 
+
+/* =================================================
+   TINGGI KHUSUS URAIAN 3 BARIS
+================================================= */
+
+var uraianCek =
+  item.pertanyaan ||
+  "-";
+
+
+var uraianLinesCek =
+  pecahTeks(
+    uraianCek,
+    colUraian - 16,
+    fontTabel,
+    3
+  );
+
+
+if (
+  uraianLinesCek.length >= 3
+) {
+
+  rowHeight =
+    rowHeightTetap +
+    14;
+
+}
+
+
+/* =================================================
+   WARNA BARIS TABEL
+   SEMUA PUTIH
+================================================= */
 /* =================================================
    WARNA BARIS TABEL
    SEMUA PUTIH
@@ -10024,7 +10060,7 @@ var uraianLines =
 
 
 var jarakBaris =
-  15;
+  17;
 
 
 var uraianStartY =
