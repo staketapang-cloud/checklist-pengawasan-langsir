@@ -17748,41 +17748,6 @@ window.simpanTTD = async function () {
     }
 
 
-    /* =====================================================
-       NOTIFIKASI SUKSES
-       OK -> KEMBALI KE FORM
-    ===================================================== */
-
-    if (
-      typeof tampilkanNotifFoto ===
-      "function"
-    ) {
-
-      tampilkanNotifFoto(
-        "Tanda tangan berhasil disimpan",
-        "Tanda tangan digital telah berhasil direkam ke server.\n\n" +
-        "ID Pemeriksaan: " +
-        idPemeriksaanAktif +
-        "\n\n" +
-        "Silakan tekan OK untuk kembali ke Form Checklist.",
-        false
-      );
-
-
-      var overlay =
-        document.getElementById(
-          "notifFoto"
-        );
-
-
-      if (overlay) {
-
-        overlay.dataset.afterOk =
-          "form";
-
-      }
-
-    }
 
 
     /* =====================================================
