@@ -2630,11 +2630,13 @@ body {
       display:none;
       width:100%;
     "
+    onclick="simpanPemeriksaan()"
   >
     SIMPAN & LIHAT PREVIEW
   </button>
 
 </div>
+
     </div>
 
   </div>
@@ -7880,7 +7882,80 @@ function simpanPemeriksaan() {
       });
 
 
-   
+    /* =================================================
+       NOTIFIKASI
+    ================================================= */
+
+tampilkanNotifFoto(
+  "Tanda tangan berhasil disimpan",
+  "Tanda tangan digital berhasil direkam ke server.\n\n" +
+  "ID Pemeriksaan: " +
+  idPemeriksaanAktif +
+  "\n\n" +
+  "Silakan tekan OK untuk kembali ke Form Checklist.\n" +
+  "Setelah itu klik SIMPAN & TAMPILKAN PREVIEW.",
+  "form"
+);
+  })
+
+
+  .catch(function(error) {
+
+    console.error(
+      "GAGAL SIMPAN PEMERIKSAAN:",
+      error
+    );
+
+
+    setProgressSimpan(
+      0,
+      "Penyimpanan gagal",
+      "-",
+      error.message
+    );
+
+
+    tampilkanStatus(
+      "Gagal menyimpan pemeriksaan.\n" +
+      error.message
+    );
+
+
+    alert(
+      "Gagal menyimpan pemeriksaan.\n\n" +
+      error.message
+    );
+
+  })
+
+
+  .finally(function() {
+
+    sedangSimpanPemeriksaan =
+      false;
+
+
+    if (tombol) {
+
+      tombol.disabled =
+        false;
+
+      tombol.textContent =
+        "SIMPAN & SELESAI";
+
+    }
+
+
+    if (btnTTD) {
+
+      btnTTD.disabled =
+        false;
+
+    }
+
+  });
+
+}
 /* =========================================================
    PREVIEW HASIL AKHIR - JPG A4 COMPACT 1 HALAMAN
    =========================================================
