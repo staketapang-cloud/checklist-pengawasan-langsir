@@ -7348,36 +7348,6 @@ if (!idAktifTTD) {
 
 
       /* =================================================
-         NOTIFIKASI BERHASIL
-      ================================================= */
-
-      tampilkanNotifFoto(
-        "Tanda tangan berhasil disimpan",
-        "Tanda tangan digital telah berhasil direkam ke server.\n\n" +
-        "ID Pemeriksaan: " +
-        idPemeriksaanAktif +
-        "\n\n" +
-        "Silakan tekan OK untuk kembali ke Form Checklist Pengawasan Langsir. " +
-        "Jika sudah yakin, klik SIMPAN & SELESAI.",
-        "form"
-      );
-
-
-    }
-
-    catch (errorTTD) {
-
-      console.error(
-        "GAGAL SIMPAN TTD:",
-        errorTTD
-      );
-
-
-      signatureServerSaved =
-        false;
-
-
-      /* =================================================
          PROGRESS GAGAL
       ================================================= */
 
