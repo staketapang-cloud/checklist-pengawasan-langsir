@@ -17700,6 +17700,7 @@ console.log(
 /* =========================================================
    FINAL FIX SIMPAN TTD
    SATU JALUR
+   - Progress langsung bergerak sejak 1%
    - ID otomatis
    - Progress otomatis 1% -> 95%
    - 100% hanya setelah server sukses
@@ -17777,6 +17778,126 @@ window.simpanTTD = async function () {
 
 
     /* =====================================================
+       PROGRESS LANGSUNG BERJALAN
+       MULAI SEBELUM MENUNGGU ID PEMERIKSAAN
+
+       1% -> 95%
+    ===================================================== */
+
+    progressTimer =
+      setInterval(
+        function () {
+
+          if (progressPersen >= 95) {
+
+            progressPersen = 95;
+
+            return;
+
+          }
+
+
+          if (progressPersen < 50) {
+
+            progressPersen += 2;
+
+          }
+
+          else {
+
+            progressPersen += 1;
+
+          }
+
+
+          if (progressPersen > 95) {
+
+            progressPersen = 95;
+
+          }
+
+
+          var teks =
+            "Menyiapkan tanda tangan...";
+
+          var note =
+            "Menyiapkan data pemeriksaan.";
+
+
+          if (progressPersen >= 5) {
+
+            teks =
+              "Membaca tanda tangan...";
+
+            note =
+              "Data tanda tangan sedang disiapkan.";
+
+          }
+
+
+          if (progressPersen >= 20) {
+
+            teks =
+              "Menyiapkan data pemeriksaan...";
+
+            note =
+              "Mempersiapkan data untuk dikirim.";
+
+          }
+
+
+          if (progressPersen >= 50) {
+
+            teks =
+              "Menyimpan tanda tangan...";
+
+            note =
+              "Mengirim TTD ke server.";
+
+          }
+
+
+          if (progressPersen >= 85) {
+
+            teks =
+              "Memproses penyimpanan TTD...";
+
+            note =
+              "Menunggu konfirmasi server.";
+
+          }
+
+
+          if (progressPersen >= 93) {
+
+            teks =
+              "Menunggu konfirmasi server...";
+
+            note =
+              "TTD sedang dipastikan tersimpan.";
+
+          }
+
+
+          if (
+            typeof setProgressTTD === "function"
+          ) {
+
+            setProgressTTD(
+              progressPersen,
+              teks,
+              progressPersen + "%",
+              note
+            );
+
+          }
+
+        },
+        180
+      );
+
+
+    /* =====================================================
        PASTIKAN ID PEMERIKSAAN
     ===================================================== */
 
@@ -17833,110 +17954,30 @@ window.simpanTTD = async function () {
 
 
     /* =====================================================
-       PROGRESS 5%
+       PROGRESS MINIMAL 5%
     ===================================================== */
 
-    progressPersen = 5;
+    if (
+      progressPersen < 5
+    ) {
+
+      progressPersen = 5;
+
+    }
+
 
     if (
       typeof setProgressTTD === "function"
     ) {
 
       setProgressTTD(
-        5,
+        progressPersen,
         "Membaca tanda tangan...",
-        "5%",
+        progressPersen + "%",
         "Data tanda tangan siap dikirim."
       );
 
     }
-
-
-    /* =====================================================
-       PROGRESS OTOMATIS
-       5% -> 95%
-
-       100% HANYA DARI HASIL SERVER
-    ===================================================== */
-
-    progressTimer =
-      setInterval(
-        function () {
-
-          if (progressPersen >= 95) {
-
-            progressPersen = 95;
-
-            return;
-
-          }
-
-
-          if (progressPersen < 50) {
-
-            progressPersen += 2;
-
-          }
-
-          else {
-
-            progressPersen += 1;
-
-          }
-
-
-          if (progressPersen > 95) {
-
-            progressPersen = 95;
-
-          }
-
-
-          var teks =
-            "Menyimpan tanda tangan...";
-
-          var note =
-            "Mengirim TTD ke server.";
-
-
-          if (progressPersen >= 85) {
-
-            teks =
-              "Memproses penyimpanan TTD...";
-
-            note =
-              "Menunggu konfirmasi server.";
-
-          }
-
-
-          if (progressPersen >= 93) {
-
-            teks =
-              "Menunggu konfirmasi server...";
-
-            note =
-              "TTD sedang dipastikan tersimpan.";
-
-          }
-
-
-          if (
-            typeof setProgressTTD === "function"
-          ) {
-
-            setProgressTTD(
-              progressPersen,
-              teks,
-              progressPersen + "%",
-              note
-            );
-
-          }
-
-        },
-        180
-      );
 
 
     /* =====================================================
@@ -18097,10 +18138,6 @@ window.simpanTTD = async function () {
         false;
 
 
-      /* =================================================
-         AUTO SCROLL KE BUTTON
-      ================================================= */
-
       setTimeout(
         function() {
 
@@ -18170,7 +18207,6 @@ window.simpanTTD = async function () {
 
 
   }
-
 
   /* =======================================================
      JIKA GAGAL
@@ -18326,8 +18362,6 @@ window.simpanTTD = async function () {
   }
 
 };
-
-
 /* =========================================================
    PAKSA GLOBAL MENGGUNAKAN FUNGSI FINAL
 ========================================================= */
