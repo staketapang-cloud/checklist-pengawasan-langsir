@@ -2021,6 +2021,130 @@ body {
   color: #000000;
   font-size: 14px;
 }
+      <style>
+#loginNama {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   PROGRESS TTD - VISUAL SAMA SEPERTI LOGIN
+========================================================= */
+
+#progressTTD .progress-bar {
+
+  position: relative;
+
+  height: 100%;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #003b67,
+      #007fc2,
+      #08a0dc,
+      #f58220
+    );
+
+  box-shadow:
+    0 0 15px
+    rgba(0,130,205,.35);
+
+  transition:
+    width .4s ease;
+}
+
+
+/* =========================================================
+   CAHAYA BERJALAN
+========================================================= */
+
+#progressTTD .progress-bar::after {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: -40%;
+
+  width: 40%;
+
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.65),
+      transparent
+    );
+
+  animation:
+    progressTrainLightTTD
+    1.7s
+    linear
+    infinite;
+}
+
+
+@keyframes progressTrainLightTTD {
+
+  from {
+    left: -40%;
+  }
+
+  to {
+    left: 120%;
+  }
+
+}
+
+
+/* =========================================================
+   PERSENTASE TTD
+========================================================= */
+
+#progressTTD .progress-percent {
+
+  margin-top: 9px;
+
+  text-align: center;
+
+  color: var(--rail-blue-dark);
+
+  font-size: 20px;
+
+  font-weight: 850;
+}
+
+
+/* =========================================================
+   KETERANGAN TTD
+========================================================= */
+
+#progressTTD .progress-note {
+
+  margin-top: 4px;
+
+  text-align: center;
+
+  color: #718293;
+
+  font-size: 11px;
+}
+
+</style>
 </style>
       <!-- =========================================================
      LIBRARY PDF
