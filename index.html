@@ -7432,24 +7432,38 @@ if (!idAktifTTD) {
       }
 
 
-      /* =================================================
-         TAMPILKAN TOMBOL PREVIEW
-      ================================================= */
+     /* =================================================
+   TAMPILKAN TOMBOL PREVIEW
+   + AUTO SCROLL
+================================================= */
 
-      var tombolPreview =
-        document.getElementById(
-          "btnSimpanLihatPreview"
-        );
-
-
-      if (tombolPreview) {
-
-        tombolPreview.style.display =
-          "block";
-
-      }
+var tombolPreview =
+  document.getElementById(
+    "btnSimpanLihatPreview"
+  );
 
 
+if (tombolPreview) {
+
+  tombolPreview.style.display =
+    "block";
+
+
+  /* =================================================
+     TUNGGU TOMBOL MUNCUL
+     LALU SCROLL KE TOMBOL
+  ================================================= */
+
+  setTimeout(function() {
+
+    tombolPreview.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }, 250);
+
+}
       /* =================================================
          HILANGKAN AREA FOTO
       ================================================= */
