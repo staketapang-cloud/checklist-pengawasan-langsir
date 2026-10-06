@@ -9411,7 +9411,7 @@ console.log(
       item...
       item...
 
-   3  Kepatuhan PLR dan Awak KA dalam melakukan SOP
+   3  Kepatuhan PLR & Awak KA dalam melakukan SOP
       Kegiatan Langsir
       item...
 ===================================================== */
@@ -9529,7 +9529,7 @@ rowHeightTetap =
   Math.max(
     34,
     Math.min(
-      39,
+      45,
       rowHeightTetap
     )
   );
@@ -10334,16 +10334,44 @@ for (
   );
 
 }
-     /* =====================================================
-   CATATAN
+/* =====================================================
+   HEADER CATATAN
 ===================================================== */
 
-y +=
-  10;
+y += 10;
 
+var headerCatatanHeight =
+  32;
+
+/* HEADER ABU-ABU TUA */
+ctx.fillStyle =
+  "#6b7280";
+
+ctx.fillRect(
+  margin,
+  y,
+  contentWidth,
+  headerCatatanHeight
+);
+
+/* TULISAN CATATAN */
 ctx.textAlign =
   "left";
 
+ctx.font =
+  "bold 15px Arial";
+
+ctx.fillStyle =
+  "#ffffff";
+
+ctx.fillText(
+  "CATATAN",
+  margin + 10,
+  y + 21
+);
+
+y +=
+  headerCatatanHeight;
 /* =====================================================
    JUDUL CATATAN
    FONT 16px
