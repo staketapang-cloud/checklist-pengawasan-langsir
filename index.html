@@ -9863,37 +9863,7 @@ function gambarSubHeaderKelompok2(
 
 
 
-var rowHeight =
-  rowHeightTetap;
 
-
-/* =================================================
-   TAMBAH TINGGI KHUSUS URAIAN 3 BARIS
-================================================= */
-
-var uraianCek =
-  item.pertanyaan ||
-  "-";
-
-
-var uraianLinesCek =
-  pecahTeks(
-    uraianCek,
-    colUraian - 16,
-    fontTabel,
-    3
-  );
-
-
-if (
-  uraianLinesCek.length >= 3
-) {
-
-  rowHeight =
-    rowHeightTetap +
-    10;
-
-}
 
 ctx.fillStyle =
   "#ffffff";
