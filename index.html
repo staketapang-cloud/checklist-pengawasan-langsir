@@ -18343,7 +18343,7 @@ console.log(
 
 
 /* =========================================================
-   FINAL BUTTON PREVIEW
+   FINAL BUTTON PREVIEW SYSTEM
    TTD -> BERHASIL -> BUTTON PREVIEW
 ========================================================= */
 
@@ -18354,23 +18354,22 @@ window.tampilkanButtonPreviewFinal =
       "MEMBUAT / MENAMPILKAN BUTTON PREVIEW"
     );
 
-
-    /* =====================================================
-       CARI BUTTON YANG SUDAH ADA
-    ===================================================== */
-
     var tombol =
       document.getElementById(
         "btnSimpanLihatPreview"
       );
 
-
-    /*
-     * Kalau button sudah ada di HTML,
-     * gunakan button tersebut.
-     */
+    /* =====================================================
+       BUTTON SUDAH ADA DI HTML
+    ===================================================== */
 
     if (tombol) {
+
+      tombol.hidden =
+        false;
+
+      tombol.disabled =
+        false;
 
       tombol.style.display =
         "block";
@@ -18378,14 +18377,52 @@ window.tampilkanButtonPreviewFinal =
       tombol.style.visibility =
         "visible";
 
-      tombol.disabled =
-        false;
+      tombol.style.opacity =
+        "1";
+
+      tombol.style.width =
+        "100%";
+
+      tombol.style.minHeight =
+        "50px";
+
+      tombol.style.margin =
+        "0";
+
+      tombol.style.padding =
+        "14px 16px";
+
+      tombol.style.border =
+        "none";
+
+      tombol.style.borderRadius =
+        "8px";
+
+      tombol.style.backgroundColor =
+        "#198754";
+
+      tombol.style.color =
+        "#ffffff";
+
+      tombol.style.fontSize =
+        "15px";
+
+      tombol.style.fontWeight =
+        "bold";
+
+      tombol.style.cursor =
+        "pointer";
+
+      tombol.style.position =
+        "relative";
+
+      tombol.style.zIndex =
+        "1000000";
 
 
-      /*
-       * Pastikan aksi tombol tetap
-       * menuju preview hasil akhir.
-       */
+      /* ===================================================
+         AKSI BUTTON
+      =================================================== */
 
       tombol.onclick =
         function () {
@@ -18394,7 +18431,6 @@ window.tampilkanButtonPreviewFinal =
             "BUTTON SIMPAN & TAMPILKAN PREVIEW DIKLIK"
           );
 
-
           if (
             typeof window.tampilkanPreviewHasilAkhir ===
             "function"
@@ -18402,9 +18438,7 @@ window.tampilkanButtonPreviewFinal =
 
             window.tampilkanPreviewHasilAkhir();
 
-          }
-
-          else {
+          } else {
 
             console.error(
               "tampilkanPreviewHasilAkhir tidak ditemukan."
@@ -18419,20 +18453,82 @@ window.tampilkanButtonPreviewFinal =
         };
 
 
-      /*
-       * Scroll ke button.
-       */
+      /* ===================================================
+         PASTIKAN FORM TERBUKA
+      =================================================== */
+
+      var form =
+        document.getElementById(
+          "formPemeriksaan"
+        );
+
+      if (form) {
+
+        form.style.display =
+          "block";
+
+        form.style.visibility =
+          "visible";
+
+        form.style.opacity =
+          "1";
+
+      }
+
+
+      /* ===================================================
+         PASTIKAN APP TERBUKA
+      =================================================== */
+
+      var app =
+        document.getElementById(
+          "app"
+        );
+
+      if (app) {
+
+        app.style.display =
+          "block";
+
+      }
+
+
+      /* ===================================================
+         DEBUG
+      =================================================== */
+
+      console.log(
+        "BUTTON SIMPAN & TAMPILKAN PREVIEW: TAMPIL"
+      );
+
+
+      /* ===================================================
+         SCROLL KE BUTTON
+      =================================================== */
 
       setTimeout(
         function () {
 
-          tombol.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
+          try {
+
+            tombol.scrollIntoView({
+              behavior:
+                "smooth",
+              block:
+                "center"
+            });
+
+          } catch (error) {
+
+            console.warn(
+              "Gagal scroll ke button preview:",
+              error
+            );
+
+          }
 
         },
-        250
+        300
       );
 
 
@@ -18447,14 +18543,13 @@ window.tampilkanButtonPreviewFinal =
 
     /* =====================================================
        JIKA BUTTON BELUM ADA
-       CARI AREA BUTTON
+       CARI AREA
     ===================================================== */
 
     var area =
       document.getElementById(
         "areaSimpanLihatPreview"
       );
-
 
     if (!area) {
 
@@ -18468,7 +18563,7 @@ window.tampilkanButtonPreviewFinal =
 
 
     /* =====================================================
-       BUAT BUTTON BARU
+       BUAT BUTTON
     ===================================================== */
 
     tombol =
@@ -18476,30 +18571,26 @@ window.tampilkanButtonPreviewFinal =
         "button"
       );
 
-
     tombol.type =
       "button";
-
 
     tombol.id =
       "btnSimpanLihatPreview";
 
-
     tombol.className =
       "btn btn-simpan btn-preview-glow";
-
 
     tombol.style.display =
       "block";
 
-
     tombol.style.visibility =
       "visible";
-
 
     tombol.style.width =
       "100%";
 
+    tombol.style.minHeight =
+      "50px";
 
     tombol.textContent =
       "✨ SIMPAN & LIHAT PREVIEW";
@@ -18516,7 +18607,6 @@ window.tampilkanButtonPreviewFinal =
           "BUTTON SIMPAN & TAMPILKAN PREVIEW DIKLIK"
         );
 
-
         if (
           typeof window.tampilkanPreviewHasilAkhir ===
           "function"
@@ -18524,9 +18614,7 @@ window.tampilkanButtonPreviewFinal =
 
           window.tampilkanPreviewHasilAkhir();
 
-        }
-
-        else {
+        } else {
 
           console.error(
             "tampilkanPreviewHasilAkhir tidak ditemukan."
@@ -18541,10 +18629,6 @@ window.tampilkanButtonPreviewFinal =
       };
 
 
-    /* =====================================================
-       MASUKKAN BUTTON KE AREA
-    ===================================================== */
-
     area.appendChild(
       tombol
     );
@@ -18557,13 +18641,26 @@ window.tampilkanButtonPreviewFinal =
     setTimeout(
       function () {
 
-        tombol.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
+        try {
+
+          tombol.scrollIntoView({
+            behavior:
+              "smooth",
+            block:
+              "center"
+          });
+
+        } catch (error) {
+
+          console.warn(
+            "Gagal scroll ke button preview:",
+            error
+          );
+
+        }
 
       },
-      250
+      300
     );
 
 
@@ -18575,196 +18672,7 @@ window.tampilkanButtonPreviewFinal =
 
 
 /* =========================================================
-   SISTEM TTD FINAL SELESAI
-========================================================= */
-
-console.log(
-  "FINAL BUTTON PREVIEW SYSTEM AKTIF"
-);
-  area.appendChild(
-    tombol
-  );
-
-
-  /* =======================================================
-     LETAK AREA
-     SETELAH FORM PEMERIKSAAN
-  ======================================================= */
-
-  if (
-    area.parentNode !==
-    form.parentNode
-  ) {
-
-    form.parentNode.insertBefore(
-      area,
-      form.nextSibling
-    );
-
-  }
-
-
-  /* =======================================================
-     TAMPILKAN AREA
-  ======================================================= */
-
-  area.hidden =
-    false;
-
-  area.style.display =
-    "block";
-
-  area.style.visibility =
-    "visible";
-
-  area.style.opacity =
-    "1";
-
-  area.style.width =
-    "100%";
-
-  area.style.marginTop =
-    "20px";
-
-  area.style.marginBottom =
-    "20px";
-
-  area.style.position =
-    "relative";
-
-  area.style.zIndex =
-    "999999";
-
-
-  /* =======================================================
-     TAMPILKAN BUTTON
-  ======================================================= */
-
-  tombol.hidden =
-    false;
-
-  tombol.disabled =
-    false;
-
-  tombol.style.display =
-    "block";
-
-  tombol.style.visibility =
-    "visible";
-
-  tombol.style.opacity =
-    "1";
-
-  tombol.style.width =
-    "100%";
-
-  tombol.style.minHeight =
-    "50px";
-
-  tombol.style.margin =
-    "0";
-
-  tombol.style.padding =
-    "14px 16px";
-
-  tombol.style.border =
-    "none";
-
-  tombol.style.borderRadius =
-    "8px";
-
-  tombol.style.backgroundColor =
-    "#198754";
-
-  tombol.style.color =
-    "#ffffff";
-
-  tombol.style.fontSize =
-    "15px";
-
-  tombol.style.fontWeight =
-    "bold";
-
-  tombol.style.cursor =
-    "pointer";
-
-  tombol.style.position =
-    "relative";
-
-  tombol.style.zIndex =
-    "1000000";
-
-
-  /* =======================================================
-     PASTIKAN FORM TERBUKA
-  ======================================================= */
-
-  form.style.display =
-    "block";
-
-  form.style.visibility =
-    "visible";
-
-  form.style.opacity =
-    "1";
-
-
-  var app =
-    document.getElementById(
-      "app"
-    );
-
-
-  if (app) {
-
-    app.style.display =
-      "block";
-
-  }
-
-
-  /* =======================================================
-     DEBUG
-  ======================================================= */
-
-  console.log(
-    "BUTTON PREVIEW PARENT:",
-    tombol.parentNode
-  );
-
-  console.log(
-    "BUTTON PREVIEW AREA:",
-    area
-  );
-
-  console.log(
-    "BUTTON SIMPAN & TAMPILKAN PREVIEW: TAMPIL"
-  );
-
-
-  /* =======================================================
-     SCROLL KE BUTTON
-  ======================================================= */
-
-  setTimeout(
-    function () {
-
-      tombol.scrollIntoView({
-        behavior:
-          "smooth",
-        block:
-          "center"
-      });
-
-    },
-    300
-  );
-
-};
-
-
-/* =========================================================
-   OVERRIDE TUTUP NOTIFIKASI
+   OVERRIDE TUTUP NOTIFIKASI FOTO
 ========================================================= */
 
 window.tutupNotifFoto =
@@ -18774,7 +18682,6 @@ window.tutupNotifFoto =
       document.getElementById(
         "notifFoto"
       );
-
 
     if (!overlay) {
 
@@ -18873,8 +18780,14 @@ window.tutupNotifFoto =
       setTimeout(
         function () {
 
-          window.tampilkanButtonPreviewFinal();
+          if (
+            typeof window.tampilkanButtonPreviewFinal ===
+            "function"
+          ) {
 
+            window.tampilkanButtonPreviewFinal();
+
+          }
 
           console.log(
             "Kembali ke Form Checklist."
@@ -18961,9 +18874,8 @@ console.log(
 console.log(
   "================================="
 );
-</script>
+      </script>
 
 </body>
 
 </html>
-
