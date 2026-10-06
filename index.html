@@ -9351,7 +9351,7 @@ rowHeightTetap =
   Math.max(
     38,
     Math.min(
-      58,
+      65,
       rowHeightTetap
     )
   );
@@ -9862,27 +9862,38 @@ function gambarSubHeaderKelompok2(
 }
 
 
-/* =====================================================
-   FUNGSI GAMBAR ITEM
-===================================================== */
 
-function gambarItemChecklist(
-  item,
-  indexGlobal
-) {
-
-  var rowY =
-    y;
-
-
-  var rowHeight =
-    rowHeightTetap;
+var rowHeight =
+  rowHeightTetap;
 
 
 /* =================================================
-   WARNA BARIS TABEL
-   SEMUA PUTIH
+   TAMBAH TINGGI KHUSUS URAIAN 3 BARIS
 ================================================= */
+
+var uraianCek =
+  item.pertanyaan ||
+  "-";
+
+
+var uraianLinesCek =
+  pecahTeks(
+    uraianCek,
+    colUraian - 16,
+    fontTabel,
+    3
+  );
+
+
+if (
+  uraianLinesCek.length >= 3
+) {
+
+  rowHeight =
+    rowHeightTetap +
+    10;
+
+}
 
 ctx.fillStyle =
   "#ffffff";
