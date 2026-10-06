@@ -11337,205 +11337,48 @@ btnDownload.onclick =
       ".jpg";
 
 
-    /* ===================================================
-       DETEKSI SAFARI iPHONE / iPAD SAJA
-    =================================================== */
+/* ===================================================
+   DOWNLOAD JPG LANGSUNG
+   TANPA SHARE / SIMPAN ULANG
+=================================================== */
 
-    var userAgent =
-      navigator.userAgent ||
-      "";
+var link =
+  document.createElement(
+    "a"
+  );
 
 
-    var isIOS =
-      /iPad|iPhone|iPod/.test(
-        userAgent
-      ) ||
-      (
-        navigator.platform ===
-          "MacIntel" &&
-        navigator.maxTouchPoints >
-          1
-      );
+link.href =
+  jpg;
 
 
-    var isSafari =
-      /Safari/i.test(
-        userAgent
-      ) &&
-      !/Chrome|CriOS|Android|EdgiOS|OPiOS|FxiOS/i.test(
-        userAgent
-      );
+link.download =
+  namaFile;
 
 
-    var gunakanShareSafari =
-      isIOS &&
-      isSafari &&
-      navigator.share &&
-      navigator.canShare;
+link.style.display =
+  "none";
 
 
-    /* ===================================================
-       SAFARI iPHONE / iPAD
-       GUNAKAN SHARE FILE
-    =================================================== */
+document.body.appendChild(
+  link
+);
 
-    if (
-      gunakanShareSafari
-    ) {
 
-      fetch(jpg)
+link.click();
 
-        .then(
-          function(response) {
 
-            return response.blob();
+document.body.removeChild(
+  link
+);
 
-          }
-        )
 
-        .then(
-          function(blob) {
+console.log(
+  "JPG BERHASIL DIDOWNLOAD:",
+  namaFile
+);
 
-            var file =
-              new File(
-                [blob],
-                namaFile,
-                {
-                  type:
-                    "image/jpeg"
-                }
-              );
-
-
-            if (
-              navigator.canShare({
-                files: [file]
-              })
-            ) {
-
-              return navigator.share({
-
-                files: [file],
-
-                title:
-                  "Checklist Pengawasan Kegiatan Langsir",
-
-                text:
-                  "Hasil Checklist Pengawasan Kegiatan Langsir"
-
-              });
-
-            }
-
-
-            throw new Error(
-              "Browser tidak mendukung berbagi file."
-            );
-
-          }
-        )
-
-        .then(
-          function() {
-
-            console.log(
-              "JPG berhasil dibagikan."
-            );
-
-          }
-        )
-
-        .catch(
-          function(error) {
-
-            if (
-              error &&
-              error.name ===
-                "AbortError"
-            ) {
-
-              console.log(
-                "Menu Share ditutup oleh pengguna."
-              );
-
-              return;
-
-            }
-
-
-            console.warn(
-              "Share JPG Safari gagal, menggunakan download biasa:",
-              error
-            );
-
-
-            /* =========================================
-               FALLBACK DOWNLOAD
-            ========================================== */
-
-            var link =
-              document.createElement(
-                "a"
-              );
-
-
-            link.href =
-              jpg;
-
-
-            link.download =
-              namaFile;
-
-
-            document.body.appendChild(
-              link
-            );
-
-
-            link.click();
-
-
-            link.remove();
-
-          }
-        );
-
-
-      return;
-
-    }
-
-
-    /* ===================================================
-       CHROME / EDGE / FIREFOX / DESKTOP / ANDROID
-       DOWNLOAD LANGSUNG
-    =================================================== */
-
-    var link =
-      document.createElement(
-        "a"
-      );
-
-
-    link.href =
-      jpg;
-
-
-    link.download =
-      namaFile;
-
-
-    document.body.appendChild(
-      link
-    );
-
-
-    link.click();
-
-
-    link.remove();
-
-  };
+};
 
 
 tombolArea.appendChild(
