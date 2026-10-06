@@ -10340,12 +10340,11 @@ for (
 
 y += 10;
 
-var headerCatatanHeight =
-  32;
+var headerCatatanHeight = 28;
 
 /* HEADER ABU-ABU TUA */
 ctx.fillStyle =
-  "#6b7280";
+  "#5b6573";
 
 ctx.fillRect(
   margin,
@@ -10354,46 +10353,14 @@ ctx.fillRect(
   headerCatatanHeight
 );
 
-/* TULISAN CATATAN */
-ctx.textAlign =
-  "left";
+y += headerCatatanHeight;
 
-ctx.font =
-  "bold 15px Arial";
 
-ctx.fillStyle =
-  "#ffffff";
-
-ctx.fillText(
-  "CATATAN",
-  margin + 10,
-  y + 21
-);
-
-y +=
-  headerCatatanHeight;
 /* =====================================================
-   JUDUL CATATAN
-   FONT 16px
+   KOTAK ISI CATATAN
 ===================================================== */
 
-ctx.font =
-  "bold 15px Arial";
-
-ctx.fillStyle =
-  "#1f4e78";
-
-ctx.fillText(
-  "CATATAN",
-  margin,
-  y + 8
-);
-
-y +=
-  7;
-
-var catatanHeight =
-  140;
+var catatanHeight = 140;
 
 ctx.strokeStyle =
   "#888888";
@@ -10408,51 +10375,77 @@ ctx.strokeRect(
   catatanHeight
 );
 
+
 /* =====================================================
-   ISI CATATAN
-   FONT 14px
+   CATATAN : + ISI
 ===================================================== */
 
+ctx.textAlign =
+  "left";
+
 ctx.font =
-  "14px Arial";
+  "bold 14px Arial";
 
 ctx.fillStyle =
   "#000000";
 
-var catatanLines =
-  pecahTeks(
+ctx.fillText(
+  "CATATAN :",
+  margin + 8,
+  y + 19
+);
+
+
+/* =====================================================
+   ISI CATATAN DI SAMPING
+===================================================== */
+
+var catatanTeks =
+  String(
     data.CATATAN ||
-    "-",
-    contentWidth - 16,
-    "14px Arial",
-    4
-  );
+    ""
+  ).trim();
 
-catatanLines.forEach(
-  function(line, index) {
+if (catatanTeks) {
 
-    ctx.fillText(
-      line,
-      margin + 8,
-      y +
-      17 +
-      (
-        index *
-        17
-      )
+  ctx.font =
+    "14px Arial";
+
+  ctx.fillStyle =
+    "#000000";
+
+  var catatanLines =
+    pecahTeks(
+      catatanTeks,
+      contentWidth - 95,
+      "14px Arial",
+      4
     );
 
-  }
-);
+  catatanLines.forEach(
+    function(line, index) {
+
+      ctx.fillText(
+        line,
+        margin + 82,
+        y +
+        19 +
+        (index * 17)
+      );
+
+    }
+  );
+
+}
 
 y +=
   catatanHeight +
   10;
 
+
 /* =====================================================
    TANDA TANGAN KANAN BAWAH
 ===================================================== */
-
 var ttdWidth =
   300;
 
