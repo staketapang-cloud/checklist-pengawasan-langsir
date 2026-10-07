@@ -11690,52 +11690,7 @@ console.log(
   "JPG langsung didownload:",
   namaFile
 );
-  /* =================================================
-     CADANGAN JIKA SHARE GAMBAR TIDAK DIDUKUNG
-  ================================================= */
 
-  var link =
-    document.createElement(
-      "a"
-    );
-
-  link.href =
-    URL.createObjectURL(
-      jpgBlob
-    );
-
-  link.download =
-    namaFile;
-
-  link.style.display =
-    "none";
-
-  document.body.appendChild(
-    link
-  );
-
-  link.click();
-
-  document.body.removeChild(
-    link
-  );
-
-  setTimeout(
-    function() {
-
-      URL.revokeObjectURL(
-        link.href
-      );
-
-    },
-    1000
-  );
-
-
-  console.log(
-    "JPG didownload:",
-    namaFile
-  );
 
 }
 
