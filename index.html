@@ -2109,7 +2109,17 @@ body {
   }
 
 }
+/* =========================================================
+   CAHAYA PROGRESS TTD BERHENTI SAAT 100%
+========================================================= */
 
+#progressTTD.progress-selesai .progress-bar::after {
+
+  animation: none !important;
+
+  display: none !important;
+
+}
 
 /* =========================================================
    PERSENTASE TTD
@@ -18125,7 +18135,20 @@ window.simpanTTD = async function () {
 
     }
 
+/* =====================================================
+   MATIKAN CAHAYA LOADING SETELAH 100%
+===================================================== */
 
+var progressTTDElement =
+  document.getElementById("progressTTD");
+
+if (progressTTDElement) {
+
+  progressTTDElement.classList.add(
+    "progress-selesai"
+  );
+
+}
     /* =====================================================
        TAMPILKAN BUTTON
        SIMPAN & LIHAT PREVIEW
