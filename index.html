@@ -3995,7 +3995,13 @@ function muatDaftarUserLogin() {
         jumlahUser
       );
 
-
+console.log(
+  "WAKTU MUAT NAMA:",
+  Math.round(
+    performance.now() - waktuMulaiMuatNama
+  ),
+  "ms"
+);
       console.log(
         "DROPDOWN LOGIN: SELECT SIAP"
       );
