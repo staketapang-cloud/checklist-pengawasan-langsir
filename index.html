@@ -3739,299 +3739,150 @@ window.daftarUserLogin = [];
 
 function muatDaftarUserLogin() {
 
-  var namaSelect =
-    document.getElementById(
-      "loginNama"
-    );
+  var namaSelect = document.getElementById("loginNama");
+  var nippElement = document.getElementById("loginNipp");
+  var jabatanElement = document.getElementById("loginJabatan");
 
-  var nippElement =
-    document.getElementById(
-      "loginNipp"
-    );
-
-  var jabatanElement =
-    document.getElementById(
-      "loginJabatan"
-    );
-
-
-  /* =======================================================
-     CEK ELEMENT
-  ======================================================= */
-
-  if (
-    !namaSelect ||
-    !nippElement ||
-    !jabatanElement
-  ) {
-
-    console.error(
-      "DROPDOWN LOGIN: element login tidak lengkap."
-    );
-
+  if (!namaSelect || !nippElement || !jabatanElement) {
+    console.error("DROPDOWN LOGIN: element tidak lengkap.");
     return;
   }
 
-
-  /* =======================================================
-     PASTIKAN LOGIN NAMA ADALAH SELECT
-  ======================================================= */
-
-  if (
-    namaSelect.tagName.toLowerCase() !==
-    "select"
-  ) {
-
-    console.error(
-      "DROPDOWN LOGIN: loginNama bukan SELECT."
-    );
-
+  if (namaSelect.tagName.toLowerCase() !== "select") {
+    console.error("DROPDOWN LOGIN: loginNama bukan SELECT.");
     return;
   }
 
+  var cacheKey = "cacheDaftarUserLoginV1";
 
-  /* =======================================================
-     STATUS AWAL
-  ======================================================= */
+  // TAMPILKAN CACHE LOKAL JIKA TERSEDIA
+  var cacheValid = false;
 
-  namaSelect.disabled =
-    true;
+  try {
+    var cacheText = localStorage.getItem(cacheKey);
 
-  namaSelect.innerHTML =
-    '<option value="">Memuat nama...</option>';
+    if (cacheText) {
+      var cacheObj = JSON.parse(cacheText);
 
+      if (
+        cacheObj &&
+        Array.isArray(cacheObj.data) &&
+        cacheObj.data.length > 0
+      ) {
+        isiDropdownNama(cacheObj.data);
+        cacheValid = true;
 
-  nippElement.value =
-    "";
+        console.log("DROPDOWN LOGIN: tampil dari cache lokal.");
+      }
+    }
+  } catch (error) {
+    console.warn("CACHE LOGIN tidak dapat dibaca:", error);
+  }
 
-  jabatanElement.value =
-    "";
+  if (!cacheValid) {
+    namaSelect.disabled = true;
+    namaSelect.innerHTML =
+      '<option value="">Memuat nama...</option>';
+  }
 
+  nippElement.value = "";
+  jabatanElement.value = "";
 
-  console.log(
-    "DROPDOWN LOGIN: mulai memuat nama..."
-  );
-// CATAT WAKTU MULAI
-  var waktuMulaiMuatNama = performance.now();
+  var waktuMulai = performance.now();
 
-
-  /* =======================================================
-     REQUEST KE APPS SCRIPT
-  ======================================================= */
-
+  // AMBIL DATA TERBARU DARI SERVER
   fetch(
-    API_URL +
-    "?action=user&_=" +
-    Date.now(),
+    API_URL + "?action=user&_=" + Date.now(),
     {
       method: "GET",
       cache: "no-store"
     }
   )
-
-  .then(
-    function(response) {
-
-      console.log(
-        "DROPDOWN LOGIN: HTTP",
-        response.status
-      );
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          "HTTP " +
-          response.status
-        );
-
-      }
-
-
-      return response.json();
-
+  .then(function(response) {
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
     }
-  )
 
+    return response.json();
+  })
+  .then(function(result) {
+    if (
+      !result ||
+      result.success !== true ||
+      !Array.isArray(result.data)
+    ) {
+      throw new Error("Data USER tidak valid.");
+    }
 
-  .then(
-    function(result) {
+    window.daftarUserLogin = result.data;
 
-      console.log(
-        "DROPDOWN LOGIN: RESPONSE",
-        result
+    // SIMPAN DATA TERBARU DI CACHE LOKAL
+    try {
+      localStorage.setItem(
+        cacheKey,
+        JSON.stringify({
+          waktu: Date.now(),
+          data: result.data
+        })
       );
+    } catch (error) {
+      console.warn("CACHE LOGIN gagal disimpan:", error);
+    }
 
+    isiDropdownNama(result.data);
 
-      /* =================================================
-         VALIDASI
-      ================================================= */
+    console.log(
+      "DROPDOWN LOGIN: data terbaru berhasil dimuat.",
+      result.data.length,
+      "nama"
+    );
 
-      if (
-        !result ||
-        result.success !== true ||
-        !Array.isArray(
-          result.data
-        )
-      ) {
+    console.log(
+      "WAKTU MUAT NAMA:",
+      Math.round(performance.now() - waktuMulai),
+      "ms"
+    );
+  })
+  .catch(function(error) {
+    console.error("DROPDOWN LOGIN: gagal memuat user:", error);
 
-        throw new Error(
-          "Data USER tidak valid."
-        );
-
-      }
-
-
-      /* =================================================
-         SIMPAN DATA USER
-      ================================================= */
-
-      window.daftarUserLogin =
-        result.data;
-
-
-      /* =================================================
-         RESET DROPDOWN
-      ================================================= */
-
+    if (!cacheValid) {
       namaSelect.innerHTML =
-        '<option value="">-- Pilih Nama --</option>';
-
-
-      var jumlahUser =
-        0;
-
-
-      /* =================================================
-         MASUKKAN SEMUA USER
-      ================================================= */
-
-      result.data.forEach(
-        function(user) {
-
-          if (!user) {
-            return;
-          }
-
-
-          var nama =
-            String(
-              user.NAMA || ""
-            ).trim();
-
-
-          var nipp =
-            String(
-              user.NIPP || ""
-            ).trim();
-
-
-          var jabatan =
-            String(
-              user.JABATAN || ""
-            ).trim();
-
-
-          if (!nama) {
-            return;
-          }
-
-
-          /* =============================================
-             BUAT OPTION
-          ============================================= */
-
-          var option =
-            document.createElement(
-              "option"
-            );
-
-
-          option.value =
-            nama;
-
-
-          option.textContent =
-            nama;
-
-
-          option.setAttribute(
-            "data-nipp",
-            nipp
-          );
-
-
-          option.setAttribute(
-            "data-jabatan",
-            jabatan
-          );
-
-
-          namaSelect.appendChild(
-            option
-          );
-
-
-          jumlahUser++;
-
-        }
-      );
-
-
-      /* =================================================
-         AKTIFKAN DROPDOWN
-      ================================================= */
-
-      namaSelect.disabled =
-        false;
-
-
-      /* =================================================
-         LOG HASIL
-      ================================================= */
-
-      console.log(
-        "DROPDOWN LOGIN: JUMLAH NAMA =",
-        jumlahUser
-      );
-
-console.log(
-  "WAKTU MUAT NAMA:",
-  Math.round(
-    performance.now() - waktuMulaiMuatNama
-  ),
-  "ms"
-);
-      console.log(
-        "DROPDOWN LOGIN: SELECT SIAP"
-      );
-
+        '<option value="">Gagal memuat nama. Coba muat ulang.</option>';
+      namaSelect.disabled = false;
     }
-  )
+  });
 
+  function isiDropdownNama(data) {
+    namaSelect.innerHTML =
+      '<option value="">-- Pilih Nama --</option>';
 
-  .catch(
-    function(error) {
+    var jumlahUser = 0;
 
-      console.error(
-        "DROPDOWN LOGIN: GAGAL MEMUAT USER:",
-        error
-      );
+    data.forEach(function(user) {
+      if (!user) return;
 
+      var nama = String(user.NAMA || "").trim();
+      var nipp = String(user.NIPP || "").trim();
+      var jabatan = String(user.JABATAN || "").trim();
 
-      namaSelect.innerHTML =
-        '<option value="">Gagal memuat nama</option>';
+      if (!nama) return;
 
+      var option = document.createElement("option");
+      option.value = nama;
+      option.textContent = nama;
+      option.setAttribute("data-nipp", nipp);
+      option.setAttribute("data-jabatan", jabatan);
 
-      namaSelect.disabled =
-        false;
+      namaSelect.appendChild(option);
+      jumlahUser++;
+    });
 
-    }
-  );
+    namaSelect.disabled = false;
 
+    console.log("DROPDOWN LOGIN: JUMLAH NAMA =", jumlahUser);
+  }
 }
-
-
 /* =========================================================
    AUTO ISI NIPP + JABATAN
 ========================================================= */
