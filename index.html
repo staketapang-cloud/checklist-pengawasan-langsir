@@ -14514,7 +14514,8 @@ function kirimTTDKeServer(
 
 
 /* =========================================================
-   SIMPAN TTD
+   TTD PREVIEW SAJA
+   TIDAK MENYIMPAN KE SHEET ATAU DRIVE
 ========================================================= */
 
 function simpanTTD() {
@@ -14523,572 +14524,140 @@ function simpanTTD() {
     return;
   }
 
+  sedangSimpanTTD = true;
 
-  sedangSimpanTTD =
-    true;
-
-
-  var tombol =
-    document.getElementById(
-      "btnSaveTTD"
-    );
-
-
-  if (tombol) {
-
-    tombol.disabled =
-      true;
-
-    tombol.textContent =
-      "MENYIMPAN...";
-
-  }
-
+  var tombol = document.getElementById("btnSaveTTD");
+  var status = document.getElementById("ttdStatus");
 
   try {
 
-    /*
-     * Pastikan canvas sudah siap.
-     */
+    /* Ambil canvas tanda tangan */
     if (!ttdCanvas) {
-
-      ttdCanvas =
-        document.getElementById(
-          "signatureCanvas"
-        );
-
+      ttdCanvas = document.getElementById("signatureCanvas");
     }
 
-
     if (!ttdCanvas) {
-
       throw new Error(
         "Canvas tanda tangan tidak ditemukan."
       );
-
     }
-
 
     if (!ttdCtx) {
-
-      ttdCtx =
-        ttdCanvas.getContext(
-          "2d"
-        );
-
+      ttdCtx = ttdCanvas.getContext("2d");
     }
 
+    /* Ambil gambar TTD dari canvas */
+    var signature = ambilSignatureCanvas();
 
-    /*
-     * Ambil gambar.
-     */
-    var signature =
-      ambilSignatureCanvas();
-
-
-    /*
-     * Bila ID belum tersedia,
-     * siapkan dulu.
-     */
-    if (!idPemeriksaanAktif) {
-
-      return pastikanIdPemeriksaan()
-
-        .then(function(id) {
-
-          idPemeriksaanAktif =
-            String(
-              id || ""
-            ).trim();
-
-
-          if (
-            !idPemeriksaanAktif
-          ) {
-
-            throw new Error(
-              "ID Pemeriksaan gagal dibuat."
-            );
-
-          }
-
-
-          sessionStorage.setItem(
-            "idPemeriksaanAktif",
-            idPemeriksaanAktif
-          );
-
-
-          return kirimTTDKeServer(
-            signature,
-            "manual"
-          );
-
-        })
-
-        .then(function(result) {
-
-          tampilkanSuksesTTD();
-
-
-          return result;
-
-        })
-
-        .catch(function(error) {
-
-          selesaiGagalTTD(
-            error
-          );
-
-
-          throw error;
-
-        });
-
-    }
-
-
-    return kirimTTDKeServer(
-      signature,
-      "manual"
-    )
-
-    .then(function(result) {
-
-      tampilkanSuksesTTD();
-
-
-      return result;
-
-    })
-
-    .catch(function(error) {
-
-      selesaiGagalTTD(
-        error
+    if (
+      !signature ||
+      (typeof signature === "string" &&
+       signature.trim() === "")
+    ) {
+      throw new Error(
+        "Tanda tangan belum tersedia. Silakan bubuhkan TTD terlebih dahulu."
       );
+    }
 
+    /*
+     * TTD hanya untuk preview.
+     * Tidak memanggil kirimTTDKeServer().
+     * Tidak mengunggah gambar ke Google Drive.
+     * Tidak menyimpan TTD ke Google Sheets.
+     */
 
-      throw error;
+    sedangSimpanTTD = false;
 
-    });
+    if (tombol) {
+      tombol.disabled = false;
+      tombol.textContent = "TTD SIAP";
+    }
 
-  }
+    if (status) {
+      status.style.display = "block";
+      status.textContent =
+        "Tanda tangan siap digunakan untuk preview checklist.";
+    }
 
-  catch (error) {
-
-    selesaiGagalTTD(
-      error
-    );
-
-
-    sedangSimpanTTD =
-      false;
-
-  }
-
-}
-
-
-/* =========================================================
-   TTD BERHASIL
-========================================================= */
-
-function tampilkanSuksesTTD() {
-
-  sedangSimpanTTD =
-    false;
-
-
-  var tombol =
-    document.getElementById(
-      "btnSaveTTD"
-    );
-
-
-  if (tombol) {
-
-    tombol.disabled =
-      false;
-
-    tombol.textContent =
-      "Simpan TTD";
-
-  }
-
-
-  var status =
-    document.getElementById(
-      "ttdStatus"
-    );
-
-
-  if (status) {
-
-    status.style.display =
-      "block";
-
-    status.textContent =
-      "Tanda tangan berhasil disimpan.";
-
-  }
-
-
-  var previewButton =
-    document.getElementById(
+    /* Tampilkan tombol preview */
+    var previewButton = document.getElementById(
       "btnSimpanLihatPreview"
     );
 
-
-  if (previewButton) {
-
-    previewButton.style.display =
-      "block";
-
-  }
-
-
-  console.log(
-    "TTD: BERHASIL DISIMPAN."
-  );
-
-}
-
-
-/* =========================================================
-   TTD GAGAL
-========================================================= */
-
-function selesaiGagalTTD(
-  error
-) {
-
-  sedangSimpanTTD =
-    false;
-
-
-  var tombol =
-    document.getElementById(
-      "btnSaveTTD"
-    );
-
-
-  if (tombol) {
-
-    tombol.disabled =
-      false;
-
-    tombol.textContent =
-      "Simpan TTD";
-
-  }
-
-
-  console.error(
-    "TTD GAGAL:",
-    error
-  );
-
-
-  var pesan =
-    error && error.message
-      ? error.message
-      : "Tanda tangan gagal disimpan.";
-
-
-  var status =
-    document.getElementById(
-      "ttdStatus"
-    );
-
-
-  if (status) {
-
-    status.style.display =
-      "block";
-
-    status.textContent =
-      pesan;
-
-  }
-
-}
-
-
-/* =========================================================
-   GLOBAL FUNCTION
-========================================================= */
-
-window.tampilkanTTD =
-  tampilkanTTD;
-
-window.simpanTTD =
-  simpanTTD;
-
-window.clearSignature =
-  clearSignature;
-
-window.bukaKotakTTD =
-  bukaKotakTTD;
-
-window.initTTD =
-  initTTD;
-
-/* =========================================================
-   FINAL TTD
-   SATU JALUR SAJA
-========================================================= */
-
-window.prosesSimpanTTD = async function(idAktif) {
-
-  try {
-
-    /* -----------------------------------------------------
-       Ambil ID yang sudah ada
-    ----------------------------------------------------- */
-
-    idAktif =
-      String(
-        idAktif ||
-        idPemeriksaanAktif ||
-        sessionStorage.getItem(
-          "idPemeriksaanAktif"
-        ) ||
-        ""
-      ).trim();
-
-
-    /* -----------------------------------------------------
-       Kalau ID belum ada, buat pemeriksaan
-    ----------------------------------------------------- */
-
-    if (!idAktif) {
-
-      console.log(
-        "TTD: ID belum ada, membuat pemeriksaan..."
-      );
-
-
-      idAktif =
-        await pastikanIdPemeriksaan();
-
-
-      idAktif =
-        String(
-          idAktif || ""
-        ).trim();
-
+    if (previewButton) {
+      previewButton.style.display = "block";
     }
-
-
-    /* -----------------------------------------------------
-       ID wajib ada
-    ----------------------------------------------------- */
-
-    if (!idAktif) {
-
-      throw new Error(
-        "ID Pemeriksaan gagal dibuat."
-      );
-
-    }
-
-
-    /* -----------------------------------------------------
-       Simpan ID
-    ----------------------------------------------------- */
-
-    idPemeriksaanAktif =
-      idAktif;
-
-
-    sessionStorage.setItem(
-      "idPemeriksaanAktif",
-      idAktif
-    );
-
 
     console.log(
-      "TTD: ID SIAP =",
-      idAktif
+      "TTD siap digunakan untuk preview. Tidak dikirim ke server."
     );
 
+    return true;
 
-    /* -----------------------------------------------------
-       Langsung gunakan fungsi simpan TTD utama
-    ----------------------------------------------------- */
+  } catch (error) {
 
-    return await simpanTTD();
+    sedangSimpanTTD = false;
 
-  }
-
-  catch (error) {
-
-    console.error(
-      "PROSES TTD GAGAL:",
-      error
-    );
-
-
-    if (
-      typeof selesaiGagalTTD ===
-      "function"
-    ) {
-
-      selesaiGagalTTD(
-        error
-      );
-
+    if (tombol) {
+      tombol.disabled = false;
+      tombol.textContent = "Simpan TTD";
     }
 
-    throw error;
+    if (status) {
+      status.style.display = "block";
+      status.textContent =
+        error.message || "TTD belum dapat digunakan.";
+    }
 
+    console.error("TTD PREVIEW:", error);
+
+    return false;
   }
+}
+
+
+/* =========================================================
+   PROSES TTD
+   TANPA MEMBUAT ID KHUSUS UNTUK TTD
+========================================================= */
+
+window.prosesSimpanTTD = async function() {
+
+  return simpanTTD();
 
 };
 
 
 /* =========================================================
-   FINAL TAMPILKAN TTD
+   BUKA KOTAK TTD
 ========================================================= */
 
-window.tampilkanTTD = async function() {
+window.tampilkanTTD = function() {
 
   try {
 
-    /* -----------------------------------------------------
-       Validasi identitas
-    ----------------------------------------------------- */
-
     if (
-      typeof validasiIdentitas ===
-      "function"
+      typeof validasiIdentitas === "function" &&
+      !validasiIdentitas()
     ) {
-
-      if (
-        !validasiIdentitas()
-      ) {
-
-        return;
-
-      }
-
+      return;
     }
 
-
-    /* -----------------------------------------------------
-       Ambil ID
-    ----------------------------------------------------- */
-
-    var idAktif =
-      String(
-        idPemeriksaanAktif ||
-        sessionStorage.getItem(
-          "idPemeriksaanAktif"
-        ) ||
-        ""
-      ).trim();
-
-
-    /* -----------------------------------------------------
-       Kalau belum ada, buat
-    ----------------------------------------------------- */
-
-    if (!idAktif) {
-
-      if (
-        typeof tampilkanStatus ===
-        "function"
-      ) {
-
-        tampilkanStatus(
-          "Menyiapkan ID Pemeriksaan..."
-        );
-
-      }
-
-
-      idAktif =
-        await pastikanIdPemeriksaan();
-
-
-      idAktif =
-        String(
-          idAktif || ""
-        ).trim();
-
-    }
-
-
-    /* -----------------------------------------------------
-       Pastikan ID benar-benar ada
-    ----------------------------------------------------- */
-
-    if (!idAktif) {
-
-      throw new Error(
-        "ID Pemeriksaan gagal dibuat."
-      );
-
-    }
-
-
-    /* -----------------------------------------------------
-       Simpan ID
-    ----------------------------------------------------- */
-
-    idPemeriksaanAktif =
-      idAktif;
-
-
-    sessionStorage.setItem(
-      "idPemeriksaanAktif",
-      idAktif
-    );
-
-
-    console.log(
-      "TTD: SIAP DIBUKA DENGAN ID =",
-      idAktif
-    );
-
-
-    /* -----------------------------------------------------
-       Buka kotak TTD
-    ----------------------------------------------------- */
-
+    /* Buka kanvas tanpa membuat ID untuk TTD */
     bukaKotakTTD();
 
-  }
+  } catch (error) {
 
-  catch (error) {
+    console.error("TAMPILKAN TTD GAGAL:", error);
 
-    console.error(
-      "TAMPILKAN TTD GAGAL:",
-      error
-    );
-
-
-    var status =
-      document.getElementById(
-        "ttdStatus"
-      );
-
+    var status = document.getElementById("ttdStatus");
 
     if (status) {
-
-      status.style.display =
-        "block";
-
+      status.style.display = "block";
       status.textContent =
-        error.message ||
-        "TTD gagal dibuka.";
-
+        error.message || "TTD gagal dibuka.";
     }
-
   }
-
 };
 
 
@@ -15096,28 +14665,19 @@ window.tampilkanTTD = async function() {
    GLOBAL FUNCTION TTD
 ========================================================= */
 
-window.simpanTTD =
-  simpanTTD;
-
-window.prosesSimpanTTD =
-  window.prosesSimpanTTD;
-
-window.tampilkanTTD =
-  window.tampilkanTTD;
-
-window.clearSignature =
-  clearSignature;
-
-window.bukaKotakTTD =
-  bukaKotakTTD;
-
-window.initTTD =
-  initTTD;
+window.simpanTTD = simpanTTD;
+window.prosesSimpanTTD = window.prosesSimpanTTD;
+window.tampilkanTTD = window.tampilkanTTD;
+window.clearSignature = clearSignature;
+window.bukaKotakTTD = bukaKotakTTD;
+window.initTTD = initTTD;
 
 
 /* =========================================================
-   SELESAI SISTEM TTD
+   SELESAI SISTEM TTD PREVIEW
 ========================================================= */
+
+
 /* =========================================================
    FOTO
 ========================================================= */
