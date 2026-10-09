@@ -6046,51 +6046,42 @@ function ambilSignatureCanvas() {
 }
 
 
+
 /* =========================================================
-   SIMPAN TTD KE SERVER
-   FUNGSI INTI
+   TTD LOKAL SAJA
+   TIDAK MENGIRIM TTD KE SERVER / GOOGLE DRIVE
+   TTD TETAP ADA DI CANVAS UNTUK PREVIEW JPG
 ========================================================= */
 
-function kirimTTDKeServer(
-  signature,
-  mode
-) {
-
-  var data =
-    buatDataTTD(
-      signature
-    );
-
-
-  /*
-   * Kalau TTD yang sama sudah berhasil disimpan,
-   * jangan kirim ulang.
-   */
+function kirimTTDKeServer(signature, mode) {
 
   if (
-    signatureServerSaved &&
-    signatureServerData ===
-      signature
+    !signature ||
+    !signature.startsWith("data:image/png;base64,")
   ) {
-
-    console.log(
-      "TTD SUDAH TERSIMPAN DI SERVER - SKIP"
+    return Promise.reject(
+      new Error("Data tanda tangan tidak valid.")
     );
-
-
-    return Promise.resolve({
-
-      success: true,
-
-      skipped:
-        true,
-
-      message:
-        "TTD sudah tersimpan di server."
-
-    });
-
   }
+
+  /*
+   * TTD hanya digunakan pada proses preview.
+   * Tidak memanggil API simpan_ttd.
+   * Tidak menyimpan URL TTD ke sheet TRANSAKSI.
+   */
+
+  signatureServerSaved = true;
+  signatureServerData = signature;
+
+  return Promise.resolve({
+    success: true,
+    localOnly: true,
+    message: "TTD siap digunakan untuk preview JPG.",
+    mode: mode || "manual"
+  });
+}
+
+
 
 
   return kirimRequestPost(
@@ -8226,9 +8217,23 @@ function tampilkanPreviewHasilAkhir() {
       }
 
 
+      console.log(
+        "PPKA DI FORM:",
+        document.getElementById("ppkaPemeriksaan").value
+      );
+
+
+      console.log(
+        "PPKA DI DATA:",
+        data.PPKA
+      );
+
+
       /* =====================================================
          AMBIL CHECKLIST
       ===================================================== */
+
+
 
       var items =
         Array.from(
@@ -14425,74 +14430,32 @@ function buatDataTTD(
 }
 
 
+
 /* =========================================================
    KIRIM TTD
+   LOKAL SAJA — TIDAK KE SERVER
 ========================================================= */
 
-function kirimTTDKeServer(
-  signature,
-  mode
-) {
+function kirimTTDKeServer(signature, mode) {
 
-  var data =
-    buatDataTTD(
-      signature
+  if (
+    !signature ||
+    !signature.startsWith("data:image/png;base64,")
+  ) {
+    return Promise.reject(
+      new Error("Data tanda tangan tidak valid.")
     );
+  }
 
+  signatureServerSaved = true;
+  signatureServerData = signature;
 
-  return kirimRequestPost(
-    "simpan_ttd",
-    data
-  )
-
-  .then(function(result) {
-
-    console.log(
-      "HASIL SIMPAN TTD:",
-      result
-    );
-
-
-    if (
-      !result ||
-      result.success !== true
-    ) {
-
-      throw new Error(
-        result && result.message
-          ? result.message
-          : "Server menolak penyimpanan TTD."
-      );
-
-    }
-
-
-    ttdServerSaved =
-      true;
-
-    ttdServerData =
-      signature;
-
-
-    idPemeriksaanAktif =
-      String(
-        result.id_pemeriksaan ||
-        data.ID_PEMERIKSAAN ||
-        idPemeriksaanAktif ||
-        ""
-      ).trim();
-
-
-    sessionStorage.setItem(
-      "idPemeriksaanAktif",
-      idPemeriksaanAktif
-    );
-
-
-    return result;
-
+  return Promise.resolve({
+    success: true,
+    localOnly: true,
+    message: "TTD siap untuk preview JPG.",
+    mode: mode || "manual"
   });
-
 }
 
 
