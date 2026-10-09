@@ -11472,134 +11472,117 @@ try {
     );
 
 
-/* =================================================
-   DETEKSI PERANGKAT
-================================================= */
+  /* =================================================
+     COBA SHARE SEBAGAI GAMBAR
+  ================================================= */
 
-var userAgent =
-  navigator.userAgent ||
-  "";
+  if (
+    navigator.share &&
+    navigator.canShare &&
+    navigator.canShare({
+      files: [jpgFile]
+    })
+  ) {
 
-var isMobile =
-  /Android|iPhone|iPad|iPod|Mobile/i.test(
-    userAgent
-  );
+    navigator.share({
 
+      files:
+        [jpgFile],
 
-/* =================================================
-   HP / MOBILE
-   TETAP MENGGUNAKAN SHARE
-================================================= */
+      title:
+        "Checklist Pengawasan Kegiatan Langsir",
 
-if (
-  isMobile &&
-  navigator.share &&
-  navigator.canShare &&
-  navigator.canShare({
-    files: [jpgFile]
-  })
-) {
+      text:
+        "Hasil Checklist Pengawasan Kegiatan Langsir"
 
-  navigator.share({
+    })
 
-    files:
-      [jpgFile],
-
-    title:
-      "Checklist Pengawasan Kegiatan Langsir",
-
-    text:
-      "Hasil Checklist Pengawasan Kegiatan Langsir"
-
-  })
-
-  .then(
-    function() {
-
-      console.log(
-        "JPG berhasil dikirim ke menu berbagi HP."
-      );
-
-    }
-  )
-
-  .catch(
-    function(error) {
-
-      if (
-        error &&
-        error.name ===
-          "AbortError"
-      ) {
+    .then(
+      function() {
 
         console.log(
-          "Menu Share JPG ditutup."
+          "JPG berhasil dikirim ke menu berbagi."
         );
 
-        return;
+      }
+    )
+
+    .catch(
+      function(error) {
+
+        if (
+          error &&
+          error.name ===
+            "AbortError"
+        ) {
+
+          console.log(
+            "Menu simpan/share ditutup."
+          );
+
+          return;
+
+        }
+
+        console.error(
+          "Share JPG gagal:",
+          error
+        );
 
       }
-
-      console.error(
-        "Share JPG HP gagal:",
-        error
-      );
-
-    }
-  );
-
-  return;
-
-}
-
-
-/* =================================================
-   KOMPUTER / DESKTOP
-   DOWNLOAD LANGSUNG
-================================================= */
-
-var link =
-  document.createElement(
-    "a"
-  );
-
-link.href =
-  URL.createObjectURL(
-    jpgBlob
-  );
-
-link.download =
-  namaFile;
-
-link.style.display =
-  "none";
-
-document.body.appendChild(
-  link
-);
-
-link.click();
-
-document.body.removeChild(
-  link
-);
-
-setTimeout(
-  function() {
-
-    URL.revokeObjectURL(
-      link.href
     );
 
-  },
-  1000
-);
+    return;
 
-console.log(
-  "JPG langsung didownload:",
-  namaFile
-);
+  }
 
+
+  /* =================================================
+     CADANGAN JIKA SHARE GAMBAR TIDAK DIDUKUNG
+  ================================================= */
+
+  var link =
+    document.createElement(
+      "a"
+    );
+
+  link.href =
+    URL.createObjectURL(
+      jpgBlob
+    );
+
+  link.download =
+    namaFile;
+
+  link.style.display =
+    "none";
+
+  document.body.appendChild(
+    link
+  );
+
+  link.click();
+
+  document.body.removeChild(
+    link
+  );
+
+  setTimeout(
+    function() {
+
+      URL.revokeObjectURL(
+        link.href
+      );
+
+    },
+    1000
+  );
+
+
+  console.log(
+    "JPG didownload:",
+    namaFile
+  );
 
 }
 
