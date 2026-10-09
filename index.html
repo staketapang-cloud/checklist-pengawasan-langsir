@@ -5664,6 +5664,7 @@ function validasiChecklist() {
 }
 
 
+
 /* =========================================================
    PASTIKAN ID
 ========================================================= */
@@ -5672,15 +5673,11 @@ function pastikanIdPemeriksaan() {
 
   if (
     idPemeriksaanAktif &&
-    String(
-      idPemeriksaanAktif
-    ).trim()
+    String(idPemeriksaanAktif).trim()
   ) {
 
     return Promise.resolve(
-      String(
-        idPemeriksaanAktif
-      ).trim()
+      String(idPemeriksaanAktif).trim()
     );
 
   }
@@ -5699,7 +5696,6 @@ function pastikanIdPemeriksaan() {
 
     idPemeriksaanAktif =
       String(idSession).trim();
-
 
     return Promise.resolve(
       idPemeriksaanAktif
@@ -5733,6 +5729,17 @@ function pastikanIdPemeriksaan() {
     ambilDataForm();
 
 
+  if (!data) {
+
+    return Promise.reject(
+      new Error(
+        "Data pemeriksaan tidak ditemukan."
+      )
+    );
+
+  }
+
+
   data.ID_PEMERIKSAAN =
     idPemeriksaanAktif;
 
@@ -5744,7 +5751,6 @@ function pastikanIdPemeriksaan() {
     "simpan_pemeriksaan",
     data
   )
-
 
   .then(function(result) {
 
