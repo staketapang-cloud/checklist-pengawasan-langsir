@@ -4138,6 +4138,22 @@ function loginPengguna() {
 
   sedangLogin = true;
 
+  // SCROLL OTOMATIS KE PROGRESS LOGIN
+  setTimeout(function() {
+
+    var progressLogin =
+      document.getElementById("progressLogin");
+
+    if (progressLogin) {
+
+      progressLogin.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+
+    }
+
+  }, 100);
 
   var tombol =
     document.getElementById(
