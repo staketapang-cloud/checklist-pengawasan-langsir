@@ -11500,33 +11500,67 @@ var jpgFile =
   );
 
 /* =================================================
-   DOWNLOAD JPG LANGSUNG KE KOMPUTER / HP
+   HP: BUKA PILIHAN SIMPAN / BAGIKAN GAMBAR
+   KOMPUTER: DOWNLOAD LANGSUNG
 ================================================= */
 
-var link =
-  document.createElement("a");
+var userAgent =
+  navigator.userAgent || "";
+
+var isHP =
+  /Android|iPhone|iPad|iPod/i.test(userAgent) ||
+  (
+    navigator.platform === "MacIntel" &&
+    navigator.maxTouchPoints > 1
+  );
+
+if (
+  isHP &&
+  navigator.share &&
+  navigator.canShare &&
+  navigator.canShare({ files: [jpgFile] })
+) {
+
+  navigator.share({
+    files: [jpgFile],
+    title: "Checklist Pengawasan Kegiatan Langsir"
+  }).catch(function(error) {
+
+    if (error && error.name === "AbortError") {
+      return;
+    }
+
+    console.error("Share JPG gagal:", error);
+
+    alert("Gambar belum tersimpan. Silakan coba kembali.");
+
+  });
+
+  return;
+
+}
+
+/* KOMPUTER: DOWNLOAD LANGSUNG */
 
 var urlJPG =
   URL.createObjectURL(jpgBlob);
+
+var link =
+  document.createElement("a");
 
 link.href = urlJPG;
 link.download = namaFile;
 link.style.display = "none";
 
 document.body.appendChild(link);
-
 link.click();
-
 document.body.removeChild(link);
 
 setTimeout(function() {
   URL.revokeObjectURL(urlJPG);
-}, 3000);
+}, 10000);
 
-console.log(
-  "JPG LANGSUNG DIDOWNLOAD:",
-  namaFile
-);
+console.log("JPG didownload:", namaFile);
 
 }
 catch (
