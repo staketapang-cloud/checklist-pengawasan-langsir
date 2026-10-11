@@ -11489,132 +11489,46 @@ try {
     );
 
 
-  /* Buat File gambar */
-  var jpgFile =
-    new File(
-      [jpgBlob],
-      namaFile,
-      {
-        type:
-          "image/jpeg"
-      }
-    );
-
-
-  /* =================================================
-     COBA SHARE SEBAGAI GAMBAR
-  ================================================= */
-
-  if (
-    navigator.share &&
-    navigator.canShare &&
-    navigator.canShare({
-      files: [jpgFile]
-    })
-  ) {
-
-    navigator.share({
-
-      files:
-        [jpgFile],
-
-      title:
-        "Checklist Pengawasan Kegiatan Langsir",
-
-      text:
-        "Hasil Checklist Pengawasan Kegiatan Langsir"
-
-    })
-
-    .then(
-      function() {
-
-        console.log(
-          "JPG berhasil dikirim ke menu berbagi."
-        );
-
-      }
-    )
-
-    .catch(
-      function(error) {
-
-        if (
-          error &&
-          error.name ===
-            "AbortError"
-        ) {
-
-          console.log(
-            "Menu simpan/share ditutup."
-          );
-
-          return;
-
-        }
-
-        console.error(
-          "Share JPG gagal:",
-          error
-        );
-
-      }
-    );
-
-    return;
-
-  }
-
-
-  /* =================================================
-     CADANGAN JIKA SHARE GAMBAR TIDAK DIDUKUNG
-  ================================================= */
-
-  var link =
-    document.createElement(
-      "a"
-    );
-
-  link.href =
-    URL.createObjectURL(
-      jpgBlob
-    );
-
-  link.download =
-    namaFile;
-
-  link.style.display =
-    "none";
-
-  document.body.appendChild(
-    link
+/* Buat File gambar */
+var jpgFile =
+  new File(
+    [jpgBlob],
+    namaFile,
+    {
+      type: "image/jpeg"
+    }
   );
 
-  link.click();
+/* =================================================
+   DOWNLOAD JPG LANGSUNG KE KOMPUTER / HP
+================================================= */
 
-  document.body.removeChild(
-    link
-  );
+var link =
+  document.createElement("a");
 
-  setTimeout(
-    function() {
+var urlJPG =
+  URL.createObjectURL(jpgBlob);
 
-      URL.revokeObjectURL(
-        link.href
-      );
+link.href = urlJPG;
+link.download = namaFile;
+link.style.display = "none";
 
-    },
-    1000
-  );
+document.body.appendChild(link);
 
+link.click();
 
-  console.log(
-    "JPG didownload:",
-    namaFile
-  );
+document.body.removeChild(link);
+
+setTimeout(function() {
+  URL.revokeObjectURL(urlJPG);
+}, 3000);
+
+console.log(
+  "JPG LANGSUNG DIDOWNLOAD:",
+  namaFile
+);
 
 }
-
 catch (
   errorJPG
 ) {
