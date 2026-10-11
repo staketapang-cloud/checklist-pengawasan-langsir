@@ -11340,19 +11340,111 @@ function simpanPreviewJPGKeServer(
 }
 
 
+/* =====================================================
+   NAMA FILE CHECKLIST BERDASARKAN DINAS DAN TANGGAL
+===================================================== */
+
+function buatNamaFileChecklist(ekstensi) {
+
+  var dinas =
+    document.getElementById("dinasLangsirPemeriksaan")
+      ?.value ||
+    data.DINAS_LANGSIR ||
+    "Dinas";
+
+  var tanggalInput =
+    document.getElementById("tanggalPemeriksaan");
+
+  var tanggal =
+    tanggalInput?.value ||
+    data.TANGGAL ||
+    "";
+
+  var hari = "";
+
+  if (tanggal) {
+
+    var bagianTanggal =
+      tanggal.split("-");
+
+    if (bagianTanggal.length === 3) {
+
+      var tanggalObjek =
+        new Date(
+          Number(bagianTanggal[0]),
+          Number(bagianTanggal[1]) - 1,
+          Number(bagianTanggal[2])
+        );
+
+      var daftarHari = [
+        "Minggu",
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu"
+      ];
+
+      hari =
+        daftarHari[tanggalObjek.getDay()];
+
+      tanggal =
+        bagianTanggal[2] + "-" +
+        bagianTanggal[1] + "-" +
+        bagianTanggal[0];
+
+    }
+
+  }
+
+  if (!tanggal) {
+
+    var sekarang = new Date();
+
+    var daftarHariSekarang = [
+      "Minggu",
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu"
+    ];
+
+    hari =
+      daftarHariSekarang[sekarang.getDay()];
+
+    tanggal =
+      String(sekarang.getDate()).padStart(2, "0") + "-" +
+      String(sekarang.getMonth() + 1).padStart(2, "0") + "-" +
+      sekarang.getFullYear();
+
+  }
+
+  dinas =
+    String(dinas)
+      .trim()
+      .replace(/\s+/g, " ");
+
+  return (
+    "Checklist_Langsir_" +
+    dinas.replace(/[^a-zA-Z0-9_-]/g, "_") +
+    "_" +
+    hari +
+    "_" +
+    tanggal +
+    "." +
+    ekstensi
+  );
+
+}
+
 btnDownload.onclick =
   function() {
 
-    var idFile =
-      data.ID_PEMERIKSAAN ||
-      idPemeriksaanAktif ||
-      Date.now();
-
-
-    var namaFile =
-      "Checklist_Langsir_A4_" +
-      idFile +
-      ".jpg";
+var namaFile =
+  buatNamaFileChecklist("jpg");
 
 
 /* ===================================================
@@ -11612,16 +11704,8 @@ btnPDF.onclick =
       }
 
 
-      var idFile =
-        data.ID_PEMERIKSAAN ||
-        idPemeriksaanAktif ||
-        Date.now();
-
-
-      var namaFile =
-        "Checklist_Langsir_A4_" +
-        idFile +
-        ".pdf";
+var namaFile =
+  buatNamaFileChecklist("pdf");
 
 
       /* =================================================
