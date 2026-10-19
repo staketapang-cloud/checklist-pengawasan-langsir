@@ -11533,8 +11533,57 @@ var isHP =
    UNTUK DISIMPAN KE GALERI JIKA DIDUKUNG
 ================================================ */
 
-
 if (isAndroid) {
+
+  /* Coba simpan melalui pemilih file Android
+     jika browser mendukung File System Access API */
+
+  if (
+    typeof window.showSaveFilePicker === "function"
+  ) {
+
+    try {
+
+      var fileHandle =
+        await window.showSaveFilePicker({
+          suggestedName: namaFile,
+          types: [{
+            description: "Gambar JPG",
+            accept: {
+              "image/jpeg": [".jpg", ".jpeg"]
+            }
+          }]
+        });
+
+      var writable =
+        await fileHandle.createWritable();
+
+      await writable.write(jpgBlob);
+      await writable.close();
+
+      alert(
+        "JPG berhasil disimpan. Jika tersedia, pilih folder Pictures agar mudah ditemukan di Galeri."
+      );
+
+      return;
+
+    } catch (errorSave) {
+
+      if (
+        errorSave &&
+        errorSave.name === "AbortError"
+      ) {
+        return;
+      }
+
+      console.error(
+        "Pemilih penyimpanan tidak tersedia:",
+        errorSave
+      );
+    }
+  }
+
+  /* Cadangan: download langsung seperti sebelumnya */
 
   var urlAndroid =
     URL.createObjectURL(jpgBlob);
@@ -11562,6 +11611,7 @@ if (isAndroid) {
   return;
 }
 
+/* IPHONE: PERTAHANKAN SHARE ASLI */
 
 
 /* IPHONE: PERTAHANKAN SHARE ASLI */
