@@ -11504,8 +11504,12 @@ var jpgFile =
    KOMPUTER: DOWNLOAD LANGSUNG
 ================================================= */
 
+
 var userAgent =
   navigator.userAgent || "";
+
+var isAndroid =
+  /Android/i.test(userAgent);
 
 var isHP =
   /Android|iPhone|iPad|iPod/i.test(userAgent) ||
@@ -11513,6 +11517,44 @@ var isHP =
     navigator.platform === "MacIntel" &&
     navigator.maxTouchPoints > 1
   );
+
+
+
+/* ================================================
+   KHUSUS ANDROID
+   COBA DOWNLOAD JPG LANGSUNG
+   IPHONE TETAP MENGGUNAKAN SHARE ASLI
+================================================ */
+
+if (isAndroid) {
+
+  var urlAndroid =
+    URL.createObjectURL(jpgBlob);
+
+  var linkAndroid =
+    document.createElement("a");
+
+  linkAndroid.href = urlAndroid;
+  linkAndroid.download = namaFile;
+  linkAndroid.style.display = "none";
+
+  document.body.appendChild(linkAndroid);
+  linkAndroid.click();
+  document.body.removeChild(linkAndroid);
+
+  setTimeout(function() {
+    URL.revokeObjectURL(urlAndroid);
+  }, 30000);
+
+  console.log(
+    "Permintaan download JPG Android:",
+    namaFile
+  );
+
+  return;
+}
+
+/* IPHONE: PERTAHANKAN SHARE ASLI */
 
 if (
   isHP &&
