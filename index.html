@@ -11535,58 +11535,15 @@ var isHP =
 
 if (isAndroid) {
 
-  /* Coba simpan melalui pemilih file Android
-     jika browser mendukung File System Access API */
-
-  if (
-    typeof window.showSaveFilePicker === "function"
-  ) {
-
-    try {
-
-      var fileHandle =
-        await window.showSaveFilePicker({
-          suggestedName: namaFile,
-          types: [{
-            description: "Gambar JPG",
-            accept: {
-              "image/jpeg": [".jpg", ".jpeg"]
-            }
-          }]
-        });
-
-      var writable =
-        await fileHandle.createWritable();
-
-      await writable.write(jpgBlob);
-      await writable.close();
-
-      alert(
-        "JPG berhasil disimpan. Jika tersedia, pilih folder Pictures agar mudah ditemukan di Galeri."
-      );
-
-      return;
-
-    } catch (errorSave) {
-
-      if (
-        errorSave &&
-        errorSave.name === "AbortError"
-      ) {
-        return;
-      }
-
-      console.error(
-        "Pemilih penyimpanan tidak tersedia:",
-        errorSave
-      );
-    }
-  }
-
-  /* Cadangan: download langsung seperti sebelumnya */
+  /* =========================================
+     ANDROID: DOWNLOAD JPG
+     LALU BUKA PREVIEW DENGAN PILIHAN SHARE
+  ========================================= */
 
   var urlAndroid =
     URL.createObjectURL(jpgBlob);
+
+  /* Download JPG langsung */
 
   var linkAndroid =
     document.createElement("a");
@@ -11599,19 +11556,76 @@ if (isAndroid) {
   linkAndroid.click();
   document.body.removeChild(linkAndroid);
 
-  setTimeout(function() {
-    URL.revokeObjectURL(urlAndroid);
-  }, 30000);
+  /* Buka preview JPG di tab baru */
+
+  var previewAndroid =
+    window.open("", "_blank");
+
+  if (previewAndroid) {
+
+    previewAndroid.document.open();
+
+    previewAndroid.document.write(
+      '<!DOCTYPE html>' +
+      '<html><head>' +
+      '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+      '<title>Preview Checklist JPG</title>' +
+      '<style>' +
+      'body{margin:0;padding:16px;font-family:Arial,sans-serif;background:#eef3f7;text-align:center;}' +
+      'img{display:block;max-width:100%;height:auto;margin:16px auto;background:white;}' +
+      '.bar{position:sticky;top:0;background:#eef3f7;padding:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}' +
+      'button{border:0;border-radius:8px;padding:12px 18px;font-size:15px;font-weight:bold;background:#0066a9;color:white;}' +
+      '.share{background:#f58220;}' +
+      '</style></head><body>' +
+      '<div class="bar">' +
+      '<button onclick="downloadJPG()">DOWNLOAD JPG</button>' +
+      '<button class="share" onclick="shareJPG()">SHARE</button>' +
+      '</div>' +
+      '<img id="gambarJPG" alt="Preview Checklist">' +
+      '<script>' +
+      'var gambarURL=' + JSON.stringify(urlAndroid) + ';' +
+      'var namaGambar=' + JSON.stringify(namaFile) + ';' +
+      'document.getElementById("gambarJPG").src=gambarURL;' +
+      'function downloadJPG(){' +
+      'var a=document.createElement("a");a.href=gambarURL;a.download=namaGambar;document.body.appendChild(a);a.click();a.remove();' +
+      '}' +
+      'async function shareJPG(){' +
+      'try{' +
+      'var r=await fetch(gambarURL);' +
+      'var b=await r.blob();' +
+      'var f=new File([b],namaGambar,{type:"image/jpeg"});' +
+      'if(navigator.share&&navigator.canShare&&navigator.canShare({files:[f]})){' +
+      'await navigator.share({files:[f],title:"Checklist Pengawasan Kegiatan Langsir"});' +
+      '}else{' +
+      'alert("Browser ini tidak mendukung berbagi file JPG. Gunakan DOWNLOAD JPG.");' +
+      '}' +
+      '}catch(e){if(e.name!=="AbortError"){alert("Gambar belum dapat dibagikan.");}}' +
+      '}' +
+      '<\/script>' +
+      '</body></html>'
+    );
+
+    previewAndroid.document.close();
+
+  } else {
+
+    alert(
+      "JPG sudah diminta untuk diunduh. Izinkan pop-up browser agar preview dapat dibuka."
+    );
+
+  }
+
+  /* Jangan hapus URL selama preview masih digunakan */
 
   console.log(
-    "Permintaan download JPG Android:",
+    "Download dan preview JPG Android:",
     namaFile
   );
 
   return;
 }
 
-/* IPHONE: PERTAHANKAN SHARE ASLI */
+
 
 
 /* IPHONE: PERTAHANKAN SHARE ASLI */
