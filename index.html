@@ -11533,42 +11533,8 @@ var isHP =
    UNTUK DISIMPAN KE GALERI JIKA DIDUKUNG
 ================================================ */
 
+
 if (isAndroid) {
-
-  if (
-    navigator.share &&
-    navigator.canShare &&
-    navigator.canShare({ files: [jpgFile] })
-  ) {
-
-    navigator.share({
-      files: [jpgFile],
-      title: "Checklist Pengawasan Kegiatan Langsir"
-    }).catch(function(error) {
-
-      if (
-        error &&
-        error.name === "AbortError"
-      ) {
-        return;
-      }
-
-      console.error(
-        "Berbagi JPG Android gagal:",
-        error
-      );
-
-      alert(
-        "Silakan gunakan Download JPG untuk menyimpan gambar."
-      );
-
-    });
-
-    return;
-  }
-
-  /* Browser Android tidak mendukung berbagi file:
-     gunakan download seperti sebelumnya */
 
   var urlAndroid =
     URL.createObjectURL(jpgBlob);
@@ -11588,8 +11554,15 @@ if (isAndroid) {
     URL.revokeObjectURL(urlAndroid);
   }, 30000);
 
+  console.log(
+    "Permintaan download JPG Android:",
+    namaFile
+  );
+
   return;
 }
+
+
 
 /* IPHONE: PERTAHANKAN SHARE ASLI */
 
