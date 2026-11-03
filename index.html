@@ -2797,7 +2797,7 @@ body {
   <button
     type="button"
     class="btn btn-secondary"
-    onclick="document.getElementById('fotoPemeriksaan').click()"
+    onclick="bukaPilihFoto()"
     style="width:100%;"
   >
     + PILIH FOTO DARI GALERI
@@ -15378,132 +15378,256 @@ function fileToBase64WithProgress(
    PREVIEW FOTO
 ========================================================= */
 
-document.addEventListener(
-  "change",
-  function(event) {
+/* =========================================================
+   PREVIEW FOTO - MAKSIMAL 6 FOTO
+   BISA TAMBAH, GANTI, DAN HAPUS FOTO
+========================================================= */
+
+var daftarFotoTerpilih = [];
+
+var indeksFotoDiganti = null;
+
+
+/* Sinkronkan daftar foto ke input */
+
+function sinkronkanInputFoto() {
+
+  var input =
+    document.getElementById("fotoPemeriksaan");
+
+  if (!input) return;
+
+  var transfer =
+    new DataTransfer();
+
+  daftarFotoTerpilih.forEach(function(file) {
+    transfer.items.add(file);
+  });
+
+  input.files = transfer.files;
+
+}
+
+
+/* Perbarui jumlah foto */
+
+function perbaruiJumlahFoto() {
+
+  var jumlah =
+    document.getElementById("jumlahFoto");
+
+  if (jumlah) {
+    jumlah.textContent =
+      daftarFotoTerpilih.length + " / 6 Foto dipilih";
+  }
+
+}
+
+
+/* Buka galeri untuk menambah foto */
+
+function bukaPilihFoto() {
+
+  indeksFotoDiganti = null;
+
+  var input =
+    document.getElementById("fotoPemeriksaan");
+
+  if (!input) return;
+
+  input.value = "";
+
+  input.click();
+
+}
+
+
+/* Buka galeri untuk mengganti foto tertentu */
+
+function gantiFoto(index) {
+
+  indeksFotoDiganti = index;
+
+  var input =
+    document.getElementById("fotoPemeriksaan");
+
+  if (!input) return;
+
+  input.value = "";
+
+  input.click();
+
+}
+
+
+/* Hapus foto tertentu */
+
+function hapusFoto(index) {
+
+  daftarFotoTerpilih.splice(index, 1);
+
+  sinkronkanInputFoto();
+
+  tampilkanPreviewFoto();
+
+}
+
+
+/* Tampilkan seluruh preview */
+
+function tampilkanPreviewFoto() {
+
+  var preview =
+    document.getElementById("previewFoto");
+
+  if (!preview) return;
+
+  preview.innerHTML = "";
+
+  perbaruiJumlahFoto();
+
+  daftarFotoTerpilih.forEach(function(file, index) {
+
+    var reader =
+      new FileReader();
+
+    reader.onload = function(e) {
+
+      var wrapper =
+        document.createElement("div");
+
+      wrapper.className =
+        "preview-item";
+
+      var img =
+        document.createElement("img");
+
+      img.src =
+        e.target.result;
+
+      var nama =
+        document.createElement("div");
+
+      nama.className =
+        "preview-name";
+
+      nama.textContent =
+        file.name;
+
+      var tombolGanti =
+        document.createElement("button");
+
+      tombolGanti.type = "button";
+
+      tombolGanti.textContent = "GANTI";
+
+      tombolGanti.style.marginTop = "6px";
+
+      tombolGanti.onclick = function() {
+        gantiFoto(index);
+      };
+
+      var tombolHapus =
+        document.createElement("button");
+
+      tombolHapus.type = "button";
+
+      tombolHapus.textContent = "HAPUS";
+
+      tombolHapus.style.marginTop = "6px";
+
+      tombolHapus.style.marginLeft = "5px";
+
+      tombolHapus.onclick = function() {
+        hapusFoto(index);
+      };
+
+      wrapper.appendChild(img);
+      wrapper.appendChild(nama);
+      wrapper.appendChild(tombolGanti);
+      wrapper.appendChild(tombolHapus);
+
+      preview.appendChild(wrapper);
+
+    };
+
+    reader.readAsDataURL(file);
+
+  });
+
+}
+
+
+/* Terima pilihan foto dari galeri */
+
+document.addEventListener("change", function(event) {
+
+  if (
+    event.target.id !== "fotoPemeriksaan"
+  ) {
+    return;
+  }
+
+  var files =
+    Array.from(event.target.files || []);
+
+  if (files.length === 0) {
+    indeksFotoDiganti = null;
+    return;
+  }
+
+  if (indeksFotoDiganti !== null) {
+
+    var fileBaru = files[0];
 
     if (
-      event.target.id !==
-      "fotoPemeriksaan"
+      !fileBaru.type ||
+      !fileBaru.type.startsWith("image/")
     ) {
+      alert("File harus berupa gambar.");
 
-      return;
+      indeksFotoDiganti = null;
 
-    }
-
-
-    var preview =
-      document.getElementById(
-        "previewFoto"
-      );
-
-
-    if (!preview) {
       return;
     }
 
+    daftarFotoTerpilih[indeksFotoDiganti] =
+      fileBaru;
 
-    preview.innerHTML =
-      "";
-
-
-    var files =
-      event.target.files;
-
-
-    if (
-      !files ||
-      files.length === 0
-    ) {
-
-      return;
-
-    }
-
-
-    Array.from(files).forEach(
-      function(file) {
-
-        if (
-          !file.type ||
-          !file.type.startsWith(
-            "image/"
-          )
-        ) {
-
-          return;
-
-        }
-
-
-        var reader =
-          new FileReader();
-
-
-        reader.onload =
-          function(e) {
-
-            var wrapper =
-              document.createElement(
-                "div"
-              );
-
-
-            wrapper.className =
-              "preview-item";
-
-
-            var img =
-              document.createElement(
-                "img"
-              );
-
-
-            img.src =
-              e.target.result;
-
-
-            var nama =
-              document.createElement(
-                "div"
-              );
-
-
-            nama.className =
-              "preview-name";
-
-
-            nama.textContent =
-              file.name;
-
-
-            wrapper.appendChild(
-              img
-            );
-
-
-            wrapper.appendChild(
-              nama
-            );
-
-
-            preview.appendChild(
-              wrapper
-            );
-
-          };
-
-
-        reader.readAsDataURL(
-          file
-        );
-
-      }
-    );
+    indeksFotoDiganti = null;
 
   }
-);
 
+  else {
+
+    files.forEach(function(file) {
+
+      if (
+        !file.type ||
+        !file.type.startsWith("image/")
+      ) {
+        return;
+      }
+
+      if (daftarFotoTerpilih.length >= 6) {
+        return;
+      }
+
+      daftarFotoTerpilih.push(file);
+
+    });
+
+  }
+
+  if (files.length > 0 && daftarFotoTerpilih.length >= 6) {
+    alert("Maksimal hanya 6 foto.");
+  }
+
+  sinkronkanInputFoto();
+
+  tampilkanPreviewFoto();
+
+});
 
 /* =========================================================
    RESET FORM
