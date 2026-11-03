@@ -11889,7 +11889,7 @@ btnPDF.style.fontWeight =
 
 
 btnPDF.onclick =
-  function() {
+  async function() {
 
     try {
 
@@ -11938,7 +11938,28 @@ var namaFile =
         "FAST"
       );
 
+      /* =================================================
+         HALAMAN KEDUA — DOKUMENTASI FOTO
+      ================================================= */
 
+      var fotoJPG =
+        await fotoJPGPromise;
+
+      pdf.addPage(
+        "a4",
+        "portrait"
+      );
+
+      pdf.addImage(
+        fotoJPG,
+        "JPEG",
+        0,
+        0,
+        210,
+        297,
+        undefined,
+        "FAST"
+      );
       /* =================================================
          DETEKSI SAFARI iPHONE / iPAD SAJA
       ================================================= */
