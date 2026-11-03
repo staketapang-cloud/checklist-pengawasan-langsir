@@ -14953,6 +14953,238 @@ function fileToBase64WithProgress(
 
 
 /* =========================================================
+   MEMBUAT JPG DOKUMENTASI FOTO
+   UKURAN A4 - 6 SLOT - 3 KOLOM x 2 BARIS
+========================================================= */
+
+function buatJPGFotoKolase() {
+
+  return new Promise(function(resolve, reject) {
+
+    var foto = daftarFotoTerpilih || [];
+
+    var totalFoto =
+      foto.filter(Boolean).length;
+
+    if (totalFoto === 0) {
+      reject(new Error("Belum ada foto dokumentasi."));
+      return;
+    }
+
+    var canvas =
+      document.createElement("canvas");
+
+    canvas.width = 1240;
+    canvas.height = 1754;
+
+    var ctx =
+      canvas.getContext("2d");
+
+    // Latar belakang A4
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, 1240, 1754);
+
+    // Header
+    ctx.fillStyle = "#001d36";
+    ctx.fillRect(0, 0, 1240, 190);
+
+    ctx.fillStyle = "#f58220";
+    ctx.fillRect(0, 190, 1240, 12);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "center";
+    ctx.font = "bold 42px Arial";
+
+    ctx.fillText(
+      "DOKUMENTASI FOTO",
+      620,
+      85
+    );
+
+    ctx.font = "24px Arial";
+
+    ctx.fillText(
+      "CHECKLIST PENGAWASAN KEGIATAN LANGSIR",
+      620,
+      135
+    );
+
+    // Pengaturan enam kotak foto
+    var margin = 64;
+    var jarakKolom = 22;
+    var jarakBaris = 28;
+
+    var lebarKotak =
+      (1240 - (margin * 2) - (jarakKolom * 2)) / 3;
+
+    var tinggiKotak = 680;
+
+    var awalY = 245;
+
+    var pekerjaan = [];
+
+    for (var i = 0; i < 6; i++) {
+
+      (function(index) {
+
+        var kolom = index % 3;
+        var baris = Math.floor(index / 3);
+
+        var x =
+          margin +
+          kolom * (lebarKotak + jarakKolom);
+
+        var y =
+          awalY +
+          baris * (tinggiKotak + jarakBaris);
+
+        // Kotak foto
+        ctx.fillStyle = "#f5f7f9";
+
+        ctx.fillRect(
+          x,
+          y,
+          lebarKotak,
+          tinggiKotak
+        );
+
+        ctx.strokeStyle = "#b8c6d1";
+        ctx.lineWidth = 3;
+
+        ctx.strokeRect(
+          x,
+          y,
+          lebarKotak,
+          tinggiKotak
+        );
+
+        // Judul slot
+        ctx.fillStyle = "#001d36";
+        ctx.textAlign = "left";
+        ctx.font = "bold 25px Arial";
+
+        ctx.fillText(
+          "FOTO " + (index + 1),
+          x + 16,
+          y + 43
+        );
+
+        var file = foto[index];
+
+        if (!file) {
+
+          ctx.fillStyle = "#8996a1";
+          ctx.textAlign = "center";
+          ctx.font = "22px Arial";
+
+          ctx.fillText(
+            "BELUM ADA FOTO",
+            x + lebarKotak / 2,
+            y + 370
+          );
+
+          return;
+        }
+
+        // Membaca foto dari slot
+        var tugas = new Promise(function(
+          selesai,
+          gagal
+        ) {
+
+          var url =
+            URL.createObjectURL(file);
+
+          var gambar =
+            new Image();
+
+          gambar.onload = function() {
+
+            var areaX = x + 12;
+            var areaY = y + 65;
+            var areaW = lebarKotak - 24;
+            var areaH = tinggiKotak - 80;
+
+            // Menjaga proporsi foto
+            var skala = Math.min(
+              areaW / gambar.width,
+              areaH / gambar.height
+            );
+
+            var lebarGambar =
+              gambar.width * skala;
+
+            var tinggiGambar =
+              gambar.height * skala;
+
+            var posisiX =
+              areaX + (areaW - lebarGambar) / 2;
+
+            var posisiY =
+              areaY + (areaH - tinggiGambar) / 2;
+
+            ctx.drawImage(
+              gambar,
+              posisiX,
+              posisiY,
+              lebarGambar,
+              tinggiGambar
+            );
+
+            URL.revokeObjectURL(url);
+
+            selesai();
+          };
+
+          gambar.onerror = function() {
+
+            URL.revokeObjectURL(url);
+
+            gagal(
+              new Error(
+                "Foto nomor " +
+                (index + 1) +
+                " tidak dapat dibaca."
+              )
+            );
+
+          };
+
+          gambar.src = url;
+
+        });
+
+        pekerjaan.push(tugas);
+
+      })(i);
+
+    }
+
+    Promise.all(pekerjaan)
+
+      .then(function() {
+
+        var hasilJPG =
+          canvas.toDataURL(
+            "image/jpeg",
+            0.92
+          );
+
+        resolve(hasilJPG);
+
+      })
+
+      .catch(function(error) {
+
+        reject(error);
+
+      });
+
+  });
+
+}
+
+/* =========================================================
    PREVIEW FOTO
 ========================================================= */
 
