@@ -15585,7 +15585,16 @@ document.addEventListener("change", function(event) {
     return;
   }
 
-  daftarFotoTerpilih[indeksFotoDiganti] = file;
+ if (
+  daftarFotoTerpilih.filter(Boolean).length >= 6 &&
+  !daftarFotoTerpilih[indeksFotoDiganti]
+) {
+  alert("Maksimal hanya 6 foto.");
+  indeksFotoDiganti = null;
+  return;
+}
+
+daftarFotoTerpilih[indeksFotoDiganti] = file;
 
   indeksFotoDiganti = null;
 
