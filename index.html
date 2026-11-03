@@ -15423,6 +15423,7 @@ function hapusFoto(index) {
 }
 
 
+
 /* Tampilkan 6 kotak foto */
 function tampilkanPreviewFoto() {
 
@@ -15441,10 +15442,11 @@ function tampilkanPreviewFoto() {
     let file = daftarFotoTerpilih[index];
 
     let wrapper =
-  document.createElement("div");
+      document.createElement("div");
 
     wrapper.className = "preview-item";
 
+    /* FOTO SUDAH DIPILIH */
     if (file) {
 
       var reader = new FileReader();
@@ -15456,36 +15458,47 @@ function tampilkanPreviewFoto() {
 
         img.src = e.target.result;
 
-        var nama =
-          document.createElement("div");
-
-        nama.className = "preview-name";
-        nama.textContent = file.name;
-
-        var tombolGanti =
-          document.createElement("button");
-
-        tombolGanti.type = "button";
-        tombolGanti.textContent = "GANTI";
-        tombolGanti.onclick = function() {
-          gantiFoto(index);
-        };
-
+        /* TOMBOL SILANG MERAH */
         var tombolHapus =
           document.createElement("button");
 
         tombolHapus.type = "button";
-        tombolHapus.textContent = "HAPUS";
+        tombolHapus.textContent = "×";
 
-        tombolHapus.style.marginLeft = "5px";
+        tombolHapus.style.position = "absolute";
+        tombolHapus.style.top = "6px";
+        tombolHapus.style.right = "6px";
+        tombolHapus.style.width = "30px";
+        tombolHapus.style.height = "30px";
+        tombolHapus.style.padding = "0";
+        tombolHapus.style.border = "none";
+        tombolHapus.style.borderRadius = "50%";
+        tombolHapus.style.background = "#e60000";
+        tombolHapus.style.color = "#ffffff";
+        tombolHapus.style.fontSize = "24px";
+        tombolHapus.style.fontWeight = "bold";
+        tombolHapus.style.lineHeight = "28px";
+        tombolHapus.style.cursor = "pointer";
+        tombolHapus.style.zIndex = "5";
 
-        tombolHapus.onclick = function() {
+        tombolHapus.onclick = function(event) {
+
+          event.stopPropagation();
+
           hapusFoto(index);
+
+        };
+
+        wrapper.style.position = "relative";
+        wrapper.style.cursor = "pointer";
+        wrapper.style.overflow = "hidden";
+
+        /* Klik gambar untuk mengganti foto */
+        wrapper.onclick = function() {
+          gantiFoto(index);
         };
 
         wrapper.appendChild(img);
-        wrapper.appendChild(nama);
-        wrapper.appendChild(tombolGanti);
         wrapper.appendChild(tombolHapus);
 
       };
@@ -15494,6 +15507,7 @@ function tampilkanPreviewFoto() {
 
     } else {
 
+      /* SLOT FOTO KOSONG */
       wrapper.classList.add("foto-slot");
 
       wrapper.innerHTML =
@@ -15507,10 +15521,10 @@ function tampilkanPreviewFoto() {
     }
 
     preview.appendChild(wrapper);
+
   }
 
 }
-
 
 /* Terima foto dari galeri */
 document.addEventListener("change", function(event) {
