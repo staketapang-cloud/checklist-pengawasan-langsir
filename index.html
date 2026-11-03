@@ -14813,8 +14813,10 @@ function uploadFoto() {
 
 }
 
+
 /* =========================================================
-   KIRIM FOTO
+   KIRIM FOTO - SIMPAN SEMENTARA UNTUK PREVIEW
+   TIDAK UPLOAD KE SERVER
 ========================================================= */
 
 function kirimFoto() {
@@ -14823,487 +14825,56 @@ function kirimFoto() {
     return;
   }
 
-
   var input =
-    document.getElementById(
-      "fotoPemeriksaan"
-    );
+    document.getElementById("fotoPemeriksaan");
 
   var status =
-    document.getElementById(
-      "statusUploadFoto"
-    );
-
+    document.getElementById("statusUploadFoto");
 
   if (!input) {
-
-    alert(
-      "Input foto tidak ditemukan."
-    );
-
+    alert("Input foto tidak ditemukan.");
     return;
-
   }
 
+  var jumlahFoto =
+    daftarFotoTerpilih.filter(Boolean).length;
 
-  if (
-    !input.files ||
-    input.files.length === 0
-  ) {
-
-    alert(
-      "Silakan pilih foto terlebih dahulu."
-    );
-
+  if (jumlahFoto === 0) {
+    alert("Silakan pilih foto terlebih dahulu.");
     return;
-
   }
 
+  if (jumlahFoto > 6) {
+    alert("Maksimal hanya 6 foto.");
+    return;
+  }
 
-  sedangUploadFoto =
-    true;
-
-
-  var files =
-    Array.from(
-      input.files
-    );
-
+  // Pastikan input tetap sinkron dengan enam slot foto
+  sinkronkanInputFoto();
 
   setProgressUpload(
-    10,
-    "Menunggu menyiapkan upload foto",
-    "0 / " + files.length,
-    "Menyiapkan foto dan pemeriksaan..."
+    100,
+    "Foto siap untuk preview",
+    jumlahFoto + " / 6",
+    "Foto berhasil disiapkan."
   );
-
 
   if (status) {
-
-    status.style.display =
-      "block";
-
+    status.style.display = "block";
     status.textContent =
-      "Menunggu menyiapkan upload foto...";
-
+      jumlahFoto + " foto siap digunakan untuk preview.";
   }
 
-
-  pastikanIdPemeriksaan()
-
-
-  .then(function(id) {
-
-    idPemeriksaanAktif =
-      String(id).trim();
-
-
-    setProgressUpload(
-      35,
-      "Menyiapkan upload foto",
-      "0 / " + files.length,
-      "ID Pemeriksaan siap. Menyiapkan file foto..."
-    );
-
-
-    if (status) {
-
-      status.textContent =
-        "Menyiapkan upload foto...";
-
-    }
-
-
-    return uploadSemuaFoto(
-      files,
-      status
-    );
-
-  })
-
-
-  .then(function(hasil) {
-
-    setProgressUpload(
-      85,
-      "Finalisasi upload foto",
-      hasil.berhasil +
-      " / " +
-      files.length,
-      "Memastikan seluruh hasil upload telah diproses..."
-    );
-
-
-input.value =
-  "";
-
-daftarFotoTerpilih = [];
-indeksFotoDiganti = null;
-perbaruiJumlahFoto();
-
-var preview =
-  document.getElementById(
-    "previewFoto"
-  );
-
-if (preview) {
-  preview.innerHTML = "";
-}
-
-
-    return new Promise(function(resolve) {
-
-      setTimeout(
-        function() {
-
-          resolve(hasil);
-
-        },
-        250
-      );
-
-    });
-
-  })
-
-
-  .then(function(hasil) {
-
-    setProgressUpload(
-      100,
-      "Upload foto selesai",
-      hasil.berhasil +
-      " / " +
-      files.length,
-      "Proses upload seluruh foto telah selesai."
-    );
-
-
-    if (status) {
-
-      status.textContent =
-        "Upload selesai.\n" +
-        "Berhasil: " +
-        hasil.berhasil +
-        " foto\n" +
-        "Gagal: " +
-        hasil.gagal +
-        " foto.";
-
-    }
-
-
-    if (
-      hasil.berhasil > 0 &&
-      hasil.gagal === 0
-    ) {
-
-      tampilkanNotifFoto(
-        "Foto telah berhasil diupload",
-        "Foto dokumentasi berhasil disimpan.\n\n" +
-        "Jumlah foto: " +
-        hasil.berhasil +
-        "\n\n" +
-        "Tekan OK untuk melanjutkan ke TTD.",
-        "ttd"
-      );
-
-    }
-
-    else if (
-      hasil.berhasil > 0 &&
-      hasil.gagal > 0
-    ) {
-
-      tampilkanNotifFoto(
-        "Upload foto selesai sebagian",
-        "Berhasil: " +
-        hasil.berhasil +
-        " foto\n" +
-        "Gagal: " +
-        hasil.gagal +
-        " foto\n\n" +
-        "Tekan OK untuk melanjutkan ke TTD.",
-        "ttd"
-      );
-
-    }
-
-    else {
-
-      tampilkanNotifFoto(
-        "Upload foto gagal",
-        "Tidak ada foto yang berhasil diupload.",
-        "none"
-      );
-
-    }
-
-  })
-
-
-  .catch(function(error) {
-
-    console.error(
-      "ERROR UPLOAD FOTO:",
-      error
-    );
-
-
-    setProgressUpload(
-      0,
-      "Upload foto gagal",
-      "-",
-      error.message
-    );
-
-
-    if (status) {
-
-      status.textContent =
-        "Upload foto gagal.\n" +
-        error.message;
-
-    }
-
-
-    tampilkanNotifFoto(
-      "Upload foto gagal",
-      error.message,
-      "none"
-    );
-
-  })
-
-
-  .finally(function() {
-
-    sedangUploadFoto =
-      false;
-
-  });
-
-}
-
-
-/* =========================================================
-   UPLOAD SEMUA FOTO
-========================================================= */
-
-function uploadSemuaFoto(
-  files,
-  status
-) {
-
-  var berhasil =
-    0;
-
-  var gagal =
-    0;
-
-  var total =
-    files.length;
-
-  var rangkaian =
-    Promise.resolve();
-
-
-  files.forEach(function(
-    file,
-    index
-  ) {
-
-    rangkaian =
-      rangkaian.then(
-        function() {
-
-          var nomor =
-            index + 1;
-
-
-          if (
-            !file.type ||
-            !file.type.startsWith(
-              "image/"
-            )
-          ) {
-
-            gagal++;
-
-            return;
-
-          }
-
-
-          if (
-            file.size >
-            5 * 1024 * 1024
-          ) {
-
-            gagal++;
-
-
-            setProgressUpload(
-              Math.round(
-                (nomor / total) * 85
-              ),
-              "File terlalu besar",
-              nomor +
-              " / " +
-              total,
-              file.name +
-              " lebih dari 5 MB."
-            );
-
-
-            return;
-
-          }
-
-
-          setProgressUpload(
-            35,
-            "Menyiapkan upload foto",
-            nomor +
-            " / " +
-            total,
-            "Menyiapkan " +
-            file.name
-          );
-
-
-          return fileToBase64WithProgress(
-            file,
-            function(progress) {
-
-              var persen =
-                35 +
-                (
-                  20 *
-                  progress /
-                  100
-                );
-
-
-              setProgressUpload(
-                persen,
-                "Membaca foto",
-                nomor +
-                " / " +
-                total,
-                file.name
-              );
-
-            }
-          )
-
-
-          .then(function(base64) {
-
-            setProgressUpload(
-              65,
-              "Mengirim foto ke server",
-              nomor +
-              " / " +
-              total,
-              "Mengupload " +
-              file.name
-            );
-
-
-            var payload = {
-
-              ID_PEMERIKSAAN:
-                idPemeriksaanAktif,
-
-              ID_PEMERIKSA:
-                idPemeriksaanAktif,
-
-              NAMA_FILE:
-                file.name,
-
-              FOTO:
-                base64
-
-            };
-
-
-            return kirimRequestPost(
-              "upload_foto",
-              payload
-            );
-
-          })
-
-
-          .then(function(result) {
-
-            if (
-              result &&
-              result.success === true
-            ) {
-
-              berhasil++;
-
-            }
-
-            else {
-
-              gagal++;
-
-            }
-
-
-            setProgressUpload(
-              85,
-              "Finalisasi foto",
-              nomor +
-              " / " +
-              total,
-              file.name +
-              " telah diproses."
-            );
-
-          })
-
-
-          .catch(function(error) {
-
-            gagal++;
-
-
-            console.error(
-              "GAGAL FOTO:",
-              file.name,
-              error
-            );
-
-          });
-
-        }
-      );
-
-  });
-
-
-  return rangkaian.then(
-    function() {
-
-      return {
-
-        berhasil:
-          berhasil,
-
-        gagal:
-          gagal
-
-      };
-
-    }
+  tampilkanNotifFoto(
+    "Foto berhasil disiapkan",
+    jumlahFoto +
+    " foto dokumentasi siap digunakan.\n\n" +
+    "Foto belum diupload ke server.\n\n" +
+    "Tekan OK untuk melanjutkan ke TTD.",
+    "ttd"
   );
 
 }
-
 
 /* =========================================================
    FILE TO BASE64
