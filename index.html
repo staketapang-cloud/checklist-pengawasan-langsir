@@ -15600,28 +15600,22 @@ document.addEventListener("change", function(event) {
 
   else {
 
-    files.forEach(function(file) {
+var jumlahDitolak = 0;
 
-      if (
-        !file.type ||
-        !file.type.startsWith("image/")
-      ) {
-        return;
-      }
+files.forEach(function(file) {
+  if (!file.type || !file.type.startsWith("image/")) return;
 
-      if (daftarFotoTerpilih.length >= 6) {
-        return;
-      }
-
-      daftarFotoTerpilih.push(file);
-
-    });
-
+  if (daftarFotoTerpilih.length >= 6) {
+    jumlahDitolak++;
+    return;
   }
 
-  if (files.length > 0 && daftarFotoTerpilih.length >= 6) {
-    alert("Maksimal hanya 6 foto.");
-  }
+  daftarFotoTerpilih.push(file);
+});
+
+if (jumlahDitolak > 0) {
+  alert("Maksimal hanya 6 foto. Ada foto yang tidak ditambahkan.");
+}
 
   sinkronkanInputFoto();
 
