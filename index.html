@@ -11213,6 +11213,7 @@ try {
 var fotoJPGPromise = buatJPGFotoKolase();
 
 
+
 /* =====================================================
    IDENTITAS HALAMAN KEDUA — DOKUMENTASI FOTO
 ===================================================== */
@@ -11221,29 +11222,67 @@ var judulFoto =
   document.createElement("div");
 
 judulFoto.style.textAlign = "center";
-judulFoto.style.marginTop = "24px";
+judulFoto.style.marginTop = "20px";
 judulFoto.style.marginBottom = "16px";
 judulFoto.style.color = "#1f4e78";
 judulFoto.style.lineHeight = "1.5";
 
-var identitasFoto = document.createElement("div");
+/* Ambil identitas dari session login */
 
-identitasFoto.style.fontSize = "13px";
-identitasFoto.style.fontWeight = "bold";
-identitasFoto.style.textAlign = "center";
+var namaPengawas =
+  sessionStorage.getItem("userNama") || "-";
 
-identitasFoto.innerHTML =
+var nippPengawas =
+  sessionStorage.getItem("userNipp") || "-";
+
+var jabatanPengawas =
+  sessionStorage.getItem("userJabatan") || "-";
+
+/* Ambil tanggal pemeriksaan */
+
+var tanggalInput =
+  document.getElementById("tanggalPemeriksaan");
+
+var tanggalTampil = "-";
+
+if (tanggalInput && tanggalInput.value) {
+
+  var bagianTanggal =
+    tanggalInput.value.split("-");
+
+  if (bagianTanggal.length === 3) {
+
+    var tanggalObjek =
+      new Date(
+        Number(bagianTanggal[0]),
+        Number(bagianTanggal[1]) - 1,
+        Number(bagianTanggal[2])
+      );
+
+    tanggalTampil =
+      new Intl.DateTimeFormat("id-ID", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      }).format(tanggalObjek);
+
+  }
+
+}
+
+/* Susun identitas */
+
+judulFoto.innerHTML =
   '<div style="font-size:20px;font-weight:bold;">DOKUMENTASI FOTO</div>' +
   '<div style="font-size:16px;font-weight:bold;margin-bottom:10px;">PENGAWAS KEGIATAN LANGSIR</div>' +
-  '<div>NAMA : ' + (data.NAMA || data.nama || "-") + '</div>' +
-  '<div>NIPP : ' + (data.NIPP || data.nipp || "-") + '</div>' +
-  '<div>JABATAN : ' + (data.JABATAN || data.jabatan || "-") + '</div>' +
-  '<div>' + (data.HARI || data.hari || "") +
-  ', ' + (data.TANGGAL || data.tanggal || "-") + '</div>';
-
-judulFoto.appendChild(identitasFoto);
+  '<div style="font-size:13px;font-weight:bold;">NAMA : ' + namaPengawas + '</div>' +
+  '<div style="font-size:13px;font-weight:bold;">NIPP : ' + nippPengawas + '</div>' +
+  '<div style="font-size:13px;font-weight:bold;">JABATAN : ' + jabatanPengawas + '</div>' +
+  '<div style="font-size:13px;font-weight:bold;">' + tanggalTampil + '</div>';
 
 container.appendChild(judulFoto);
+
 
 
 
