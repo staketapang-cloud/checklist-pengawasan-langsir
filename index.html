@@ -1706,27 +1706,22 @@ body {
   border: 1px solid #ddd;
   border-radius: 9px;
 }
+
 #previewFoto {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 15px;
 }
 
 .preview-item {
-  width: 100%;
-  height: 175px;
-  min-width: 0;
+  width: 140px;
   text-align: center;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
 }
+
 .preview-item img {
-  width: 100%;
-  height: 110px;
+  width: 140px;
+  height: 100px;
   object-fit: cover;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -1738,20 +1733,7 @@ body {
   word-break: break-word;
 }
 
-.foto-slot {
-  width: 100%;
-  height: 175px;
-  min-height: 175px;
-  border: 2px dashed #b8c5d1;
-  border-radius: 8px;
-  background: #f5f8fb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  cursor: pointer;
-  box-sizing: border-box;
-}
+
 /* =========================================================
    TTD
 ========================================================= */
@@ -2779,65 +2761,6 @@ body {
 
     </div>
 
-<!-- =====================================================
-     UPLOAD FOTO PEMERIKSAAN
-===================================================== -->
-
-<div style="margin-top:20px;">
-
-  <button
-    type="button"
-    class="btn btn-foto"
-    onclick="uploadFoto()"
-    style="width:100%;"
-  >
-    📷 UPLOAD FOTO
-  </button>
-
-</div>
-
-<div id="uploadFotoBox">
-
-  <h3>Dokumentasi Foto Pemeriksaan</h3>
-
-  <p>
-    Pilih kotak untuk mengisi foto dokumentasi.
-    Maksimal 6 foto.
-  </p>
-
-  <input
-    type="file"
-    id="fotoPemeriksaan"
-    accept="image/*"
-    style="display:none;"
-  >
-
-  <div
-    id="jumlahFoto"
-    style="margin-top:12px;font-weight:bold;"
-  >
-    0 / 6 Foto dipilih
-  </div>
-
-  <div
-    id="previewFoto"
-    class="foto-grid"
-  ></div>
-
-  <div
-    id="statusUploadFoto"
-    class="status-box"
-    style="display:none;"
-  ></div>
-
-
-
-</div>
-
-<!-- =====================================================
-     AKHIR UPLOAD FOTO
-===================================================== -->
-
 
     <div
       id="statusBox"
@@ -2980,7 +2903,7 @@ body {
     class="btn-save-ttd"
     onclick="window.simpanTTD()"
   >
-    Simpan TTD & FOTO
+    Simpan TTD
   </button>
 
 </div>
@@ -11207,68 +11130,6 @@ try {
 
 
 /* =====================================================
-   HALAMAN KEDUA — DOKUMENTASI FOTO
-===================================================== */
-
-var fotoJPGPromise = buatJPGFotoKolase();
-
-
-
-/* =====================================================
-   JUDUL HALAMAN KEDUA — DOKUMENTASI FOTO
-===================================================== */
-
-var judulFoto =
-  document.createElement("div");
-
-judulFoto.textContent =
-  "DOKUMENTASI FOTO";
-
-judulFoto.style.fontSize = "22px";
-judulFoto.style.fontWeight = "bold";
-judulFoto.style.textAlign = "center";
-judulFoto.style.marginTop = "24px";
-judulFoto.style.marginBottom = "16px";
-judulFoto.style.color = "#1f4e78";
-
-container.appendChild(judulFoto);
-
-
-
-
-var imgFoto =
-  document.createElement("img");
-
-imgFoto.alt =
-  "Preview Dokumentasi Foto";
-
-imgFoto.style.width = "100%";
-imgFoto.style.height = "auto";
-imgFoto.style.display = "block";
-imgFoto.style.border = "1px solid #cccccc";
-imgFoto.style.boxSizing = "border-box";
-
-container.appendChild(imgFoto);
-
-
-/* Tampilkan hasil kolase setelah selesai dibuat */
-
-fotoJPGPromise
-  .then(function(fotoJPG) {
-
-    imgFoto.src = fotoJPG;
-
-  })
-  .catch(function(error) {
-
-    console.error(
-      "GAGAL MEMBUAT PREVIEW FOTO:",
-      error
-    );
-
-  });
-
-/* =====================================================
    TOMBOL PREVIEW
 ===================================================== */
 
@@ -11637,32 +11498,7 @@ var jpgFile =
       type: "image/jpeg"
     }
   );
-/* =================================================
-   SIAPKAN JPG DOKUMENTASI FOTO
-================================================= */
 
-var fotoJPG =
-  await fotoJPGPromise;
-
-var namaFileFoto =
-  namaFile.replace(
-    "Checklist_Langsir_",
-    "Dokumentasi_Foto_Langsir_"
-  );
-
-var fotoBlob =
-  await fetch(fotoJPG).then(function(response) {
-    return response.blob();
-  });
-
-var fotoJPGFile =
-  new File(
-    [fotoBlob],
-    namaFileFoto,
-    {
-      type: "image/jpeg"
-    }
-  );
 /* =================================================
    HP: BUKA PILIHAN SIMPAN / BAGIKAN GAMBAR
    KOMPUTER: DOWNLOAD LANGSUNG
@@ -11719,32 +11555,7 @@ if (isAndroid) {
   document.body.appendChild(linkAndroid);
   linkAndroid.click();
   document.body.removeChild(linkAndroid);
-/* DOWNLOAD JPG DOKUMENTASI FOTO */
 
-var urlFotoAndroid =
-  URL.createObjectURL(fotoBlob);
-
-var linkFotoAndroid =
-  document.createElement("a");
-
-linkFotoAndroid.href =
-  urlFotoAndroid;
-
-linkFotoAndroid.download =
-  namaFileFoto;
-
-linkFotoAndroid.style.display =
-  "none";
-
-document.body.appendChild(
-  linkFotoAndroid
-);
-
-linkFotoAndroid.click();
-
-document.body.removeChild(
-  linkFotoAndroid
-);
   /* Buka preview JPG di tab baru */
 
   var previewAndroid =
@@ -11823,15 +11634,13 @@ if (
   isHP &&
   navigator.share &&
   navigator.canShare &&
-  navigator.canShare({
-  files: [jpgFile, fotoJPGFile]
-})
+  navigator.canShare({ files: [jpgFile] })
 ) {
 
-navigator.share({
-  files: [jpgFile, fotoJPGFile],
-  title: "Checklist Pengawasan Kegiatan Langsir"
-}).catch(function(error) {
+  navigator.share({
+    files: [jpgFile],
+    title: "Checklist Pengawasan Kegiatan Langsir"
+  }).catch(function(error) {
 
     if (error && error.name === "AbortError") {
       return;
@@ -11866,36 +11675,7 @@ document.body.removeChild(link);
 setTimeout(function() {
   URL.revokeObjectURL(urlJPG);
 }, 10000);
-/* DOWNLOAD JPG DOKUMENTASI FOTO */
 
-var urlFotoJPG =
-  URL.createObjectURL(fotoBlob);
-
-var linkFotoJPG =
-  document.createElement("a");
-
-linkFotoJPG.href =
-  urlFotoJPG;
-
-linkFotoJPG.download =
-  namaFileFoto;
-
-linkFotoJPG.style.display =
-  "none";
-
-document.body.appendChild(
-  linkFotoJPG
-);
-
-linkFotoJPG.click();
-
-document.body.removeChild(
-  linkFotoJPG
-);
-
-setTimeout(function() {
-  URL.revokeObjectURL(urlFotoJPG);
-}, 10000);
 console.log("JPG didownload:", namaFile);
 
 }
@@ -11971,7 +11751,7 @@ btnPDF.style.fontWeight =
 
 
 btnPDF.onclick =
-  async function() {
+  function() {
 
     try {
 
@@ -12020,28 +11800,7 @@ var namaFile =
         "FAST"
       );
 
-      /* =================================================
-         HALAMAN KEDUA — DOKUMENTASI FOTO
-      ================================================= */
 
-      var fotoJPG =
-        await fotoJPGPromise;
-
-      pdf.addPage(
-        "a4",
-        "portrait"
-      );
-
-      pdf.addImage(
-        fotoJPG,
-        "JPEG",
-        0,
-        0,
-        210,
-        297,
-        undefined,
-        "FAST"
-      );
       /* =================================================
          DETEKSI SAFARI iPHONE / iPAD SAJA
       ================================================= */
@@ -14952,16 +14711,19 @@ window.initTTD = initTTD;
 function uploadFoto() {
 
   var box =
-    document.getElementById("uploadFotoBox");
+    document.getElementById(
+      "uploadFotoBox"
+    );
+
 
   if (!box) {
     return;
   }
 
-  box.style.display = "block";
 
-  // Tampilkan 6 kotak foto
-  tampilkanPreviewFoto();
+  box.style.display =
+    "block";
+
 
   box.scrollIntoView({
     behavior: "smooth",
@@ -14972,8 +14734,7 @@ function uploadFoto() {
 
 
 /* =========================================================
-   KIRIM FOTO - SIMPAN SEMENTARA UNTUK PREVIEW
-   TIDAK UPLOAD KE SERVER
+   KIRIM FOTO
 ========================================================= */
 
 function kirimFoto() {
@@ -14982,56 +14743,485 @@ function kirimFoto() {
     return;
   }
 
+
   var input =
-    document.getElementById("fotoPemeriksaan");
+    document.getElementById(
+      "fotoPemeriksaan"
+    );
 
   var status =
-    document.getElementById("statusUploadFoto");
+    document.getElementById(
+      "statusUploadFoto"
+    );
+
 
   if (!input) {
-    alert("Input foto tidak ditemukan.");
+
+    alert(
+      "Input foto tidak ditemukan."
+    );
+
     return;
+
   }
 
-  var jumlahFoto =
-    daftarFotoTerpilih.filter(Boolean).length;
 
-  if (jumlahFoto === 0) {
-    alert("Silakan pilih foto terlebih dahulu.");
+  if (
+    !input.files ||
+    input.files.length === 0
+  ) {
+
+    alert(
+      "Silakan pilih foto terlebih dahulu."
+    );
+
     return;
+
   }
 
-  if (jumlahFoto > 6) {
-    alert("Maksimal hanya 6 foto.");
-    return;
-  }
 
-  // Pastikan input tetap sinkron dengan enam slot foto
-  sinkronkanInputFoto();
+  sedangUploadFoto =
+    true;
+
+
+  var files =
+    Array.from(
+      input.files
+    );
+
 
   setProgressUpload(
-    100,
-    "Foto siap untuk preview",
-    jumlahFoto + " / 6",
-    "Foto berhasil disiapkan."
+    10,
+    "Menunggu menyiapkan upload foto",
+    "0 / " + files.length,
+    "Menyiapkan foto dan pemeriksaan..."
   );
 
+
   if (status) {
-    status.style.display = "block";
+
+    status.style.display =
+      "block";
+
     status.textContent =
-      jumlahFoto + " foto siap digunakan untuk preview.";
+      "Menunggu menyiapkan upload foto...";
+
   }
 
-  tampilkanNotifFoto(
-    "Foto berhasil disiapkan",
-    jumlahFoto +
-    " foto dokumentasi siap digunakan.\n\n" +
-    "Foto belum diupload ke server.\n\n" +
-    "Tekan OK untuk melanjutkan ke TTD.",
-    "ttd"
+
+  pastikanIdPemeriksaan()
+
+
+  .then(function(id) {
+
+    idPemeriksaanAktif =
+      String(id).trim();
+
+
+    setProgressUpload(
+      35,
+      "Menyiapkan upload foto",
+      "0 / " + files.length,
+      "ID Pemeriksaan siap. Menyiapkan file foto..."
+    );
+
+
+    if (status) {
+
+      status.textContent =
+        "Menyiapkan upload foto...";
+
+    }
+
+
+    return uploadSemuaFoto(
+      files,
+      status
+    );
+
+  })
+
+
+  .then(function(hasil) {
+
+    setProgressUpload(
+      85,
+      "Finalisasi upload foto",
+      hasil.berhasil +
+      " / " +
+      files.length,
+      "Memastikan seluruh hasil upload telah diproses..."
+    );
+
+
+    input.value =
+      "";
+
+
+    var preview =
+      document.getElementById(
+        "previewFoto"
+      );
+
+
+    if (preview) {
+      preview.innerHTML = "";
+    }
+
+
+    return new Promise(function(resolve) {
+
+      setTimeout(
+        function() {
+
+          resolve(hasil);
+
+        },
+        250
+      );
+
+    });
+
+  })
+
+
+  .then(function(hasil) {
+
+    setProgressUpload(
+      100,
+      "Upload foto selesai",
+      hasil.berhasil +
+      " / " +
+      files.length,
+      "Proses upload seluruh foto telah selesai."
+    );
+
+
+    if (status) {
+
+      status.textContent =
+        "Upload selesai.\n" +
+        "Berhasil: " +
+        hasil.berhasil +
+        " foto\n" +
+        "Gagal: " +
+        hasil.gagal +
+        " foto.";
+
+    }
+
+
+    if (
+      hasil.berhasil > 0 &&
+      hasil.gagal === 0
+    ) {
+
+      tampilkanNotifFoto(
+        "Foto telah berhasil diupload",
+        "Foto dokumentasi berhasil disimpan.\n\n" +
+        "Jumlah foto: " +
+        hasil.berhasil +
+        "\n\n" +
+        "Tekan OK untuk melanjutkan ke TTD.",
+        "ttd"
+      );
+
+    }
+
+    else if (
+      hasil.berhasil > 0 &&
+      hasil.gagal > 0
+    ) {
+
+      tampilkanNotifFoto(
+        "Upload foto selesai sebagian",
+        "Berhasil: " +
+        hasil.berhasil +
+        " foto\n" +
+        "Gagal: " +
+        hasil.gagal +
+        " foto\n\n" +
+        "Tekan OK untuk melanjutkan ke TTD.",
+        "ttd"
+      );
+
+    }
+
+    else {
+
+      tampilkanNotifFoto(
+        "Upload foto gagal",
+        "Tidak ada foto yang berhasil diupload.",
+        "none"
+      );
+
+    }
+
+  })
+
+
+  .catch(function(error) {
+
+    console.error(
+      "ERROR UPLOAD FOTO:",
+      error
+    );
+
+
+    setProgressUpload(
+      0,
+      "Upload foto gagal",
+      "-",
+      error.message
+    );
+
+
+    if (status) {
+
+      status.textContent =
+        "Upload foto gagal.\n" +
+        error.message;
+
+    }
+
+
+    tampilkanNotifFoto(
+      "Upload foto gagal",
+      error.message,
+      "none"
+    );
+
+  })
+
+
+  .finally(function() {
+
+    sedangUploadFoto =
+      false;
+
+  });
+
+}
+
+
+/* =========================================================
+   UPLOAD SEMUA FOTO
+========================================================= */
+
+function uploadSemuaFoto(
+  files,
+  status
+) {
+
+  var berhasil =
+    0;
+
+  var gagal =
+    0;
+
+  var total =
+    files.length;
+
+  var rangkaian =
+    Promise.resolve();
+
+
+  files.forEach(function(
+    file,
+    index
+  ) {
+
+    rangkaian =
+      rangkaian.then(
+        function() {
+
+          var nomor =
+            index + 1;
+
+
+          if (
+            !file.type ||
+            !file.type.startsWith(
+              "image/"
+            )
+          ) {
+
+            gagal++;
+
+            return;
+
+          }
+
+
+          if (
+            file.size >
+            5 * 1024 * 1024
+          ) {
+
+            gagal++;
+
+
+            setProgressUpload(
+              Math.round(
+                (nomor / total) * 85
+              ),
+              "File terlalu besar",
+              nomor +
+              " / " +
+              total,
+              file.name +
+              " lebih dari 5 MB."
+            );
+
+
+            return;
+
+          }
+
+
+          setProgressUpload(
+            35,
+            "Menyiapkan upload foto",
+            nomor +
+            " / " +
+            total,
+            "Menyiapkan " +
+            file.name
+          );
+
+
+          return fileToBase64WithProgress(
+            file,
+            function(progress) {
+
+              var persen =
+                35 +
+                (
+                  20 *
+                  progress /
+                  100
+                );
+
+
+              setProgressUpload(
+                persen,
+                "Membaca foto",
+                nomor +
+                " / " +
+                total,
+                file.name
+              );
+
+            }
+          )
+
+
+          .then(function(base64) {
+
+            setProgressUpload(
+              65,
+              "Mengirim foto ke server",
+              nomor +
+              " / " +
+              total,
+              "Mengupload " +
+              file.name
+            );
+
+
+            var payload = {
+
+              ID_PEMERIKSAAN:
+                idPemeriksaanAktif,
+
+              ID_PEMERIKSA:
+                idPemeriksaanAktif,
+
+              NAMA_FILE:
+                file.name,
+
+              FOTO:
+                base64
+
+            };
+
+
+            return kirimRequestPost(
+              "upload_foto",
+              payload
+            );
+
+          })
+
+
+          .then(function(result) {
+
+            if (
+              result &&
+              result.success === true
+            ) {
+
+              berhasil++;
+
+            }
+
+            else {
+
+              gagal++;
+
+            }
+
+
+            setProgressUpload(
+              85,
+              "Finalisasi foto",
+              nomor +
+              " / " +
+              total,
+              file.name +
+              " telah diproses."
+            );
+
+          })
+
+
+          .catch(function(error) {
+
+            gagal++;
+
+
+            console.error(
+              "GAGAL FOTO:",
+              file.name,
+              error
+            );
+
+          });
+
+        }
+      );
+
+  });
+
+
+  return rangkaian.then(
+    function() {
+
+      return {
+
+        berhasil:
+          berhasil,
+
+        gagal:
+          gagal
+
+      };
+
+    }
   );
 
 }
+
 
 /* =========================================================
    FILE TO BASE64
@@ -15110,542 +15300,135 @@ function fileToBase64WithProgress(
 
 
 /* =========================================================
-   MEMBUAT JPG DOKUMENTASI FOTO
-   UKURAN A4 - 6 SLOT - 3 KOLOM x 2 BARIS
-========================================================= */
-
-function buatJPGFotoKolase() {
-
-  return new Promise(function(resolve, reject) {
-
-    var foto = daftarFotoTerpilih || [];
-
-    var totalFoto =
-      foto.filter(Boolean).length;
-
-
-    var canvas =
-      document.createElement("canvas");
-
-    canvas.width = 1240;
-    canvas.height = 1754;
-
-    var ctx =
-      canvas.getContext("2d");
-
-    // Latar belakang A4
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, 1240, 1754);
-
-  // =====================================================
-// HEADER JPG — IDENTITAS PENGAWAS KEGIATAN LANGSIR
-// =====================================================
-
-var namaPengawas =
-  sessionStorage.getItem("userNama") || "-";
-
-var nippPengawas =
-  sessionStorage.getItem("userNipp") || "-";
-
-var jabatanPengawas =
-  sessionStorage.getItem("userJabatan") || "-";
-
-// Ambil tanggal pemeriksaan
-var inputTanggal =
-  document.getElementById("tanggalPemeriksaan");
-
-var nilaiTanggal =
-  inputTanggal ? inputTanggal.value : "";
-
-var teksTanggal = "-";
-
-if (nilaiTanggal) {
-  var tanggalObj =
-    new Date(nilaiTanggal + "T00:00:00");
-
-  if (!isNaN(tanggalObj.getTime())) {
-    teksTanggal =
-      new Intl.DateTimeFormat("id-ID", {
-        weekday: "long",
-        day: "2-digit",
-        month: "long",
-        year: "numeric"
-      }).format(tanggalObj);
-  } else {
-    teksTanggal = nilaiTanggal;
-  }
-}
-
-// Latar header
-ctx.fillStyle = "#001d36";
-ctx.fillRect(0, 0, 1240, 320);
-
-ctx.fillStyle = "#f58220";
-ctx.fillRect(0, 320, 1240, 12);
-
-// Judul
-ctx.fillStyle = "#ffffff";
-ctx.textAlign = "center";
-ctx.font = "bold 42px Arial";
-
-ctx.fillText(
-  "DOKUMENTASI FOTO",
-  620,
-  65
-);
-
-ctx.font = "24px Arial";
-
-ctx.fillText(
-  "PENGAWAS KEGIATAN LANGSIR",
-  620,
-  112
-);
-
-// Identitas pengawas
-ctx.font = "bold 25px Arial";
-
-ctx.fillText(
-  "NAMA : " + namaPengawas,
-  620,
-  175
-);
-
-ctx.fillText(
-  "NIPP : " + nippPengawas,
-  620,
-  220
-);
-
-ctx.fillText(
-  "JABATAN : " + jabatanPengawas,
-  620,
-  265
-);
-
-ctx.font = "24px Arial";
-
-ctx.fillText(
-  teksTanggal,
-  620,
-  305
-);
-    // Pengaturan enam kotak foto
-    var margin = 64;
-    var jarakKolom = 22;
-    var jarakBaris = 28;
-
-    var lebarKotak =
-      (1240 - (margin * 2) - (jarakKolom * 2)) / 3;
-
-    var tinggiKotak = 630;
-
-var awalY = 365;
-
-    var pekerjaan = [];
-
-    for (var i = 0; i < 6; i++) {
-
-      (function(index) {
-
-        var kolom = index % 3;
-        var baris = Math.floor(index / 3);
-
-        var x =
-          margin +
-          kolom * (lebarKotak + jarakKolom);
-
-        var y =
-          awalY +
-          baris * (tinggiKotak + jarakBaris);
-
-        // Kotak foto
-        ctx.fillStyle = "#f5f7f9";
-
-        ctx.fillRect(
-          x,
-          y,
-          lebarKotak,
-          tinggiKotak
-        );
-
-        ctx.strokeStyle = "#b8c6d1";
-        ctx.lineWidth = 3;
-
-        ctx.strokeRect(
-          x,
-          y,
-          lebarKotak,
-          tinggiKotak
-        );
-
-        // Judul slot
-        ctx.fillStyle = "#001d36";
-        ctx.textAlign = "left";
-        ctx.font = "bold 25px Arial";
-
-        ctx.fillText(
-          "FOTO " + (index + 1),
-          x + 16,
-          y + 43
-        );
-
-        var file = foto[index];
-
-        if (!file) {
-
-          ctx.fillStyle = "#8996a1";
-          ctx.textAlign = "center";
-          ctx.font = "22px Arial";
-
-          ctx.fillText(
-            "BELUM ADA FOTO",
-            x + lebarKotak / 2,
-            y + 370
-          );
-
-          return;
-        }
-
-        // Membaca foto dari slot
-        var tugas = new Promise(function(
-          selesai,
-          gagal
-        ) {
-
-          var url =
-            URL.createObjectURL(file);
-
-          var gambar =
-            new Image();
-
-          gambar.onload = function() {
-
-            var areaX = x + 12;
-            var areaY = y + 65;
-            var areaW = lebarKotak - 24;
-            var areaH = tinggiKotak - 80;
-
-            // Menjaga proporsi foto
-            var skala = Math.min(
-              areaW / gambar.width,
-              areaH / gambar.height
-            );
-
-            var lebarGambar =
-              gambar.width * skala;
-
-            var tinggiGambar =
-              gambar.height * skala;
-
-            var posisiX =
-              areaX + (areaW - lebarGambar) / 2;
-
-            var posisiY =
-              areaY + (areaH - tinggiGambar) / 2;
-
-            ctx.drawImage(
-              gambar,
-              posisiX,
-              posisiY,
-              lebarGambar,
-              tinggiGambar
-            );
-
-            URL.revokeObjectURL(url);
-
-            selesai();
-          };
-
-          gambar.onerror = function() {
-
-            URL.revokeObjectURL(url);
-
-            gagal(
-              new Error(
-                "Foto nomor " +
-                (index + 1) +
-                " tidak dapat dibaca."
-              )
-            );
-
-          };
-
-          gambar.src = url;
-
-        });
-
-        pekerjaan.push(tugas);
-
-      })(i);
-
-    }
-
-    Promise.all(pekerjaan)
-
-      .then(function() {
-
-        var hasilJPG =
-          canvas.toDataURL(
-            "image/jpeg",
-            0.92
-          );
-
-        resolve(hasilJPG);
-
-      })
-
-      .catch(function(error) {
-
-        reject(error);
-
-      });
-
-  });
-
-}
-
-/* =========================================================
    PREVIEW FOTO
 ========================================================= */
 
-/* =========================================================
-   PREVIEW FOTO - MAKSIMAL 6 FOTO
-   BISA TAMBAH, GANTI, DAN HAPUS FOTO
-========================================================= */
+document.addEventListener(
+  "change",
+  function(event) {
 
-var daftarFotoTerpilih = [];
+    if (
+      event.target.id !==
+      "fotoPemeriksaan"
+    ) {
 
-var indeksFotoDiganti = null;
-
-
-
-/* =========================================================
-   SISTEM 6 SLOT FOTO
-========================================================= */
-
-/* Sinkronkan daftar foto ke input */
-function sinkronkanInputFoto() {
-
-  var input =
-    document.getElementById("fotoPemeriksaan");
-
-  if (!input) return;
-
-  var transfer = new DataTransfer();
-
-  daftarFotoTerpilih.forEach(function(file) {
-    if (file) {
-      transfer.items.add(file);
-    }
-  });
-
-  input.files = transfer.files;
-}
-
-
-/* Hitung foto yang terisi */
-function perbaruiJumlahFoto() {
-
-  var jumlah =
-    document.getElementById("jumlahFoto");
-
-  var total =
-    daftarFotoTerpilih.filter(Boolean).length;
-
-  if (jumlah) {
-    jumlah.textContent =
-      total + " / 6 Foto dipilih";
-  }
-}
-
-
-/* Pilih foto berdasarkan nomor kotak */
-function pilihSlotFoto(index) {
-
-  indeksFotoDiganti = index;
-
-  var input =
-    document.getElementById("fotoPemeriksaan");
-
-  if (!input) return;
-
-  input.value = "";
-  input.click();
-}
-
-
-/* Ganti foto */
-function gantiFoto(index) {
-  pilihSlotFoto(index);
-}
-
-
-/* Hapus foto tanpa menggeser posisi */
-function hapusFoto(index) {
-
-  daftarFotoTerpilih[index] = null;
-
-  sinkronkanInputFoto();
-
-  tampilkanPreviewFoto();
-}
-
-
-
-/* Tampilkan 6 kotak foto */
-function tampilkanPreviewFoto() {
-
-  var preview =
-    document.getElementById("previewFoto");
-
-  if (!preview) return;
-
-  preview.innerHTML = "";
-
-  perbaruiJumlahFoto();
-
-  for (let i = 0; i < 6; i++) {
-
-    let index = i;
-    let file = daftarFotoTerpilih[index];
-
-    let wrapper =
-      document.createElement("div");
-
-    wrapper.className = "preview-item";
-
-    /* FOTO SUDAH DIPILIH */
-    if (file) {
-
-      var reader = new FileReader();
-
-      reader.onload = function(e) {
-
-        var img =
-          document.createElement("img");
-
-        img.src = e.target.result;
-
-        /* TOMBOL SILANG MERAH */
-        var tombolHapus =
-          document.createElement("button");
-
-        tombolHapus.type = "button";
-        tombolHapus.textContent = "×";
-
-        tombolHapus.style.position = "absolute";
-        tombolHapus.style.top = "6px";
-        tombolHapus.style.right = "6px";
-        tombolHapus.style.width = "30px";
-        tombolHapus.style.height = "30px";
-        tombolHapus.style.padding = "0";
-        tombolHapus.style.border = "none";
-        tombolHapus.style.borderRadius = "50%";
-        tombolHapus.style.background = "#e60000";
-        tombolHapus.style.color = "#ffffff";
-        tombolHapus.style.fontSize = "24px";
-        tombolHapus.style.fontWeight = "bold";
-        tombolHapus.style.lineHeight = "28px";
-        tombolHapus.style.cursor = "pointer";
-        tombolHapus.style.zIndex = "5";
-
-        tombolHapus.onclick = function(event) {
-
-          event.stopPropagation();
-
-          hapusFoto(index);
-
-        };
-
-        wrapper.style.position = "relative";
-        wrapper.style.cursor = "pointer";
-        wrapper.style.overflow = "hidden";
-
-        /* Klik gambar untuk mengganti foto */
-        wrapper.onclick = function() {
-          gantiFoto(index);
-        };
-
-        wrapper.appendChild(img);
-        wrapper.appendChild(tombolHapus);
-
-      };
-
-      reader.readAsDataURL(file);
-
-    } else {
-
-      /* SLOT FOTO KOSONG */
-      wrapper.classList.add("foto-slot");
-
-      wrapper.innerHTML =
-        "<div style='font-size:28px;color:#0066a9;'>+</div>" +
-        "<div>FOTO " + (index + 1) + "</div>";
-
-      wrapper.onclick = function() {
-        pilihSlotFoto(index);
-      };
+      return;
 
     }
 
-    preview.appendChild(wrapper);
+
+    var preview =
+      document.getElementById(
+        "previewFoto"
+      );
+
+
+    if (!preview) {
+      return;
+    }
+
+
+    preview.innerHTML =
+      "";
+
+
+    var files =
+      event.target.files;
+
+
+    if (
+      !files ||
+      files.length === 0
+    ) {
+
+      return;
+
+    }
+
+
+    Array.from(files).forEach(
+      function(file) {
+
+        if (
+          !file.type ||
+          !file.type.startsWith(
+            "image/"
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        var reader =
+          new FileReader();
+
+
+        reader.onload =
+          function(e) {
+
+            var wrapper =
+              document.createElement(
+                "div"
+              );
+
+
+            wrapper.className =
+              "preview-item";
+
+
+            var img =
+              document.createElement(
+                "img"
+              );
+
+
+            img.src =
+              e.target.result;
+
+
+            var nama =
+              document.createElement(
+                "div"
+              );
+
+
+            nama.className =
+              "preview-name";
+
+
+            nama.textContent =
+              file.name;
+
+
+            wrapper.appendChild(
+              img
+            );
+
+
+            wrapper.appendChild(
+              nama
+            );
+
+
+            preview.appendChild(
+              wrapper
+            );
+
+          };
+
+
+        reader.readAsDataURL(
+          file
+        );
+
+      }
+    );
 
   }
+);
 
-}
-
-/* Terima foto dari galeri */
-document.addEventListener("change", function(event) {
-
-  if (event.target.id !== "fotoPemeriksaan") {
-    return;
-  }
-
-  var files =
-    Array.from(event.target.files || []);
-
-  if (files.length === 0) {
-    indeksFotoDiganti = null;
-    return;
-  }
-
-  var file = files[0];
-
-  if (
-    !file.type ||
-    !file.type.startsWith("image/")
-  ) {
-
-    alert("File harus berupa gambar.");
-
-    indeksFotoDiganti = null;
-    return;
-  }
-
-  if (indeksFotoDiganti === null) {
-    alert("Silakan pilih salah satu kotak foto.");
-    return;
-  }
-
- if (
-  daftarFotoTerpilih.filter(Boolean).length >= 6 &&
-  !daftarFotoTerpilih[indeksFotoDiganti]
-) {
-  alert("Maksimal hanya 6 foto.");
-  indeksFotoDiganti = null;
-  return;
-}
-
-daftarFotoTerpilih[indeksFotoDiganti] = file;
-
-  indeksFotoDiganti = null;
-
-  sinkronkanInputFoto();
-
-  tampilkanPreviewFoto();
-
-});
 
 /* =========================================================
    RESET FORM
@@ -15675,17 +15458,26 @@ function resetFormPemeriksaan() {
     var element =
       document.getElementById(id);
 
+
     if (!element) {
       return;
     }
 
-    if (element.tagName === "SELECT") {
 
-      element.selectedIndex = 0;
+    if (
+      element.tagName ===
+      "SELECT"
+    ) {
 
-    } else {
+      element.selectedIndex =
+        0;
 
-      element.value = "";
+    }
+
+    else {
+
+      element.value =
+        "";
 
     }
 
@@ -15693,7 +15485,10 @@ function resetFormPemeriksaan() {
 
 
   var checklist =
-    document.getElementById("checklistContainer");
+    document.getElementById(
+      "checklistContainer"
+    );
+
 
   if (checklist) {
 
@@ -15705,22 +15500,22 @@ function resetFormPemeriksaan() {
   }
 
 
-  /* RESET FOTO */
-
   var foto =
-    document.getElementById("fotoPemeriksaan");
+    document.getElementById(
+      "fotoPemeriksaan"
+    );
+
 
   if (foto) {
     foto.value = "";
   }
 
-  daftarFotoTerpilih = [];
-  indeksFotoDiganti = null;
-  perbaruiJumlahFoto();
-
 
   var preview =
-    document.getElementById("previewFoto");
+    document.getElementById(
+      "previewFoto"
+    );
+
 
   if (preview) {
     preview.innerHTML = "";
@@ -15728,54 +15523,82 @@ function resetFormPemeriksaan() {
 
 
   var upload =
-    document.getElementById("uploadFotoBox");
+    document.getElementById(
+      "uploadFotoBox"
+    );
+
 
   if (upload) {
-    upload.style.display = "none";
+
+    upload.style.display =
+      "none";
+
   }
 
-
-  /* RESET TTD */
 
   var ttd =
-    document.getElementById("ttdBox");
+    document.getElementById(
+      "ttdBox"
+    );
+
 
   if (ttd) {
-    ttd.style.display = "none";
+
+    ttd.style.display =
+      "none";
+
   }
 
-  signatureServerSaved = false;
-  signatureServerData = "";
+
+  /*
+   * Reset TTD.
+   */
+
+  signatureServerSaved =
+    false;
+
+  signatureServerData =
+    "";
+
 
   clearSignature();
 
 
-  /* RESET PROGRESS */
-
   var progressSimpan =
-    document.getElementById("progressSimpan");
+    document.getElementById(
+      "progressSimpan"
+    );
 
   if (progressSimpan) {
-    progressSimpan.style.display = "none";
+    progressSimpan.style.display =
+      "none";
   }
 
 
   var progressUpload =
-    document.getElementById("progressUploadFoto");
+    document.getElementById(
+      "progressUploadFoto"
+    );
 
   if (progressUpload) {
-    progressUpload.style.display = "none";
+    progressUpload.style.display =
+      "none";
   }
 
 
   var progressTTD =
-    document.getElementById("progressTTD");
+    document.getElementById(
+      "progressTTD"
+    );
 
   if (progressTTD) {
-    progressTTD.style.display = "none";
+    progressTTD.style.display =
+      "none";
   }
 
 }
+
+
 /* =========================================================
    LOGOUT
 ========================================================= */
