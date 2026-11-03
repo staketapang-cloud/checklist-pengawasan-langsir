@@ -11215,71 +11215,21 @@ var fotoJPGPromise = buatJPGFotoKolase();
 
 
 /* =====================================================
-   IDENTITAS HALAMAN KEDUA — DOKUMENTASI FOTO
+   JUDUL HALAMAN KEDUA — DOKUMENTASI FOTO
 ===================================================== */
 
 var judulFoto =
   document.createElement("div");
 
+judulFoto.textContent =
+  "DOKUMENTASI FOTO";
+
+judulFoto.style.fontSize = "22px";
+judulFoto.style.fontWeight = "bold";
 judulFoto.style.textAlign = "center";
-judulFoto.style.marginTop = "20px";
+judulFoto.style.marginTop = "24px";
 judulFoto.style.marginBottom = "16px";
 judulFoto.style.color = "#1f4e78";
-judulFoto.style.lineHeight = "1.5";
-
-/* Ambil identitas dari session login */
-
-var namaPengawas =
-  sessionStorage.getItem("userNama") || "-";
-
-var nippPengawas =
-  sessionStorage.getItem("userNipp") || "-";
-
-var jabatanPengawas =
-  sessionStorage.getItem("userJabatan") || "-";
-
-/* Ambil tanggal pemeriksaan */
-
-var tanggalInput =
-  document.getElementById("tanggalPemeriksaan");
-
-var tanggalTampil = "-";
-
-if (tanggalInput && tanggalInput.value) {
-
-  var bagianTanggal =
-    tanggalInput.value.split("-");
-
-  if (bagianTanggal.length === 3) {
-
-    var tanggalObjek =
-      new Date(
-        Number(bagianTanggal[0]),
-        Number(bagianTanggal[1]) - 1,
-        Number(bagianTanggal[2])
-      );
-
-    tanggalTampil =
-      new Intl.DateTimeFormat("id-ID", {
-        weekday: "long",
-        day: "2-digit",
-        month: "long",
-        year: "numeric"
-      }).format(tanggalObjek);
-
-  }
-
-}
-
-/* Susun identitas */
-
-judulFoto.innerHTML =
-  '<div style="font-size:20px;font-weight:bold;">DOKUMENTASI FOTO</div>' +
-  '<div style="font-size:16px;font-weight:bold;margin-bottom:10px;">PENGAWAS KEGIATAN LANGSIR</div>' +
-  '<div style="font-size:13px;font-weight:bold;">NAMA : ' + namaPengawas + '</div>' +
-  '<div style="font-size:13px;font-weight:bold;">NIPP : ' + nippPengawas + '</div>' +
-  '<div style="font-size:13px;font-weight:bold;">JABATAN : ' + jabatanPengawas + '</div>' +
-  '<div style="font-size:13px;font-weight:bold;">' + tanggalTampil + '</div>';
 
 container.appendChild(judulFoto);
 
@@ -15187,31 +15137,99 @@ function buatJPGFotoKolase() {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, 1240, 1754);
 
-    // Header
-    ctx.fillStyle = "#001d36";
-    ctx.fillRect(0, 0, 1240, 190);
+  // =====================================================
+// HEADER JPG — IDENTITAS PENGAWAS KEGIATAN LANGSIR
+// =====================================================
 
-    ctx.fillStyle = "#f58220";
-    ctx.fillRect(0, 190, 1240, 12);
+var namaPengawas =
+  sessionStorage.getItem("userNama") || "-";
 
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "center";
-    ctx.font = "bold 42px Arial";
+var nippPengawas =
+  sessionStorage.getItem("userNipp") || "-";
 
-    ctx.fillText(
-      "DOKUMENTASI FOTO",
-      620,
-      85
-    );
+var jabatanPengawas =
+  sessionStorage.getItem("userJabatan") || "-";
 
-    ctx.font = "24px Arial";
+// Ambil tanggal pemeriksaan
+var inputTanggal =
+  document.getElementById("tanggalPemeriksaan");
 
-    ctx.fillText(
-      "CHECKLIST PENGAWASAN KEGIATAN LANGSIR",
-      620,
-      135
-    );
+var nilaiTanggal =
+  inputTanggal ? inputTanggal.value : "";
 
+var teksTanggal = "-";
+
+if (nilaiTanggal) {
+  var tanggalObj =
+    new Date(nilaiTanggal + "T00:00:00");
+
+  if (!isNaN(tanggalObj.getTime())) {
+    teksTanggal =
+      new Intl.DateTimeFormat("id-ID", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      }).format(tanggalObj);
+  } else {
+    teksTanggal = nilaiTanggal;
+  }
+}
+
+// Latar header
+ctx.fillStyle = "#001d36";
+ctx.fillRect(0, 0, 1240, 320);
+
+ctx.fillStyle = "#f58220";
+ctx.fillRect(0, 320, 1240, 12);
+
+// Judul
+ctx.fillStyle = "#ffffff";
+ctx.textAlign = "center";
+ctx.font = "bold 42px Arial";
+
+ctx.fillText(
+  "DOKUMENTASI FOTO",
+  620,
+  65
+);
+
+ctx.font = "24px Arial";
+
+ctx.fillText(
+  "PENGAWAS KEGIATAN LANGSIR",
+  620,
+  112
+);
+
+// Identitas pengawas
+ctx.font = "bold 25px Arial";
+
+ctx.fillText(
+  "NAMA : " + namaPengawas,
+  620,
+  175
+);
+
+ctx.fillText(
+  "NIPP : " + nippPengawas,
+  620,
+  220
+);
+
+ctx.fillText(
+  "JABATAN : " + jabatanPengawas,
+  620,
+  265
+);
+
+ctx.font = "24px Arial";
+
+ctx.fillText(
+  teksTanggal,
+  620,
+  305
+);
     // Pengaturan enam kotak foto
     var margin = 64;
     var jarakKolom = 22;
@@ -15220,9 +15238,9 @@ function buatJPGFotoKolase() {
     var lebarKotak =
       (1240 - (margin * 2) - (jarakKolom * 2)) / 3;
 
-    var tinggiKotak = 680;
+    var tinggiKotak = 630;
 
-    var awalY = 245;
+var awalY = 365;
 
     var pekerjaan = [];
 
