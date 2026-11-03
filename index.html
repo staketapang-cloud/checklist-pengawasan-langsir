@@ -2761,6 +2761,81 @@ body {
 
     </div>
 
+<!-- =====================================================
+     UPLOAD FOTO PEMERIKSAAN
+===================================================== -->
+
+<div style="margin-top:20px;">
+
+  <button
+    type="button"
+    class="btn btn-foto"
+    onclick="uploadFoto()"
+    style="width:100%;"
+  >
+    📷 UPLOAD FOTO
+  </button>
+
+</div>
+
+<div id="uploadFotoBox">
+
+  <h3>Dokumentasi Foto Pemeriksaan</h3>
+
+  <p>
+    Pilih maksimal 6 foto dari galeri HP atau komputer.
+  </p>
+
+  <input
+    type="file"
+    id="fotoPemeriksaan"
+    accept="image/*"
+    multiple
+    style="display:none;"
+  >
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    onclick="document.getElementById('fotoPemeriksaan').click()"
+    style="width:100%;"
+  >
+    + PILIH FOTO DARI GALERI
+  </button>
+
+  <div
+    id="jumlahFoto"
+    style="margin-top:12px;font-weight:bold;"
+  >
+    0 / 6 Foto dipilih
+  </div>
+
+  <div
+    id="previewFoto"
+    class="foto-grid"
+  ></div>
+
+  <div
+    id="statusUploadFoto"
+    class="status-box"
+    style="display:none;"
+  ></div>
+
+  <button
+    type="button"
+    class="btn btn-save"
+    onclick="kirimFoto()"
+    style="width:100%;margin-top:15px;"
+  >
+    KIRIM FOTO
+  </button>
+
+</div>
+
+<!-- =====================================================
+     AKHIR UPLOAD FOTO
+===================================================== -->
+
 
     <div
       id="statusBox"
