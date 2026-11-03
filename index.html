@@ -14790,19 +14790,16 @@ window.initTTD = initTTD;
 function uploadFoto() {
 
   var box =
-    document.getElementById(
-      "uploadFotoBox"
-    );
-
+    document.getElementById("uploadFotoBox");
 
   if (!box) {
     return;
   }
 
+  box.style.display = "block";
 
-  box.style.display =
-    "block";
-
+  // Tampilkan 6 kotak foto
+  tampilkanPreviewFoto();
 
   box.scrollIntoView({
     behavior: "smooth",
@@ -14810,7 +14807,6 @@ function uploadFoto() {
   });
 
 }
-
 
 /* =========================================================
    KIRIM FOTO
