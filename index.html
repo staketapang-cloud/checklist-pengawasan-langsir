@@ -1706,22 +1706,23 @@ body {
   border: 1px solid #ddd;
   border-radius: 9px;
 }
-
 #previewFoto {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
   margin-top: 15px;
 }
 
 .preview-item {
-  width: 140px;
+  width: 100%;
+  min-width: 0;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .preview-item img {
-  width: 140px;
-  height: 100px;
+  width: 100%;
+  height: 110px;
   object-fit: cover;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -1733,7 +1734,19 @@ body {
   word-break: break-word;
 }
 
-
+.foto-slot {
+  width: 100%;
+  min-height: 110px;
+  border: 2px dashed #b8c5d1;
+  border-radius: 8px;
+  background: #f5f8fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  box-sizing: border-box;
+}
 /* =========================================================
    TTD
 ========================================================= */
@@ -2783,25 +2796,16 @@ body {
   <h3>Dokumentasi Foto Pemeriksaan</h3>
 
   <p>
-    Pilih maksimal 6 foto dari galeri HP atau komputer.
+    Pilih kotak untuk mengisi foto dokumentasi.
+    Maksimal 6 foto.
   </p>
 
   <input
     type="file"
     id="fotoPemeriksaan"
     accept="image/*"
-    multiple
     style="display:none;"
   >
-
-  <button
-    type="button"
-    class="btn btn-secondary"
-    onclick="bukaPilihFoto()"
-    style="width:100%;"
-  >
-    + PILIH FOTO DARI GALERI
-  </button>
 
   <div
     id="jumlahFoto"
@@ -15390,8 +15394,12 @@ var daftarFotoTerpilih = [];
 var indeksFotoDiganti = null;
 
 
-/* Sinkronkan daftar foto ke input */
 
+/* =========================================================
+   SISTEM 6 SLOT FOTO
+========================================================= */
+
+/* Sinkronkan daftar foto ke input */
 function sinkronkanInputFoto() {
 
   var input =
@@ -15399,54 +15407,36 @@ function sinkronkanInputFoto() {
 
   if (!input) return;
 
-  var transfer =
-    new DataTransfer();
+  var transfer = new DataTransfer();
 
   daftarFotoTerpilih.forEach(function(file) {
-    transfer.items.add(file);
+    if (file) {
+      transfer.items.add(file);
+    }
   });
 
   input.files = transfer.files;
-
 }
 
 
-/* Perbarui jumlah foto */
-
+/* Hitung foto yang terisi */
 function perbaruiJumlahFoto() {
 
   var jumlah =
     document.getElementById("jumlahFoto");
 
+  var total =
+    daftarFotoTerpilih.filter(Boolean).length;
+
   if (jumlah) {
     jumlah.textContent =
-      daftarFotoTerpilih.length + " / 6 Foto dipilih";
+      total + " / 6 Foto dipilih";
   }
-
 }
 
 
-/* Buka galeri untuk menambah foto */
-
-function bukaPilihFoto() {
-
-  indeksFotoDiganti = null;
-
-  var input =
-    document.getElementById("fotoPemeriksaan");
-
-  if (!input) return;
-
-  input.value = "";
-
-  input.click();
-
-}
-
-
-/* Buka galeri untuk mengganti foto tertentu */
-
-function gantiFoto(index) {
+/* Pilih foto berdasarkan nomor kotak */
+function pilihSlotFoto(index) {
 
   indeksFotoDiganti = index;
 
@@ -15456,27 +15446,28 @@ function gantiFoto(index) {
   if (!input) return;
 
   input.value = "";
-
   input.click();
-
 }
 
 
-/* Hapus foto tertentu */
+/* Ganti foto */
+function gantiFoto(index) {
+  pilihSlotFoto(index);
+}
 
+
+/* Hapus foto tanpa menggeser posisi */
 function hapusFoto(index) {
 
-  daftarFotoTerpilih.splice(index, 1);
+  daftarFotoTerpilih[index] = null;
 
   sinkronkanInputFoto();
 
   tampilkanPreviewFoto();
-
 }
 
 
-/* Tampilkan seluruh preview */
-
+/* Tampilkan 6 kotak foto */
 function tampilkanPreviewFoto() {
 
   var preview =
@@ -15488,85 +15479,87 @@ function tampilkanPreviewFoto() {
 
   perbaruiJumlahFoto();
 
-  daftarFotoTerpilih.forEach(function(file, index) {
+  for (let i = 0; i < 6; i++) {
 
-    var reader =
-      new FileReader();
+    let index = i;
+    let file = daftarFotoTerpilih[index];
 
-    reader.onload = function(e) {
+    var wrapper =
+      document.createElement("div");
 
-      var wrapper =
-        document.createElement("div");
+    wrapper.className = "preview-item";
 
-      wrapper.className =
-        "preview-item";
+    if (file) {
 
-      var img =
-        document.createElement("img");
+      var reader = new FileReader();
 
-      img.src =
-        e.target.result;
+      reader.onload = function(e) {
 
-      var nama =
-        document.createElement("div");
+        var img =
+          document.createElement("img");
 
-      nama.className =
-        "preview-name";
+        img.src = e.target.result;
 
-      nama.textContent =
-        file.name;
+        var nama =
+          document.createElement("div");
 
-      var tombolGanti =
-        document.createElement("button");
+        nama.className = "preview-name";
+        nama.textContent = file.name;
 
-      tombolGanti.type = "button";
+        var tombolGanti =
+          document.createElement("button");
 
-      tombolGanti.textContent = "GANTI";
+        tombolGanti.type = "button";
+        tombolGanti.textContent = "GANTI";
+        tombolGanti.onclick = function() {
+          gantiFoto(index);
+        };
 
-      tombolGanti.style.marginTop = "6px";
+        var tombolHapus =
+          document.createElement("button");
 
-      tombolGanti.onclick = function() {
-        gantiFoto(index);
+        tombolHapus.type = "button";
+        tombolHapus.textContent = "HAPUS";
+
+        tombolHapus.style.marginLeft = "5px";
+
+        tombolHapus.onclick = function() {
+          hapusFoto(index);
+        };
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(nama);
+        wrapper.appendChild(tombolGanti);
+        wrapper.appendChild(tombolHapus);
+
       };
 
-      var tombolHapus =
-        document.createElement("button");
+      reader.readAsDataURL(file);
 
-      tombolHapus.type = "button";
+    } else {
 
-      tombolHapus.textContent = "HAPUS";
+      wrapper.classList.add("foto-slot");
 
-      tombolHapus.style.marginTop = "6px";
+      wrapper.innerHTML =
+        "<div style='font-size:28px;color:#0066a9;'>+</div>" +
+        "<div>FOTO " + (index + 1) + "</div>";
 
-      tombolHapus.style.marginLeft = "5px";
-
-      tombolHapus.onclick = function() {
-        hapusFoto(index);
+      wrapper.onclick = function() {
+        pilihSlotFoto(index);
       };
 
-      wrapper.appendChild(img);
-      wrapper.appendChild(nama);
-      wrapper.appendChild(tombolGanti);
-      wrapper.appendChild(tombolHapus);
+    }
 
-      preview.appendChild(wrapper);
-
-    };
-
-    reader.readAsDataURL(file);
-
-  });
+    preview.appendChild(wrapper);
+  }
 
 }
 
 
-/* Terima pilihan foto dari galeri */
-
+/* Terima foto dari galeri */
 document.addEventListener("change", function(event) {
 
-  if (
-    event.target.id !== "fotoPemeriksaan"
-  ) {
+  if (event.target.id !== "fotoPemeriksaan") {
     return;
   }
 
@@ -15578,68 +15571,33 @@ document.addEventListener("change", function(event) {
     return;
   }
 
-  if (indeksFotoDiganti !== null) {
+  var file = files[0];
 
-    var fileBaru = files[0];
+  if (
+    !file.type ||
+    !file.type.startsWith("image/")
+  ) {
 
-    if (
-      !fileBaru.type ||
-      !fileBaru.type.startsWith("image/")
-    ) {
-      alert("File harus berupa gambar.");
-
-      indeksFotoDiganti = null;
-
-      return;
-    }
-
-    daftarFotoTerpilih[indeksFotoDiganti] =
-      fileBaru;
+    alert("File harus berupa gambar.");
 
     indeksFotoDiganti = null;
-
+    return;
   }
 
-   else {
-
-    var jumlahDitolak = 0;
-
-    files.forEach(function(file) {
-
-      if (
-        !file.type ||
-        !file.type.startsWith("image/")
-      ) {
-        return;
-      }
-
-      if (daftarFotoTerpilih.length >= 6) {
-        jumlahDitolak++;
-        return;
-      }
-
-      daftarFotoTerpilih.push(file);
-
-    });
-
-    if (jumlahDitolak > 0) {
-
-      alert(
-        "Maksimal hanya 6 foto. Ada foto yang tidak ditambahkan."
-      );
-
-    }
-
+  if (indeksFotoDiganti === null) {
+    alert("Silakan pilih salah satu kotak foto.");
+    return;
   }
+
+  daftarFotoTerpilih[indeksFotoDiganti] = file;
+
+  indeksFotoDiganti = null;
 
   sinkronkanInputFoto();
 
   tampilkanPreviewFoto();
 
 });
-
-
-
 
 /* =========================================================
    RESET FORM
