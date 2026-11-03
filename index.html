@@ -1715,11 +1715,15 @@ body {
 
 .preview-item {
   width: 100%;
+  height: 175px;
   min-width: 0;
   text-align: center;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 }
-
 .preview-item img {
   width: 100%;
   height: 110px;
@@ -1736,7 +1740,8 @@ body {
 
 .foto-slot {
   width: 100%;
-  min-height: 110px;
+  height: 175px;
+  min-height: 175px;
   border: 2px dashed #b8c5d1;
   border-radius: 8px;
   background: #f5f8fb;
