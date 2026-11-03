@@ -11214,6 +11214,60 @@ try {
 
 
 /* =====================================================
+   HALAMAN KEDUA — DOKUMENTASI FOTO
+===================================================== */
+
+var fotoJPGPromise = buatJPGFotoKolase();
+
+var judulFoto =
+  document.createElement("div");
+
+judulFoto.textContent =
+  "DOKUMENTASI FOTO PEMERIKSAAN";
+
+judulFoto.style.fontWeight = "bold";
+judulFoto.style.fontSize = "18px";
+judulFoto.style.textAlign = "center";
+judulFoto.style.marginTop = "24px";
+judulFoto.style.marginBottom = "12px";
+judulFoto.style.color = "#1f4e78";
+
+container.appendChild(judulFoto);
+
+
+var imgFoto =
+  document.createElement("img");
+
+imgFoto.alt =
+  "Preview Dokumentasi Foto";
+
+imgFoto.style.width = "100%";
+imgFoto.style.height = "auto";
+imgFoto.style.display = "block";
+imgFoto.style.border = "1px solid #cccccc";
+imgFoto.style.boxSizing = "border-box";
+
+container.appendChild(imgFoto);
+
+
+/* Tampilkan hasil kolase setelah selesai dibuat */
+
+fotoJPGPromise
+  .then(function(fotoJPG) {
+
+    imgFoto.src = fotoJPG;
+
+  })
+  .catch(function(error) {
+
+    console.error(
+      "GAGAL MEMBUAT PREVIEW FOTO:",
+      error
+    );
+
+  });
+
+/* =====================================================
    TOMBOL PREVIEW
 ===================================================== */
 
@@ -14966,10 +15020,6 @@ function buatJPGFotoKolase() {
     var totalFoto =
       foto.filter(Boolean).length;
 
-    if (totalFoto === 0) {
-      reject(new Error("Belum ada foto dokumentasi."));
-      return;
-    }
 
     var canvas =
       document.createElement("canvas");
