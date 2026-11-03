@@ -15625,6 +15625,7 @@ if (jumlahDitolak > 0) {
 
 });
 
+
 /* =========================================================
    RESET FORM
 ========================================================= */
@@ -15653,26 +15654,17 @@ function resetFormPemeriksaan() {
     var element =
       document.getElementById(id);
 
-
     if (!element) {
       return;
     }
 
+    if (element.tagName === "SELECT") {
 
-    if (
-      element.tagName ===
-      "SELECT"
-    ) {
+      element.selectedIndex = 0;
 
-      element.selectedIndex =
-        0;
+    } else {
 
-    }
-
-    else {
-
-      element.value =
-        "";
+      element.value = "";
 
     }
 
@@ -15680,10 +15672,7 @@ function resetFormPemeriksaan() {
 
 
   var checklist =
-    document.getElementById(
-      "checklistContainer"
-    );
-
+    document.getElementById("checklistContainer");
 
   if (checklist) {
 
@@ -15695,24 +15684,22 @@ function resetFormPemeriksaan() {
   }
 
 
-  var foto =
-    document.getElementById(
-      "fotoPemeriksaan"
-    );
+  /* RESET FOTO */
 
+  var foto =
+    document.getElementById("fotoPemeriksaan");
 
   if (foto) {
     foto.value = "";
   }
-daftarFotoTerpilih = [];
-indeksFotoDiganti = null;
-perbaruiJumlahFoto();
+
+  daftarFotoTerpilih = [];
+  indeksFotoDiganti = null;
+  perbaruiJumlahFoto();
+
 
   var preview =
-    document.getElementById(
-      "previewFoto"
-    );
-
+    document.getElementById("previewFoto");
 
   if (preview) {
     preview.innerHTML = "";
@@ -15720,82 +15707,54 @@ perbaruiJumlahFoto();
 
 
   var upload =
-    document.getElementById(
-      "uploadFotoBox"
-    );
-
+    document.getElementById("uploadFotoBox");
 
   if (upload) {
-
-    upload.style.display =
-      "none";
-
+    upload.style.display = "none";
   }
 
+
+  /* RESET TTD */
 
   var ttd =
-    document.getElementById(
-      "ttdBox"
-    );
-
+    document.getElementById("ttdBox");
 
   if (ttd) {
-
-    ttd.style.display =
-      "none";
-
+    ttd.style.display = "none";
   }
 
-
-  /*
-   * Reset TTD.
-   */
-
-  signatureServerSaved =
-    false;
-
-  signatureServerData =
-    "";
-
+  signatureServerSaved = false;
+  signatureServerData = "";
 
   clearSignature();
 
 
+  /* RESET PROGRESS */
+
   var progressSimpan =
-    document.getElementById(
-      "progressSimpan"
-    );
+    document.getElementById("progressSimpan");
 
   if (progressSimpan) {
-    progressSimpan.style.display =
-      "none";
+    progressSimpan.style.display = "none";
   }
 
 
   var progressUpload =
-    document.getElementById(
-      "progressUploadFoto"
-    );
+    document.getElementById("progressUploadFoto");
 
   if (progressUpload) {
-    progressUpload.style.display =
-      "none";
+    progressUpload.style.display = "none";
   }
 
 
   var progressTTD =
-    document.getElementById(
-      "progressTTD"
-    );
+    document.getElementById("progressTTD");
 
   if (progressTTD) {
-    progressTTD.style.display =
-      "none";
+    progressTTD.style.display = "none";
   }
 
 }
-
-
 /* =========================================================
    LOGOUT
 ========================================================= */
