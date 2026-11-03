@@ -14929,19 +14929,21 @@ function kirimFoto() {
     );
 
 
-    input.value =
-      "";
+input.value =
+  "";
 
+daftarFotoTerpilih = [];
+indeksFotoDiganti = null;
+perbaruiJumlahFoto();
 
-    var preview =
-      document.getElementById(
-        "previewFoto"
-      );
+var preview =
+  document.getElementById(
+    "previewFoto"
+  );
 
-
-    if (preview) {
-      preview.innerHTML = "";
-    }
+if (preview) {
+  preview.innerHTML = "";
+}
 
 
     return new Promise(function(resolve) {
@@ -15702,7 +15704,9 @@ function resetFormPemeriksaan() {
   if (foto) {
     foto.value = "";
   }
-
+daftarFotoTerpilih = [];
+indeksFotoDiganti = null;
+perbaruiJumlahFoto();
 
   var preview =
     document.getElementById(
