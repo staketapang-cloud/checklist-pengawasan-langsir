@@ -15600,19 +15600,42 @@ document.addEventListener("change", function(event) {
 
   }
 
-  else {
+   else {
 
-var jumlahDitolak = 0;
+    var jumlahDitolak = 0;
 
-files.forEach(function(file) {
-  if (!file.type || !file.type.startsWith("image/")) return;
+    files.forEach(function(file) {
 
-  if (daftarFotoTerpilih.length >= 6) {
-    jumlahDitolak++;
-    return;
+      if (
+        !file.type ||
+        !file.type.startsWith("image/")
+      ) {
+        return;
+      }
+
+      if (daftarFotoTerpilih.length >= 6) {
+        jumlahDitolak++;
+        return;
+      }
+
+      daftarFotoTerpilih.push(file);
+
+    });
+
+    if (jumlahDitolak > 0) {
+
+      alert(
+        "Maksimal hanya 6 foto. Ada foto yang tidak ditambahkan."
+      );
+
+    }
+
   }
 
-  daftarFotoTerpilih.push(file);
+  sinkronkanInputFoto();
+
+  tampilkanPreviewFoto();
+
 });
 
 if (jumlahDitolak > 0) {
