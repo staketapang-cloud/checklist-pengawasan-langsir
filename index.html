@@ -11636,7 +11636,32 @@ var jpgFile =
       type: "image/jpeg"
     }
   );
+/* =================================================
+   SIAPKAN JPG DOKUMENTASI FOTO
+================================================= */
 
+var fotoJPG =
+  await fotoJPGPromise;
+
+var namaFileFoto =
+  namaFile.replace(
+    "Checklist_Langsir_",
+    "Dokumentasi_Foto_Langsir_"
+  );
+
+var fotoBlob =
+  await fetch(fotoJPG).then(function(response) {
+    return response.blob();
+  });
+
+var fotoJPGFile =
+  new File(
+    [fotoBlob],
+    namaFileFoto,
+    {
+      type: "image/jpeg"
+    }
+  );
 /* =================================================
    HP: BUKA PILIHAN SIMPAN / BAGIKAN GAMBAR
    KOMPUTER: DOWNLOAD LANGSUNG
@@ -11693,7 +11718,32 @@ if (isAndroid) {
   document.body.appendChild(linkAndroid);
   linkAndroid.click();
   document.body.removeChild(linkAndroid);
+/* DOWNLOAD JPG DOKUMENTASI FOTO */
 
+var urlFotoAndroid =
+  URL.createObjectURL(fotoBlob);
+
+var linkFotoAndroid =
+  document.createElement("a");
+
+linkFotoAndroid.href =
+  urlFotoAndroid;
+
+linkFotoAndroid.download =
+  namaFileFoto;
+
+linkFotoAndroid.style.display =
+  "none";
+
+document.body.appendChild(
+  linkFotoAndroid
+);
+
+linkFotoAndroid.click();
+
+document.body.removeChild(
+  linkFotoAndroid
+);
   /* Buka preview JPG di tab baru */
 
   var previewAndroid =
@@ -11772,13 +11822,15 @@ if (
   isHP &&
   navigator.share &&
   navigator.canShare &&
-  navigator.canShare({ files: [jpgFile] })
+  navigator.canShare({
+  files: [jpgFile, fotoJPGFile]
+})
 ) {
 
-  navigator.share({
-    files: [jpgFile],
-    title: "Checklist Pengawasan Kegiatan Langsir"
-  }).catch(function(error) {
+navigator.share({
+  files: [jpgFile, fotoJPGFile],
+  title: "Checklist Pengawasan Kegiatan Langsir"
+}).catch(function(error) {
 
     if (error && error.name === "AbortError") {
       return;
@@ -11813,7 +11865,36 @@ document.body.removeChild(link);
 setTimeout(function() {
   URL.revokeObjectURL(urlJPG);
 }, 10000);
+/* DOWNLOAD JPG DOKUMENTASI FOTO */
 
+var urlFotoJPG =
+  URL.createObjectURL(fotoBlob);
+
+var linkFotoJPG =
+  document.createElement("a");
+
+linkFotoJPG.href =
+  urlFotoJPG;
+
+linkFotoJPG.download =
+  namaFileFoto;
+
+linkFotoJPG.style.display =
+  "none";
+
+document.body.appendChild(
+  linkFotoJPG
+);
+
+linkFotoJPG.click();
+
+document.body.removeChild(
+  linkFotoJPG
+);
+
+setTimeout(function() {
+  URL.revokeObjectURL(urlFotoJPG);
+}, 10000);
 console.log("JPG didownload:", namaFile);
 
 }
