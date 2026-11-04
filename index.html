@@ -15169,16 +15169,28 @@ function buatJPGFotoKolase() {
 
       }
     }
-    // JAM REAL-TIME WIB
-    var waktuSekarang = new Date();
+       // JAM BERDASARKAN DINAS LANGSIR
+    var pilihanDinas =
+      document.getElementById("dinasLangsirPemeriksaan");
 
-    var teksJam =
-      new Intl.DateTimeFormat("id-ID", {
-        timeZone: "Asia/Jakarta",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false
-      }).format(waktuSekarang);
+    var dinasTerpilih =
+      pilihanDinas ? pilihanDinas.value : "";
+
+    var teksJam = "-";
+
+    if (dinasTerpilih === "DINAS PAGI") {
+
+      teksJam = "07:00 - 15:00";
+
+    } else if (dinasTerpilih === "DINAS SIANG") {
+
+      teksJam = "15:00 - 23:00";
+
+    } else if (dinasTerpilih === "DINAS MALAM") {
+
+      teksJam = "23:00 - 07:00";
+
+    }
 
     /* =====================================================
        LOGO KAI - POJOK KANAN ATAS HALAMAN 2
@@ -15244,7 +15256,7 @@ function buatJPGFotoKolase() {
     );
 
     // Tanggal pemeriksaan
-    ctx.font = "24px Arial";
+    ctx.font = "bold 24px Arial";
 
     ctx.fillText(
       teksTanggal,
@@ -15252,11 +15264,11 @@ function buatJPGFotoKolase() {
       260
     );
 
-    // Jam pemeriksaan
+    // Jam dinas pemeriksaan
     ctx.font = "bold 24px Arial";
 
     ctx.fillText(
-      "JAM : " + teksJam + " WIB",
+      "JAM DINAS : " + teksJam + " WIB",
       620,
       290
     );
@@ -15557,10 +15569,20 @@ wrapper.style.maxWidth = "380px";
 
   } else {
 
-    /* SLOT FOTO KOSONG - DESAIN PREMIUM */
+        /* SLOT FOTO KOSONG - DESAIN PREMIUM */
     wrapper.classList.add("foto-slot");
 
     wrapper.style.minHeight = "280px";
+    wrapper.style.height = "280px";
+    wrapper.style.width = "100%";
+    wrapper.style.boxSizing = "border-box";
+
+    // Khusus layar HP: lebih pendek dan melebar
+    if (window.innerWidth <= 600) {
+      wrapper.style.minHeight = "180px";
+      wrapper.style.height = "180px";
+    }
+
     wrapper.style.display = "flex";
     wrapper.style.flexDirection = "column";
     wrapper.style.alignItems = "center";
@@ -15574,41 +15596,41 @@ wrapper.style.maxWidth = "380px";
 
     wrapper.innerHTML =
       "<div style='" +
-        "width:64px;height:64px;" +
+        "width:52px;height:52px;" +
         "border-radius:50%;" +
         "background:#E8F1F8;" +
         "display:flex;" +
         "align-items:center;" +
         "justify-content:center;" +
-        "font-size:32px;" +
+        "font-size:28px;" +
         "color:#0066A9;" +
       "'>▧</div>" +
 
       "<div style='" +
-        "font-size:16px;" +
+        "font-size:15px;" +
         "font-weight:700;" +
         "color:#173B57;" +
-        "margin-top:10px;" +
+        "margin-top:6px;" +
       "'>" +
         "PILIH FOTO DOKUMENTASI" +
       "</div>" +
 
       "<div style='" +
-        "font-size:12px;" +
+        "font-size:11px;" +
         "color:#7A8794;" +
-        "margin-top:5px;" +
+        "margin-top:4px;" +
       "'>" +
         "Klik di sini untuk memilih foto pemeriksaan" +
       "</div>" +
 
       "<div style='" +
-        "font-size:11px;" +
+        "font-size:10px;" +
         "font-weight:600;" +
         "color:#0066A9;" +
         "background:#E8F1F8;" +
-        "padding:6px 14px;" +
+        "padding:5px 12px;" +
         "border-radius:20px;" +
-        "margin-top:12px;" +
+        "margin-top:8px;" +
       "'>" +
         "1 FOTO" +
       "</div>";
@@ -15616,11 +15638,6 @@ wrapper.style.maxWidth = "380px";
     wrapper.onclick = function() {
       pilihSlotFoto(index);
     };
-
-    wrapper.onclick = function() {
-      pilihSlotFoto(index);
-    };
-
   }
 
   preview.appendChild(wrapper);
