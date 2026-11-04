@@ -15191,7 +15191,23 @@ function buatJPGFotoKolase() {
       teksJam = "23:00 - 07:00";
 
     }
+/* =====================================================
+   LOGO DANANTARA - POJOK KIRI ATAS HALAMAN 2
+===================================================== */
 
+if (
+  window.logoDanantara &&
+  window.logoDanantara.complete &&
+  window.logoDanantara.naturalWidth > 0
+) {
+  ctx.drawImage(
+    window.logoDanantara,
+    76,
+    20,
+    120,
+    72
+  );
+}
     /* =====================================================
        LOGO KAI - POJOK KANAN ATAS HALAMAN 2
     ===================================================== */
@@ -16225,7 +16241,29 @@ console.log(
   window.logoKAI.src =
     "logo-kai.png.png";
 
+/* =======================================================
+   MUAT LOGO DANANTARA
+======================================================= */
 
+window.logoDanantara = new Image();
+
+window.logoDanantara.onload = function () {
+  console.log(
+    "LOGO DANANTARA BERHASIL DIMUAT:",
+    window.logoDanantara.naturalWidth,
+    "x",
+    window.logoDanantara.naturalHeight
+  );
+};
+
+window.logoDanantara.onerror = function () {
+  console.error(
+    "LOGO DANANTARA GAGAL DIMUAT:",
+    window.logoDanantara.src
+  );
+};
+
+window.logoDanantara.src = "logo-danantara.jpg";
   /* =======================================================
      2. SIMPAN FUNGSI PREVIEW ASLI
   ======================================================= */
