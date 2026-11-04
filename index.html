@@ -15204,8 +15204,8 @@ if (
     window.logoDanantara,
     76,
     20,
-    120,
-    72
+    150,
+    60
   );
 }
     /* =====================================================
@@ -15602,11 +15602,14 @@ wrapper.style.maxWidth = "380px";
     wrapper.style.width = "100%";
     wrapper.style.boxSizing = "border-box";
 
-    // Khusus layar HP: lebih pendek dan melebar
-    if (window.innerWidth <= 600) {
-      wrapper.style.minHeight = "180px";
-      wrapper.style.height = "180px";
-    }
+// Khusus layar HP
+if (window.innerWidth <= 600) {
+  wrapper.style.minHeight = "180px";
+  wrapper.style.height = "180px";
+
+  wrapper.style.position = "relative";
+  wrapper.style.left = "8px";
+}
 
     wrapper.style.display = "flex";
     wrapper.style.flexDirection = "column";
