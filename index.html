@@ -15173,7 +15173,16 @@ function buatJPGFotoKolase() {
 
       }
     }
+    // JAM REAL-TIME WIB
+    var waktuSekarang = new Date();
 
+    var teksJam =
+      new Intl.DateTimeFormat("id-ID", {
+        timeZone: "Asia/Jakarta",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      }).format(waktuSekarang);
     // Header biru
     ctx.fillStyle = "#001d36";
     ctx.fillRect(0, 0, 1240, 320);
@@ -15229,13 +15238,20 @@ function buatJPGFotoKolase() {
       620,
       305
     );
+    // Jam pemeriksaan
+    ctx.font = "bold 24px Arial";
 
+    ctx.fillText(
+      "JAM : " + teksJam + " WIB",
+      620,
+      345
+    );
     // =====================================================
     // SATU KOTAK FOTO BESAR
     // =====================================================
 
     var x = 64;
-    var y = 365;
+    var y = 390;
     var lebar = 1112;
     var tinggi = 1300;
 
