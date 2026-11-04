@@ -11223,6 +11223,8 @@ try {
    HALAMAN KEDUA — DOKUMENTASI FOTO
 ===================================================== */
 
+var fotoJPGHasil = "";
+
 var fotoJPGPromise = buatJPGFotoKolase();
 
 
@@ -11268,6 +11270,8 @@ container.appendChild(imgFoto);
 
 fotoJPGPromise
   .then(function(fotoJPG) {
+
+    fotoJPGHasil = fotoJPG;
 
     imgFoto.src = fotoJPG;
 
