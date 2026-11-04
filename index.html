@@ -10989,40 +10989,55 @@ console.log(
 
 
 /* =====================================================
-   SIMPAN JPG HASIL AKHIR KE SERVER
+   SIMPAN KEDUA JPG KE SERVER
 ===================================================== */
 
-try {
+var idJPG =
+  data.ID_PEMERIKSAAN ||
+  idPemeriksaanAktif;
 
-  var idJPG =
-    data.ID_PEMERIKSAAN ||
-    idPemeriksaanAktif;
+if (idJPG) {
 
-  if (idJPG) {
+  fotoJPGPromise
 
-    simpanPreviewJPGKeServer(
-      jpg,
-      idJPG
-    );
+    .then(function(fotoJPG) {
 
-    console.log(
-      "JPG HASIL AKHIR DIKIRIM KE SERVER:",
-      idJPG
-    );
+      if (!fotoJPG) {
+        throw new Error(
+          "JPG Dokumentasi Foto belum tersedia."
+        );
+      }
 
-  } else {
+      return simpanPreviewJPGKeServer(
+        jpg,
+        idJPG,
+        fotoJPG
+      );
 
-    console.warn(
-      "ID_PEMERIKSAAN tidak ditemukan. JPG tidak dikirim ke server."
-    );
+    })
 
-  }
+    .then(function(result) {
 
-} catch (err) {
+      console.log(
+        "KEDUA JPG BERHASIL DIKIRIM KE SERVER:",
+        result
+      );
 
-  console.error(
-    "Gagal mengirim JPG hasil akhir:",
-    err
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "GAGAL MENYIMPAN KEDUA JPG:",
+        error
+      );
+
+    });
+
+} else {
+
+  console.warn(
+    "ID_PEMERIKSAAN tidak ditemukan. Kedua JPG tidak dikirim."
   );
 
 }
@@ -11364,7 +11379,8 @@ btnDownload.style.fontWeight =
 
 function simpanPreviewJPGKeServer(
   jpgData,
-  idPemeriksaan
+  idPemeriksaan,
+  fotoPengawasData
 ) {
 
   return new Promise(
@@ -11421,8 +11437,11 @@ function simpanPreviewJPGKeServer(
                 ID_PEMERIKSAAN:
                   idPemeriksaan,
 
-                JPG:
-                  jpgData
+               JPG:
+  jpgData,
+
+FOTO_PENGAWAS_LANGSIR:
+  fotoPengawasData
 
               }
 
