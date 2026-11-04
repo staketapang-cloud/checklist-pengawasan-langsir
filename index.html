@@ -10988,60 +10988,6 @@ console.log(
 );
 
 
-/* =====================================================
-   SIMPAN KEDUA JPG KE SERVER
-===================================================== */
-
-var idJPG =
-  data.ID_PEMERIKSAAN ||
-  idPemeriksaanAktif;
-
-if (idJPG) {
-
-  fotoJPGPromise
-
-    .then(function(fotoJPG) {
-
-      if (!fotoJPG) {
-        throw new Error(
-          "JPG Dokumentasi Foto belum tersedia."
-        );
-      }
-
-      return simpanPreviewJPGKeServer(
-        jpg,
-        idJPG,
-        fotoJPG
-      );
-
-    })
-
-    .then(function(result) {
-
-      console.log(
-        "KEDUA JPG BERHASIL DIKIRIM KE SERVER:",
-        result
-      );
-
-    })
-
-    .catch(function(error) {
-
-      console.error(
-        "GAGAL MENYIMPAN KEDUA JPG:",
-        error
-      );
-
-    });
-
-} else {
-
-  console.warn(
-    "ID_PEMERIKSAAN tidak ditemukan. Kedua JPG tidak dikirim."
-  );
-
-}
-
 
 /* =====================================================
    HAPUS PREVIEW LAMA
@@ -11299,7 +11245,59 @@ fotoJPGPromise
     );
 
   });
+/* =====================================================
+   SIMPAN KEDUA JPG KE SERVER
+===================================================== */
 
+var idJPG =
+  data.ID_PEMERIKSAAN ||
+  idPemeriksaanAktif;
+
+if (idJPG) {
+
+  fotoJPGPromise
+
+    .then(function(fotoJPG) {
+
+      if (!fotoJPG) {
+        throw new Error(
+          "JPG Dokumentasi Foto belum tersedia."
+        );
+      }
+
+      return simpanPreviewJPGKeServer(
+        jpg,
+        idJPG,
+        fotoJPG
+      );
+
+    })
+
+    .then(function(result) {
+
+      console.log(
+        "KEDUA JPG BERHASIL DIKIRIM KE SERVER:",
+        result
+      );
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "GAGAL MENYIMPAN KEDUA JPG:",
+        error
+      );
+
+    });
+
+} else {
+
+  console.warn(
+    "ID_PEMERIKSAAN tidak ditemukan. Kedua JPG tidak dikirim."
+  );
+
+}
 /* =====================================================
    TOMBOL PREVIEW
 ===================================================== */
