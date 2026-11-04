@@ -15548,14 +15548,23 @@ wrapper.style.maxWidth = "380px";
 
       var img =
         document.createElement("img");
+img.src = e.target.result;
 
-      img.src = e.target.result;
-      img.style.width = "100%";
-      img.style.height = "auto";
-      img.style.maxWidth = "100%";
-      img.style.display = "block";
-      img.style.objectFit = "contain";
-      img.style.margin = "0 auto";
+/* GAMBAR MENGIKUTI LEBAR FRAME */
+img.style.width = "100%";
+img.style.height = "auto";
+img.style.maxWidth = "100%";
+img.style.maxHeight = "none";
+img.style.display = "block";
+img.style.objectFit = "contain";
+img.style.objectPosition = "center";
+img.style.margin = "0 auto";
+
+/* FRAME MENYESUAIKAN TINGGI GAMBAR */
+wrapper.style.height = "auto";
+wrapper.style.minHeight = "0";
+wrapper.style.maxWidth = "none";
+wrapper.style.overflow = "visible";
 
       // Pastikan foto memenuhi lebar area di HP
       wrapper.style.width = "100%";
