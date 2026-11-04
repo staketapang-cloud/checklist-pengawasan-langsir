@@ -11658,8 +11658,13 @@ var jpgFile =
    SIAPKAN JPG DOKUMENTASI FOTO
 ================================================= */
 
-var fotoJPG =
-  await fotoJPGPromise;
+var fotoJPG = fotoJPGHasil;
+
+if (!fotoJPG) {
+  throw new Error(
+    "JPG Dokumentasi Foto belum siap. Silakan coba kembali."
+  );
+}
 
 var namaFileFoto =
   namaFile.replace(
@@ -11667,10 +11672,20 @@ var namaFileFoto =
     "Dokumentasi_Foto_Langsir_"
   );
 
-var fotoBlob =
-  await fetch(fotoJPG).then(function(response) {
-    return response.blob();
-  });
+/* UBAH DATA JPG HALAMAN 2 MENJADI BLOB */
+
+var bagianFoto = fotoJPG.split(",");
+var byteFoto = atob(bagianFoto[1]);
+var arrayFoto = new Uint8Array(byteFoto.length);
+
+for (var j = 0; j < byteFoto.length; j++) {
+  arrayFoto[j] = byteFoto.charCodeAt(j);
+}
+
+var fotoBlob = new Blob(
+  [arrayFoto],
+  { type: "image/jpeg" }
+);
 
 var fotoJPGFile =
   new File(
@@ -11762,90 +11777,17 @@ linkFotoAndroid.click();
 document.body.removeChild(
   linkFotoAndroid
 );
-  /* Buka preview JPG di tab baru */
+  /* PREVIEW UTAMA SUDAH MENAMPILKAN KEDUA HALAMAN */
 
-  var previewAndroid =
-    window.open("", "_blank");
-
-  if (previewAndroid) {
-
-    previewAndroid.document.open();
-
-    previewAndroid.document.write(
-      '<!DOCTYPE html>' +
-      '<html><head>' +
-      '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-      '<title>Preview Checklist JPG</title>' +
-      '<style>' +
-      'body{margin:0;padding:16px;font-family:Arial,sans-serif;background:#eef3f7;text-align:center;}' +
-      'img{display:block;max-width:100%;height:auto;margin:16px auto;background:white;}' +
-      '.bar{position:sticky;top:0;background:#eef3f7;padding:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}' +
-      'button{border:0;border-radius:8px;padding:12px 18px;font-size:15px;font-weight:bold;background:#0066a9;color:white;}' +
-      '.share{background:#f58220;}' +
-      '</style></head><body>' +
-      '<div class="bar">' +
-      '<button onclick="downloadJPG()">DOWNLOAD JPG</button>' +
-      '<button class="share" onclick="shareJPG()">SHARE</button>' +
-      '</div>' +
-      '<img id="gambarJPG" alt="Preview Checklist">' +
-      '<script>' +
-'var gambarURL=' + JSON.stringify(urlAndroid) + ';' +
-'var namaGambar=' + JSON.stringify(namaFile) + ';' +
-'var fotoURL=' + JSON.stringify(urlFotoAndroid) + ';' +
-'var namaFoto=' + JSON.stringify(namaFileFoto) + ';' +
-'document.getElementById("gambarJPG").src=gambarURL;' +
-'function downloadJPG(){' +
-
-  'var a=document.createElement("a");' +
-  'a.href=gambarURL;' +
-  'a.download=namaGambar;' +
-  'document.body.appendChild(a);' +
-  'a.click();' +
-  'a.remove();' +
-
-  'setTimeout(function(){' +
-
-    'var b=document.createElement("a");' +
-    'b.href=fotoURL;' +
-    'b.download=namaFoto;' +
-    'document.body.appendChild(b);' +
-    'b.click();' +
-    'b.remove();' +
-
-  '},1000);' +
-
-'}' +
-      'async function shareJPG(){' +
-      'try{' +
-      'var r=await fetch(gambarURL);' +
-      'var b=await r.blob();' +
-      'var f=new File([b],namaGambar,{type:"image/jpeg"});' +
-      'if(navigator.share&&navigator.canShare&&navigator.canShare({files:[f]})){' +
-      'await navigator.share({files:[f],title:"Checklist Pengawasan Kegiatan Langsir"});' +
-      '}else{' +
-      'alert("Browser ini tidak mendukung berbagi file JPG. Gunakan DOWNLOAD JPG.");' +
-      '}' +
-      '}catch(e){if(e.name!=="AbortError"){alert("Gambar belum dapat dibagikan.");}}' +
-      '}' +
-      '<\/script>' +
-      '</body></html>'
-    );
-
-    previewAndroid.document.close();
-
-  } else {
-
-    alert(
-      "JPG sudah diminta untuk diunduh. Izinkan pop-up browser agar preview dapat dibuka."
-    );
-
-  }
-
-  /* Jangan hapus URL selama preview masih digunakan */
+  setTimeout(function() {
+    URL.revokeObjectURL(urlAndroid);
+    URL.revokeObjectURL(urlFotoAndroid);
+  }, 30000);
 
   console.log(
-    "Download dan preview JPG Android:",
-    namaFile
+    "Dua JPG Android diminta untuk diunduh:",
+    namaFile,
+    namaFileFoto
   );
 
   return;
