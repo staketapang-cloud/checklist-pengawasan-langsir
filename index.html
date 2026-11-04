@@ -2800,10 +2800,6 @@ body {
 
   <h3>Dokumentasi Foto Pemeriksaan</h3>
 
-  <p>
-    Pilih kotak untuk mengisi foto dokumentasi.
-    Maksimal 6 foto.
-  </p>
 
   <input
     type="file"
@@ -2816,7 +2812,7 @@ body {
     id="jumlahFoto"
     style="margin-top:12px;font-weight:bold;"
   >
-    0 / 6 Foto dipilih
+    0 / 1 Foto dipilih
   </div>
 
   <div
@@ -15561,17 +15557,16 @@ function tampilkanPreviewFoto() {
     /* SLOT FOTO KOSONG */
     wrapper.classList.add("foto-slot");
 
-    wrapper.style.minHeight = "250px";
+    wrapper.style.minHeight = "420px";
     wrapper.style.display = "flex";
     wrapper.style.flexDirection = "column";
     wrapper.style.alignItems = "center";
     wrapper.style.justifyContent = "center";
     wrapper.style.cursor = "pointer";
 
-    wrapper.innerHTML =
-      "<div style='font-size:42px;color:#0066a9;'>+</div>" +
-      "<div style='font-size:18px;font-weight:bold;'>FOTO 1</div>" +
-      "<div style='font-size:13px;color:#777;'>KLIK UNTUK MEMILIH FOTO</div>";
+wrapper.innerHTML =
+  "<div style='font-size:52px;color:#0066a9;'>+</div>" +
+  "<div style='font-size:15px;color:#777;'>KLIK UNTUK MEMILIH FOTO</div>";
 
     wrapper.onclick = function() {
       pilihSlotFoto(index);
