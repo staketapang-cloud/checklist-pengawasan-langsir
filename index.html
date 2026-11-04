@@ -15183,10 +15183,26 @@ function buatJPGFotoKolase() {
         minute: "2-digit",
         hour12: false
       }).format(waktuSekarang);
-    // Header biru
-    ctx.fillStyle = "#001d36";
-    ctx.fillRect(0, 0, 1240, 320);
 
+    /* =====================================================
+       LOGO KAI - POJOK KANAN ATAS HALAMAN 2
+    ===================================================== */
+
+    if (
+      window.logoKAI &&
+      window.logoKAI.complete &&
+      window.logoKAI.naturalWidth > 0
+    ) {
+
+      ctx.drawImage(
+        window.logoKAI,
+        1084,
+        28,
+        80,
+        48
+      );
+
+    }
     // Garis oranye
     ctx.fillStyle = "#f58220";
     ctx.fillRect(0, 320, 1240, 12);
