@@ -11791,8 +11791,25 @@ document.body.removeChild(
 'var namaFoto=' + JSON.stringify(namaFileFoto) + ';' +
 'document.getElementById("gambarJPG").src=gambarURL;' +
 'function downloadJPG(){' +
-'var a=document.createElement("a");a.href=gambarURL;a.download=namaGambar;document.body.appendChild(a);a.click();a.remove();' +
-'var b=document.createElement("a");b.href=fotoURL;b.download=namaFoto;document.body.appendChild(b);b.click();b.remove();' +
+
+  'var a=document.createElement("a");' +
+  'a.href=gambarURL;' +
+  'a.download=namaGambar;' +
+  'document.body.appendChild(a);' +
+  'a.click();' +
+  'a.remove();' +
+
+  'setTimeout(function(){' +
+
+    'var b=document.createElement("a");' +
+    'b.href=fotoURL;' +
+    'b.download=namaFoto;' +
+    'document.body.appendChild(b);' +
+    'b.click();' +
+    'b.remove();' +
+
+  '},1000);' +
+
 '}' +
       'async function shareJPG(){' +
       'try{' +
