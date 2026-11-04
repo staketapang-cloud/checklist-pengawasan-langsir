@@ -15601,14 +15601,17 @@ wrapper.style.maxWidth = "380px";
     wrapper.style.height = "280px";
     wrapper.style.width = "100%";
     wrapper.style.boxSizing = "border-box";
-
+// Khusus layar HP: lebarkan frame ke kanan
+if (window.innerWidth <= 600) {
+  wrapper.style.width = "calc(100% + 16px)";
+  wrapper.style.maxWidth = "none";
+  wrapper.style.marginLeft = "0";
+  wrapper.style.marginRight = "0";
+}
 // Khusus layar HP
 if (window.innerWidth <= 600) {
   wrapper.style.minHeight = "180px";
   wrapper.style.height = "180px";
-
-  wrapper.style.position = "relative";
-  wrapper.style.left = "8px";
 }
 
     wrapper.style.display = "flex";
