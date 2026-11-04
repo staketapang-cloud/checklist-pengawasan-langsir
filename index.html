@@ -15124,7 +15124,7 @@ function buatJPGFotoKolase() {
     var ctx = canvas.getContext("2d");
 
     // Latar belakang A4
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, 1240, 1754);
 
     // =====================================================
@@ -15203,8 +15203,8 @@ function buatJPGFotoKolase() {
     ctx.fillStyle = "#f58220";
     ctx.fillRect(0, 320, 1240, 12);
 
-    // Judul
-    ctx.fillStyle = "#ffffff";
+      // Judul
+    ctx.fillStyle = "#000000";
     ctx.textAlign = "center";
     ctx.font = "bold 42px Arial";
 
@@ -15222,41 +15222,43 @@ function buatJPGFotoKolase() {
       112
     );
 
-    // Identitas
+     // Identitas pengawas
     ctx.font = "bold 25px Arial";
 
     ctx.fillText(
       "NAMA : " + namaPengawas,
       620,
-      175
+      155
     );
 
     ctx.fillText(
       "NIPP : " + nippPengawas,
       620,
-      220
+      190
     );
 
     ctx.fillText(
       "JABATAN : " + jabatanPengawas,
       620,
-      265
+      225
     );
 
+    // Tanggal pemeriksaan
     ctx.font = "24px Arial";
 
     ctx.fillText(
       teksTanggal,
       620,
-      305
+      260
     );
+
     // Jam pemeriksaan
     ctx.font = "bold 24px Arial";
 
     ctx.fillText(
       "JAM : " + teksJam + " WIB",
       620,
-      325
+      290
     );
     // =====================================================
     // SATU KOTAK FOTO BESAR
