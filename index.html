@@ -15124,7 +15124,7 @@ function buatJPGFotoKolase() {
     var ctx = canvas.getContext("2d");
 
     // Latar belakang A4
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, 1240, 1754);
 
     // =====================================================
@@ -15191,12 +15191,12 @@ function buatJPGFotoKolase() {
     ) {
 
       ctx.drawImage(
-        window.logoKAI,
-        1084,
-        28,
-        80,
-        48
-      );
+  window.logoKAI,
+  1044,
+  20,
+  120,
+  72
+);
 
     }
     // Garis oranye
@@ -15256,7 +15256,7 @@ function buatJPGFotoKolase() {
     ctx.fillText(
       "JAM : " + teksJam + " WIB",
       620,
-      345
+      325
     );
     // =====================================================
     // SATU KOTAK FOTO BESAR
@@ -15487,6 +15487,7 @@ function tampilkanPreviewFoto() {
 
   wrapper.style.position = "relative";
   wrapper.style.width = "100%";
+wrapper.style.maxWidth = "380px";
   wrapper.style.maxWidth = "500px";
   wrapper.style.margin = "0 auto";
   wrapper.style.overflow = "hidden";
@@ -15557,7 +15558,7 @@ function tampilkanPreviewFoto() {
     /* SLOT FOTO KOSONG */
     wrapper.classList.add("foto-slot");
 
-    wrapper.style.minHeight = "420px";
+    wrapper.style.minHeight = "280px";
     wrapper.style.display = "flex";
     wrapper.style.flexDirection = "column";
     wrapper.style.alignItems = "center";
