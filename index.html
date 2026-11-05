@@ -5835,7 +5835,15 @@ function pastikanIdPemeriksaan() {
 
   data.STATUS =
     "DRAFT";
+// IDENTITAS PETUGAS LOGIN
+data.USER_NAMA =
+  sessionStorage.getItem("userNama") || "";
 
+data.USER_NIPP =
+  sessionStorage.getItem("userNipp") || "";
+
+data.USER_JABATAN =
+  sessionStorage.getItem("userJabatan") || "";
 
   return kirimRequestPost(
     "simpan_pemeriksaan",
